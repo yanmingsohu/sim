@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jym.base.bean.BeanUtil;
+import jym.base.util.BeanUtil;
 
 /**
  * 默认使用中文编码<br>
@@ -91,6 +91,7 @@ public abstract class HttpBase extends HttpServlet {
 	
 	/**
 	 * 被doGet包装,其中formbean已经被保存在HttpServletRequest,用小写类名（不含包名）引用
+	 * 
 	 * @param req - 请求
 	 * @param resp - 响应
 	 * @param formbean - web.xml配置中beanclass属性的对象，使用post/get参数初始化
@@ -105,6 +106,7 @@ public abstract class HttpBase extends HttpServlet {
 	
 	/**
 	 * 被doPost包装,其中formbean已经被保存在HttpServletRequest,用小写类名（不含包名）引用
+	 * 
 	 * @param req - 请求
 	 * @param resp - 响应
 	 * @param formbean - web.xml配置中beanclass属性的对象，使用post/get参数初始化

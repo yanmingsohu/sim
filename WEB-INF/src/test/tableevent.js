@@ -2,25 +2,7 @@
 function editTableData(row, rowindex) {
 	if (rowindex==0) return;
 	
-	var div = document.getElementById('editdialog');
-	div.style.display = "block";
-	moveCenter(div);
-	var forms = div.getElementsByTagName('input');
-	var tds = row.getElementsByTagName("td");
-	
-	var func = function (name, findex, tdindex) {
-		if (forms[findex].name==name) {
-			forms[findex].value = tds[tdindex].innerText;
-		}
-	}
-	
-	for (var i=0; i<forms.length; ++i) {
-		var form = forms[i];
-		func('bookname', i, 1);
-		func('price', i, 2);
-		func('author', i, 3);
-		func('id', i, 0);
-	}
+	alert(rowindex);
 }
 
 /**

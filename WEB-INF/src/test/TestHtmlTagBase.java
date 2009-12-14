@@ -38,7 +38,7 @@ public class TestHtmlTagBase {
 		click.setTarget(table1);
 		
 		
-		FileOutputStream fout = new FileOutputStream("f:/index.html");
+		FileOutputStream fout = new FileOutputStream("c:/index.html");
 		fout.write(tag.toString().getBytes());
 		fout.close();
 	}

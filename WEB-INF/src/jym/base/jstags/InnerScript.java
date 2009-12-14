@@ -9,6 +9,7 @@ import java.util.Map;
 
 import jym.base.tags.HtmlTagBase;
 import jym.base.tags.ITag;
+import jym.base.util.ResourceLoader;
 
 /**
  * Ç¶ÈëhtmlµÄ½Å±¾
@@ -36,20 +37,7 @@ public class InnerScript extends HtmlTagBase implements IJavaScript {
 	}
 	
 	public void readJavaScript(String fromfile) {
-		URL url = null;
-		Class<?> c = this.getClass();
-		
-		while (url==null) {
-			url = c.getResource(fromfile);
-			ClassLoader loader = c.getClassLoader();
-			
-			if (loader!=null) {
-				c = loader.getClass();
-			} else {
-				break;
-			}
-		}
-		
+		URL url = ResourceLoader.getUrl(fromfile);
 		readJavaScript(url);
 	}
 	

@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import jym.base.Tools;
+import jym.base.util.Tools;
 
 /**
  * 标准xml标记,不支持内嵌的js <br/>
