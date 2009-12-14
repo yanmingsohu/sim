@@ -2,7 +2,6 @@ package test;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URL;
 
 import jym.base.jstags.TableMouseOverColor;
 import jym.base.jstags.TableRowClick;
@@ -34,8 +33,7 @@ public class TestHtmlTagBase {
 		tcolor.setTarget(table1);
 		
 		TableRowClick click = new TableRowClick();
-		URL jsu = click.getClass().getResource("/test/tableevent.js");
-		click.appendCall(jsu, "editTableData");
+		click.appendCall("/test/tableevent.js", "editTableData");
 		click.setTarget(table);
 		click.setTarget(table1);
 		
