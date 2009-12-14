@@ -1,0 +1,17 @@
+.settings
+
+*.class
+*.exe
+*.dll
+*.jar
+*.lib
+*.zip
+
+*.exp
+*.pdb
+*.obj
+*.idb
+*.pch
+*.dep
+*.manifest
+*.o

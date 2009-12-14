@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app>
+	<servlet>
+		<servlet-name></servlet-name>
+		<servlet-class></servlet-class>
+		
+		<init-param>
+		<!-- beanclass配置值即为HttpBase中formbean的类 -->
+			<param-name>beanclass</param-name>
+			<param-value></param-value>
+		</init-param>
+	</servlet>
+</web-app>
