@@ -29,6 +29,14 @@ public class TableTag extends HtmlTagBase {
 		body = super.creat("tbody");
 		currentRow = body.creat("tr");
 	}
+	
+	public TableTag(String[] heads) {
+		this(heads.length);
+		
+		for (int i=0; i<heads.length; ++i) {
+			appendHead(heads[i]);
+		}
+	}
 
 	public void addAttribute(String name, String value) {
 		super.addAttribute(name, value);

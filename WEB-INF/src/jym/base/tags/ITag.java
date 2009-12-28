@@ -7,7 +7,9 @@ import java.io.PrintWriter;
 /**
  * Xml标记，可以创建子标记与文本节点
  */
-public interface ITag {
+public interface ITag extends IPrinter {
+	final String SP = "&nbsp;";
+	
 	/**
 	 * 创建一个xml元素节点
 	 * @param newtagname - 元素的名称
@@ -39,13 +41,6 @@ public interface ITag {
 	 * 成功返回true
 	 */
 	boolean append(ITag tag);
-	
-	/**
-	 * 当前标签及子标签写出到out<br>
-	 * 由内部实现调用
-	 * @param out
-	 */
-	void printout(PrintWriter out);
 	
 	/**
 	 * 如果是自关闭标记返回true<br>

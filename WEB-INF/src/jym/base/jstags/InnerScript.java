@@ -123,7 +123,7 @@ public class InnerScript extends HtmlTagBase implements IJavaScript {
 	public boolean append(ITag tag) {
 		throw new UnsupportedOperationException();
 	}
-
+	
 	public void setTarget(ITag tag) {
 	}
 }

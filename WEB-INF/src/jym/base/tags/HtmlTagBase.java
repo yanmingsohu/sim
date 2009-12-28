@@ -103,7 +103,7 @@ public class HtmlTagBase extends TagBase {
 		
 		Iterator<URL> it = amassjs.values().iterator();
 		while (it.hasNext()) {
-			getJStoWrite(it.next(), insertText);
+			urlWriteOut(it.next(), insertText);
 		}
 		
 		insertText.append("</script>");
@@ -117,12 +117,12 @@ public class HtmlTagBase extends TagBase {
 	}
 	
 	/**
-	 * 从URL中加载脚本
-	 * @param jsurl
+	 * 从URL中加载文本，并输出到out中
+	 * @param url
 	 */
-	protected void getJStoWrite(URL jsurl, PrintWriter out) {
+	protected void urlWriteOut(URL url, PrintWriter out) {
 		try {
-			InputStreamReader in = new InputStreamReader( jsurl.openStream() );
+			InputStreamReader in = new InputStreamReader( url.openStream() );
 			CharBuffer buff = CharBuffer.allocate(BUFF_SIZE);
 			int len = in.read(buff);
 			

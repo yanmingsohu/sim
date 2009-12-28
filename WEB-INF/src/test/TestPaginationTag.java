@@ -13,7 +13,7 @@ public class TestPaginationTag {
 		PaginationTag t = new PaginationTag();
 		t.setCurrentPage(2);
 		t.setTotalPage(20);
-		t.setUrlPattern("a/b/page?=%d");
+		t.setUrlPattern("a/b/page?page=%page");
 		
 		System.out.println(t);
 	}

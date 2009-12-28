@@ -40,10 +40,10 @@ public class PaginationTag extends HtmlTagBase {
 	}
 	
 	/**
-	 * 设置超链接字符串，字符串中的%d装换为页码值
+	 * 设置超链接字符串，字符串中的%page转换为页码值
 	 */
 	public void setUrlPattern(String up) {
-		url = up;
+		url = up.replaceAll("%page", "%d");
 	}
 
 	@Override
@@ -57,6 +57,8 @@ public class PaginationTag extends HtmlTagBase {
 		if (start<0) start = 0;
 		int end = current + dispsize;
 		if (end>total) end = total;
+		
+	if (start+2>end) return;
 		
 		ITag stag = new HtmlTagBase("a");
 		stag.addAttribute("href", String.format(url, 0));

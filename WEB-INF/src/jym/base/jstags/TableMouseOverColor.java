@@ -33,6 +33,9 @@ public class TableMouseOverColor extends InnerScript {
 		mc = mcolor;
 	}
 
+	/**
+	 * 注意顺序，这个方法必须在表格的数据已经加载结束的时候调用
+	 */
 	@Override
 	public void setTarget(ITag tag) {
 		callMethodString("changeTableColor", tag.getID(), fc, sc, mc);
