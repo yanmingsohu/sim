@@ -5,10 +5,11 @@ package jym.base;
 import java.io.CharArrayWriter;
 import java.io.PrintWriter;
 
+import jym.base.tags.IPrinter;
 import jym.base.tags.ITag;
 import jym.base.tags.TagBase;
 
-public class XmlPack {
+public class XmlPack implements IPrinter {
 	public final static String SYSTEM = "SYSTEM";
 	public final static String PUBLIC = "PUBLIC";
 	
@@ -74,6 +75,9 @@ public class XmlPack {
 		out.close();
 	}
 	
+	/**
+	 * 这个方法效率太低，应该用IPrinter写出
+	 */
 	public String toString() {
 		if (!closed) close();
 		return buff.toString();
@@ -82,6 +86,11 @@ public class XmlPack {
 	private void checkclosed() {
 		if (closed) 
 			throw new IllegalStateException("已经关闭");
+	}
+
+	@Override
+	public void printout(PrintWriter out) {
+		root.printout(out);
 	}
 	
 	public static void main(String[] s) {

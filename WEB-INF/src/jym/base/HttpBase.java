@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import jym.base.util.BeanUtil;
+import jym.base.util.ForwardProcess;
+import jym.base.util.ICallBack;
+import jym.base.util.ServletData;
 
 /**
  * 默认使用中文编码<br>
@@ -29,7 +32,7 @@ public abstract class HttpBase extends HttpServlet {
 	 * 用post来的数据初始化这个bean
 	 */
 	@Override
-	public void init(ServletConfig config) throws ServletException {
+	public final void init(ServletConfig config) throws ServletException {
 		super.init(config);
 		
 		String bclass = config.getInitParameter("beanclass");
@@ -37,25 +40,55 @@ public abstract class HttpBase extends HttpServlet {
 			bean = new BeanUtil(bclass);
 		}
 	}
-
+	
+	/**
+	 * 被doGet/doPost..包装,其中data对象包含的formbean
+	 * 已经被保存在HttpServletRequest,
+	 * 用小写类名（不含包名）引用
+	 * 
+	 * @param data - HttpServlet数据对象
+	 * @return	如果返回String类型，则String为有效的mapping路径<br>
+	 * 			如果返回IPrinter类型，则打印他，并返回null路径<br>
+	 * 			如果返回其他类型，则直接把toString的结果输出到客户端，
+	 * 			并返回null路径<br>
+	 * @throws Exception
+	 */
+	public abstract Object execute(IHttpData data) throws Exception;
+	
+	
 	/** 不要直接覆盖这个方法 */
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+	protected final void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		
-		Object formbean = common(req, resp);
-		String path = get(req, resp, formbean);
-		forward(req, resp, path);
+		doPost(req, resp);
 	}
 
 	/** 不要直接覆盖这个方法 */
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+	protected final void doPost(final HttpServletRequest req, 
+			final HttpServletResponse resp)
 			throws ServletException, IOException {
 		
 		Object formbean = common(req, resp);
-		String path = post(req, resp, formbean);
-		forward(req, resp, path);
+		HttpData data = new HttpData(req, resp, formbean);
+		
+		try {
+			final Object obj = execute(data);
+			ForwardProcess.exec(data, obj, new ICallBack() {
+				@Override
+				public void back() throws Exception {
+					forward(req, resp, (String)obj);
+				}
+			});
+			
+		} catch (ServletException se) {
+			throw se;
+		} catch (IOException ioe) {
+			throw ioe;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
+	// 设置编码集，返回formbean
 	private Object common(HttpServletRequest req, HttpServletResponse resp) {
 		charencoding(req,resp);
 		Object formbean = null;
@@ -89,33 +122,19 @@ public abstract class HttpBase extends HttpServlet {
 		}
 	}
 	
-	/**
-	 * 被doGet包装,其中formbean已经被保存在HttpServletRequest,用小写类名（不含包名）引用
-	 * 
-	 * @param req - 请求
-	 * @param resp - 响应
-	 * @param formbean - web.xml配置中beanclass属性的对象，使用post/get参数初始化
-	 * @return String - 转发的路径，可以为null
-	 * @throws ServletException
-	 * @throws IOException
-	 */
-	protected String get(HttpServletRequest req, HttpServletResponse resp, Object formbean)
-		throws ServletException, IOException {
-		return null;
-	}
-	
-	/**
-	 * 被doPost包装,其中formbean已经被保存在HttpServletRequest,用小写类名（不含包名）引用
-	 * 
-	 * @param req - 请求
-	 * @param resp - 响应
-	 * @param formbean - web.xml配置中beanclass属性的对象，使用post/get参数初始化
-	 * @return String - 转发的路径，可以为null
-	 * @throws ServletException
-	 * @throws IOException
-	 */
-	protected String post(HttpServletRequest req, HttpServletResponse resp, Object formbean)
-		throws ServletException, IOException {
-		return null;
+	private class HttpData extends ServletData implements IHttpData {
+		private Object fb;
+
+		public HttpData(HttpServletRequest request, HttpServletResponse response,
+				Object formbean) throws IOException {
+			
+			super(request, response);
+			fb = formbean;
+		}
+
+		@Override
+		public Object getFormObj() {
+			return fb;
+		}
 	}
 }

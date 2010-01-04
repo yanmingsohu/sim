@@ -3,11 +3,13 @@
 package jym.base;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
+import jym.base.util.ForwardProcess;
+import jym.base.util.ICallBack;
+import jym.base.util.ServletData;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -21,55 +23,60 @@ import org.apache.struts.action.ActionMapping;
 public abstract class ActionBase extends Action {
 	
 	/**
-	 * 子类不要覆盖这个方法
+	 * 子类不要覆盖这个方法,ActionBase把Struts1的execute方法进行了封装<br>
+	 * 执行方式依照execute(IActionData)方法的注释实现
 	 */
 	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form,
+	public final ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		
 		ActionData ad = new ActionData(mapping, form, request, response);
-		String path = execute(ad);
+		prepositive(ad);
+		Object obj = execute(ad);
 		
-		ActionForward forward = null;
-		if (path!=null) {
-			forward = mapping.findForward(path);
-		}
+		ForwardCallBack fcb = new ForwardCallBack(mapping, obj);
+		ForwardProcess.exec(ad, obj, fcb);
 		
-		return forward;
+		return fcb.getForward();
+	}
+	
+	/**
+	 * 在execute方法执行前，提供插入操作的机会，默认什么都不做
+	 * 
+	 * @param data - Action参数的封装
+	 */
+	protected void prepositive(IActionData data) throws Exception {
 	}
 	
 	/**
 	 * 被Action的execute方法包装，以简化原execute的参数依赖
 	 * 
 	 * @param data - Action参数的封装
-	 * @return 有效的mapping路径
+	 * @return	如果返回String类型，则String为有效的mapping路径<br>
+	 * 			如果返回IPrinter类型，则打印他，并返回null路径<br>
+	 * 			如果返回其他类型，则直接把toString的结果输出到客户端，
+	 * 			并返回null路径<br>
+	 * 
 	 * @throws Exception
 	 */
-	abstract public String execute(IActionData data) throws Exception ;
+	abstract public Object execute(IActionData data) throws Exception ;
 	
 	/**
 	 * 传递给execute
 	 */
-	private class ActionData implements IActionData {
+	private class ActionData extends ServletData implements IActionData {
 		
 		private ActionMapping map;
 		private ActionForm fm;
-		private HttpServletRequest req;
-		private HttpServletResponse resp;
-		private HttpSession ses;
-		private PrintWriter out;
 		
 		private ActionData(ActionMapping mapping, ActionForm form,
 				HttpServletRequest request, HttpServletResponse response) 
 		throws IOException
 		{
+			super(request, response);
 			map = mapping;
 			fm  = form;
-			req = request;
-			resp= response;
-			ses = req.getSession();
-			out =resp.getWriter();
 		}
 		
 		public ActionForm getActionForm() {
@@ -78,38 +85,27 @@ public abstract class ActionBase extends Action {
 
 		public ActionMapping getActionMapping() {
 			return map;
+		}		
+	}
+	
+	private class ForwardCallBack implements ICallBack {
+		private Object obj;
+		private ActionForward forward;
+		private ActionMapping mapping;
+		
+		private ForwardCallBack(ActionMapping map, Object ob) {
+			obj = ob;
+			mapping = map;
+			forward = null;
 		}
-
-		public Object getAttribute(String name) {
-			return req.getAttribute(name);
+		
+		@Override
+		public void back() throws Exception {
+			forward = mapping.findForward( (String)obj );
 		}
-
-		public HttpServletRequest getHttpServletRequest() {
-			return req;
-		}
-
-		public HttpServletResponse getHttpServletResponse() {
-			return resp;
-		}
-
-		public String getParameter(String name) {
-			return req.getParameter(name);
-		}
-
-		public Object getSessionAttribute(String name) {
-			return ses.getAttribute(name);
-		}
-
-		public void print(Object data) {
-			out.print(data);
-		}
-
-		public void setAttribute(String name, Object obj) {
-			req.setAttribute(name, obj);
-		}
-
-		public void setSessionAttribute(String name, Object obj) {
-			ses.setAttribute(name, obj);
+		
+		public ActionForward getForward() {
+			return forward;
 		}
 	}
 }
