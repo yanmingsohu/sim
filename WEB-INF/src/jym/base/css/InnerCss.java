@@ -30,7 +30,7 @@ public final class InnerCss extends HtmlTagBase {
 		URL url = ResourceLoader.getUrl(fromClassPath);
 		if (url!=null) {
 			PrintWriter out = this.creatText();
-			super.urlWriteOut(url, out);
+			ResourceLoader.urlWriteOut(url, out);
 		} else {
 			System.out.println("InnerCss: ’“≤ªµΩurl ("+fromClassPath+")");
 		}

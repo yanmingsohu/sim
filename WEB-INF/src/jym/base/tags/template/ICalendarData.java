@@ -8,7 +8,7 @@ import jym.base.tags.ITag;
 
 public interface ICalendarData {
 	/**
-	 * 返回要处理的日期
+	 * 返回要处理的日期(年/月)
 	 */
 	Calendar getCalendar();
 	

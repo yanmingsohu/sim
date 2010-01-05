@@ -2,24 +2,20 @@
 
 package jym.base.tags;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.URL;
-import java.nio.CharBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 import jym.base.jstags.IJavaScript;
+import jym.base.util.ResourceLoader;
 
 /**
  * html标记
  */
 public class HtmlTagBase extends TagBase {
-
-	private int BUFF_SIZE = 2048;
 	
 	private ArrayList<IJavaScript> innerjs;
 	private Map<Object, URL> amassjs;
@@ -103,7 +99,7 @@ public class HtmlTagBase extends TagBase {
 		
 		Iterator<URL> it = amassjs.values().iterator();
 		while (it.hasNext()) {
-			urlWriteOut(it.next(), insertText);
+			ResourceLoader.urlWriteOut(it.next(), insertText);
 		}
 		
 		insertText.append("</script>");
@@ -114,27 +110,6 @@ public class HtmlTagBase extends TagBase {
 	 */
 	private void clearAmassJs() {
 		amassjs = null;
-	}
-	
-	/**
-	 * 从URL中加载文本，并输出到out中
-	 * @param url
-	 */
-	protected void urlWriteOut(URL url, PrintWriter out) {
-		try {
-			InputStreamReader in = new InputStreamReader( url.openStream() );
-			CharBuffer buff = CharBuffer.allocate(BUFF_SIZE);
-			int len = in.read(buff);
-			
-			while (len>0) {
-				out.write(buff.array(), 0, len);
-				buff.clear();
-				len = in.read(buff);
-			}
-			in.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	/** 
