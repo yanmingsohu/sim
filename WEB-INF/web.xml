@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <web-app>
+
 	<servlet>
+	
 		<servlet-name></servlet-name>
 		<servlet-class></servlet-class>
 		
@@ -10,5 +12,7 @@
 			<param-name>beanclass</param-name>
 			<param-value></param-value>
 		</init-param>
+		
 	</servlet>
+	
 </web-app>
