@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.Date;
 
 import jym.base.orm.JdbcTemplate.ITransition;
@@ -14,17 +15,17 @@ class MethodMapping {
 	
 	private Method m;
 	private ITransition it;
-	private String sql;
+	private ISelecter<?> objcrt;
 	
 	/**
 	 * 抛出异常说明方法不符合要求
 	 */
-	MethodMapping(Method md, String createSql) 
+	MethodMapping(Method md, ISelecter<?> is) 
 		throws SecurityException, IllegalArgumentException, NoSuchMethodException, 
 		InstantiationException, IllegalAccessException, InvocationTargetException 
 	{
 		m = md;
-		sql = createSql;
+		objcrt = is;
 		
 		Class<?>[] pt0 = md.getParameterTypes();
 		if (pt0.length==1) {
@@ -51,9 +52,8 @@ class MethodMapping {
 	}
 	
 	private ITransition getTransitionType(final Class<?> type) 
-	throws SecurityException, NoSuchMethodException, 
-		IllegalArgumentException, InstantiationException, 
-		IllegalAccessException, InvocationTargetException 
+	throws SecurityException, NoSuchMethodException, IllegalArgumentException, 
+		InstantiationException,	IllegalAccessException, InvocationTargetException 
 	{
 		ITransition it;
 		
@@ -110,6 +110,13 @@ class MethodMapping {
 			it = new ITransition() {
 				public Object trans(ResultSet rs, int col) throws SQLException {
 					return new BigDecimal(rs.getString(col));
+				}
+			};
+		}
+		else if (Collection.class.isAssignableFrom(type)) {
+			it = new ITransition() {
+				public Object trans(ResultSet rs, int col) throws SQLException {
+					return objcrt.select(rs.getString(col));
 				}
 			};
 		}

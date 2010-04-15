@@ -16,7 +16,7 @@ import javax.sql.DataSource;
 /**
  * 数据库实体映射模板
  */
-public class JdbcTemplate<T> {
+public class JdbcTemplate<T> implements ISelecter<T> {
 	
 	private DataSource dsrc;
 	private Connection conn;
@@ -26,6 +26,7 @@ public class JdbcTemplate<T> {
 	private Class<T> clazz;
 	private boolean usecolnamemap = true;
 	private boolean autocloseconn = false;
+	private Plot plot;
 	
 	/** 使用小写比较String */
 	private Map<String, MethodMapping> ormmap;
@@ -65,7 +66,8 @@ public class JdbcTemplate<T> {
 	private void init() {
 		clazz = orm.getModelClass();
 		sql = orm.getPrepareSql();
-
+		plot = new Plot();
+		
 		initMethods();
 		initOrm();
 	}
@@ -141,12 +143,6 @@ public class JdbcTemplate<T> {
 		}
 	}
 	
-	/**
-	 * 执行select查询
-	 * 
-	 * @param params -- setPrepareSql()时sql语句中?的参数
-	 * @return 对象列表 -- 如果没有对象返回,则返回空的List
-	 */
 	public List<T> select(Object ...params) {
 		List<T> brs = new ArrayList<T>();
 		ResultSet rs = null;
@@ -218,28 +214,18 @@ public class JdbcTemplate<T> {
 		}
 	}
 	
-	private IPlot plot = new IPlot() {
-		public void fieldPlot(String fn, String cn) {
-			setMappingPlot(fn, cn, null);
-		}
-
-		public void fieldPlot(String fieldName, String colname, String sql) {
-			throw new UnsupportedOperationException("暂不支持这个操作");
-			//setMappingPlot(fieldName, colname, sql);
-		}
-	};	
 	
 	/**
 	 * 如果filedname的类型不是简单类型,则使用sql创建<br>
 	 * sql可以为null
 	 */
-	private MethodMapping setMappingPlot(String filedname, String colname, String sql) {
+	private MethodMapping setMappingPlot(String filedname, String colname, ISelecter is) {
 		String methodName = getSetterName(filedname);
 		Method m = getSetterMethod(methodName);
 		MethodMapping mm = null;
 		
 		try {
-			mm = new MethodMapping(m, sql);
+			mm = new MethodMapping(m, is);
 			// ormmap.set 的参数变为小写
 			ormmap.put(colname.toLowerCase(), mm);
 		} catch (Exception e) {
@@ -285,6 +271,18 @@ public class JdbcTemplate<T> {
 	 */
 	public void autoClose(boolean ac) {
 		autocloseconn = ac;
+	}
+	
+	private class Plot implements IPlot {
+		public void fieldPlot(String fn, String cn) {
+			setMappingPlot(fn, cn, null);
+		}
+
+		@Override
+		public void fieldPlot(String fieldName, String colname, ISelecter getter) {
+			//throw new UnsupportedOperationException("暂不支持这个操作");
+			setMappingPlot(fieldName, colname, getter);
+		}
 	}
 	
 	interface ITransition {

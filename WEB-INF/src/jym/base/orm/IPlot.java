@@ -20,11 +20,13 @@ public interface IPlot {
 	 * 把需要映射的实体属性名fieldName与数据库列名colname进行匹配<br>
 	 * 未映射的实体属性使用表格名匹配<br>
 	 * <br>
-	 * 如果找到匹配,则用sql语句创建fieldName类型的对象,<b>并把colname的列值放到sql语句的第一个参数中</b>
+	 * 如果找到匹配,则用getter创建fieldName类型的对象,
+	 * <b>并把colname的列值放到getter.select(...)函数的第一个参数中</b>
 	 * 
 	 * @param fieldName -- 属性名,必须有相应的setter方法,不区分大小写
 	 * @param colname -- 列名,不区分大小写
-	 * @param sql -- 创建fieldName类型对象需要的sql语句,如果为null则和调用两个参数的方法效果相同
+	 * @param getter -- 创建fieldName类型对象需要的ISelecter对象,
+	 * 					如果为null则和调用两个参数的方法效果相同
 	 */
-	public void fieldPlot(String fieldName, String colname, String sql);
+	public void fieldPlot(String fieldName, String colname, ISelecter getter);
 }
