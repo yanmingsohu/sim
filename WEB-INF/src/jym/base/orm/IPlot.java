@@ -28,5 +28,5 @@ public interface IPlot {
 	 * @param getter -- 创建fieldName类型对象需要的ISelecter对象,
 	 * 					如果为null则和调用两个参数的方法效果相同
 	 */
-	public void fieldPlot(String fieldName, String colname, ISelecter getter);
+	public void fieldPlot(String fieldName, String colname, ISelecter<?> getter);
 }

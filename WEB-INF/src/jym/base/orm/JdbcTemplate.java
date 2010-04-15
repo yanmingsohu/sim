@@ -6,12 +6,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
+
+import jym.base.util.BeanUtil;
 
 /**
  * 数据库实体映射模板
@@ -20,7 +23,6 @@ public class JdbcTemplate<T> implements ISelecter<T> {
 	
 	private DataSource dsrc;
 	private Connection conn;
-	private String sql;
 	private PreparedStatement ps;
 	private IOrm<T> orm;
 	private Class<T> clazz;
@@ -28,10 +30,13 @@ public class JdbcTemplate<T> implements ISelecter<T> {
 	private boolean autocloseconn = false;
 	private Plot plot;
 	
-	/** 使用小写比较String */
+	/** 使用小写比较String <表列明, 方法封装>*/
 	private Map<String, MethodMapping> ormmap;
-	/** 使用小写比较String */
+	/** 使用小写比较String <方法小写名, 方法>*/
 	private Map<String, Method> classMethodmap;
+	/** 大小写敏感, <方法, 列明> */
+	private Map<Method, String> reverse;
+	
 	
 	/**
 	 * jdbc模板构造函数, autoClose()发方法无效, 连接不会被关闭
@@ -65,7 +70,6 @@ public class JdbcTemplate<T> implements ISelecter<T> {
 	
 	private void init() {
 		clazz = orm.getModelClass();
-		sql = orm.getPrepareSql();
 		plot = new Plot();
 		
 		initMethods();
@@ -129,31 +133,88 @@ public class JdbcTemplate<T> implements ISelecter<T> {
 	
 	private void initOrm() {
 		ormmap = new HashMap<String, MethodMapping>();
+		reverse = new HashMap<Method, String>();
 		orm.mapping(plot);
 	}
 
 	private void createConn() throws SQLException {
-		if (conn==null || conn.isClosed()) { //  || !conn.isValid(6)
+		if (conn==null || conn.isClosed()) { //  || !conn.isValid(6) java5 不支持
 			if (dsrc!=null) {
 				conn = dsrc.getConnection();
-				ps = conn.prepareStatement(sql);
+				ps = conn.prepareStatement(orm.getPrepareSql());
 			} else {
 				throw new SQLException("与数据库的连接已经丢失");
 			}
 		}
 	}
 	
+	public List<T> select(T model, String join) {
+		List<T> brs = new ArrayList<T>();
+		
+		Method[] ms = plot.getClass().getMethods();
+		StringBuilder where = new StringBuilder(" where ");
+		Statement st = null;
+		
+		try {
+			st = conn.createStatement();
+			boolean first = true;
+			
+			for (int i=0; i<ms.length; ++i) {
+				String colname = reverse.get(ms[i]);
+				
+				if (colname!=null) {
+					Object value = ms[i].invoke(model, new Object[0]);
+					
+					if ( BeanUtil.isValid(value) ) {
+						if (first) {
+							where.append(join);
+						} else {
+							first = false;
+						}
+						
+						where.append(" (" + colname + "= '" + value + "') ");
+					}
+				}
+			}
+			
+			String sql = nowhere(orm.getPrepareSql()) + where;
+			ResultSet rs = st.executeQuery(sql);
+			select(rs, brs);
+			
+		} catch (Exception e) {
+			warnning("select错误: " + e);
+		} finally {
+			if (st!=null)
+				try {
+					st.close();
+				} catch (SQLException e) {
+				}
+		}
+		
+		return brs;
+	}
+	
 	public List<T> select(Object ...params) {
 		List<T> brs = new ArrayList<T>();
-		ResultSet rs = null;
-		
 		try {
 			createConn();
 			for (int i=1; i<=params.length; ++i) {
 				ps.setObject(i, params[i-1]);
 			}
 			
-			rs = ps.executeQuery();
+			select(ps.executeQuery(), brs);
+			
+		} catch (Exception e) {
+			warnning("select错误: " + e.getMessage());
+		}
+		
+		return brs;
+	}
+	
+	private void select(ResultSet rs, List<T> brs) throws Exception {
+		if (rs==null) return;
+		
+		try {
 			ResultSetMetaData rsmd = rs.getMetaData();
 			
 			int col = rsmd.getColumnCount();
@@ -165,15 +226,8 @@ public class JdbcTemplate<T> implements ISelecter<T> {
 					// ormmap.set时已经变为小写
 					mapping(rsmd.getColumnLabel(i), i, rs, model);
 				}
-
 				brs.add(model);
 			}
-			
-		} catch(Exception e) {
-			warnning("select错误: " + e.getMessage());
-			
-		} catch(Throwable t) {
-			warnning("严重错误: " + t);
 			
 		} finally {
 			if (rs!=null)
@@ -187,8 +241,6 @@ public class JdbcTemplate<T> implements ISelecter<T> {
 			}
 			usecolnamemap = false;
 		}
-		
-		return brs;
 	}
 	
 	private void mapping(String colname, int colc, ResultSet rs, T model) {
@@ -219,8 +271,8 @@ public class JdbcTemplate<T> implements ISelecter<T> {
 	 * 如果filedname的类型不是简单类型,则使用sql创建<br>
 	 * sql可以为null
 	 */
-	private MethodMapping setMappingPlot(String filedname, String colname, ISelecter is) {
-		String methodName = getSetterName(filedname);
+	private MethodMapping setMappingPlot(String filedname, String colname, ISelecter<?> is) {
+		String methodName = BeanUtil.getSetterName(filedname);
 		Method m = getSetterMethod(methodName);
 		MethodMapping mm = null;
 		
@@ -228,6 +280,8 @@ public class JdbcTemplate<T> implements ISelecter<T> {
 			mm = new MethodMapping(m, is);
 			// ormmap.set 的参数变为小写
 			ormmap.put(colname.toLowerCase(), mm);
+			reverse.put(m, colname);
+			
 		} catch (Exception e) {
 			warnning("方法(" + m.getName() + ")无效: " + e.getMessage());
 		}
@@ -235,17 +289,19 @@ public class JdbcTemplate<T> implements ISelecter<T> {
 		return mm;
 	}
 	
-	private String getSetterName(String fieldname) {
-		char[] fns = fieldname.toCharArray();
-		StringBuilder buff = new StringBuilder();
-		buff.append("set");
-		buff.append( Character.toTitleCase(fns[0]) );
-		buff.append(fns, 1, fns.length-1);
-		return buff.toString();
-	}
-	
 	private Method getSetterMethod(String methodname) {
 		return classMethodmap.get(methodname.toLowerCase());
+	}
+	
+	/**
+	 * 返回不含有where子句的sql语句
+	 */
+	private String nowhere(String s) {
+		int i = s.toLowerCase().indexOf("where");
+		if (i>0) {
+			return s.substring(0, i);
+		}
+		return s;
 	}
 
 	/**
@@ -279,7 +335,7 @@ public class JdbcTemplate<T> implements ISelecter<T> {
 		}
 
 		@Override
-		public void fieldPlot(String fieldName, String colname, ISelecter getter) {
+		public void fieldPlot(String fieldName, String colname, ISelecter<?> getter) {
 			//throw new UnsupportedOperationException("暂不支持这个操作");
 			setMappingPlot(fieldName, colname, getter);
 		}
