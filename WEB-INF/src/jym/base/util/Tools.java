@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class Tools {
 	private static int id = 0;
+	private static volatile int sqlid = 0;
 	
 	public static void nocatch(HttpServletResponse resp) {
 		resp.setHeader("cache-control", "no-cache");
@@ -35,8 +36,12 @@ public class Tools {
 		System.out.println(o);
 	}
 	
+	public static void p(Object o) {
+		System.out.print(o);
+	}
+	
 	public static void plsql(String sql) {
-		System.out.println("sql: " + sql);
+		System.out.println( String.format("sql(%1$#06x): %2$s", sqlid++, sql) );
 	}
 	
 	/**

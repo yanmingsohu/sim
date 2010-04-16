@@ -3,5 +3,9 @@
 package jym.base.util;
 
 public class Version {
-	public final static String v = "v0.17";
+	public final static String v = "v0.18";
+	
+	public static final String asString() {
+		return v;
+	}
 }

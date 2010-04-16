@@ -2,6 +2,10 @@
 
 package jym.base.sql;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -27,7 +31,7 @@ public class JdbcTemplate implements IQuery {
 	 * 用上下文中的数据源初始化模板
 	 * 
 	 * @param name - 要查询的数据源名称,如:<br>
-	 * 				<code> java:/comp/env/jdbc/ora_rmcsh <code>
+	 * 				<code> "java:/comp/env/jdbc/ora_rmcsh" <code>
 	 */
 	public JdbcTemplate(String name) throws NamingException {
 		InitialContext cxt = new InitialContext();
@@ -41,17 +45,34 @@ public class JdbcTemplate implements IQuery {
 	}
 
 	public void query(ISql sql) {
+		
+		ProxyStatement proxy  = null;
 		Connection conn = null;
 		Statement st = null;
 		
 		try {
 			conn = src.getConnection();
 			st = conn.createStatement();
-			sql.exe(st);
+			proxy = getProxy(st);
+			sql.exe(proxy);
+		
+		} catch (SQLException e) {
+			String msg = e.getMessage();
+			if (msg==null) {
+				msg = "未知的sql异常";
+			}
+			Tools.p(msg.trim() + ": ");
+			
+			if (proxy!=null) {
+				Tools.plsql(proxy.getSql());
+			} else {
+				Tools.pl("unknow sql.");
+			}
+			sql.exception(e, e.getMessage());
 			
 		} catch (Throwable t) {
-			sql.exception(t, t.getMessage());
 			t.printStackTrace();
+			sql.exception(t, t.getMessage());
 			
 		} finally {
 			if (st!=null) {
@@ -65,5 +86,55 @@ public class JdbcTemplate implements IQuery {
 				} catch (Exception e) {};
 			}
 		}
+	}
+	
+	private ProxyStatement getProxy(Statement st) {
+		return (ProxyStatement) Proxy.newProxyInstance(
+				this.getClass().getClassLoader(), 
+					new Class[]{ ProxyStatement.class },
+						new StatementHandler(st) );
+	}
+	
+	public class StatementHandler implements InvocationHandler {
+		private Statement statement;
+		private String sql;
+		
+		public StatementHandler(Statement st) {
+			statement = st;
+		}
+
+		public Object invoke(Object st, Method m, Object[] ps) 
+		throws Throwable, SQLException
+		{
+			String mname = m.getName();
+
+			if (mname.equals("executeQuery")) {
+				sql = (String) ps[0];
+			}
+			else if (mname.equals("executeUpdate")) {
+				sql = (String) ps[0];
+			}
+			else if (mname.equals("execute")) {
+				sql = (String) ps[0];
+			}
+			else if (mname.equals("getSql")) {
+				return getSql();
+			}
+			
+			try {
+				return m.invoke(statement, ps);
+				
+			} catch (InvocationTargetException e) {
+				throw e.getTargetException();
+			}
+		}
+		
+		private String getSql() {
+			return sql;
+		}
+	}
+	
+	private interface ProxyStatement extends Statement {
+		public String getSql();
 	}
 }

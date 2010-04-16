@@ -14,7 +14,6 @@ import jym.base.sql.ISql;
 import jym.base.sql.JdbcTemplate;
 import jym.base.sql.Logic;
 import jym.base.util.BeanUtil;
-import jym.base.util.Tools;
 
 /**
  * 数据库实体映射模板
@@ -83,7 +82,7 @@ public class OrmTemplate<T> implements ISelecter<T> {
 	public List<T> select(T model, String join) {
 		
 		Method[] ms = model.getClass().getMethods();
-		final StringBuilder where = new StringBuilder(" where ");
+		final StringBuilder where = new StringBuilder();
 		
 		boolean first = true;
 		
@@ -96,6 +95,7 @@ public class OrmTemplate<T> implements ISelecter<T> {
 					
 					if ( BeanUtil.isValid(value) ) {
 						if (first) {
+							where.append(" where ");
 							first = false;
 						} else {
 							where.append(join);
@@ -119,12 +119,10 @@ public class OrmTemplate<T> implements ISelecter<T> {
 		
 		jdbc.query(new ISql() {
 			public void exception(Throwable tr, String msg) {
-				warnning("select错误: " + msg);
 			}
 
 			public void exe(Statement stm) throws Throwable {
 				String sql = swapwhere(orm.getSimSql(), where);
-				Tools.plsql(sql);
 				select( stm.executeQuery(sql), brs );
 			}
 		});
@@ -161,12 +159,15 @@ public class OrmTemplate<T> implements ISelecter<T> {
 	}
 	
 	/**
-	 * 替换sim格式sql中的$where为指定的where子句
+	 * 替换sim格式sql中的$where为指定的where子句<br>
+	 * 如果where是空字符串(trim().length()==0), 则忽略where子句<br>
+	 * 否则如果where字符串未以'where'开始则自动添加'where'字符串
 	 */
 	private String swapwhere(String simsql, String where) {
+		where = where.trim();
 		StringBuilder buff = new StringBuilder(where);
 		
-		if (!where.trim().startsWith("where")) {
+		if ( where.length()>0 && !where.startsWith("where") ) {
 			buff.insert(0, "where ");
 		}
 		buff.insert(0, ' ');

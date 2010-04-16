@@ -2,9 +2,9 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="WEB-INF/src"/>
-	<classpathentry kind="src" output="work" path="work"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/struts2"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/J2EE 1.4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/struts1"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/oracle"/>
 	<classpathentry kind="output" path="WEB-INF/classes"/>
 </classpath>
