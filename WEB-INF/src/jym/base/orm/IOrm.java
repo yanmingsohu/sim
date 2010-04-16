@@ -1,6 +1,10 @@
 package jym.base.orm;
 
-
+/**
+ * orm映射时使用的实体映射策略,
+ * 
+ * @param <T> - 数据实体
+ */
 public interface IOrm<T> {
 	
 	/**
@@ -11,11 +15,15 @@ public interface IOrm<T> {
 	public Class<T> getModelClass();
 	
 	/**
-	 * 返回sql命令
+	 * 返回特殊的sql命令
 	 * 
-	 * @param sql -- PreparedStatement格式的sql
+	 * @return 
+	 * 		特殊格式的sql命令,其中的where子句使用$where代替,
+	 * 		以便动态替换成特定的条件,例如<br>
+	 * 		原句: <code>select * from table_name where col1 > 1;</code><br>
+	 * 		替换: <code>select * from table_name $where; </code>
 	 */
-	public String getPrepareSql();
+	public String getSimSql();
 	
 	/**
 	 * 数据与实体的映射策略

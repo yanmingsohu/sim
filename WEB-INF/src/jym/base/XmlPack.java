@@ -88,7 +88,6 @@ public class XmlPack implements IPrinter {
 			throw new IllegalStateException("ÒÑ¾­¹Ø±Õ");
 	}
 
-	@Override
 	public void printout(PrintWriter out) {
 		root.printout(out);
 	}

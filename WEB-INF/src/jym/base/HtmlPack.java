@@ -65,7 +65,6 @@ public class HtmlPack implements IPrinter {
 			throw new IllegalStateException("ÒÑ¾­¹Ø±Õ");
 	}
 
-	@Override
 	public void printout(PrintWriter out) {
 		html.printout(out);
 	}

@@ -1,0 +1,144 @@
+// CatfoOD 2010-4-16 上午09:38:08 yanming-sohu@sohu.com/@qq.com
+
+package jym.base.orm;
+
+import java.lang.reflect.Method;
+import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.Map;
+
+import jym.base.sql.Logic;
+import jym.base.util.BeanUtil;
+
+
+/**
+ * 实体属性与数据库列映射策略实现
+ *
+ * @param <T> - 实体类型
+ */
+class Plot<T> implements IPlot {	
+	
+	/** 使用小写比较String <表列名, 方法封装>*/
+	private Map<String, MethodMapping> ormmap;
+	/** 使用小写比较String <方法小写名, 方法>*/
+	private Map<String, Method> classMethodmap;
+	/** 大小写敏感, <方法, 列名> */
+	private Map<Method, String> reverse;
+	
+	private IOrm<T> orm;
+	private boolean usecolnamemap = true;
+	
+	
+	public Plot(IOrm<T> _orm) {
+		orm = _orm;
+		initMethods();
+		initOrm();
+	}
+	
+	private void initMethods() {
+		Method[] ms = orm.getModelClass().getMethods();
+		classMethodmap = new HashMap<String, Method>();
+		for (int i=0; i<ms.length; ++i) {
+			// 使用小写比较
+			classMethodmap.put(ms[i].getName().toLowerCase(), ms[i]);
+		}
+	}
+	
+	private void initOrm() {
+		ormmap = new HashMap<String, MethodMapping>();
+		reverse = new HashMap<Method, String>();
+		orm.mapping(this);
+	}
+	
+	public void fieldPlot(String fn, String cn) {
+		setMappingPlot(fn, cn, null, null);
+	}
+
+	public void fieldPlot(String fieldName, String colname, ISelecter<?> getter) {
+		setMappingPlot(fieldName, colname, getter, null);
+	}
+	
+	public void fieldPlot(String fieldName, String colname, Logic log) {
+		setMappingPlot(fieldName, colname, null, log);
+	}
+	
+	protected void mapping(String colname, int colc, ResultSet rs, T model) {
+		colname = colname.toLowerCase();
+		MethodMapping md = null;
+
+		// 自动使用表格列名进行映射
+		if (usecolnamemap && !ormmap.containsKey(colname)) {
+			md = setMappingPlot(colname, colname, null, null);
+			
+		} else {
+			md = ormmap.get(colname);
+		}
+		
+		if (md!=null) {
+			try {
+				md.invoke(rs, colc, model);
+				
+			} catch(Exception e) {
+				warnning("执行方法 (" + md.getName() + ") 时错误: " + e.getMessage());
+			}
+		} else {
+			warnning(colname+" 指定的数据行没有映射");
+		}
+	}
+	
+	/**
+	 * 如果filedname的类型不是简单类型,则使用sql创建<br>
+	 * sql可以为null
+	 */
+	protected MethodMapping setMappingPlot(
+			String fieldname, String colname, ISelecter<?> is, Logic log) {
+
+		Method setm = getMethod( BeanUtil.getSetterName(fieldname) );
+		Method getm = getMethod( BeanUtil.getGetterName(fieldname) );
+		MethodMapping mm = null;
+		
+		try {
+			mm = new MethodMapping(setm, is, log);
+			// ormmap.set 的参数变为小写
+			ormmap.put(colname.toLowerCase(), mm);
+			reverse.put(getm, colname);
+			
+		} catch (Exception e) {
+			warnning("方法(" + setm.getName() + ")无效: " + e.getMessage());
+		}
+		
+		return mm;
+	}
+	
+	private Method getMethod(String methodname) {
+		return classMethodmap.get(methodname.toLowerCase());
+	}
+	
+	/**
+	 * 取得指定列的比较方式, 大小写不敏感
+	 */
+	public Logic getColumnLogic(String colname) {
+		Logic log = null;
+		MethodMapping mm = ormmap.get(colname.toLowerCase());
+		if (mm!=null) {
+			log = mm.getColumnLogic();
+		}
+		return log;
+	}
+	
+	protected void stopColnameMapping() {
+		usecolnamemap = false;
+	}
+	
+	/**
+	 * 取得实体get方法对表名的映射
+	 */
+	protected String getColname(Method m) {
+		return reverse.get(m);
+	}
+	
+	private void warnning(String msg) {
+		System.out.println("警告:(Plot): " + msg);
+	}
+	
+}

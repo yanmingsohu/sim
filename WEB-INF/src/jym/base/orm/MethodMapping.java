@@ -9,23 +9,26 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Date;
 
-import jym.base.orm.JdbcTemplate.ITransition;
+import jym.base.sql.Logic;
 
 class MethodMapping {
 	
 	private Method m;
 	private ITransition it;
 	private ISelecter<?> objcrt;
+	private Logic logic;
 	
 	/**
-	 * 抛出异常说明方法不符合要求
+	 * 抛出异常,说明方法不符合要求<br>
+	 * if log==null log=Logic.EQ
 	 */
-	MethodMapping(Method md, ISelecter<?> is) 
+	MethodMapping(Method md, ISelecter<?> is, Logic log) 
 		throws SecurityException, IllegalArgumentException, NoSuchMethodException, 
 		InstantiationException, IllegalAccessException, InvocationTargetException 
 	{
 		m = md;
 		objcrt = is;
+		logic = log==null? Logic.EQ : log;
 		
 		Class<?>[] pt0 = md.getParameterTypes();
 		if (pt0.length==1) {
@@ -116,7 +119,9 @@ class MethodMapping {
 		else if (Collection.class.isAssignableFrom(type)) {
 			it = new ITransition() {
 				public Object trans(ResultSet rs, int col) throws SQLException {
-					return objcrt.select(rs.getString(col));
+					return objcrt!=null
+							? objcrt.select(rs.getString(col))
+							: null;
 				}
 			};
 		}
@@ -141,6 +146,10 @@ class MethodMapping {
 				return null;
 			}
 		};
+	}
+	
+	protected Logic getColumnLogic() {
+		return logic;
 	}
 	
 	private void warnning(String msg) {

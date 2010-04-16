@@ -35,6 +35,21 @@ public class Tools {
 		System.out.println(o);
 	}
 	
+	public static void plsql(String sql) {
+		System.out.println("sql: " + sql);
+	}
+	
+	/**
+	 * 如果o==null, 则跑出异常,异常信息在msg中定义
+	 * 
+	 * @throws RuntimeException
+	 */
+	public static void check(Object o, String msg) {
+		if (o==null) {
+			throw new RuntimeException(msg);
+		}
+	}
+	
 	/**
 	 * 复制HttpServletRequest中的请求参数到属性列表
 	 * 以便jsp的EL调用

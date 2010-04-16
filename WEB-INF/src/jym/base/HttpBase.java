@@ -73,7 +73,7 @@ public abstract class HttpBase extends HttpServlet {
 		try {
 			final Object obj = execute(data);
 			ForwardProcess.exec(data, obj, new ICallBack() {
-				@Override
+
 				public void back() throws Exception {
 					forward(req, resp, (String)obj);
 				}
@@ -132,7 +132,6 @@ public abstract class HttpBase extends HttpServlet {
 			fb = formbean;
 		}
 
-		@Override
 		public Object getFormObj() {
 			return fb;
 		}
