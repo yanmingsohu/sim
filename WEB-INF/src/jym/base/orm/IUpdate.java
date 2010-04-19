@@ -2,8 +2,22 @@
 
 package jym.base.orm;
 
+/**
+ * 可执行insert delete update方法
+ */
 public interface IUpdate<T> {
-	public int add(T model);
-	public int update(T model);
+	/**
+	 * 在数据库中插入一行数据,成功返回true
+	 */
+	public boolean add(T model);
+	
+	/**
+	 * 删除数据库中数据
+	 */
 	public int delete(T model);
+	
+	/**
+	 * 更新数据库中的数据
+	 */
+	public int update(T model);
 }

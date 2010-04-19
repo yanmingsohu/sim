@@ -95,10 +95,16 @@ public class BeanUtil {
 		return new String(cs);
 	}
 	
+	/**
+	 * 如果fieldname为null, 抛出异常
+	 */
 	public static String getSetterName(String fieldname) {
 		return getXetName(fieldname, "set");
 	}
 	
+	/**
+	 * 如果fieldname为null, 抛出异常
+	 */
 	public static String getGetterName(String fieldname) {
 		return getXetName(fieldname, "get");
 	}
@@ -122,6 +128,32 @@ public class BeanUtil {
 			}
 		}
 		return ms.toArray(new Method[0]);
+	}
+	
+	/**
+	 * 创建clazz类的对象
+	 */
+	public static Object creatBean(Class<?> clazz, Object...params) throws Exception {
+		Class<?>[] cls = new Class[params.length];
+		for (int i=0; i<cls.length; ++i) {
+			cls[i] = params[i].getClass();
+		}
+		Constructor<?> cons = clazz.getConstructor(cls);
+		return cons.newInstance(params);
+	}
+	
+	/**
+	 * 执行targer对象的method方法, 参数是params
+	 */
+	public static Object invoke(Object targer, String method, Object...params) 
+	throws Exception, NoSuchMethodException {
+		Class<?> clazz = targer.getClass();
+		Class<?>[] cls = new Class[params.length];
+		for (int i=0; i<cls.length; ++i) {
+			cls[i] = params[i].getClass();
+		}
+		Method m = clazz.getMethod(method, cls);
+		return m.invoke(targer, params);
 	}
 	
 	/**

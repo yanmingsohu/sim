@@ -15,20 +15,19 @@ public interface IOrm<T> {
 	public Class<T> getModelClass();
 	
 	/**
-	 * 返回特殊的sql命令
-	 * 
-	 * @return 
-	 * 		特殊格式的sql命令,其中的where子句使用$where代替,
-	 * 		以便动态替换成特定的条件,例如<br>
-	 * 		原句: <code>select * from table_name where col1 > 1;</code><br>
-	 * 		替换: <code>select * from table_name $where; </code>
+	 * 返回数据库表名
 	 */
-	public String getSimSql();
+	public String getTableName();
 	
 	/**
 	 * 数据与实体的映射策略
 	 * 在plot中放入实体属性与数据库列名的对应关系
 	 */
 	public void mapping(IPlot plot);
+	
+	/**
+	 * 返回表格的主键列的列名子
+	 */
+	public String getKey();
 	
 }

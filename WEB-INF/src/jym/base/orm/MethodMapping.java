@@ -1,6 +1,5 @@
 package jym.base.orm;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -10,25 +9,29 @@ import java.util.Collection;
 import java.util.Date;
 
 import jym.base.sql.Logic;
+import jym.base.util.BeanUtil;
 
 class MethodMapping {
-	
+
+	@SuppressWarnings("unchecked")
+	private ISelecter objcrt;
 	private Method m;
 	private ITransition it;
-	private ISelecter<?> objcrt;
 	private Logic logic;
+	private String pkmethod;
 	
 	/**
 	 * 抛出异常,说明方法不符合要求<br>
 	 * if log==null log=Logic.EQ
 	 */
-	MethodMapping(Method md, ISelecter<?> is, Logic log) 
+	MethodMapping(Method md, ISelecter<?> is, String pk, Logic log) 
 		throws SecurityException, IllegalArgumentException, NoSuchMethodException, 
 		InstantiationException, IllegalAccessException, InvocationTargetException 
 	{
-		m = md;
-		objcrt = is;
-		logic = log==null? Logic.EQ : log;
+		objcrt 		= is;
+		m 			= md; 
+		logic 		= (log==null) ? Logic.EQ : log;
+		pkmethod 	= (pk!=null) ? BeanUtil.getSetterName(pk) : null;
 		
 		Class<?>[] pt0 = md.getParameterTypes();
 		if (pt0.length==1) {
@@ -117,13 +120,7 @@ class MethodMapping {
 			};
 		}
 		else if (Collection.class.isAssignableFrom(type)) {
-			it = new ITransition() {
-				public Object trans(ResultSet rs, int col) throws SQLException {
-					return objcrt!=null
-							? objcrt.select(rs.getString(col))
-							: null;
-				}
-			};
+			it = getCollection(type);
 		}
 		else {
 			it = getObjTransition(type);
@@ -132,13 +129,37 @@ class MethodMapping {
 		return it;
 	}
 	
+	private ITransition getCollection(final Class<?> type) {
+		return new ITransition() {
+
+			@SuppressWarnings("unchecked")
+			public Object trans(ResultSet rs, int col) throws SQLException {
+				if (objcrt != null) {
+					try {
+						Object pkobj = BeanUtil.creatBean(objcrt.getModelClass());
+						Object param = rs.getObject(col);
+						BeanUtil.invoke(pkobj, pkmethod, param);
+						
+						return objcrt.select(pkobj, "and");
+						
+					} catch (Exception e) {
+						warnning("外键映射错误:" + e.getMessage());
+					}
+				}
+				else {
+					warnning("外键实体未映射.");
+				}
+				return null;
+			}
+			
+		};
+	}
+	
 	private ITransition getObjTransition(final Class<?> type) {
 		return new ITransition() {
 			public Object trans(ResultSet rs, int col) throws SQLException {
-				Constructor<?> cons;
 				try {
-					cons = type.getConstructor(String.class);
-					return cons.newInstance(rs.getString(col));
+					return BeanUtil.creatBean(type, rs.getObject(col));
 					
 				} catch (Exception e) {
 					warnning(type + "类型没有(String)构造函数." + e.getMessage());

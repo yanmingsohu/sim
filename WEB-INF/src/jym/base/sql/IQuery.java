@@ -6,6 +6,8 @@ package jym.base.sql;
 public interface IQuery {
 	/**
 	 * 执行查询
+	 * 
+	 * @param sql - sql语句的执行对象
 	 */
 	public void query(ISql sql);
 }

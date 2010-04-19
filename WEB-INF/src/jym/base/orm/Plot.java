@@ -25,6 +25,7 @@ class Plot<T> implements IPlot {
 	/** 大小写敏感, <方法, 列名> */
 	private Map<Method, String> reverse;
 	
+	private Method[] ms;
 	private IOrm<T> orm;
 	private boolean usecolnamemap = true;
 	
@@ -36,7 +37,7 @@ class Plot<T> implements IPlot {
 	}
 	
 	private void initMethods() {
-		Method[] ms = orm.getModelClass().getMethods();
+		ms = orm.getModelClass().getMethods();
 		classMethodmap = new HashMap<String, Method>();
 		for (int i=0; i<ms.length; ++i) {
 			// 使用小写比较
@@ -51,15 +52,15 @@ class Plot<T> implements IPlot {
 	}
 	
 	public void fieldPlot(String fn, String cn) {
-		setMappingPlot(fn, cn, null, null);
+		setMappingPlot(fn, cn, null, null, null);
 	}
 
-	public void fieldPlot(String fieldName, String colname, ISelecter<?> getter) {
-		setMappingPlot(fieldName, colname, getter, null);
+	public void fieldPlot(String fieldName, String colname, ISelecter<?> getter, String pk) {
+		setMappingPlot(fieldName, colname, getter, pk, null);
 	}
 	
 	public void fieldPlot(String fieldName, String colname, Logic log) {
-		setMappingPlot(fieldName, colname, null, log);
+		setMappingPlot(fieldName, colname, null, null, log);
 	}
 	
 	protected void mapping(String colname, int colc, ResultSet rs, T model) {
@@ -68,7 +69,7 @@ class Plot<T> implements IPlot {
 
 		// 自动使用表格列名进行映射
 		if (usecolnamemap && !ormmap.containsKey(colname)) {
-			md = setMappingPlot(colname, colname, null, null);
+			md = setMappingPlot(colname, colname, null, null, null);
 			
 		} else {
 			md = ormmap.get(colname);
@@ -91,20 +92,21 @@ class Plot<T> implements IPlot {
 	 * sql可以为null
 	 */
 	protected MethodMapping setMappingPlot(
-			String fieldname, String colname, ISelecter<?> is, Logic log) {
+			String fieldname, String colname, ISelecter<?> is, String pk, Logic log) {
 
 		Method setm = getMethod( BeanUtil.getSetterName(fieldname) );
 		Method getm = getMethod( BeanUtil.getGetterName(fieldname) );
 		MethodMapping mm = null;
 		
 		try {
-			mm = new MethodMapping(setm, is, log);
+			mm = new MethodMapping(setm, is, pk, log);
 			// ormmap.set 的参数变为小写
 			ormmap.put(colname.toLowerCase(), mm);
 			reverse.put(getm, colname);
 			
 		} catch (Exception e) {
 			warnning("方法(" + setm.getName() + ")无效: " + e.getMessage());
+			e.printStackTrace();
 		}
 		
 		return mm;
@@ -112,6 +114,10 @@ class Plot<T> implements IPlot {
 	
 	private Method getMethod(String methodname) {
 		return classMethodmap.get(methodname.toLowerCase());
+	}
+	
+	protected Method[] getAllMethod() {
+		return ms;
 	}
 	
 	/**
@@ -131,7 +137,7 @@ class Plot<T> implements IPlot {
 	}
 	
 	/**
-	 * 取得实体get方法对表名的映射
+	 * 取得实体get方法对表名的映射, 区分大小写
 	 */
 	protected String getColname(Method m) {
 		return reverse.get(m);
