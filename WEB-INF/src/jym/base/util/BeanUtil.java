@@ -160,7 +160,7 @@ public class BeanUtil {
 	 * 测试obj是否有效
 	 * 
 	 * @param obj 
-	 * @return 如果obj不为null, 并且如果obj是Number类型则不为0, 
+	 * @return 如果obj不为null, 并且如果obj是Number类型则>=0, 
 	 * 			并且obj是String类型长度>0 则返回true, 否则返回false;
 	 */
 	public static boolean isValid(Object obj) {
@@ -169,7 +169,7 @@ public class BeanUtil {
 			r = true;
 			if (obj instanceof Number) {
 				Number num = (Number) obj;
-				r = num.doubleValue()!=0;
+				r = num.doubleValue()>=0;
 			}
 			if (obj instanceof String) {
 				String str = obj.toString();

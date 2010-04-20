@@ -14,6 +14,7 @@ import jym.base.sql.IQuery;
 public class OrmTemplate<T> 
 	extends UpdateTemplate<T> 
 	implements IQuery, ISelecter<T>, IUpdate<T> {
+	
 
 	/**
 	 * orm模板构造函数, 全部使用表格名映射实体属性
@@ -37,5 +38,5 @@ public class OrmTemplate<T>
 	public OrmTemplate(DataSource ds, IOrm<T> orm) {
 		super(ds, orm);
 	}
-
+	
 }

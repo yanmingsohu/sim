@@ -3,7 +3,8 @@
 package jym.base.orm;
 
 /**
- * 可执行insert delete update方法
+ * 可执行insert delete update方法<br>
+ * 部分操作依赖于主键的有效性,且主键的有效区间x>=0
  */
 public interface IUpdate<T> {
 	/**

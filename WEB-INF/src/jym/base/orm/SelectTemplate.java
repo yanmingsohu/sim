@@ -20,9 +20,8 @@ import jym.base.util.Tools;
 /**
  * 数据库实体检索模板
  */
-public class SelectTemplate<T> implements ISelecter<T>, IQuery {
+public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQuery {
 
-	private JdbcTemplate jdbc;
 	private Class<T> clazz;
 	private IOrm<T> orm;
 	private Plot<T> plot;
@@ -67,7 +66,7 @@ public class SelectTemplate<T> implements ISelecter<T>, IQuery {
 	 * @throws SQLException - 数据库错误抛出异常
 	 */
 	public SelectTemplate(DataSource ds, IOrm<T> orm) {
-		jdbc = new JdbcTemplate(ds);
+		super(ds);
 		this.orm = orm;
 		
 		check();
@@ -139,10 +138,7 @@ public class SelectTemplate<T> implements ISelecter<T>, IQuery {
 	private List<T> select(final String sql) {
 		final List<T> brs = new ArrayList<T>();
 		
-		jdbc.query(new ISql() {
-			public void exception(Throwable tr, String msg) {
-			}
-
+		query(new ISql() {
 			public void exe(Statement stm) throws Throwable {
 				select( stm.executeQuery(sql), brs );
 			}
@@ -178,10 +174,6 @@ public class SelectTemplate<T> implements ISelecter<T>, IQuery {
 			plot.stopColnameMapping();
 		}
 	}
-
-	public void query(ISql sql) {
-		jdbc.query(sql);
-	}
 	
 	private void warnning(String msg) {
 		System.out.println("警告:(SelectTemplate): " + msg);
@@ -193,10 +185,6 @@ public class SelectTemplate<T> implements ISelecter<T>, IQuery {
 	
 	protected IOrm<T> getOrm() {
 		return orm;
-	}
-	
-	protected JdbcTemplate getJdbcTemplate() {
-		return jdbc;
 	}
 	
 	protected Plot<T> getPlot() {

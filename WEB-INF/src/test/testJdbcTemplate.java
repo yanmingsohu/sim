@@ -30,9 +30,6 @@ public class testJdbcTemplate {
 		
 		jt.query(new ISql() {
 
-			public void exception(Throwable tr, String msg) {
-			}
-
 			public void exe(Statement stm) throws Throwable {
 				Tools.pl( stm.execute("select * from ba_brongth") );
 			}

@@ -19,12 +19,14 @@ import jym.base.util.Tools;
 public class JdbcTemplate implements IQuery {
 	
 	private DataSource src;
+	private ThreadLocal<IExceptionHandle> handle;
 	
 	/**
 	 * 用数据源初始化模板
 	 */
 	public JdbcTemplate(DataSource ds) {
 		init(ds);
+		handle = new ThreadLocal<IExceptionHandle>();
 	}
 	
 	/**
@@ -68,11 +70,11 @@ public class JdbcTemplate implements IQuery {
 			} else {
 				Tools.pl("unknow sql.");
 			}
-			sql.exception(e, e.getMessage());
+			handleException(e);
 			
 		} catch (Throwable t) {
 			t.printStackTrace();
-			sql.exception(t, t.getMessage());
+			handleException(t);
 			
 		} finally {
 			if (st!=null) {
@@ -85,6 +87,17 @@ public class JdbcTemplate implements IQuery {
 					conn.close();
 				} catch (Exception e) {};
 			}
+		}
+	}
+
+	public void regExceptionHandle(IExceptionHandle eh) {
+		handle.set(eh);
+	}
+	
+	private void handleException(Throwable t) {
+		IExceptionHandle ie = handle.get();
+		if (ie!=null) {
+			ie.exception(t, t.getMessage());
 		}
 	}
 	
@@ -137,4 +150,5 @@ public class JdbcTemplate implements IQuery {
 	private interface ProxyStatement extends Statement {
 		public String getSql();
 	}
+	
 }
