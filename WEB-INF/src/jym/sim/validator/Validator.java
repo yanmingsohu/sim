@@ -11,7 +11,7 @@ import java.util.List;
 import jym.sim.util.Tools;
 
 /**
- * 对象验证器,缓存前一个对象的相关消息<br>
+ * 对象验证器,缓存前一个对象的相关信息<br>
  * 验证对象时使用同一个Validator对象更有效率
  */
 public class Validator {
@@ -21,7 +21,9 @@ public class Validator {
 	private List<Field> cachedfields;
 	private List<IVerify> cachedverifys;
 
-	
+	/**
+	 * 验证对象,并返回验证结果
+	 */
 	public VerifyMessage validate(Object o) {
 		VerifyMessage msg = new VerifyMessage();
 		

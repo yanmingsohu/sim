@@ -19,8 +19,8 @@ import jym.sim.validator.annotation.Stringlen;
 public class validatorTest {
 
 	public static void main(String[] args) throws Throwable {
-		//pressure();
-		test();
+		pressure();
+		//test();
 	}
 	
 	private static void pressure() {
@@ -32,7 +32,7 @@ public class validatorTest {
 		time.start();
 		for (int i=0; i<10000; ++i) {
 			VerifyMessage vm = v.validate(u);
-			showMsg( vm );
+			//showMsg( vm );
 		}
 		time.showtime();
 	}

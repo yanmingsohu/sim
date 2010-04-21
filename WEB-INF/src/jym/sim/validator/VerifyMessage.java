@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * 验证消息
+ * 验证结果集
  */
 public class VerifyMessage {
 	private List<Msg> msgs;
