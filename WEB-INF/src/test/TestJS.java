@@ -4,7 +4,7 @@ package test;
 
 import java.io.PrintWriter;
 
-import jym.base.jstags.InnerScript;
+import jym.sim.jstags.InnerScript;
 
 public class TestJS {
 

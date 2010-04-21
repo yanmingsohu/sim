@@ -3,10 +3,10 @@ package test;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import jym.base.jstags.TableMouseOverColor;
-import jym.base.jstags.TableRowClick;
-import jym.base.tags.HtmlTagBase;
-import jym.base.tags.TableTag;
+import jym.sim.jstags.TableMouseOverColor;
+import jym.sim.jstags.TableRowClick;
+import jym.sim.tags.HtmlTagBase;
+import jym.sim.tags.TableTag;
 
 public class TestHtmlTagBase {
 

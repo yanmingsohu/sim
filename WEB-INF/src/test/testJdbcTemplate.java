@@ -6,9 +6,9 @@ import java.sql.Statement;
 
 import javax.sql.DataSource;
 
-import jym.base.sql.ISql;
-import jym.base.sql.JdbcTemplate;
-import jym.base.util.Tools;
+import jym.sim.sql.ISql;
+import jym.sim.sql.JdbcTemplate;
+import jym.sim.util.Tools;
 
 public class testJdbcTemplate {
 

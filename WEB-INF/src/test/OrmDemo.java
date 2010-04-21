@@ -7,13 +7,13 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import jym.base.orm.IOrm;
-import jym.base.orm.IPlot;
-import jym.base.orm.ISelecter;
-import jym.base.orm.IUpdate;
-import jym.base.orm.OrmTemplate;
-import jym.base.sql.Logic;
-import jym.base.util.BeanUtil;
+import jym.sim.orm.IOrm;
+import jym.sim.orm.IPlot;
+import jym.sim.orm.ISelecter;
+import jym.sim.orm.IUpdate;
+import jym.sim.orm.OrmTemplate;
+import jym.sim.sql.Logic;
+import jym.sim.util.BeanUtil;
 
 public class OrmDemo {
 	final private static String url = "jdbc:oracle:thin:@192.168.0.68:1521:RMCSH";

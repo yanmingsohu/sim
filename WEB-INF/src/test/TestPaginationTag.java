@@ -2,7 +2,7 @@
 
 package test;
 
-import jym.base.tags.PaginationTag;
+import jym.sim.tags.PaginationTag;
 
 public class TestPaginationTag {
 

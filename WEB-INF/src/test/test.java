@@ -2,10 +2,10 @@
 
 package test;
 
-import jym.base.HtmlPack;
-import jym.base.tags.ExternalCSSTag;
-import jym.base.tags.ITag;
-import jym.base.tags.TableTag;
+import jym.sim.base.HtmlPack;
+import jym.sim.tags.ExternalCSSTag;
+import jym.sim.tags.ITag;
+import jym.sim.tags.TableTag;
 
 public class test {
 
