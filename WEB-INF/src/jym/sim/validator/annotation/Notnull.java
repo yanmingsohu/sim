@@ -9,7 +9,8 @@ import java.lang.annotation.Target;
 
 
 /**
- * 非null测试
+ * 非null测试,如果被测试的对象是String,则测试是否0长度字符串
+ * 如果对象是集合,则测试集合是否无元素,是则认为null
  */
 @Retention(value=RetentionPolicy.RUNTIME)
 @Target(value=ElementType.FIELD)
