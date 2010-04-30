@@ -24,10 +24,8 @@ class MethodMapping {
 	 * 抛出异常,说明方法不符合要求<br>
 	 * if log==null log=Logic.EQ
 	 */
-	MethodMapping(Method md, ISelecter<?> is, String pk, Logic log) 
-		throws SecurityException, IllegalArgumentException, NoSuchMethodException, 
-		InstantiationException, IllegalAccessException, InvocationTargetException 
-	{
+	MethodMapping(Method md, ISelecter<?> is, String pk, Logic log)	{
+		
 		objcrt 		= is;
 		m 			= md; 
 		logic 		= (log==null) ? Logic.EQ : log;
@@ -57,10 +55,8 @@ class MethodMapping {
 		return m.getName();
 	}
 	
-	private ITransition getTransitionType(final Class<?> type) 
-	throws SecurityException, NoSuchMethodException, IllegalArgumentException, 
-		InstantiationException,	IllegalAccessException, InvocationTargetException 
-	{
+	private ITransition getTransitionType(final Class<?> type) {
+		
 		ITransition it;
 		
 		if (String.class.isAssignableFrom(type)) {

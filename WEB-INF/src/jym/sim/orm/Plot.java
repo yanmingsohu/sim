@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
 
+import jym.sim.exception.OrmException;
 import jym.sim.sql.Logic;
 import jym.sim.util.BeanUtil;
 
@@ -99,14 +100,16 @@ class Plot<T> implements IPlot {
 		MethodMapping mm = null;
 		
 		try {
+			if (setm==null) {
+				throw new OrmException("没有setter方法");
+			}
 			mm = new MethodMapping(setm, is, pk, log);
 			// ormmap.set 的参数变为小写
 			ormmap.put(colname.toLowerCase(), mm);
 			reverse.put(getm, colname);
 			
-		} catch (Exception e) {
-			warnning("方法(" + setm.getName() + ")无效: " + e.getMessage());
-			e.printStackTrace();
+		} catch (OrmException e) {
+			warnning("映射属性(" + fieldname + ")时错误: " + e.getMessage());
 		}
 		
 		return mm;

@@ -8,17 +8,17 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 检测字符串长度,被检测的字符串长度x须符合: min()<=x<=max()
+ * 检测字符串的字节长度,被检测的字符串字节长度x须符合: min()<=x<=max()
  */
 @Retention(value=RetentionPolicy.RUNTIME)
 @Target(value=ElementType.FIELD)
 public @interface Stringlen {
 	/**
-	 * 字符串最大长度
+	 * 字符串最大字节长度
 	 */
 	int max();
 	/**
-	 * 字符串最小长度
+	 * 字符串最小字节长度
 	 */
 	int min();
 	/**
