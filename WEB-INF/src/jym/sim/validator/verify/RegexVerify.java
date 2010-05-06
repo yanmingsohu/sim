@@ -28,7 +28,7 @@ public class RegexVerify implements IVerify {
 				return SUCCESS;
 			}
 		} catch (PatternSyntaxException e) {
-			Tools.pl("验证属性(" + field + ")时正则表达式错误:" + anno.exp());
+			Tools.pl("验证属性(" + field + ")时正则表达式错误:" + e.getMessage() );
 			return ERROR;
 		}
 		

@@ -92,6 +92,7 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 		
 			if (colname!=null) {
 				try {
+					Tools.check(model, "bean参数不能为null.");
 					Object value = ms[i].invoke(model, new Object[0]);
 					
 					if ( BeanUtil.isValid(value) ) {
@@ -99,7 +100,7 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 					}
 					
 				} catch (Exception e) {
-					warnning("invoke错误: "+ e);
+					warnning("invoke错误: "+ e.getMessage());
 				}
 			}
 		}
