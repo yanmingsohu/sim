@@ -96,6 +96,8 @@ public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
 	}
 
 	public int update(T model) {
+		Tools.check(pk, "IOrm.getKey()返回null, update不能执行.");
+		
 		final Refer result = new Refer();
 		
 		final StringBuilder sql = new StringBuilder(UPDATE);
