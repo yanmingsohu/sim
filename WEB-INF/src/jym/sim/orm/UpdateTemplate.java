@@ -3,6 +3,8 @@
 package jym.sim.orm;
 
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.sql.DataSource;
 
@@ -14,7 +16,9 @@ public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
 	private final static String INSERT = "INSERT INTO ";
 	private final static String DELETE = "DELETE FROM ";
 	private final static String UPDATE = "UPDATE ";
+	protected static String DATE_FORMAT = "yyyy-MM-dd";
 	
+	private SimpleDateFormat sqlDateFormat = new SimpleDateFormat(DATE_FORMAT);
 	private final String pk;
 	
 
@@ -26,6 +30,17 @@ public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
 	public UpdateTemplate(DataSource ds, IOrm<T> orm) {
 		super(ds, orm);
 		pk = orm.getKey();
+	}
+	
+	/**
+	 * <b>与oralce的date类型绑定</b>
+	 */
+	private Object tranValue(Object o) {
+		if (o instanceof Date) {
+			Date d = (Date)o;
+			o = sqlDateFormat.format(d);
+		} 
+		return o;
 	}
 
 	public boolean add(T model) {
@@ -45,7 +60,7 @@ public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
 						values.append(',');
 					}
 					columns.append(column);
-					values.append('\'').append(value).append('\'');
+					values.append('\'').append(tranValue(value)).append('\'');
 				}
 			}			
 		});
@@ -80,7 +95,7 @@ public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
 					sql.append(" AND ");
 				}
 				sql.append(column).append('=');
-				sql.append('\'').append(value).append('\'');
+				sql.append('\'').append(tranValue(value)).append('\'');
 			}			
 		});
 		
@@ -114,15 +129,15 @@ public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
 						sql.append(" , ");
 					}
 					sql.append(column).append('=');
-					sql.append('\'').append(value).append('\'');
+					sql.append('\'').append(tranValue(value)).append('\'');
 					
 				} else {
 					result.value = value;
 				}
-			}			
+			}
 		});
 		
-		Tools.check(result.value, "请检查IOrm.getKey()方法是否返回正确的列名");
+		Tools.check(result.value, "请检查IOrm.getKey()方法是否返回正确的列名."+pk);
 		
 		sql.append(" WHERE ").append( pk )
 				.append("= '").append( result.value ).append("'");

@@ -82,6 +82,7 @@ class Plot<T> implements IPlot {
 				
 			} catch(Exception e) {
 				warnning("执行方法 (" + md.getName() + ") 时错误: " + e.getMessage());
+				e.printStackTrace();
 			}
 		} else {
 			warnning(colname+" 指定的数据行没有映射");

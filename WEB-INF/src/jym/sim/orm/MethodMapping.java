@@ -47,8 +47,10 @@ class MethodMapping {
 		throws IllegalArgumentException, IllegalAccessException, 
 		InvocationTargetException, SQLException
 	{
-		Object data = it.trans(rs, col);
-		m.invoke(model, data);
+		if (rs.getObject(col)!=null) {
+			Object data = it.trans(rs, col);
+			m.invoke(model, data);
+		}
 	}
 	
 	public String getName() {

@@ -15,6 +15,14 @@ public class OrmTemplate<T>
 	extends UpdateTemplate<T> 
 	implements IQuery, ISelecter<T>, IUpdate<T> {
 	
+	/**
+	 * 设置数据库日期格式默认 "yyyy-MM-dd"
+	 * 
+	 */
+	public static void setDateFormat(String format) {
+		UpdateTemplate.DATE_FORMAT = format;
+	}
+	
 
 	/**
 	 * orm模板构造函数, 全部使用表格名映射实体属性
