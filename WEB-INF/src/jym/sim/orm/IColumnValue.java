@@ -10,7 +10,7 @@ public interface IColumnValue {
 	/**
 	 * 模板对象通过这个方法把表格列与列值传给实现这个接口的对象
 	 * 
-	 * @param column - 列名
+	 * @param column - 列名,不会是null
 	 * @param value - 值
 	 */
 	void set(String column, Object value);

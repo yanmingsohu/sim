@@ -110,7 +110,7 @@ public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
 		return result.i;
 	}
 
-	public int update(T model) {
+	public int update(final T model) {
 		Tools.check(pk, "IOrm.getKey()返回null, update不能执行.");
 		
 		final Refer result = new Refer();
@@ -137,7 +137,8 @@ public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
 			}
 		});
 		
-		Tools.check(result.value, "请检查IOrm.getKey()方法是否返回正确的列名."+pk);
+		Tools.check(result.value, "请检查IOrm.getKey()方法是否返回正确的列名:" + pk
+				+ " 或主键属性是否返回null值:" + model.getClass() );
 		
 		sql.append(" WHERE ").append( pk )
 				.append("= '").append( result.value ).append("'");
