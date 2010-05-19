@@ -53,7 +53,7 @@ public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
 		loopMethod2Colume(model, new IColumnValue() {
 			boolean first = true;
 			public void set(String column, Object value) {
-				if (!column.equalsIgnoreCase(pk)) {
+			//	if (!column.equalsIgnoreCase(pk)) {
 					if (first) first = false;
 					else {
 						columns.append(',');
@@ -61,7 +61,7 @@ public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
 					}
 					columns.append(column);
 					values.append('\'').append(tranValue(value)).append('\'');
-				}
+			//	}
 			}			
 		});
 		
