@@ -2,6 +2,7 @@
 
 package jym.sim.util;
 
+import java.io.PrintStream;
 import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,14 +10,22 @@ import javax.servlet.http.HttpServletResponse;
 
 public class Tools {
 	
-	private static int id = 0;
-	private static volatile int sqlid = 0;
-	
 	public static final String start = 
 		">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>";
 	public static final String end = 
 		"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n";
+
+	private static volatile int sqlid = 0;
+	private static int id = 0;
+	private static PrintStream out = System.out;
 	
+	
+	/**
+	 * 重新定位输出流,默认System.out;
+	 */
+	public static void setOut(PrintStream newout) {
+		out = newout;
+	}
 	
 	public static void nocatch(HttpServletResponse resp) {
 		resp.setHeader("cache-control", "no-cache");
@@ -38,26 +47,7 @@ public class Tools {
 	public static boolean isNull(String s) {
 		return s==null || s.trim().length()==0;
 	}
-	
-	public static void pl(Object o) {
-		System.out.println(o);
-	}
-	
-	public static void p(Object o) {
-		System.out.print(o);
-	}
-	
-	public static void plsql(String sql) {
-		System.out.println( String.format("sql(%1$#06x): %2$s", sqlid++, sql) );
-	}
-	
-	public static void pl(Object ...o) {
-		for (int i=0; i<o.length; ++i) {
-			System.out.print(o[i]+" ");
-		}
-		System.out.println();
-	}
-	
+
 	/**
 	 * 返回name的第一个字符
 	 */
@@ -66,6 +56,25 @@ public class Tools {
 			return name.substring(0, 1);
 		}
 		return name;
+	}
+	
+	public static void pl(Object o) {
+		out.println(o);
+	}
+	
+	public static void p(Object o) {
+		out.print(o);
+	}
+	
+	public static void plsql(String sql) {
+		out.println( String.format("sql(%1$#06x): %2$s", sqlid++, sql) );
+	}
+	
+	public static void pl(Object ...o) {
+		for (int i=0; i<o.length; ++i) {
+			out.print(o[i]+" ");
+		}
+		out.println();
 	}
 	
 	public static void plerr(Throwable t) {
@@ -93,7 +102,7 @@ public class Tools {
 	}
 	
 	/**
-	 * 如果o==null, 则跑出异常,异常信息在msg中定义
+	 * 如果o==null, 则抛出异常,异常信息在msg中定义
 	 * 
 	 * @throws RuntimeException
 	 */
