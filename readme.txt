@@ -1,8 +1,8 @@
 ﻿sim 简单Servlet框架
 -------------------------
-CatfoOD 2009-10-29 v0.1
+CatfoOD 2009-10-29 v0.30
 
-edit: CatfoOD 2010-5-12
+edit: CatfoOD 2010-5-25
 
 
 package: jym.sim.base {
@@ -39,6 +39,18 @@ package: jym.sim.orm {
 		实体对象映射类
 		提供基本的增删改查
 		*实体映射策略在程序中配置
+	]
+}
+
+
+package: jym.sim.orm.page {
+
+	*: [
+		数据库查询分页策略
+	]
+	
+	PageBean: [
+		分页数据
 	]
 }
 

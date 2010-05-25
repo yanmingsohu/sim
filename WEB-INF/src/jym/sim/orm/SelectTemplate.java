@@ -10,6 +10,9 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import jym.sim.orm.page.IPage;
+import jym.sim.orm.page.NotPagination;
+import jym.sim.orm.page.PageBean;
 import jym.sim.sql.IQuery;
 import jym.sim.sql.ISql;
 import jym.sim.sql.JdbcTemplate;
@@ -25,9 +28,7 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 	private Class<T> clazz;
 	private IOrm<T> orm;
 	private Plot<T> plot;
-	
-	private final static String SELECT = "select * from ";
-	
+	private IPage pagePlot;
 	
 	/**
 	 * jdbc模板构造函数, 全部使用表格名映射实体属性
@@ -68,6 +69,7 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 	public SelectTemplate(DataSource ds, IOrm<T> orm) {
 		super(ds);
 		this.orm = orm;
+		pagePlot = new NotPagination();
 		
 		check();
 		init();
@@ -106,49 +108,57 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 		}
 	}
 	
-	public List<T> select(final T model, final String join) {
-		
-		final StringBuilder selectsql = new StringBuilder(SELECT);
-		selectsql.append(orm.getTableName());
+	public List<T> select(T model, String join) {
+		PageBean p = new PageBean();
+		p.setCurrent(1);
+		p.setOnesize(Integer.MAX_VALUE);
+		p.setTotal(1);
+		return select(model, join, p);
+	}
+	
+	public List<T> select(final T model, final String join, final PageBean pagedata) {
+		Tools.check(pagedata, "分页数据不能为null");
+		final StringBuilder where = new StringBuilder();
 		
 		loopMethod2Colume(model, new IColumnValue() {
-			
 			boolean first = true;
 
 			public void set(String column, Object value) {
 				if ( BeanUtil.isValid(value) ) {
 					if (first) {
-						selectsql.append(" where ");
+						where.append("where");
 						first = false;
 					} else {
-						selectsql.append(join);
+						where.append(join);
 					}
 					
 					Logic logic = plot.getColumnLogic(column);
 					
-					selectsql.append( " (" ).append(column).append(' ')
+					where.append( " (" ).append(column).append(' ')
 							.append(logic.in(value)).append( ") " );
 				}
 			}
-			
 		});
 		
-		return select(selectsql.toString());
+		return select(
+				pagePlot.select(orm.getTableName(), where.toString(), pagedata),
+				pagedata
+				);
 	}
 	
-	private List<T> select(final String sql) {
+	private List<T> select(final String sql, final PageBean pagedata) {
 		final List<T> brs = new ArrayList<T>();
 		
 		query(new ISql() {
 			public void exe(Statement stm) throws Throwable {
-				select( stm.executeQuery(sql), brs );
+				select( stm.executeQuery(sql), brs, pagedata );
 			}
 		});
 		
 		return brs;
 	}
 	
-	private void select(ResultSet rs, List<T> brs) throws Exception {
+	private void select(ResultSet rs, List<T> brs, PageBean pagedata) throws Exception {
 		if (rs==null) return;
 		
 		try {
@@ -156,14 +166,25 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 			
 			int col = rsmd.getColumnCount();
 			
-			while ( rs.next() ) {
-				T model = clazz.newInstance();
+			if (rs.next()) {
+				int total = 1;
+			try { 
+				// 没有TOTAL_COLUMN_NAME指定的列并不是错误
+				total = rs.getInt(IPage.TOTAL_COLUMN_NAME);
+				} 
+			catch(Exception e) {}
 				
-				for (int i=1; i<=col; ++i) {
-					// ormmap.set时已经变为小写
-					plot.mapping(rsmd.getColumnLabel(i), i, rs, model);
-				}
-				brs.add(model);
+				computeTotalPage(pagedata, total);
+				
+				do {
+					T model = clazz.newInstance();
+					
+					for (int i=1; i<=col; ++i) {
+						// ormmap.set时已经变为小写
+						plot.mapping(rsmd.getColumnLabel(i), i, rs, model);
+					}
+					brs.add(model);
+				} while ( rs.next() );
 			}
 			
 		} finally {
@@ -176,8 +197,21 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 		}
 	}
 	
+	private void computeTotalPage(PageBean pagedata, int colNum) {
+		int tp = colNum / pagedata.getOnesize();
+		int tc = colNum % pagedata.getOnesize();
+		if (tc>0) tp++;
+		pagedata.setTotal(tp);
+	}
+	
 	private void warnning(String msg) {
 		System.out.println("警告:(SelectTemplate): " + msg);
+	}
+	
+	public void setPaginationPlot(IPage plot) {
+		if (plot!=null) {
+			pagePlot = plot;
+		}
 	}
 
 	public Class<T> getModelClass() {

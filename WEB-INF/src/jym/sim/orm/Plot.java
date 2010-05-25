@@ -17,7 +17,9 @@ import jym.sim.util.BeanUtil;
  *
  * @param <T> - 实体类型
  */
-class Plot<T> implements IPlot {	
+class Plot<T> implements IPlot {
+	
+	private final static String PASS_COLM_NAME = "sim__";
 	
 	/** 使用小写比较String <表列名, 方法封装>*/
 	private Map<String, MethodMapping> ormmap;
@@ -66,6 +68,10 @@ class Plot<T> implements IPlot {
 	
 	protected void mapping(String colname, int colc, ResultSet rs, T model) {
 		colname = colname.toLowerCase();
+		if (colname.startsWith(PASS_COLM_NAME)) {
+			return;
+		}
+		
 		MethodMapping md = null;
 
 		// 自动使用表格列名进行映射

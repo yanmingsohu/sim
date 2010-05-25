@@ -3,7 +3,7 @@
 package jym.sim.util;
 
 public class Version {
-	public final static String v = "v0.20";
+	public final static String v = "v0.30";
 	
 	public static final String asString() {
 		return v;
