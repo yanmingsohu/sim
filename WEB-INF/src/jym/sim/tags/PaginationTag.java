@@ -5,8 +5,14 @@ package jym.sim.tags;
 import java.io.PrintWriter;
 
 public class PaginationTag extends HtmlTagBase {
-	
+	/** tag元素class属性的前缀 */
 	public final static String CSS_CLASS_NAME = "sim_pagination";
+	public final static String CSS_CLASS_FIRSTPAGE = "sim_pagination_firstpage";
+	public final static String CSS_CLASS_LASTPAGE = "sim_pagination_lastpage";
+	public final static String CSS_CLASS_JUMPPAGE = "sim_pagination_page_jump";
+	public final static String CLASS_ATTR = "class";
+	public final static String HREF_ATTR = "href";
+	public final static String TAG_A = "a";
 	
 	private int current;
 	private int total;
@@ -18,7 +24,7 @@ public class PaginationTag extends HtmlTagBase {
 	 */
 	public PaginationTag() {
 		super("div");
-		super.addAttribute("class", CSS_CLASS_NAME);
+		super.addAttribute(CLASS_ATTR, CSS_CLASS_NAME);
 		dispsize = 10;
 	}
 
@@ -62,18 +68,20 @@ public class PaginationTag extends HtmlTagBase {
 		int end = current + dispsize;
 		if (end>total) end = total;
 		
-	if (start+2>end) return;
+	if (start+1>end) return;
 		
-		ITag stag = new HtmlTagBase("a");
-		stag.addAttribute("href", String.format(url, 1));
-		stag.append("<<<");
+		ITag stag = new HtmlTagBase(TAG_A);
+		stag.addAttribute(HREF_ATTR, String.format(url, 1));
+		stag.addAttribute(CLASS_ATTR, CSS_CLASS_FIRSTPAGE);
+		stag.append("首页");
 		append(stag);
 		
 		for (int i=start; i<=end; ++i) {
 			appendSpace();
-			ITag atag = new HtmlTagBase("a");
+			ITag atag = new HtmlTagBase(TAG_A);
+			atag.addAttribute(CLASS_ATTR, CSS_CLASS_JUMPPAGE);
 			if (i!=current) {
-				atag.addAttribute("href", String.format(url, i));
+				atag.addAttribute(HREF_ATTR, String.format(url, i));
 				atag.append(String.valueOf(i));
 			} else {
 				atag.append("["+ (i) +"]");
@@ -82,9 +90,10 @@ public class PaginationTag extends HtmlTagBase {
 			appendSpace();
 		}
 		
-		ITag etag = new HtmlTagBase("a");
-		etag.addAttribute("href", String.format(url, total));
-		etag.append(">>>");
+		ITag etag = new HtmlTagBase(TAG_A);
+		etag.addAttribute(HREF_ATTR, String.format(url, total));
+		etag.addAttribute(CLASS_ATTR, CSS_CLASS_LASTPAGE);
+		etag.append("末页");
 		append(etag);
 	}
 	
