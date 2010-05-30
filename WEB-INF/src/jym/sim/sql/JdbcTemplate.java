@@ -9,6 +9,8 @@ import java.lang.reflect.Proxy;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -17,6 +19,9 @@ import javax.sql.DataSource;
 import jym.sim.util.Tools;
 
 public class JdbcTemplate implements IQuery {
+	
+	protected final static String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
+	private SimpleDateFormat sqlDateFormat = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
 	
 	private DataSource src;
 	private ThreadLocal<IExceptionHandle> handle;
@@ -44,6 +49,25 @@ public class JdbcTemplate implements IQuery {
 	private void init(DataSource ds) {
 		Tools.check(ds, "数据源无效");
 		src = ds;
+	}
+	
+	/**
+	 * 设置数据库日期格式默认 "yyyy-MM-dd"
+	 * 
+	 */
+	public void setDateFormat(String format) {
+		sqlDateFormat = new SimpleDateFormat(format);
+	}
+	
+	/**
+	 * 从普通对象转换为sql语句字符串
+	 */
+	protected Object transformValue(Object o) {
+		if (o instanceof Date) {
+			Date d = (Date)o;
+			o = sqlDateFormat.format(d);
+		} 
+		return o;
 	}
 
 	public void query(ISql sql) {
@@ -108,6 +132,9 @@ public class JdbcTemplate implements IQuery {
 						new StatementHandler(st) );
 	}
 	
+	/**
+	 * Statement代理,用于截取Sql
+	 */
 	public class StatementHandler implements InvocationHandler {
 		private Statement statement;
 		private String sql;

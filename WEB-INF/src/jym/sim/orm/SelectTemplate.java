@@ -25,6 +25,7 @@ import jym.sim.util.Tools;
  */
 public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQuery {
 
+	
 	private Class<T> clazz;
 	private IOrm<T> orm;
 	private Plot<T> plot;
@@ -135,7 +136,8 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 					Logic logic = plot.getColumnLogic(column);
 					
 					where.append( " (" ).append(column).append(' ')
-							.append(logic.in(value)).append( ") " );
+							.append( logic.in(transformValue( value )) )
+							.append( ") " );
 				}
 			}
 		});

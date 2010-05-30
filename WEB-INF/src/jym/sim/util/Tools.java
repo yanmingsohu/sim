@@ -4,6 +4,7 @@ package jym.sim.util;
 
 import java.io.PrintStream;
 import java.util.Enumeration;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -77,25 +78,55 @@ public class Tools {
 		out.println();
 	}
 	
+	/**
+	 * 打印错误,不过滤输出
+	 * @param t - 要打印的异常
+	 */
 	public static void plerr(Throwable t) {
+		plerr(t, null);
+	}
+	
+	/**
+	 * 打印错误并过滤输出
+	 * @param t - 要打印的错误
+	 * @param filterExp - 正则表达式,用表达式过滤类名,
+	 * 			符合则打印,否则忽略 如果表达式错误则匹配全部
+	 */
+	public static void plerr(Throwable t, String filterExp) {
 		StringBuilder ps = new StringBuilder();
 		StackTraceElement[] st = t.getStackTrace();
+		
+		Pattern p = null; 
+		try {
+			if (filterExp!=null) {
+			p = Pattern.compile(filterExp);
+			}
+		} catch(Exception e) {}
 		
 		ps.append(t.getClass());
 		ps.append(':');
 		ps.append(t.getMessage());
 		ps.append("\n");
 		
+		boolean isSkip = false;
 		for (int i=0; i<st.length; ++i) {
-			ps.append("\t~: ");
-			ps.append(st[i].getClassName());
-			ps.append(" - ");
-			ps.append(st[i].getMethodName());
-			ps.append("() [ ");
-			ps.append(st[i].getFileName());
-			ps.append(" | ");
-			ps.append(st[i].getLineNumber());
-			ps.append(" ]\n");
+			if ( p==null ||  p.matcher(st[i].getClassName()).find() ) {
+				ps.append("\t~: ");
+				ps.append(st[i].getClassName());
+				ps.append(" - ");
+				ps.append(st[i].getMethodName());
+				ps.append("() [ ");
+				ps.append(st[i].getFileName());
+				ps.append(" | ");
+				ps.append(st[i].getLineNumber());
+				ps.append(" ]\n");
+				isSkip = false;
+			} else {
+				if (!isSkip) {
+					ps.append("\t~: ... [ overlook ]\n");
+				}
+				isSkip = true;
+			}
 		}
 		
 		pl(ps);
