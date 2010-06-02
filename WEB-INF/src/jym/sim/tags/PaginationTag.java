@@ -52,8 +52,8 @@ public class PaginationTag extends HtmlTagBase {
 	/**
 	 * ÉèÖÃ³¬Á´½Ó×Ö·û´®£¬×Ö·û´®ÖÐµÄ%page×ª»»ÎªÒ³ÂëÖµ
 	 */
-	public void setUrlPattern(String up) {
-		url = up.replaceAll("%page", "%d");
+	public void setUrlPattern(String _url) {
+		url = _url; //up.replaceAll("%page", "%d");
 	}
 
 	@Override
@@ -71,7 +71,7 @@ public class PaginationTag extends HtmlTagBase {
 	if (start+1>end) return;
 		
 		ITag stag = new HtmlTagBase(TAG_A);
-		stag.addAttribute(HREF_ATTR, String.format(url, 1));
+		stag.addAttribute(HREF_ATTR, getUrl(1));
 		stag.addAttribute(CLASS_ATTR, CSS_CLASS_FIRSTPAGE);
 		stag.append("Ê×Ò³");
 		append(stag);
@@ -81,7 +81,7 @@ public class PaginationTag extends HtmlTagBase {
 			ITag atag = new HtmlTagBase(TAG_A);
 			atag.addAttribute(CLASS_ATTR, CSS_CLASS_JUMPPAGE);
 			if (i!=current) {
-				atag.addAttribute(HREF_ATTR, String.format(url, i));
+				atag.addAttribute(HREF_ATTR, getUrl(i));
 				atag.append(String.valueOf(i));
 			} else {
 				atag.append("["+ (i) +"]");
@@ -91,7 +91,7 @@ public class PaginationTag extends HtmlTagBase {
 		}
 		
 		ITag etag = new HtmlTagBase(TAG_A);
-		etag.addAttribute(HREF_ATTR, String.format(url, total));
+		etag.addAttribute(HREF_ATTR, getUrl(total));
 		etag.addAttribute(CLASS_ATTR, CSS_CLASS_LASTPAGE);
 		etag.append("Ä©Ò³");
 		append(etag);
@@ -99,5 +99,9 @@ public class PaginationTag extends HtmlTagBase {
 	
 	private void appendSpace() {
 		append("&nbsp;");
+	}
+	
+	private String getUrl(int page) {
+		return url.replaceAll("%page", Integer.toString(page));
 	}
 }

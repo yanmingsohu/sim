@@ -2,6 +2,9 @@
 
 package jym.sim.sql;
 
+/**
+ * 数据库查询where字句中逻辑判断策略
+ */
 public enum Logic {
 	
 	/** 等于 */
