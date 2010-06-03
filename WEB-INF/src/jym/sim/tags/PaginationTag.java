@@ -10,6 +10,9 @@ public class PaginationTag extends HtmlTagBase {
 	public final static String CSS_CLASS_FIRSTPAGE = "sim_pagination_firstpage";
 	public final static String CSS_CLASS_LASTPAGE = "sim_pagination_lastpage";
 	public final static String CSS_CLASS_JUMPPAGE = "sim_pagination_page_jump";
+	public final static String CSS_CLASS_NEXTPAGE = "sim_pagination_page_next";
+	public final static String CSS_CLASS_PREVPAGE = "sim_pagination_page_prev";
+	
 	public final static String CLASS_ATTR = "class";
 	public final static String HREF_ATTR = "href";
 	public final static String TAG_A = "a";
@@ -53,7 +56,7 @@ public class PaginationTag extends HtmlTagBase {
 	 * 设置超链接字符串，字符串中的%page转换为页码值
 	 */
 	public void setUrlPattern(String _url) {
-		url = _url; //up.replaceAll("%page", "%d");
+		url = _url;
 	}
 
 	@Override
@@ -69,20 +72,16 @@ public class PaginationTag extends HtmlTagBase {
 		if (end>total) end = total;
 		
 	if (start+1>end) return;
-		
-		ITag stag = new HtmlTagBase(TAG_A);
-		stag.addAttribute(HREF_ATTR, getUrl(1));
-		stag.addAttribute(CLASS_ATTR, CSS_CLASS_FIRSTPAGE);
-		stag.append("首页");
-		append(stag);
+	
+		createLink(getUrl(1), CSS_CLASS_FIRSTPAGE, "首页");
+		createLink(getUrl(current-1), CSS_CLASS_PREVPAGE, "上一页");
 		
 		for (int i=start; i<=end; ++i) {
-			appendSpace();
 			ITag atag = new HtmlTagBase(TAG_A);
 			atag.addAttribute(CLASS_ATTR, CSS_CLASS_JUMPPAGE);
 			if (i!=current) {
 				atag.addAttribute(HREF_ATTR, getUrl(i));
-				atag.append(String.valueOf(i));
+				atag.append(" " + String.valueOf(i) + " ");
 			} else {
 				atag.append("["+ (i) +"]");
 			}
@@ -90,11 +89,17 @@ public class PaginationTag extends HtmlTagBase {
 			appendSpace();
 		}
 		
-		ITag etag = new HtmlTagBase(TAG_A);
-		etag.addAttribute(HREF_ATTR, getUrl(total));
-		etag.addAttribute(CLASS_ATTR, CSS_CLASS_LASTPAGE);
-		etag.append("末页");
-		append(etag);
+		createLink(getUrl(current+1), CSS_CLASS_NEXTPAGE, "下一页");
+		createLink(getUrl(total), CSS_CLASS_LASTPAGE, "末页");
+	}
+	
+	private void createLink(String href, String clazzName, String text) {
+		ITag stag = new HtmlTagBase(TAG_A);
+		stag.addAttribute(HREF_ATTR, href);
+		stag.addAttribute(CLASS_ATTR, clazzName);
+		stag.append(text);
+		append(stag);
+		appendSpace();
 	}
 	
 	private void appendSpace() {

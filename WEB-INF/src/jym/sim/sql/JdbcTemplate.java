@@ -23,6 +23,7 @@ public class JdbcTemplate implements IQuery {
 	protected final static String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
 	private SimpleDateFormat sqlDateFormat = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
 	
+	private boolean showsql = false;
 	private DataSource src;
 	private ThreadLocal<IExceptionHandle> handle;
 	
@@ -32,6 +33,14 @@ public class JdbcTemplate implements IQuery {
 	public JdbcTemplate(DataSource ds) {
 		init(ds);
 		handle = new ThreadLocal<IExceptionHandle>();
+	}
+	
+	/**
+	 * 是否回显sql语句,默认不显示
+	 * @param show - true显示
+	 */
+	public void showSql(boolean show) {
+		showsql = show;
 	}
 	
 	/**
@@ -81,6 +90,10 @@ public class JdbcTemplate implements IQuery {
 			st = conn.createStatement();
 			proxy = getProxy(st);
 			sql.exe(proxy);
+			
+			if (showsql) {
+				Tools.plsql(proxy.getSql());
+			}
 		
 		} catch (SQLException e) {
 			String msg = e.getMessage();

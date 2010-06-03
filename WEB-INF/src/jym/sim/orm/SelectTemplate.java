@@ -15,8 +15,8 @@ import jym.sim.orm.page.NotPagination;
 import jym.sim.orm.page.PageBean;
 import jym.sim.sql.IQuery;
 import jym.sim.sql.ISql;
+import jym.sim.sql.IWhere;
 import jym.sim.sql.JdbcTemplate;
-import jym.sim.sql.Logic;
 import jym.sim.util.BeanUtil;
 import jym.sim.util.Tools;
 
@@ -133,17 +133,17 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 						where.append(join);
 					}
 					
-					Logic logic = plot.getColumnLogic(column);
+					IWhere logic = plot.getColumnLogic(column);
 					
-					where.append( " (" ).append(column).append(' ')
-							.append( logic.in(transformValue( value )) )
-							.append( ") " );
+					where.append(" (" )
+						.append( logic.w(column, transformValue( value )) )
+						.append( ") " );
 				}
 			}
 		});
 		
 		return select(
-				pagePlot.select(orm.getTableName(), where.toString(), pagedata),
+				pagePlot.select(orm.getTableName(), where.toString(), plot.getOrder(), pagedata),
 				pagedata
 				);
 	}

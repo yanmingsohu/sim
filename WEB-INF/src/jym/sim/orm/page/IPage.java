@@ -20,9 +20,10 @@ public interface IPage {
 	 * 
 	 * @param tableName - 表名
 	 * @param whereSub - 查询条件子句,字句中包含where关键字
+	 * @param orderSub - 排序子句, 无需排序时返回null
 	 * @param page - 分页数据对象
 	 * 
 	 * @return 返回拼装好的select语句
 	 */
-	public String select(String tableName, String whereSub, PageBean page);
+	public String select(String tableName, String whereSub, String orderSub, PageBean page);
 }

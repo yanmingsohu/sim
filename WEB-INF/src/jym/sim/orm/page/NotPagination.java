@@ -9,12 +9,16 @@ public class NotPagination implements IPage {
 	
 	private final static String SELECT = "select * from ";
 
-	public String select(String tableName, String whereSub, PageBean page) {
+	public String select(String tableName, String whereSub, String order, PageBean page) {
 		StringBuilder buff = new StringBuilder(SELECT);
 		buff.append(tableName);
 		buff.append(BLANK);
 		buff.append(whereSub);
 		buff.append(BLANK);
+		
+		if (order!=null) {
+			buff.append(order);
+		}
 		return buff.toString();
 	}
 

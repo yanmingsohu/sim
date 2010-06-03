@@ -8,8 +8,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import jym.sim.exception.OrmException;
+import jym.sim.sql.IOrder;
 import jym.sim.sql.Logic;
 import jym.sim.util.BeanUtil;
+import jym.sim.util.Tools;
 
 
 /**
@@ -31,6 +33,7 @@ class Plot<T> implements IPlot {
 	private Method[] ms;
 	private IOrm<T> orm;
 	private boolean usecolnamemap = true;
+	private String order_sub = null;
 	
 	
 	public Plot(IOrm<T> _orm) {
@@ -155,8 +158,32 @@ class Plot<T> implements IPlot {
 		return reverse.get(m);
 	}
 	
+	/**
+	 * 返回排序子句, 如果无需排序返回null
+	 */
+	protected String getOrder() {
+		return order_sub;
+	}
+	
 	private void warnning(Class<?> beanClass, String msg) {
 		System.out.println("警告:(Plot): (" + beanClass +") " + msg);
+	}
+
+	public IOrder order() {
+		return new IOrder() {
+			public void asc(String columnName) {
+				set(columnName, "asc");
+			}
+
+			public void desc(String columnName) {
+				set(columnName, "desc");
+			}
+			
+			private void set(String cn, String o) {
+				Tools.check(cn, "排序的列名不能为null");
+				order_sub = " ORDER BY " + cn + " " + o;
+			}
+		};
 	}
 	
 }

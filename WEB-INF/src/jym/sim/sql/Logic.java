@@ -5,35 +5,37 @@ package jym.sim.sql;
 /**
  * 数据库查询where字句中逻辑判断策略
  */
-public enum Logic {
+public class Logic implements IWhere {
 	
 	/** 等于 */
-		EQ("='%1$s'"),
+		public static final Logic EQ = new Logic("%1$s='%2$s'");
 		
 	/** 不等于 */
-		NE("!='%1$s'"),
+		public static final Logic NE = new Logic("%1$s!='%2$s'");
 		
 	/** 小于 */
-		LT("<'%1$s'"),
+		public static final Logic LT = new Logic("%1$s<'%2$s'");
 		
 	/** 小于等于 */
-		LE("<='%1$s'"),
+		public static final Logic LE = new Logic("%1$s<='%2$s'");
 		
 	/** 大于 */
-		GT(">'%1$s'"),
+		public static final Logic GT = new Logic("%1$s>'%2$s'");
 		
 	/** 大于等于 */
-		GE(">='%1$s'"),
+		public static final Logic GE = new Logic("%1$s>='%2$s'");
 		
 	/** like查询 */
-		LIKE("like '%1$s'"),
+		public static final Logic LIKE = new Logic("%1$s like '%2$s'");
 		
-	/** 包含查询, 如果结果中含有子串则为true */
-		INCLUDE("like '%%%1$s%%'"),
+	/** 包含查询; 如果结果中含有子串则为true */
+		public static final Logic INCLUDE = new Logic("%1$s like '%%%2$s%%'");
 		
-	/** 排除查询, 如果结果中不含有子串则为true */
-		EXCLUDE("not like '%%%1$s%%'"),
-	;
+	/** 排除查询; 如果结果中不含有子串则为true */
+		public static final Logic EXCLUDE = new Logic("%1$s not like '%%%2$s%%'");
+		
+	/** 日期查询,精确到日 */
+		public static final Logic DATE = new Logic("to_char(%1$s, 'yyyy-mm-dd') = '%2$s'");
 	
 	////////////////////// ----------------------------------
 	
@@ -42,12 +44,9 @@ public enum Logic {
 	private Logic(String fmt) {
 		format = fmt;
 	};
-	
-	/**
-	 * 把parm作为参数与逻辑方式结合成字符串
-	 */
-	public String in(Object parm) {
-		return String.format(format, parm);
+
+	public String w(String columnName, Object value) {
+		return String.format(format, columnName, value);
 	}
 	
 }

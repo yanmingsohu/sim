@@ -8,7 +8,7 @@ package jym.sim.orm.page;
  */
 public class OraclePagination implements IPage {
 
-	public String select(String tableName, String whereSub, PageBean page) {
+	public String select(String tableName, String whereSub, String order, PageBean page) {
 		
 		int s = (page.getCurrent() - 1) * page.getOnesize() + 1;
 		int e = s + page.getOnesize() - 1;
@@ -17,10 +17,17 @@ public class OraclePagination implements IPage {
 		
 		buff.append( "select * from ( " );
 		
-		buff.append( 	"select rownum sim__row__num, sim__in__table.* from " );
-		buff.append( 	 tableName + " sim__in__table" );
-		buff.append( 	 BLANK );
-		buff.append( 	 whereSub );
+		buff.append( 	"select rownum sim__row__num, sim__in__table.* from (" );
+		
+		buff.append( 		"select * from " + tableName );
+		buff.append( 		 BLANK );
+		buff.append( 		 whereSub );
+		buff.append( 		 BLANK );
+	if (order!=null) {
+		buff.append(		 order );
+		}
+		
+		buff.append( 	" ) sim__in__table "  );
 		
 		buff.append( " ),( " );
 		

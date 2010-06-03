@@ -1,5 +1,6 @@
 package jym.sim.orm;
 
+import jym.sim.sql.IOrder;
 import jym.sim.sql.Logic;
 
 /**
@@ -48,4 +49,9 @@ public interface IPlot {
 	 * @param pkname -- 外键对象的主键属性名
 	 */
 	public void fieldPlot(String fieldName, String colname, ISelecter<?> getter, String pkname);
+	
+	/**
+	 * 取得排序接口
+	 */
+	public IOrder order();
 }
