@@ -74,7 +74,9 @@ public class PaginationTag extends HtmlTagBase {
 	if (start+1>end) return;
 	
 		createLink(getUrl(1), CSS_CLASS_FIRSTPAGE, "首页");
+	if (current-1>0) {
 		createLink(getUrl(current-1), CSS_CLASS_PREVPAGE, "上一页");
+		}
 		
 		for (int i=start; i<=end; ++i) {
 			ITag atag = new HtmlTagBase(TAG_A);
@@ -89,7 +91,9 @@ public class PaginationTag extends HtmlTagBase {
 			appendSpace();
 		}
 		
+	if (current+1<=total) {
 		createLink(getUrl(current+1), CSS_CLASS_NEXTPAGE, "下一页");
+		}
 		createLink(getUrl(total), CSS_CLASS_LASTPAGE, "末页");
 	}
 	
