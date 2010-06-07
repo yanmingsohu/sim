@@ -51,7 +51,7 @@ public class JdbcTemplate implements IQuery {
 	 */
 	public JdbcTemplate(String name) throws NamingException {
 		InitialContext cxt = new InitialContext();
-		Tools.check(cxt, "上下文未定义");
+		Tools.check(cxt, "JdbcTemplate:上下文未定义");
 		init( (DataSource) cxt.lookup( name ) );
 	}
 	

@@ -21,9 +21,9 @@ public @interface Num {
 	/**
 	 * 最大值
 	 */
-	int max();
+	double max();
 	/**
 	 * 最小值
 	 */
-	int min();
+	double min();
 }

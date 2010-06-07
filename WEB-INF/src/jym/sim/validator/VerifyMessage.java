@@ -7,16 +7,20 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import jym.sim.util.Tools;
+
 /**
  * 验证结果集
  */
 public class VerifyMessage {
 	private List<Msg> msgs;
+	private String prefix = "";
+	private String suffix = "";
 	
 	/**
 	 * 验证消息
 	 */
-	protected VerifyMessage() {
+	public VerifyMessage() {
 		msgs = new ArrayList<Msg>();
 	}
 	
@@ -50,8 +54,11 @@ public class VerifyMessage {
 			field = f;
 			msg = m;
 		}
+		/**
+		 * 返回方法的名字,并且加入前缀后缀
+		 */
 		public String getFieldName() {
-			return field.getName();
+			return prefix + field.getName() + suffix;
 		}
 		public String getMessage() {
 			return msg;
@@ -59,6 +66,31 @@ public class VerifyMessage {
 		public Field getField() {
 			return field;
 		}
+	}
+
+	/**
+	 * 把另一个VerifyMessage中的所有消息加入当前的VerifyMessage中
+	 */
+	public void add(VerifyMessage vm) {
+		this.msgs.addAll(vm.msgs);
+	}
+
+	public String getPrefix() {
+		return prefix;
+	}
+
+	public String getSuffix() {
+		return suffix;
+	}
+
+	public void setPrefix(String prefix) {
+		Tools.check(prefix, "前缀不能为null");
+		this.prefix = prefix;
+	}
+
+	public void setSuffix(String suffix) {
+		Tools.check(suffix, "后缀不能为null");
+		this.suffix = suffix;
 	}
 	
 }
