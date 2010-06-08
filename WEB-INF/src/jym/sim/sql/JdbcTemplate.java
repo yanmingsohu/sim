@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Savepoint;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,6 +24,8 @@ public class JdbcTemplate implements IQuery {
 	protected final static String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
 	private SimpleDateFormat sqlDateFormat = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
 	
+	private static ThreadLocal<JdbcSession> db_connect = new ThreadLocal<JdbcSession>();
+	
 	private boolean showsql = false;
 	private DataSource src;
 	private ThreadLocal<IExceptionHandle> handle;
@@ -33,6 +36,19 @@ public class JdbcTemplate implements IQuery {
 	public JdbcTemplate(DataSource ds) {
 		init(ds);
 		handle = new ThreadLocal<IExceptionHandle>();
+	}
+	
+	private JdbcSession initSession() throws SQLException {
+		JdbcSession js = db_connect.get();
+		if (js==null) {
+			js = new JdbcSession();
+			db_connect.set(js);
+		}
+		return js;
+	}
+	
+	public IJdbcSession getSession() throws SQLException {
+		return initSession();
 	}
 	
 	/**
@@ -84,9 +100,11 @@ public class JdbcTemplate implements IQuery {
 		ProxyStatement proxy  = null;
 		Connection conn = null;
 		Statement st = null;
+		JdbcSession js = null;
 		
 		try {
-			conn = src.getConnection();
+			js = initSession();
+			conn = js.getConnection();
 			st = conn.createStatement();
 			proxy = getProxy(st);
 			sql.exe(proxy);
@@ -119,11 +137,13 @@ public class JdbcTemplate implements IQuery {
 					st.close();
 				} catch (SQLException e) {}
 			}
-			if (conn!=null) {
+		/* 不自动释放连接
+			if (conn!=null && js.isAutoCommit()) {
 				try {
 					conn.close();
 				} catch (Exception e) {};
 			}
+		*/
 		}
 	}
 
@@ -191,4 +211,93 @@ public class JdbcTemplate implements IQuery {
 		public String getSql();
 	}
 	
+	/**
+	 * 默认自动递交的事务
+	 */
+	private class JdbcSession implements IJdbcSession {
+		private Connection conn;
+		
+		private JdbcSession() throws SQLException {
+			getConnection();
+		}
+		
+		public Connection getConnection() throws SQLException {
+			if (conn==null || conn.isClosed()) {
+				conn = src.getConnection();
+			}
+			return conn;
+		}
+
+		public boolean commit() {
+			try {
+				conn.commit();
+				return true;
+			} catch (SQLException e) {
+				handleException(e);
+			}
+			return false;
+		}
+
+		public boolean isAutoCommit() {
+			try {
+				return conn.getAutoCommit();
+			} catch (SQLException e) {
+				handleException(e);
+			}
+			return true;
+		}
+
+		public boolean releaseSavepoint(Savepoint savepoint) {
+			try {
+				conn.releaseSavepoint(savepoint);
+				return true;
+			} catch (SQLException e) {
+				handleException(e);
+			}
+			return false;
+		}
+
+		public boolean rollback() {
+			return rollback(null);
+		}
+
+		public boolean rollback(Savepoint savepoint) {
+			try {
+				if (savepoint==null) conn.rollback();
+				else conn.rollback(savepoint);
+				
+				return true;
+			} catch (SQLException e) {
+				handleException(e);
+			}
+			return false;
+		}
+
+		public void setCommit(boolean isAuto) {
+			try {
+				conn.setAutoCommit(isAuto);
+			} catch (SQLException e) {
+				handleException(e);
+			}
+		}
+
+		public Savepoint setSavepoint() {
+			try {
+				return conn.setSavepoint();
+			} catch (SQLException e) {
+				handleException(e);
+			}
+			return null;
+		}
+
+		public Savepoint setSavepoint(String name) {
+			try {
+				return conn.setSavepoint(name);
+			} catch (SQLException e) {
+				handleException(e);
+			}
+			return null;
+		}
+		
+	}
 }

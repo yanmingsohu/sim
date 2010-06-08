@@ -1,5 +1,7 @@
 package jym.sim.sql;
 
+import java.sql.SQLException;
+
 /**
  * sql查询接口
  */
@@ -16,4 +18,8 @@ public interface IQuery {
 	 */
 	public void regExceptionHandle(IExceptionHandle eh);
 	
+	/**
+	 * 取得当前的JDBC会话(事务),此会话是线程安全的
+	 */
+	public IJdbcSession getSession() throws SQLException;
 }
