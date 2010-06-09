@@ -98,9 +98,7 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 					Tools.check(model, "bean参数不能为null.");
 					Object value = ms[i].invoke(model, new Object[0]);
 					
-					if ( BeanUtil.isValid(value) ) {
-						cv.set(colname, value);
-					}
+					cv.set(colname, value);
 					
 				} catch (Exception e) {
 					warnning("invoke错误: "+ e.getMessage());

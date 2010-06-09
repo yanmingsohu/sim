@@ -7,6 +7,7 @@ import java.sql.Statement;
 import javax.sql.DataSource;
 
 import jym.sim.sql.ISql;
+import jym.sim.util.BeanUtil;
 import jym.sim.util.Tools;
 
 public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
@@ -36,7 +37,7 @@ public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
 		loopMethod2Colume(model, new IColumnValue() {
 			boolean first = true;
 			public void set(String column, Object value) {
-			//	if (!column.equalsIgnoreCase(pk)) {
+				if ( BeanUtil.isValid(value) ) {
 					if (first) first = false;
 					else {
 						columns.append(',');
@@ -44,7 +45,7 @@ public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
 					}
 					columns.append(column);
 					values.append('\'').append(transformValue(value)).append('\'');
-			//	}
+				}
 			}			
 		});
 		
@@ -72,13 +73,15 @@ public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
 			boolean first = true;
 			
 			public void set(String column, Object value) {
-				if (first) {
-					first = false;
-				} else {
-					sql.append(" AND ");
+				if ( BeanUtil.isValid(value) ) {
+					if (first) {
+						first = false;
+					} else {
+						sql.append(" AND ");
+					}
+					sql.append(column).append('=');
+					sql.append('\'').append(transformValue(value)).append('\'');
 				}
-				sql.append(column).append('=');
-				sql.append('\'').append(transformValue(value)).append('\'');
 			}			
 		});
 		
@@ -105,17 +108,19 @@ public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
 			boolean first = true;
 			
 			public void set(String column, Object value) {
-				if ( !column.equalsIgnoreCase(pk) ) {
-					if (first) {
-						first = false;
+				if (value!=null) {
+					if ( !column.equalsIgnoreCase(pk) ) {
+						if (first) {
+							first = false;
+						} else {
+							sql.append(" , ");
+						}
+						sql.append(column).append('=');
+						sql.append('\'').append(transformValue(value)).append('\'');
+						
 					} else {
-						sql.append(" , ");
+						result.value = value;
 					}
-					sql.append(column).append('=');
-					sql.append('\'').append(transformValue(value)).append('\'');
-					
-				} else {
-					result.value = value;
 				}
 			}
 		});
