@@ -45,7 +45,7 @@ public class CalendarTemplate extends HtmlTagBase {
 	}
 
 	private void init() {
-		InnerCss css = new InnerCss("/jym/base/tags/template/calendar.css");
+		InnerCss css = new InnerCss("/jym/sim/tags/template/calendar.css");
 		append(css);
 		
 		Calendar cale = (Calendar) data.getCalendar().clone();
@@ -82,7 +82,7 @@ public class CalendarTemplate extends HtmlTagBase {
 		ITag tdiv = new HtmlTagBase("div");
 		tdiv.addAttribute("style", "background-color:#93B6FF;");
 		for (int m=0; m<12; ++m) {
-			ITag mlink = tdiv.creat("a");
+			ITag mlink = tdiv.create("a");
 			mlink.addAttribute("href", "?month="+m+"&year="+year);
 			mlink.append((m+1)+"ÔÂ");
 			tdiv.append(ITag.SP);
@@ -92,7 +92,7 @@ public class CalendarTemplate extends HtmlTagBase {
 		ITag ydiv = new HtmlTagBase("div");
 		ydiv.addAttribute("style", "background-color:#FF8291;");
 		for (int y=year-ylen; y<year+ylen; ++y) {
-			ITag ylink = ydiv.creat("a");
+			ITag ylink = ydiv.create("a");
 			ylink.addAttribute("href", "?year="+y+"&month="+month);
 			ylink.append(y+"Äê");
 			ydiv.append(ITag.SP);

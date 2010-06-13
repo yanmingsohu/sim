@@ -2,6 +2,7 @@
 
 package jym.sim.util;
 
+import java.awt.Toolkit;
 import java.io.PrintStream;
 import java.util.Enumeration;
 import java.util.regex.Pattern;
@@ -162,5 +163,12 @@ public class Tools {
 	
 	public static void end() {
 		pl(end);
+	}
+	
+	/**
+	 * 发出一个音频嘟嘟声
+	 */
+	public static void beep() {
+		Toolkit.getDefaultToolkit().beep();
 	}
 }

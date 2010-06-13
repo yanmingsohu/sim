@@ -104,15 +104,15 @@ public class InnerScript extends HtmlTagBase implements IJavaScript {
 	 * 向脚本中写代码
 	 */
 	@Override
-	public PrintWriter creatText() {
-		return super.creatText();
+	public PrintWriter createText() {
+		return super.createText();
 	}
 
 	/**
 	 * 不支持的方法
 	 */
 	@Override
-	public ITag creat(String newtagname) {
+	public ITag create(String newtagname) {
 		throw new UnsupportedOperationException();
 	}
 	

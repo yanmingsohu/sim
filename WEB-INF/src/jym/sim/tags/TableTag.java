@@ -25,9 +25,9 @@ public class TableTag extends HtmlTagBase {
 	public TableTag(int colume) {
 		super("table");
 		col = colume;
-		head = super.creat("thead");
-		body = super.creat("tbody");
-		currentRow = body.creat("tr");
+		head = super.create("thead");
+		body = super.create("tbody");
+		currentRow = body.create("tr");
 	}
 	
 	public TableTag(String[] heads) {
@@ -45,10 +45,10 @@ public class TableTag extends HtmlTagBase {
 	private ITag getColumeOfRow() {
 		if (c>=col) {
 			c=0;
-			currentRow = body.creat("tr");
+			currentRow = body.create("tr");
 		}
 		c++;
-		return currentRow.creat("td");
+		return currentRow.create("td");
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class TableTag extends HtmlTagBase {
 	 * @param text
 	 */
 	public void appendHead(String text) {
-		ITag td = head.creat("td");
+		ITag td = head.create("td");
 		td.append(text);
 	}
 	
@@ -75,7 +75,7 @@ public class TableTag extends HtmlTagBase {
 	 * @param text
 	 */
 	public void appendHead(ITag tag) {
-		ITag td = head.creat("td");
+		ITag td = head.create("td");
 		td.append(tag);
 	}
 
@@ -94,14 +94,14 @@ public class TableTag extends HtmlTagBase {
 	 * 每次调用都会在表格中创建一个新的列，
 	 * 直到每行的列到达指定值，此时新建一个行
 	 */
-	public ITag creat(String newtagname) {
+	public ITag create(String newtagname) {
 		ITag td = getColumeOfRow();
-		return td.creat(newtagname);
+		return td.create(newtagname);
 	}
 
-	public PrintWriter creatText() {
+	public PrintWriter createText() {
 		ITag td = getColumeOfRow();
-		return td.creatText();
+		return td.createText();
 	}
 
 }

@@ -1,10 +1,11 @@
+@CHARSET "UTF-8";
 
 #calendartable div {
 	font-size: 16px;
 }
 
 .infoday {
-	font-family:"方正姚体";
+	font-family:"鏂规濮氫綋";
 	font-size: 12px;
 	color: #660000;
 	font-style: normal;
@@ -19,11 +20,11 @@
 	height: 60px;
 }
 
-/* 日历的头 */
+/* 鏃ュ巻鐨勫ご */
 .caletitlediv {
 	text-align: center;
 	font-size: 28px;
-	font-family: "方正舒体";
+	font-family: "鏂规鑸掍綋";
 	padding: 20px 0px 20px 0px;
 	cursor: default;
 	background-color: #FDD695;

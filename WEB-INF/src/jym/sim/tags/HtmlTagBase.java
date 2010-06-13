@@ -25,7 +25,7 @@ public class HtmlTagBase extends TagBase {
 	public HtmlTagBase(String tagname) {
 		super(tagname);
 		innerjs = new ArrayList<IJavaScript>();
-		insertText = super.creatText();
+		insertText = super.createText();
 	}
 
 	/**
@@ -44,7 +44,7 @@ public class HtmlTagBase extends TagBase {
 		return r;
 	}
 	
-	public ITag creat(String newtagname) {
+	public ITag create(String newtagname) {
 		HtmlTagBase tag = null;
 		if (!super.isEndSelf()) {
 			tag = new HtmlTagBase(newtagname);

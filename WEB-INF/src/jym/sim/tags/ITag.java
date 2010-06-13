@@ -15,13 +15,13 @@ public interface ITag extends IPrinter {
 	 * @param newtagname - 元素的名称
 	 * @return xml元素节点
 	 */
-	ITag creat(String newtagname);
+	ITag create(String newtagname);
 	
 	/**
 	 * 创建一个文本节点
 	 * @return - 文本节点的输出流
 	 */
-	PrintWriter creatText();
+	PrintWriter createText();
 	
 	/**
 	 * 添加标签的属性

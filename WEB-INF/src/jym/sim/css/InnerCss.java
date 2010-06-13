@@ -29,7 +29,7 @@ public final class InnerCss extends HtmlTagBase {
 		
 		URL url = ResourceLoader.getUrl(fromClassPath);
 		if (url!=null) {
-			PrintWriter out = this.creatText();
+			PrintWriter out = this.createText();
 			ResourceLoader.urlWriteOut(url, out);
 		} else {
 			System.out.println("InnerCss: 找不到url ("+fromClassPath+")");
@@ -68,8 +68,8 @@ public final class InnerCss extends HtmlTagBase {
 	 * 直接向样式表中添加文本，注意格式
 	 */
 	@Override
-	public PrintWriter creatText() {
-		return super.creatText();
+	public PrintWriter createText() {
+		return super.createText();
 	}
 
 	// ------------------------------------- 不支持的方法
@@ -85,7 +85,7 @@ public final class InnerCss extends HtmlTagBase {
 	}
 
 	@Override
-	public ITag creat(String newtagname) {
+	public ITag create(String newtagname) {
 		unsupport();
 		return null;
 	}

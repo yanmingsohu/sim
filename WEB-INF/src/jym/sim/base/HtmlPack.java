@@ -24,9 +24,9 @@ public class HtmlPack implements IPrinter {
 		out = new PrintWriter(buff);
 		
 		html = new HtmlTagBase("html");
-		head = html.creat("head");
-		title= head.creat("title");
-		body = html.creat("body");
+		head = html.create("head");
+		title= head.create("title");
+		body = html.create("body");
 		closed = false;
 	}
 	
@@ -39,7 +39,7 @@ public class HtmlPack implements IPrinter {
 	}
 	
 	public void setTitle(String titlename) {
-		title.creatText().print(titlename);
+		title.createText().print(titlename);
 	}
 	
 	/**

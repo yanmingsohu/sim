@@ -6,6 +6,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Savepoint;
@@ -19,7 +20,7 @@ import javax.sql.DataSource;
 
 import jym.sim.util.Tools;
 
-public class JdbcTemplate implements IQuery {
+public class JdbcTemplate implements IQuery, ICall {
 	
 	protected final static String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
 	private SimpleDateFormat sqlDateFormat = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
@@ -98,13 +99,12 @@ public class JdbcTemplate implements IQuery {
 	public void query(ISql sql) {
 		
 		ProxyStatement proxy  = null;
-		Connection conn = null;
 		Statement st = null;
 		JdbcSession js = null;
 		
 		try {
 			js = initSession();
-			conn = js.getConnection();
+			Connection conn = js.getConnection();
 			st = conn.createStatement();
 			proxy = getProxy(st);
 			sql.exe(proxy);
@@ -137,13 +137,59 @@ public class JdbcTemplate implements IQuery {
 					st.close();
 				} catch (SQLException e) {}
 			}
-		/* 不自动释放连接
-			if (conn!=null && js.isAutoCommit()) {
-				try {
-					conn.close();
-				} catch (Exception e) {};
+			if (js!=null) {
+				js.close();
 			}
-		*/
+		}
+	}
+	
+	public void call(ICallData cd) {
+		StringBuilder buff = new StringBuilder();
+		JdbcSession js = null;
+		CallableStatement cs = null;
+		
+		try {
+			js = initSession();
+			Connection conn = js.getConnection();
+			
+			buff.append('{');
+			if (cd.hasReturnValue()) {
+				buff.append("?=");
+			}
+			buff.append(" call ");
+			buff.append(cd.getProcedureName());
+			
+			int parmCount = cd.getParameterCount();
+			if (parmCount>0) {
+				buff.append(" (");
+				for (int i=0; i<parmCount; ++i) {
+					buff.append("?");
+					if (i<parmCount-1) {
+						buff.append(",");
+					}
+				}
+				buff.append(" )");
+			}
+			buff.append('}');
+			
+			cs = conn.prepareCall(buff.toString());
+			
+			cd.exe(cs);
+			
+		} catch (Throwable t) {
+			Tools.pl("存储过程错误:" + buff.toString());
+			t.printStackTrace();
+			handleException(t);
+			
+		} finally {
+			if (cs!=null) {
+				try {
+					cs.close();
+				} catch (SQLException e) {}
+			}
+			if (js!=null) {
+				js.close();
+			}
 		}
 	}
 
@@ -155,6 +201,7 @@ public class JdbcTemplate implements IQuery {
 		IExceptionHandle ie = handle.get();
 		if (ie!=null) {
 			ie.exception(t, t.getMessage());
+			// t.printStackTrace();
 		}
 	}
 	
@@ -299,5 +346,16 @@ public class JdbcTemplate implements IQuery {
 			return null;
 		}
 		
+		public void close() {
+			// 关闭后,JdbcSession在执行sql前会被调用,此时conn被关闭,会导致异常
+//			if (isAutoCommit()) {
+//				try {
+//					conn.close();
+//				} catch (SQLException e) {
+//					handleException(e);
+//				}
+//			}
+		}
 	}
+
 }

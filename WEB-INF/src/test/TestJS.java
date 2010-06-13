@@ -20,7 +20,7 @@ public class TestJS {
 		InnerScript js = new InnerScript(f);
 		js.append("ffff");
 		js.append("sss");
-		PrintWriter out = js.creatText();
+		PrintWriter out = js.createText();
 		out.print(":aaa\n");
 		
 		System.out.println(js);

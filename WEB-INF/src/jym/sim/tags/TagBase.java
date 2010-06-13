@@ -51,7 +51,7 @@ public class TagBase implements ITag {
 		return id;
 	}
 	
-	public ITag creat(String newtagname) {
+	public ITag create(String newtagname) {
 		TagBase tag = null;
 		if (!isSelf) {
 			tag = new TagBase(newtagname);
@@ -60,7 +60,7 @@ public class TagBase implements ITag {
 		return tag;
 	}
 	
-	public PrintWriter creatText() {
+	public PrintWriter createText() {
 		PrintWriter out = null;
 		if (!isSelf) {
 			CharArrayWriter buff = new CharArrayWriter();

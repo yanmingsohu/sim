@@ -95,7 +95,7 @@ public class XmlPack implements IPrinter {
 	public static void main(String[] s) {
 		XmlPack xml = new XmlPack("web-app");
 		ITag root = xml.getRoot();
-		root.creat("servlet");
+		root.create("servlet");
 		System.out.println(xml);
 	}
 }
