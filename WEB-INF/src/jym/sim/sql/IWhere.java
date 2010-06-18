@@ -6,11 +6,20 @@ package jym.sim.sql;
  * sql的where子句中列于值的判断方法
  */
 public interface IWhere {
+	
+	/**
+	 * 如果要忽略此where子句则在w()中返回SKIP_WHERE_SUB
+	 */
+	public static final String SKIP_WHERE_SUB = null;
+	
 	/**
 	 * 返回where的一个判断子句
-	 * @param columnName - 列的名字
-	 * @param value - 列的值
-	 * @return 如何判断columnName的sql
+	 * 
+	 * @param columnName - 数据库列的名字
+	 * @param value - 对应数据库列名的数据实体属性的值
+	 * @param model - 执行查询的数据对象,条件放于其中
+	 * 
+	 * @return 如何判断columnName的sql,如果返回null则忽略此子句的判断
 	 */
-	public String w(String columnName, Object value);
+	public String w(String columnName, Object value, Object model);
 }

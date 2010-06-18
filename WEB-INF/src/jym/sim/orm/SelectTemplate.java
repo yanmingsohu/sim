@@ -123,19 +123,20 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 			boolean first = true;
 
 			public void set(String column, Object value) {
-				if ( BeanUtil.isValid(value) ) {
-					if (first) {
-						where.append("where");
-						first = false;
-					} else {
-						where.append(join);
+				IWhere logic = plot.getColumnLogic(column);
+				
+				if (logic instanceof ISkipValueCheck || BeanUtil.isValid(value) ) {
+					value = logic.w(column, transformValue( value ), model);
+
+					if (value!=null) {
+						if (first) {
+							where.append("where");
+							first = false;
+						} else {
+							where.append(join);
+						}
+						where.append(" (" ).append( value ).append( ") " );
 					}
-					
-					IWhere logic = plot.getColumnLogic(column);
-					
-					where.append(" (" )
-						.append( logic.w(column, transformValue( value )) )
-						.append( ") " );
 				}
 			}
 		});

@@ -22,11 +22,10 @@ import jym.sim.util.Tools;
 
 public class JdbcTemplate implements IQuery, ICall {
 	
-	protected final static String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
-	private SimpleDateFormat sqlDateFormat = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
-	
 	private static ThreadLocal<JdbcSession> db_connect = new ThreadLocal<JdbcSession>();
+	public final static String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
 	
+	private SimpleDateFormat sqlDateFormat = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
 	private boolean showsql = false;
 	private DataSource src;
 	private ThreadLocal<IExceptionHandle> handle;

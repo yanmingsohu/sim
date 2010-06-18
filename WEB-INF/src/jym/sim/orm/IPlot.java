@@ -1,7 +1,7 @@
 package jym.sim.orm;
 
 import jym.sim.sql.IOrder;
-import jym.sim.sql.Logic;
+import jym.sim.sql.IWhere;
 
 /**
  * 实体属性与数据库列映射策略
@@ -20,7 +20,7 @@ public interface IPlot {
 	 * 				如果fieldName=='value', log==Logic.EQ, 则where语句为<br>
 	 * 				<code>where colname = 'value'</code>
 	 */
-	public void fieldPlot(String fieldName, String colname, Logic log);
+	public void fieldPlot(String fieldName, String colname, IWhere log);
 	
 	/**
 	 * 把需要映射的实体属性名fieldName与数据库列名colname进行匹配<br>

@@ -9,7 +9,7 @@ import java.util.Map;
 
 import jym.sim.exception.OrmException;
 import jym.sim.sql.IOrder;
-import jym.sim.sql.Logic;
+import jym.sim.sql.IWhere;
 import jym.sim.util.BeanUtil;
 import jym.sim.util.Tools;
 
@@ -65,7 +65,7 @@ class Plot<T> implements IPlot {
 		setMappingPlot(fieldName, colname, getter, pk, null);
 	}
 	
-	public void fieldPlot(String fieldName, String colname, Logic log) {
+	public void fieldPlot(String fieldName, String colname, IWhere log) {
 		setMappingPlot(fieldName, colname, null, null, log);
 	}
 	
@@ -104,7 +104,7 @@ class Plot<T> implements IPlot {
 	 * sql可以为null
 	 */
 	protected MethodMapping setMappingPlot(
-			String fieldname, String colname, ISelecter<?> is, String pk, Logic log) {
+			String fieldname, String colname, ISelecter<?> is, String pk, IWhere log) {
 
 		Method setm = getMethod( BeanUtil.getSetterName(fieldname) );
 		Method getm = getMethod( BeanUtil.getGetterName(fieldname) );
@@ -138,8 +138,8 @@ class Plot<T> implements IPlot {
 	/**
 	 * 取得指定列的比较方式, 大小写不敏感
 	 */
-	public Logic getColumnLogic(String colname) {
-		Logic log = null;
+	public IWhere getColumnLogic(String colname) {
+		IWhere log = null;
 		MethodMapping mm = ormmap.get(colname.toLowerCase());
 		if (mm!=null) {
 			log = mm.getColumnLogic();

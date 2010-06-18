@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Date;
 
+import jym.sim.sql.IWhere;
 import jym.sim.sql.Logic;
 import jym.sim.util.BeanUtil;
 
@@ -17,14 +18,14 @@ class MethodMapping {
 	private ISelecter objcrt;
 	private Method m;
 	private ITransition it;
-	private Logic logic;
+	private IWhere logic;
 	private String pkmethod;
 	
 	/**
 	 * 抛出异常,说明方法不符合要求<br>
 	 * if log==null log=Logic.EQ
 	 */
-	MethodMapping(Method md, ISelecter<?> is, String pk, Logic log)	{
+	MethodMapping(Method md, ISelecter<?> is, String pk, IWhere log)	{
 		
 		objcrt 		= is;
 		m 			= md; 
@@ -167,7 +168,7 @@ class MethodMapping {
 		};
 	}
 	
-	protected Logic getColumnLogic() {
+	protected IWhere getColumnLogic() {
 		return logic;
 	}
 	
