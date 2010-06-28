@@ -38,14 +38,14 @@ public class Logic implements IWhere {
 		public static final IWhere DATE = new Logic("to_char(%1$s, 'yyyy-mm-dd') = '%2$s'");
 		
 	/**
-	 * 日期范围查询,查询的结果介于两个参数之间(使用半开开区间),忽略时间部分<br/>
-	 * <code>beginFieldName <= result < endFieldName</code><br/>
+	 * 日期范围查询,查询的结果介于两个参数之间(包含当天的日期),忽略时间部分<br/>
+	 * <code>beginFieldName <= result <= endFieldName</code><br/>
 	 * 如果有一个属性域为null则此属性域使用当前日期,如果两个都为null,则忽略此列的比较<br/>
 	 * <br/>
 	 * <b>两个比较用的数据域,类型可以是String,但如果值为''或者格式无效则比较结果可能不正确</b><br/>
 	 * 
 	 * @param beginFieldName - 实体类的属性名,查询结果大于等于此属性中的值
-	 * @param endFieldName - 实体类的属性名,查询结果小于此属性中的值
+	 * @param endFieldName - 实体类的属性名,查询结果小于等于此属性中的值
 	 * * * */
 		public static final IWhere DATE_RANGE(String beginFieldName, String endFieldName) {
 			return new DateRange(beginFieldName, endFieldName);

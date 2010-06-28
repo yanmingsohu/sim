@@ -2,7 +2,9 @@
 
 package jym.sim.sql;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import jym.sim.orm.ISkipValueCheck;
@@ -33,18 +35,42 @@ public class DateRange implements IWhere, ISkipValueCheck {
 			return SKIP_WHERE_SUB;
 		}
 		
-		where.append('\'').append(format(after)).append('\'').append(" <= ").append(columnName);
+		where.append('\'').append(formatBegin(after)).append('\'').append(" <= ").append(columnName);
 		where.append(" and ");
-		where.append(columnName).append(" < ").append('\'').append(format(before)).append('\'');
+		where.append(columnName).append(" <= ").append('\'').append(formatEnd(before)).append('\'');
 		
 		return where.toString();
 	}
 	
-	private String format(Object obj) {
+	private String formatEnd(Object obj) {
+		Calendar c = Calendar.getInstance();
+		
+		if (obj instanceof Date) {
+			c.setTime((Date) obj);
+		}
+		else if (obj!=null) {
+			try {
+				Date d = sqlDateFormat.parse(obj.toString());
+				c.setTime(d);
+			} catch (ParseException e) {
+				error(e.getMessage());
+			}
+		}
+
+		c.add(Calendar.DAY_OF_MONTH, 1);
+		obj = c.getTime();
+		
+		return format(c.getTime());
+	}
+	
+	private String formatBegin(Object obj) {
 		if (obj==null) {
 			obj = new Date();
 		}
-		
+		return format(obj);
+	}
+	
+	private String format(Object obj) {
 		if (obj instanceof Date) {
 			return sqlDateFormat.format(obj);
 		}

@@ -95,7 +95,7 @@ class Plot<T> implements IPlot {
 				e.printStackTrace();
 			}
 		} else {
-			warnning(model.getClass(), colname+" 指定的数据行没有映射");
+			warnning(model.getClass(), colname+" 指定的数据列名没有映射");
 		}
 	}
 	
