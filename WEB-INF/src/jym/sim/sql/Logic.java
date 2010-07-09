@@ -3,7 +3,7 @@
 package jym.sim.sql;
 
 /**
- * 数据库查询where字句中逻辑判断策略
+ * 数据库查询where字句中逻辑判断策略,IWhere.w()方法返回null,则忽略这个条件
  */
 public class Logic implements IWhere {
 	
@@ -46,11 +46,30 @@ public class Logic implements IWhere {
 	 * 
 	 * @param beginFieldName - 实体类的属性名,查询结果大于等于此属性中的值
 	 * @param endFieldName - 实体类的属性名,查询结果小于等于此属性中的值
-	 * * * */
+	 * 
+	 * */
 		public static final IWhere DATE_RANGE(String beginFieldName, String endFieldName) {
 			return new DateRange(beginFieldName, endFieldName);
 		};
+		
+	/**
+	 * 列表查询,遍历arrayFieldName的值放入IN的查询条件中
+	 * 
+	 * @param arrayFieldName - 实体类的属性名,属性的类型是一个集合
+	 * 
+	 * */
+		public static final IWhere IN(String arrayFieldName) {
+			return new OperatorIN(arrayFieldName);
+		};
 	
+	/**
+	 * 包装多个IWhere条件,实现可选择的逻辑,如果w[n]的结果为null,则使用w[n+1]的结果
+	 * 
+	 * */
+		public static final IWhere OR(IWhere ...w) {
+			return new OperatorOR(w);
+		};
+		
 	////////////////////// ----------------------------------
 	
 	private final String format;

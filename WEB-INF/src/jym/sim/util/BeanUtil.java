@@ -179,4 +179,26 @@ public class BeanUtil {
 		
 		return r;
 	}
+	
+	/**
+	 * 取得get/set方法对应的属性,属性的类型和带参数方法的参数类型可能不同
+	 * 
+	 * @param m - 方法
+	 * @return 属性,没有返回null
+	 */
+	public static Field getMethodTargetField(Method m) {
+		String name = m.getName();
+		Field f = null;
+		
+		if (name.length()>3 && (name.startsWith("set") || name.startsWith("get")) ) {
+			char[] ch = name.toCharArray();
+			ch[3] = Character.toUpperCase(ch[3]);
+			name = new String(ch, 3, ch.length);
+			try {
+				f = m.getDeclaringClass().getField(name);
+			} catch (Exception e) {
+			}
+		}
+		return f;
+	}
 }

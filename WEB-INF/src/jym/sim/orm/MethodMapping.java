@@ -161,7 +161,8 @@ class MethodMapping {
 					return BeanUtil.creatBean(type, rs.getObject(col));
 					
 				} catch (Exception e) {
-					warnning(type + "类型没有(String)构造函数." + e.getMessage());
+					warnning("调用方法" + m.getName() + "时,作为参数创建" 
+							+ type + "类型,该类没有(String)构造函数.(是否使用了方法重载?)");
 				}
 				return null;
 			}

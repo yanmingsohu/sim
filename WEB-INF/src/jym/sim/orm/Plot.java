@@ -2,6 +2,7 @@
 
 package jym.sim.orm;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.util.HashMap;
@@ -45,9 +46,24 @@ class Plot<T> implements IPlot {
 	private void initMethods() {
 		ms = orm.getModelClass().getMethods();
 		classMethodmap = new HashMap<String, Method>();
+		
 		for (int i=0; i<ms.length; ++i) {
 			// 使用小写比较
-			classMethodmap.put(ms[i].getName().toLowerCase(), ms[i]);
+			String name = ms[i].getName().toLowerCase();
+			
+			Method m = classMethodmap.put(name, ms[i]);
+			// 函数重载
+			if (m!=null) {
+				Field f = BeanUtil.getMethodTargetField(m);
+				if (f!=null) {
+					Class<?>[] pts = m.getParameterTypes();
+					if (pts.length==1) {
+						if ( f.getType().equals(pts[0]) ) {
+							classMethodmap.put(name, m);
+						}
+					}
+				}
+			}
 		}
 	}
 	
