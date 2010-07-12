@@ -14,6 +14,13 @@ public interface IQuery {
 	public void query(ISql sql);
 	
 	/**
+	 * 执行查询语句,并返回IResultSql.exe()的结果
+	 * @param rsql - sql语句的执行对象
+	 * @return IResultSql.exe()
+	 */
+	public Object query(IResultSql rsql);
+	
+	/**
 	 * 注册错误处理器
 	 */
 	public void regExceptionHandle(IExceptionHandle eh);

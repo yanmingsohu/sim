@@ -95,18 +95,29 @@ public class JdbcTemplate implements IQuery, ICall {
 		return o;
 	}
 
-	public void query(ISql sql) {
+	public void query(final ISql sql) {
+		query(new IResultSql() {
+			public Object exe(Statement stm) throws Throwable {
+				sql.exe(stm);
+				return null;
+			}
+		});
+	}
+		
+	public Object query(IResultSql sql) {
 		
 		ProxyStatement proxy  = null;
 		Statement st = null;
 		JdbcSession js = null;
+		Object result = null;
 		
 		try {
 			js = initSession();
 			Connection conn = js.getConnection();
 			st = conn.createStatement();
 			proxy = getProxy(st);
-			sql.exe(proxy);
+			
+			result = sql.exe(proxy);
 			
 			if (showsql) {
 				Tools.plsql(proxy.getSql());
@@ -140,6 +151,8 @@ public class JdbcTemplate implements IQuery, ICall {
 				js.close();
 			}
 		}
+		
+		return result;
 	}
 	
 	public void call(ICallData cd) {

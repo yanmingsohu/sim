@@ -1,8 +1,9 @@
 // CatfoOD 2010-7-6 ионГ10:53:24 yanming-sohu@sohu.com/@qq.com
 
-package jym.sim.sql;
+package jym.sim.sql.logic;
 
 import jym.sim.orm.ISkipValueCheck;
+import jym.sim.sql.IWhere;
 
 public class OperatorOR implements IWhere, ISkipValueCheck {
 	

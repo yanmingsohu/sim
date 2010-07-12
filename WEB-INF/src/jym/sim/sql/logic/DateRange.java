@@ -1,6 +1,6 @@
 // CatfoOD 2010-6-17 ионГ08:43:30 yanming-sohu@sohu.com/@qq.com
 
-package jym.sim.sql;
+package jym.sim.sql.logic;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -8,6 +8,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 import jym.sim.orm.ISkipValueCheck;
+import jym.sim.sql.IWhere;
+import jym.sim.sql.JdbcTemplate;
 import jym.sim.util.BeanUtil;
 import jym.sim.util.Tools;
 

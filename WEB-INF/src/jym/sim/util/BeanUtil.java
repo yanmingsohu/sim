@@ -147,11 +147,17 @@ public class BeanUtil {
 	 */
 	public static Object invoke(Object targer, String method, Object...params) 
 	throws Exception, NoSuchMethodException {
+		
 		Class<?> clazz = targer.getClass();
-		Class<?>[] cls = new Class[params.length];
-		for (int i=0; i<cls.length; ++i) {
-			cls[i] = params[i].getClass();
+		Class<?>[] cls = null;
+		
+		if (params!=null) {
+			cls = new Class[params.length];
+			for (int i=0; i<cls.length; ++i) {
+				cls[i] = params[i].getClass();
+			}
 		}
+		
 		Method m = clazz.getMethod(method, cls);
 		return m.invoke(targer, params);
 	}

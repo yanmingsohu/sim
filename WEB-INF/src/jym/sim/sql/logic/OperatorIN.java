@@ -1,11 +1,12 @@
 // CatfoOD 2010-7-5 обнГ04:04:50 yanming-sohu@sohu.com/@qq.com
 
-package jym.sim.sql;
+package jym.sim.sql.logic;
 
 import java.util.Collection;
 import java.util.Iterator;
 
 import jym.sim.orm.ISkipValueCheck;
+import jym.sim.sql.IWhere;
 import jym.sim.util.BeanUtil;
 import jym.sim.util.Tools;
 
