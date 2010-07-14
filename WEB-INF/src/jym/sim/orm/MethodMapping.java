@@ -1,6 +1,5 @@
 package jym.sim.orm;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
@@ -44,12 +43,20 @@ class MethodMapping {
 	 * 转化来自数据库中的数据，setter到实体中
 	 * model.setXxx(sqldata);
 	 */
-	public void invoke(ResultSet rs, int col, Object model)
-		throws IllegalArgumentException, IllegalAccessException, 
-		InvocationTargetException, SQLException
-	{
+	public void invoke(ResultSet rs, int col, Object model)	throws Exception {
 		if (rs.getObject(col)!=null) {
-			Object data = it.trans(rs, col);
+			
+			Object data = null;
+			try {
+				data = it.trans(rs, col);
+				
+			} catch (Exception e) {	
+				warnning(model.getClass() + "映射的属性类型与数据库类型不匹配,方法" 
+						+ m + " 将直接使用数据库类型对象");
+				
+				data = rs.getObject(col);
+			}
+			
 			m.invoke(model, data);
 		}
 	}

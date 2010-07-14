@@ -131,9 +131,19 @@ public class BeanUtil {
 	}
 	
 	/**
-	 * 创建clazz类的对象
+	 * 创建clazz类的对象,params是构造函数的参数
+	 * @throws NoSuchMethodException 
+	 * @throws SecurityException 
+	 * @throws InvocationTargetException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
+	 * @throws IllegalArgumentException 
 	 */
-	public static Object creatBean(Class<?> clazz, Object...params) throws Exception {
+	public static Object creatBean(Class<?> clazz, Object...params) 
+			throws SecurityException, NoSuchMethodException, 
+			IllegalArgumentException, InstantiationException, 
+			IllegalAccessException, InvocationTargetException  {
+		
 		Class<?>[] cls = new Class[params.length];
 		for (int i=0; i<cls.length; ++i) {
 			cls[i] = params[i].getClass();

@@ -42,6 +42,13 @@ public class Logic implements IWhere {
 	/** 日期查询,精确到日 */
 		public static final IWhere DATE = new Logic("to_char(%1$s, 'yyyy-mm-dd') = '%2$s'");
 		
+	/** 属性不作为查询结果的条件 */
+		public static final IWhere NONE = new IWhere() {
+			public String w(String columnName, Object value, Object model) {
+				return null;
+			}
+		};
+		
 	/**
 	 * 日期范围查询,查询的结果介于两个参数之间(包含当天的日期),忽略时间部分<br/>
 	 * <code>beginFieldName <= result <= endFieldName</code><br/>
@@ -108,7 +115,7 @@ public class Logic implements IWhere {
 	}
 	
 	/**
-	 * 简单逻辑表达式, "v1 op v2"
+	 * 简单逻辑表达式, "columnName OP 'value'"
 	 */
 	private static class Easy implements IWhere {
 		
