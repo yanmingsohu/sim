@@ -12,7 +12,8 @@ public interface ICallData {
 	public String getProcedureName();
 	
 	/**
-	 * 返回存储过程参数的个数
+	 * 返回存储过程参数的个数<br>
+	 * 不包含返回参数: {?= call...
 	 */
 	public int getParameterCount();
 	
