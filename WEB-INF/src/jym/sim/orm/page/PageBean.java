@@ -68,4 +68,34 @@ public class PageBean {
 		this.onesize = onesize;
 	}
 
+	/**
+	 * 返回分页后数据行的起始索引, 第一行数据的索引号为<b>1</b><br>
+	 * <br>
+	 * <b>当前页(current)的值应该已经被设置, 单页数据长度(onesize)也必须有效</b>
+	 */
+	public int getStartPosition() {
+		return (getCurrent() - 1) * getOnesize() + 1;
+	}
+	
+	/**
+	 * 设置整个结果集的数据行数<br>
+	 * 此结果将转换为总页数<br>
+	 * <br>
+	 * <b>单页数据长度(onesize)也必须有效<b/>
+	 */
+	public void setTotalRow(int rownum) {
+		int tp = rownum / getOnesize();
+		int tc = rownum % getOnesize();
+		if (tc>0) tp++;
+		setTotal(tp);
+	}
+	
+	/**
+	 * 返回分页后数据行的结束索引, 第一行数据的索引号为<b>1</b><br>
+	 * <br>
+	 * <b>当前页(current)的值应该已经被设置, 单页数据长度(onesize)也必须有效</b>
+	 */
+	public int getEndPosition() {
+		return getStartPosition() + getOnesize() - 1;
+	}
 }

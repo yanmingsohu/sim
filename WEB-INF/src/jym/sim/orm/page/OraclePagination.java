@@ -15,33 +15,34 @@ public class OraclePagination implements IPage {
 		
 		StringBuilder buff = new StringBuilder();
 		
-		buff.append( "select * from ( " );
+		buff.append( "select * from ( "											);
 		
-		buff.append( 	"select rownum sim__row__num, sim__in__table.* from (" );
+		buff.append( 	"select rownum sim__row__num, sim__in__table.* from ("	);
 		
-		buff.append( 		"select * from " + tableName );
-		buff.append( 		 BLANK );
-		buff.append( 		 whereSub );
-		buff.append( 		 BLANK );
+		buff.append( 		"select * from " + tableName						);
+		buff.append( 		 BLANK 												);
+		buff.append( 		 whereSub 											);
+		buff.append( 		 BLANK 												);
+		
 	if (order!=null) {
-		buff.append(		 order );
+		buff.append(		 order 												);
 		}
 		
-		buff.append( 	" ) sim__in__table "  );
+		buff.append( 	" ) sim__in__table "  									);
+		buff.append(	"where rownum <= "										);
+		buff.append(	e														);
 		
-		buff.append( " ),( " );
+		buff.append( " ),( " 													);
 		
-		buff.append(	"select count(*) " + TOTAL_COLUMN_NAME );
-		buff.append(	" from " );
-		buff.append( 	 tableName );
-		buff.append( 	 BLANK );
-		buff.append( 	 whereSub );
+		buff.append(	"select count(*) " + TOTAL_COLUMN_NAME 					);
+		buff.append(	" from " 												);
+		buff.append( 	 tableName												);
+		buff.append( 	 BLANK													);
+		buff.append( 	 whereSub												);
 		
-		buff.append( " ) " );
-		buff.append( "where sim__row__num between " );
-		buff.append(  s );
-		buff.append( " and " );
-		buff.append(  e );
+		buff.append( " ) "														);
+		buff.append( "where sim__row__num >= "									);
+		buff.append(  s															);
 		
 //	Tools.pl("oracle ∑÷“≥sql: " + buff.toString());
 		

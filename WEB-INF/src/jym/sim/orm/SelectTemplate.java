@@ -175,7 +175,7 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 				} 
 			catch(Exception e) {}
 				
-				computeTotalPage(pagedata, total);
+				pagedata.setTotalRow(total);
 				
 				do {
 					T model = clazz.newInstance();
@@ -196,13 +196,6 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 				}
 			plot.stopColnameMapping();
 		}
-	}
-	
-	private void computeTotalPage(PageBean pagedata, int colNum) {
-		int tp = colNum / pagedata.getOnesize();
-		int tc = colNum % pagedata.getOnesize();
-		if (tc>0) tp++;
-		pagedata.setTotal(tp);
 	}
 	
 	private void warnning(String msg) {

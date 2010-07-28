@@ -182,7 +182,7 @@ class Plot<T> implements IPlot {
 	}
 	
 	private void warnning(Class<?> beanClass, String msg) {
-		System.out.println("少御:(Plot): (" + beanClass +") " + msg);
+		Tools.pl("少御:(Plot): (" + beanClass +") " + msg);
 	}
 
 	public IOrder order() {
