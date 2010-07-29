@@ -1,4 +1,5 @@
-﻿sim 简单Servlet框架
+﻿
+Java Web Tools
 -------------------------
 CatfoOD 2009-10-29 v0.30
 
@@ -111,3 +112,9 @@ package: jym.sim.tags {
 	]
 }
 
+
+packae: jym.sim.json {
+	*: [
+		生成JSON的支持
+	]
+}

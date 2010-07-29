@@ -1,5 +1,6 @@
 .settings
 outlwbs.xml
+WEB-INF/classes/jym/readme.txt
 
 *.class
 *.exe
