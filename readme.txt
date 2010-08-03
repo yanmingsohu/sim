@@ -1,9 +1,9 @@
 ﻿
 Java Web Tools
 -------------------------
-CatfoOD 2009-10-29 v0.30
+CatfoOD 2009-10-29 v0.31
 
-edit: CatfoOD 2010-5-25
+edit: CatfoOD 2010-7-29
 
 
 package: jym.sim.base {

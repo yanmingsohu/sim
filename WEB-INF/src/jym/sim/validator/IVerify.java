@@ -29,7 +29,7 @@ public interface IVerify {
 	 * 按照指定的规则验证field的值value,<br>
 	 * 如果符合规则(验证成功)返回null,<br>
 	 * 否则返回错误字符串<br>
-	 * <b>如果value值无法验证返回null</b>
+	 * <b>如果value值无法验证(value为null, 或类型不对)也返回null</b>
 	 * 
 	 * @param field - 要验证的字段
 	 * @param value - 字段所属对象的值

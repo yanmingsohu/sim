@@ -17,7 +17,9 @@ import jym.sim.validator.verify.NumVerify;
 import jym.sim.validator.verify.RegexVerify;
 import jym.sim.validator.verify.StringLenVerify;
 
-
+/**
+ * 连接验证注解与验证方法的桥梁
+ */
 public final class Verifys {
 	
 	private static Map<Object, IVerify> 
