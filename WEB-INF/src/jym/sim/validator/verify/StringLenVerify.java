@@ -19,7 +19,7 @@ public class StringLenVerify implements IVerify {
 		
 		Stringlen anno = (Stringlen) field.getAnnotation(getAnnoClass());
 		String str = value.toString();
-		int len = str.trim().getBytes().length;
+		int len = str.getBytes().length;
 		
 		if (len>=anno.min() && len<=anno.max()) {
 			return SUCCESS;

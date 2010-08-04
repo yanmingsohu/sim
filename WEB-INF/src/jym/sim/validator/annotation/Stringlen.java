@@ -8,7 +8,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 检测字符串的字节长度,被检测的字符串字节长度x须符合: min()<=x<=max()
+ * 检测字符串的字节长度,被检测的字符串字节长度x须符合: min()<=x<=max()<br>
+ * 空字符也被计算
  */
 @Retention(value=RetentionPolicy.RUNTIME)
 @Target(value=ElementType.FIELD)
