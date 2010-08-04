@@ -171,4 +171,20 @@ public class Tools {
 	public static void beep() {
 		Toolkit.getDefaultToolkit().beep();
 	}
+	
+	/**
+	 * 复制指定的数组，截取或用 0 填充（如有必要），以使副本具有指定的长度。
+	 * 对于在原数组和副本中都有效的所有索引，这两个数组将包含相同的值。
+	 * 对于在副本中有效而在原数组无效的所有索引，副本将包含 (byte)0。
+	 * 当且仅当指定长度大于原数组的长度时，这些索引存在。<br>
+	 * <br>
+	 * 此方法为java1.5提供便捷的数组复制
+	 */
+	public static byte[] copyOf(byte[] original, int newLength) {
+		byte[] newarr = new byte[newLength];
+		System.arraycopy(original, 0, newarr, 0, newLength);
+		
+		return newarr;
+	}
+	
 }

@@ -1,10 +1,26 @@
 ﻿
 Java Web Tools
--------------------------
-CatfoOD 2009-10-29 v0.31
 
+----------------------------------------------------------------------------
+CatfoOD 2009-10-29 v0.31
 edit: CatfoOD 2010-7-29
 
+
+----------------------------------------------------------------------------
+
+依赖项目:
+
+	j2ee 1.4							http://java.sun.com/j2ee/overview.html
+	struts2								http://struts.apache.org/
+	struts1 				(可选)
+	commons-logging-1.0.4				http://commons.apache.org/logging/
+	ognl-2.6.1
+	
+	commons-dbcp-1.3		(可选)		http://commons.apache.org/dbcp/
+	commons-pool-1.5.4		(可选)		http://commons.apache.org/pool/
+	DBPool-5.0				(可选)		http://www.snaq.net/java/DBPool
+
+----------------------------------------------------------------------------
 
 package: jym.sim.base {
 
@@ -116,5 +132,12 @@ package: jym.sim.tags {
 packae: jym.sim.json {
 	*: [
 		生成JSON的支持
+	]
+}
+
+
+package: jym.sim.pool {
+	*: [
+		数据库连接池的通用封装
 	]
 }

@@ -5,35 +5,24 @@ package test;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.sql.DataSource;
-
 import jym.sim.orm.IOrm;
 import jym.sim.orm.IPlot;
 import jym.sim.orm.ISelecter;
 import jym.sim.orm.IUpdate;
 import jym.sim.orm.OrmTemplate;
+import jym.sim.pool.PoolFactory;
 import jym.sim.sql.Logic;
-import jym.sim.util.BeanUtil;
 
 public class OrmDemo {
-	final private static String url = "jdbc:oracle:thin:@192.168.0.68:1521:RMCSH";
-	final private static String driver = "oracle.jdbc.pool.OracleDataSource";
-	final private static String user = "LWBS_ROOT";
-	final private static String pwd = "dl20100325";
 	
 	/**
 	 * @param args
 	 * @throws Exception 
 	 */
 	public static void main(String[] args) throws Exception {
-
-		Class<?> clazz = Class.forName(driver);
-		DataSource ds = (DataSource) BeanUtil.creatBean(clazz);
-		BeanUtil.invoke(ds, "setUser", user);
-		BeanUtil.invoke(ds, "setURL", url);
-		BeanUtil.invoke(ds, "setPassword", pwd);
+		PoolFactory pool = new PoolFactory("/test/datasource.conf");
 		
-		OrmTemplate<UserBean> orm = new OrmTemplate<UserBean>(ds, new IOrm<UserBean>() {
+		OrmTemplate<UserBean> orm = new OrmTemplate<UserBean>(pool.getDataSource(), new IOrm<UserBean>() {
 
 			public Class<UserBean> getModelClass() {
 				return UserBean.class;
