@@ -41,4 +41,10 @@ public class JSonFormater {
 		return buff.toString();
 	}
 	
+	public static String frm(Object src) {
+		if (src!=null) {
+			return frm(src.toString());
+		}
+		return null;
+	}
 }
