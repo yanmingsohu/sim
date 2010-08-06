@@ -92,7 +92,7 @@ public class Logic implements IWhere {
 	 * <code>"10 < 40"</code>
 	 * <br><br>如果field的类型不是String,则使用该对象的toString()方法,
 	 * <br>如果格式字符串中指定的域的值有一个为null,则忽略整条子句的生成
-	 * <br><b>${}之间不能有空格</b
+	 * <br><b>${}之间不能有空格</b>
 	 * 
 	 * @param defstr - 生成where子句的模式字符串
 	 * */

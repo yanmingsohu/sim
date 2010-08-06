@@ -182,7 +182,7 @@ public class Tools {
 	 */
 	public static byte[] copyOf(byte[] original, int newLength) {
 		byte[] newarr = new byte[newLength];
-		System.arraycopy(original, 0, newarr, 0, newLength);
+		System.arraycopy(original, 0, newarr, 0, original.length);
 		
 		return newarr;
 	}

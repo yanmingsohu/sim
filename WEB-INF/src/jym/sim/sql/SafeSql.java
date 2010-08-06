@@ -10,13 +10,22 @@ public class SafeSql {
 	
 	private final static char TAG = '\'';
 	
+	/**
+	 * 转换对象到字符串, 用来拼装sql
+	 * 
+	 * @param o
+	 * @return 如果o为null, 则返回null
+	 */
 	public static final String transformValue(Object o) {
-		String s = o.toString();
-		// String.indexOf方法使用内部数组效率高
-		if (s.indexOf(TAG)>=0) {
-			s = to(s);
+		if (o!=null) {
+			String s = o.toString();
+			// String.indexOf方法使用内部数组效率高
+			if (s.indexOf(TAG)>=0) {
+				s = to(s);
+			}
+			return s;
 		}
-		return s;
+		return null;
 	}
 	
 	private static final String to(String a) {

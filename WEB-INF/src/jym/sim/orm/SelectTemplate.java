@@ -82,9 +82,9 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 	}
 	
 	private void check() {
-	//	Tools.check(orm.getKey(), 			"getKey()不能返回null");
-		Tools.check(orm.getModelClass(),	"getModelClass()不能返回null");
-		Tools.check(orm.getTableName(),		"getTableName()不能返回null");
+	//	Tools.check(orm.getKey(), 			"getKey()不能返回null"			);
+		Tools.check(orm.getModelClass(),	"getModelClass()不能返回null"	);
+		Tools.check(orm.getTableName(),		"getTableName()不能返回null"		);
 	}
 	
 	protected void loopMethod2Colume(T model, IColumnValue cv) {
@@ -102,6 +102,7 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 					
 				} catch (Exception e) {
 					warnning("invoke错误: "+ e.getMessage());
+					Tools.plerr(e, "jym.*");
 				}
 			}
 		}
