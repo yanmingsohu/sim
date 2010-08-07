@@ -91,11 +91,11 @@ public class JdbcTemplate implements IQuery, ICall {
 		if (o instanceof Date) {
 			Date d = (Date)o;
 			o = sqlDateFormat.format(d);
-		} 
-		if (o instanceof String) {
-			o = ((String)o).trim();
 		}
 		else {
+			if (o instanceof String) {
+				o = ((String)o).trim();
+			}
 			o = SafeSql.transformValue(o);
 		}
 		return o;

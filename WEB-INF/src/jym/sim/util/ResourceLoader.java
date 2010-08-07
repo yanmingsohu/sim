@@ -9,6 +9,10 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.nio.CharBuffer;
 
+/**
+ * 取得资源的URL, 一直遍历ClassLoader的ClassLoader
+ * 直到达到java核心ClassLoader
+ */
 public class ResourceLoader {
 
 	private static int BUFF_SIZE = 2048;

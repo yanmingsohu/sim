@@ -4,13 +4,22 @@ package test;
 
 import java.net.URL;
 
+import jym.sim.util.ResourceLoader;
+
 public class testClassLoader {
 	
 	public static void main(String s[]) {
 		testClassLoader t = new testClassLoader();
 		
-		URL url = t.getUrlRes("/test/test.file.txt");
+		String str = "/test/datasource.conf";
+		
+		URL url = t.getUrlRes(str);
 		pl( url );
+		
+		URL url2 = t.getUrlFromRL(str);
+		pl( url2 );
+		
+		// 两个方法是用了相同的原理
 	}
 	
 	public URL getUrlRes(String urlstr) {
@@ -28,6 +37,10 @@ public class testClassLoader {
 			}
 		}
 		return url;
+	}
+	
+	public URL getUrlFromRL(String urlStr) {
+		return ResourceLoader.getUrl(urlStr);
 	}
 	
 	public static void pl(Object o) {
