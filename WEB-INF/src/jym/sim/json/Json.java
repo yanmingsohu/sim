@@ -9,6 +9,8 @@ import java.util.Map;
 
 public class Json implements IjSon {
 
+	private final static char QUOTATION_MARKS = '"';
+	
 	private Map<String,Object> map;
 	
 	
@@ -45,16 +47,16 @@ public class Json implements IjSon {
 				String name = it.next();
 				Object value = map.get(name);
 				
-				json.append('"').append(name).append('"');
+				json.append(QUOTATION_MARKS).append(name).append(QUOTATION_MARKS);
 				json.append(':');
 				if (value instanceof Json) {
 					Json rj = (Json) value;
 					rj.go(json);
 				}
 				else {
-					json.append('"').append(
+					json.append(QUOTATION_MARKS).append(
 							formatJson( String.valueOf(value) )
-						).append('"');
+						).append(QUOTATION_MARKS);
 				}
 				
 				if (it.hasNext()) {
