@@ -1,33 +1,27 @@
-// CatfoOD 2010-8-4 上午11:05:53 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-8-19 上午11:18:29 yanming-sohu@sohu.com/@qq.com
 
-package jym.sim.sql;
+package jym.sim.filter.sql;
 
+import jym.sim.filter.SimFilterException;
 
 /**
- * 转换字符串,防止sql语句注入
+ * 把字符串转换为不会在sql中产成其他语义的字符串
  */
-public class SafeSql {
+public class SafeSqlStringFilter implements ISqlInputParamFilter<String> {
 	
 	private final static char TAG = '\'';
 	
-	/**
-	 * 转换对象到字符串, 用来拼装sql
-	 * 
-	 * @param o
-	 * @return 如果o为null, 则返回null
-	 */
-	public static final String transformValue(Object o) {
-		if (o!=null) {
-			String s = o.toString();
+	public String see(String s) throws SimFilterException {
+		if (s!=null) {
 			// String.indexOf方法使用内部数组效率高
+			// 而toCharArray方法需要复制
 			if (s.indexOf(TAG)>=0) {
 				s = to(s);
 			}
-			return s;
 		}
-		return null;
+		return s;
 	}
-	
+
 	private static final String to(String a) {
 		char[] ch = a.toCharArray();
 		char[] nch = new char[ch.length * 2];

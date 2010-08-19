@@ -7,16 +7,16 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import jym.sim.filter.sql.SqlDateFilter;
 import jym.sim.orm.ISkipValueCheck;
 import jym.sim.sql.IWhere;
-import jym.sim.sql.JdbcTemplate;
 import jym.sim.util.BeanUtil;
 import jym.sim.util.Tools;
 
 public class DateRange implements IWhere, ISkipValueCheck {
 	
 	private SimpleDateFormat sqlDateFormat = 
-			new SimpleDateFormat(JdbcTemplate.DEFAULT_DATE_FORMAT);
+			new SimpleDateFormat(SqlDateFilter.DEFAULT_DATE_FORMAT);
 	
 	private String adf;
 	private String bdf;

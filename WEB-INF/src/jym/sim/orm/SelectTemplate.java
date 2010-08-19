@@ -10,6 +10,8 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import jym.sim.filter.FilterPocket;
+import jym.sim.filter.SimFilterException;
 import jym.sim.orm.page.IPage;
 import jym.sim.orm.page.NotPagination;
 import jym.sim.orm.page.PageBean;
@@ -25,11 +27,13 @@ import jym.sim.util.Tools;
  */
 public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQuery {
 
-	
 	private Class<T> clazz;
 	private IOrm<T> orm;
 	private Plot<T> plot;
 	private IPage pagePlot;
+	private FilterPocket infilter;
+	private FilterPocket outfilter;
+	
 	
 	/**
 	 * jdbc模板构造函数, 全部使用表格名映射实体属性
@@ -77,14 +81,44 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 	}
 	
 	private void init() {
+		infilter = new FilterPocket();
+		outfilter = new FilterPocket();
 		clazz = orm.getModelClass();
-		plot = new Plot<T>(orm);
+		plot = new Plot<T>(orm, outfilter);
 	}
 	
 	private void check() {
 	//	Tools.check(orm.getKey(), 			"getKey()不能返回null"			);
 		Tools.check(orm.getModelClass(),	"getModelClass()不能返回null"	);
 		Tools.check(orm.getTableName(),		"getTableName()不能返回null"		);
+	}
+	
+	/**
+	 * 取得输入数据过滤器设置器，通过FilterBase的实例可以插入新的过滤器<br>
+	 * 过滤器的作用是在实体属性拼装为sql之前先转换属性的值
+	 */
+	public FilterPocket getInputParamPocket() {
+		return infilter;
+	}
+	
+	/**
+	 * 取得数据库返回数据过滤器设置器，通过在FilterBase的实例可以插入新的过滤器<br>
+	 * 过滤器的作用是把从数据库返回的数据，在传给实体属性前进行过滤
+	 */
+	public FilterPocket getOutputParamPocket() {
+		return outfilter;
+	}
+	
+	/**
+	 * 从普通对象转换为sql语句字符串
+	 */
+	protected Object transformValue(Object o) {
+		try {
+			return infilter.filter(o);
+		} catch (SimFilterException e) {
+			warnning("输入参数过滤器转换失败:" + e);
+		}
+		return o;
 	}
 	
 	protected void loopMethod2Colume(T model, IColumnValue cv) {
@@ -101,7 +135,7 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 					cv.set(colname, value);
 					
 				} catch (Exception e) {
-					warnning("invoke错误: "+ e.getMessage());
+					warnning("invoke错误: "+ e);
 					Tools.plerr(e, "jym.*");
 				}
 			}

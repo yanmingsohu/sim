@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import jym.sim.exception.OrmException;
+import jym.sim.filter.FilterPocket;
 import jym.sim.sql.IOrder;
 import jym.sim.sql.IWhere;
 import jym.sim.util.BeanUtil;
@@ -35,10 +36,11 @@ class Plot<T> implements IPlot {
 	private IOrm<T> orm;
 	private boolean usecolnamemap = true;
 	private String order_sub = null;
+	private FilterPocket outfilter;
 	
-	
-	public Plot(IOrm<T> _orm) {
+	public Plot(IOrm<T> _orm, FilterPocket _outfilter) {
 		orm = _orm;
+		outfilter = _outfilter;
 		initMethods();
 		initOrm();
 	}
@@ -130,7 +132,7 @@ class Plot<T> implements IPlot {
 			if (setm==null) {
 				throw new OrmException("没有setter方法");
 			}
-			mm = new MethodMapping(setm, is, pk, log);
+			mm = new MethodMapping(setm, is, pk, log, outfilter);
 			// ormmap.set 的参数变为小写
 			ormmap.put(colname.toLowerCase(), mm);
 			reverse.put(getm, colname);

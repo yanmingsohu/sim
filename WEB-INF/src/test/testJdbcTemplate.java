@@ -12,9 +12,9 @@ import jym.sim.util.Tools;
 
 public class testJdbcTemplate {
 
-	final private static String url = "jdbc:oracle:thin:@192.168.0.68:1521:RMCSH";
-	final private static String user = "LWBS_ROOT";
-	final private static String pwd = "dl20100325";
+	final private static String url = "jdbc:oracle:thin:@xxx:xxx";
+	final private static String user = "";
+	final private static String pwd = "";
 	
 	
 	public static void main(String[] s) throws Exception {

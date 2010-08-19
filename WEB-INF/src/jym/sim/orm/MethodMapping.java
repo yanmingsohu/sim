@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Date;
 
+import jym.sim.filter.FilterPocket;
 import jym.sim.sql.IWhere;
 import jym.sim.sql.Logic;
 import jym.sim.util.BeanUtil;
@@ -14,26 +15,29 @@ import jym.sim.util.BeanUtil;
 class MethodMapping {
 
 	@SuppressWarnings("unchecked")
-	private ISelecter objcrt;
-	private Method m;
-	private ITransition it;
-	private IWhere logic;
-	private String pkmethod;
+	private ISelecter 		objcrt;
+	private Method 		method;
+	private ITransition 	trans;
+	private IWhere 		logic;
+	private String 		pkmethod;
+	private FilterPocket	outfilter;
+	
 	
 	/**
 	 * 抛出异常,说明方法不符合要求<br>
 	 * if log==null log=Logic.EQ
 	 */
-	MethodMapping(Method md, ISelecter<?> is, String pk, IWhere log)	{
-		
-		objcrt 		= is;
-		m 			= md; 
+	MethodMapping(Method md, ISelecter<?> is, String pk, IWhere log, FilterPocket _outfilter)	{
+
 		logic 		= (log==null) ? Logic.EQ : log;
+		objcrt 		= is;
+		method 		= md; 
 		pkmethod 	= (pk!=null) ? BeanUtil.getSetterName(pk) : null;
+		outfilter	= _outfilter;
 		
 		Class<?>[] pt0 = md.getParameterTypes();
 		if (pt0.length==1) {
-			it = getTransitionType(pt0[0]);
+			trans = getTransitionType(pt0[0]);
 		} else {
 			warnning(md.getName() + " 实体方法参数数量不匹配");
 		}
@@ -43,26 +47,26 @@ class MethodMapping {
 	 * 转化来自数据库中的数据，setter到实体中
 	 * model.setXxx(sqldata);
 	 */
-	public void invoke(ResultSet rs, int col, Object model)	throws Exception {
+	public void invoke(ResultSet rs, int col, Object model) throws Exception {
 		if (rs.getObject(col)!=null) {
 			
 			Object data = null;
 			try {
-				data = it.trans(rs, col);
-				
+				data =  trans.trans(rs, col);
+			
 			} catch (Exception e) {	
 				warnning(model.getClass() + "映射的属性类型与数据库类型不匹配,方法" 
-						+ m + " 将直接使用数据库类型对象");
+						+ method + " 将直接使用数据库类型对象");
 				
 				data = rs.getObject(col);
 			}
 			
-			m.invoke(model, data);
+			method.invoke(model, outfilter.filter(data) );
 		}
 	}
 	
 	public String getName() {
-		return m.getName();
+		return method.getName();
 	}
 	
 	private ITransition getTransitionType(final Class<?> type) {
@@ -168,7 +172,7 @@ class MethodMapping {
 					return BeanUtil.creatBean(type, rs.getObject(col));
 					
 				} catch (Exception e) {
-					warnning("调用方法" + m.getName() + "时,作为参数创建" 
+					warnning("调用方法" + method.getName() + "时,作为参数创建" 
 							+ type + "类型,该类没有(String)构造函数.(是否使用了方法重载?)");
 				}
 				return null;
