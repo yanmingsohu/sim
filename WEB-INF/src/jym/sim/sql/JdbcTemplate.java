@@ -186,7 +186,10 @@ public class JdbcTemplate implements IQuery, ICall {
 		handle.set(eh);
 	}
 	
-	private void handleException(Throwable t) {
+	/**
+	 * 数据库抛出的异常注入这个方法中，然后由注册过的异常处理器处理
+	 */
+	protected void handleException(Throwable t) {
 		IExceptionHandle ie = handle.get();
 		if (ie!=null) {
 			ie.exception(t, t.getMessage());

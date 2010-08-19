@@ -17,7 +17,7 @@ public class HtmlDisplayFilter implements ISqlOutputParamFilter<String> {
 	public HtmlDisplayFilter() {
 		map = new HashMap<Character, String>();
 		
-		map.put(' ',	"&#160;");
+	//	map.put(' ',	"&ensp;");
 		map.put('<', 	"&#60;"	);
 		map.put('>', 	"&#62;"	);
 		map.put('\'',	"&#39;"	);

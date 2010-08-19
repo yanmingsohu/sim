@@ -117,6 +117,7 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 			return infilter.filter(o);
 		} catch (SimFilterException e) {
 			warnning("输入参数过滤器转换失败:" + e);
+			handleException(e);
 		}
 		return o;
 	}
@@ -207,7 +208,7 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 			try { 
 				// 没有TOTAL_COLUMN_NAME指定的列并不是错误
 				total = rs.getInt(IPage.TOTAL_COLUMN_NAME);
-				} 
+				}
 			catch(Exception e) {}
 				
 				pagedata.setTotalRow(total);
