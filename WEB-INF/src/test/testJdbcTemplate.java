@@ -4,29 +4,15 @@ package test;
 
 import java.sql.Statement;
 
-import javax.sql.DataSource;
-
 import jym.sim.sql.ISql;
 import jym.sim.sql.JdbcTemplate;
 import jym.sim.util.Tools;
 
 public class testJdbcTemplate {
-
-	final private static String url = "jdbc:oracle:thin:@xxx:xxx";
-	final private static String user = "";
-	final private static String pwd = "";
-	
 	
 	public static void main(String[] s) throws Exception {
-		Class<?> dsclazz = Class.forName("oracle.jdbc.pool.OracleDataSource");
 		
-		DataSource ds = (DataSource) dsclazz.newInstance();
-		
-		dsclazz.getMethod("setURL", String.class).invoke(ds, url);
-		dsclazz.getMethod("setUser", String.class).invoke(ds, user);
-		dsclazz.getMethod("setPassword", String.class).invoke(ds, pwd);
-		
-		JdbcTemplate jt = new JdbcTemplate(ds);
+		JdbcTemplate jt = new JdbcTemplate(TestDBPool.getDataSource());
 		
 		jt.query(new ISql() {
 

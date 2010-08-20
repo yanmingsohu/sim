@@ -2,8 +2,9 @@
 
 package jym.sim.orm;
 
+
 /**
- * 继承此接口的类,说明进入IWhere.w方法的value参数可以无效
+ * 继承此接口的类,说明进入IWhere.w方法的value参数可以无效(为null)
  */
 public interface ISkipValueCheck {
 }

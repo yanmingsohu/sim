@@ -1,8 +1,12 @@
+// CatfoOD 2010-4-21 上午08:06:24 yanming-sohu@sohu.com/@qq.com
+
 package test;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 
+import jym.sim.util.UsedTime;
 import jym.sim.validator.Validator;
 import jym.sim.validator.VerifyMessage;
 import jym.sim.validator.VerifyMessage.Msg;
@@ -12,9 +16,10 @@ import jym.sim.validator.annotation.Notnull;
 import jym.sim.validator.annotation.Num;
 import jym.sim.validator.annotation.Stringlen;
 
-// CatfoOD 2010-4-21 上午08:06:24 yanming-sohu@sohu.com/@qq.com
 
-
+/**
+ * 测试字段验证器的效率
+ */
 @SuppressWarnings("unused")
 public class validatorTest {
 
@@ -28,13 +33,13 @@ public class validatorTest {
 		
 		Validator v = new Validator();
 		
-		TestTime time = new TestTime();
-		time.start();
+		UsedTime.start("相当50000个字段的验证");
+		
 		for (int i=0; i<10000; ++i) {
 			VerifyMessage vm = v.validate(u);
-			//showMsg( vm );
+//			showMsg( vm ); // 显示会占用时间
 		}
-		time.showtime();
+		UsedTime.endAndPrint();
 	}
 	
 	private static void test() {

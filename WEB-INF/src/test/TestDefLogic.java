@@ -12,7 +12,7 @@ public class TestDefLogic {
 		user.setBrongthname("¿ª·¢Çø");
 		user.setBrongthid("x3000");
 		
-		String s = "((bname = '${brongthname}') and (id = '${brongthid}'))";
+		String s = "fdsaf=fdsaf";//"((bname = '${brongthname}') and (id = '${brongthid}'))";
 		
 		DefinitionLogic dl = new DefinitionLogic(s);
 		Tools.pl( dl.w(null, null, user) );

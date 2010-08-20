@@ -1,0 +1,220 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<style type="text/css">
+#inpanel {
+	float: left;
+}
+#outpanel {
+	float: left;
+	clear: right;
+}
+#resultout {
+	width: 100%;
+	height: 33em;
+	overflow: scroll ;
+	border-width: 2px;
+	border-style: outset ;
+}
+.copy {
+	line-height:100%;
+	font-size: x-small;
+	text-align: right;
+}
+textarea {
+	overflow: scroll ;
+	word-wrap: normal ;
+}
+</style>
+</head>
+
+<body>
+
+<div id='inpanel'>
+<textarea id='textin' rows='33' cols='35'></textarea>
+</div>
+
+<div id='outpanel'>
+<textarea id='textout' rows='33' cols='80'></textarea>
+<div id='resultout'></div>
+</div>
+
+<div style='clear:both;'>
+	<input type='button' value='开始转换' id='startb'/>
+	<input type='button' value='显示切换' id='swapd'/>
+	<input type='button' value='复制源码' id='clipboard'/>
+</div>
+
+<div class='copy'>
+源代码格式化工具<br/><br/>
+yanming-sohu@sohu.com<br/>
+CatfoOD<br/>
+</div>
+
+</body>
+
+<script language="javascript">
+
+////////////////////-------------------------------------------////
+
+/* 渲染器的定义
+var render = function(key) {
+	return "dosome" + key;
+}
+*/
+
+var key_render = function(k) {
+	return "<span style='color:blue;'>" + k + "</span>";
+}
+
+var key = {
+	"int":		key_render
+,	"float":	key_render
+,	"auto":	key_render
+,	"double":	key_render
+,	"struct":	key_render
+,	"break":	key_render
+,	"else":	key_render
+,	"long":	key_render
+,	"switch":	key_render
+,	"case":	key_render
+,	"enum":	key_render
+,	"register":	key_render
+,	"typedef":	key_render
+,	"char":	key_render
+,	"extern":	key_render
+,	"return":	key_render
+,	"union":	key_render
+,	"const":	key_render
+,	"short":	key_render
+,	"unsigned":	key_render
+,	"continue":	key_render
+,	"for":	key_render
+,	"signed":	key_render
+,	"void":	key_render
+,	"default":	key_render
+,	"goto":	key_render
+,	"sizeof":	key_render
+,	"volatile":	key_render
+,	"do":		key_render
+,	"while":	key_render
+,	"static":	key_render
+,	"auto":	key_render
+,	"if":		key_render
+};
+
+var line_render = function (l) {
+	return "<div style='float:left;width:40px;background-Color:#bbbbbb;" +
+		"text-align:center;font-family:Courier'>"+l+"</div>";
+}
+
+var font_style = function() {
+	return 'line-height:100%;font-size:x-small';
+}
+
+////////////////////-------------------------------------------////
+
+var $ = function(id) {
+	return  document.getElementById(id);
+}
+
+var intext = $('textin');
+var outtext = $('textout');
+var result_out = $('resultout');
+
+var swap_button = $('swapd');
+var start_button = $('startb');
+var copy_button = $('clipboard');
+
+result_out.style.display='none';
+start_button.onclick = startTran;
+
+var swap_cu = true;
+
+////////////////////-------------------------------------------////
+
+swap_button.onclick = function() {
+	if (swap_cu) {
+		outtext.style.display='none';
+		result_out.style.display='block';
+		
+		result_out.innerHTML = outtext.innerText;
+	} else {
+		outtext.style.display='block';
+		result_out.style.display='none';
+	}
+	swap_cu = !swap_cu;
+}
+
+function startTran() {
+	var stext = intext.innerHTML;
+	stext = parse(stext);
+	outtext.innerText = stext;
+	result_out.innerHTML = stext;
+}
+
+copy_button.onclick = function() {
+	window.clipboardData.setData("Text",outtext.innerText); 
+}
+
+////////////////////-------------------------------------------////
+
+function parse(src) {
+	var EN = "\r\n";
+	var SP = " ";
+	var result = [];
+	
+	var arren = src.split(EN);
+	var sizeen = arren.length;
+	var line = 1;
+	
+	result.push("<font style='" + font_style() + "'>");
+	
+	for (var j=0; j<sizeen; ++j) {
+		var arr = arren[j].split(SP);
+		var size = arr.length;
+		
+		result.push(line_render(line++));
+		result.push(render_st_sp(arren[j]));
+		
+		for (var i=0; i<size; ++i) {
+			var v = arr[i];
+			var render = key[v];
+			if (render) {
+				result.push(render(v));
+			} else {
+				result.push(v);
+			}
+			result.push(SP);
+		}
+		result.push("<br/>");
+		result.push(EN);
+	}
+	
+	result.push("</font>");
+	return result.join("");
+}
+
+function render_st_sp(str) {
+	var result = [];
+	var size = str.length;
+	for (var i=0; i<size; ++i) {
+		var ch = str.charAt(i);
+		if (ch==' ') {
+			result.push('&nbsp;');
+		} 
+		else if (ch=='\t'){
+			result.push('&nbsp;&nbsp;&nbsp;&nbsp;');
+		}
+		else {
+			str.startat = i;
+			break;
+		}
+	}
+	return result.join("");
+}
+
+</script>
+
+</html>

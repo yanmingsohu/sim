@@ -16,6 +16,7 @@ import jym.sim.util.Tools;
  * 如果需要内嵌js，需要使用HtmlTagBase
  */
 public class TagBase implements ITag {
+	
 	private String stag;
 	private String etag;
 	private String tagname;
@@ -24,6 +25,7 @@ public class TagBase implements ITag {
 	private TagBase parent = null;
 	/** 是否是自终结标记 */
 	private boolean isSelf;
+	
 	
 	/**
 	 * 标准xml标记,不支持内嵌的js <br/>

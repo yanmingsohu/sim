@@ -7,7 +7,7 @@ import jym.sim.tags.ExternalCSSTag;
 import jym.sim.tags.ITag;
 import jym.sim.tags.TableTag;
 
-public class test {
+public class TestHTMLTag {
 
 	/**
 	 * @param args

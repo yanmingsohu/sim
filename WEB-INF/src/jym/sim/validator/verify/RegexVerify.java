@@ -18,7 +18,7 @@ public class RegexVerify implements IVerify {
 	}
 
 	public String getMessage(Field field, Object value) {
-		if (value==null || !(value instanceof String)) return ERROR;
+		if (value==null || !(value instanceof String)) return SKIP;
 		
 		String str = (String) value;
 		Regex anno = field.getAnnotation(Regex.class);

@@ -18,14 +18,14 @@ public class DateVerify implements IVerify {
 	}
 
 	public String getMessage(Field field, Object value) {
-		if (value==null || !(value instanceof java.util.Date)) return ERROR;
+		if (value==null || !(value instanceof java.util.Date)) return SKIP;
 		
 		java.util.Date date = (java.util.Date) value;
 		Daterange anno = (Daterange) field.getAnnotation(getAnnoClass());
 		java.util.Date max = format(anno.max());
 		java.util.Date min = format(anno.min());
 		
-		if (max==null && min==null) return ERROR;
+		if (max==null && min==null) return SKIP;
 		
 		if (date.compareTo(max)<=0 && date.compareTo(min)>=0) {
 			return SUCCESS;

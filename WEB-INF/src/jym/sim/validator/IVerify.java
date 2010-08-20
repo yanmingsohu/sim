@@ -21,6 +21,11 @@ public interface IVerify {
 	public final String ERROR = null;
 	
 	/**
+	 * 验证器跳过验证
+	 */
+	public final String SKIP = null;
+	
+	/**
 	 * 返回验证器要验证的'注解'的class
 	 */
 	public Class<? extends Annotation> getAnnoClass();

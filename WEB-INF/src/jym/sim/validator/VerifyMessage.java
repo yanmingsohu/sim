@@ -13,6 +13,7 @@ import jym.sim.util.Tools;
  * 验证结果集
  */
 public class VerifyMessage {
+	
 	private List<Msg> msgs;
 	private String prefix = "";
 	private String suffix = "";

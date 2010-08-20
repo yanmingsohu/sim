@@ -5,6 +5,7 @@ package jym.sim.tags;
 import java.io.PrintWriter;
 
 public class PaginationTag extends HtmlTagBase {
+	
 	/** tag元素class属性的前缀 */
 	public final static String CSS_CLASS_NAME = "sim_pagination";
 	public final static String CSS_CLASS_FIRSTPAGE = "sim_pagination_firstpage";
@@ -21,6 +22,7 @@ public class PaginationTag extends HtmlTagBase {
 	private int total;
 	private int dispsize;
 	private String url;
+	
 	
 	/**
 	 * 生成分页html

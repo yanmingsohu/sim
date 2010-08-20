@@ -13,7 +13,7 @@ import jym.sim.sql.IWhere;
 import jym.sim.util.BeanUtil;
 import jym.sim.util.Tools;
 
-public class DefinitionLogic implements IWhere, ISkipValueCheck{
+public class DefinitionLogic implements IWhere, ISkipValueCheck {
 	
 	private static Pattern exp = Pattern.compile(
 			"(.*?)\\$\\{([a-zA-Z][a-zA-Z_0-9]*)\\}((?:(?!\\$\\{[a-zA-Z][a-zA-Z_0-9]*\\}).)*)");
@@ -23,11 +23,17 @@ public class DefinitionLogic implements IWhere, ISkipValueCheck{
 	public DefinitionLogic(String str) {
 		deflist = new ArrayList<String>();
 		Matcher m = exp.matcher(str);
+		boolean nofind = true;
 		
 		while (m.find()) {
 			add( m.group(1) );
 			add( m.group(2) );
 			add( m.group(3) );
+			nofind = false;
+		}
+		
+		if (nofind) {
+			throw new IllegalArgumentException("参数不是有效的表达式");
 		}
 	}
 	

@@ -15,7 +15,7 @@ public class StringLenVerify implements IVerify {
 	}
 
 	public String getMessage(Field field, Object value) {
-		if (value==null || !(value instanceof String)) return ERROR;
+		if (value==null || !(value instanceof String)) return SKIP;
 		
 		Stringlen anno = (Stringlen) field.getAnnotation(getAnnoClass());
 		String str = value.toString();

@@ -10,9 +10,9 @@ import jym.sim.orm.IPlot;
 import jym.sim.orm.ISelecter;
 import jym.sim.orm.IUpdate;
 import jym.sim.orm.OrmTemplate;
-import jym.sim.pool.PoolFactory;
 import jym.sim.sql.Logic;
 
+@SuppressWarnings("unused")
 public class OrmDemo {
 	
 	/**
@@ -20,22 +20,21 @@ public class OrmDemo {
 	 * @throws Exception 
 	 */
 	public static void main(String[] args) throws Exception {
-		PoolFactory pool = new PoolFactory("/test/datasource.conf");
 		
-		OrmTemplate<UserBean> orm = new OrmTemplate<UserBean>(pool.getDataSource(), new IOrm<UserBean>() {
+		OrmTemplate<UserBean> orm = new OrmTemplate<UserBean>(TestDBPool.getDataSource(), new IOrm<UserBean>() {
 
 			public Class<UserBean> getModelClass() {
 				return UserBean.class;
 			}
 
 			public void mapping(IPlot plot) {
-				plot.fieldPlot("brongthname", "brongth_name", Logic.INCLUDE);
-				plot.fieldPlot("brongthid", "brongth_id");
-				plot.fieldPlot("brongthsn", "brongth_sn");
+				plot.fieldPlot("brongthname", "brongthname", Logic.INCLUDE);
+				plot.fieldPlot("brongthid", "brongthid");
+				plot.fieldPlot("brongthsn", "brongthsn");
 			}
 
 			public String getKey() {
-				return "brongth_sn";
+				return "brongthsn";
 			}
 
 			public String getTableName() {
@@ -47,12 +46,12 @@ public class OrmDemo {
 		checkDelete(orm);
 //		checkUpdate(orm);
 //		checkInsert(orm);
+		
 		checkSelect(orm);
 		
 		// list do something...
 	}
 	
-	//@SuppressWarnings("unused")
 	private static void checkDelete(IUpdate<UserBean> orm) {
 		UserBean user = new UserBean();
 		for (int i=100; i<120; ++i) {
@@ -62,7 +61,6 @@ public class OrmDemo {
 		}
 	}
 	
-	@SuppressWarnings("unused")
 	private static void checkUpdate(IUpdate<UserBean> orm) {
 		UserBean user = new UserBean();
 		for (int i=100; i<120; ++i) {
@@ -74,7 +72,7 @@ public class OrmDemo {
 		}
 	}
 	
-	@SuppressWarnings("unused")
+	
 	private static void checkInsert(IUpdate<UserBean> orm) {
 		UserBean user = new UserBean();
 		for (int i=100; i<120; ++i) {

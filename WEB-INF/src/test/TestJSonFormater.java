@@ -3,11 +3,23 @@
 package test;
 
 import jym.sim.json.JSonFormater;
+import jym.sim.util.Tools;
 import jym.sim.util.UsedTime;
 
 public class TestJSonFormater {
 	
 	public static void main(String[] s) {
+		time();
+		test();
+	}
+	
+	public static void test() {
+		String a = "dir {\n String s	= \"fdsafdsaf\"; \n}";
+		
+		Tools.pl( formatJson(a) );
+	}
+	
+	public static void time() {
 		String a = "dir {\n String s	= \"fdsafdsaf\"; \n}";
 		StringBuilder buff = new StringBuilder();
 		
@@ -17,7 +29,6 @@ public class TestJSonFormater {
 		
 		a = buff.toString();
 		
-		System.out.println("字符串长度" + a.length());
 //		System.out.println(a);
 		
 		for (int i=0; i<9; ++i) {
@@ -31,8 +42,8 @@ public class TestJSonFormater {
 			UsedTime.endAndPrint();
 			System.out.println("---");
 		}
+		System.out.println("字符串长度" + a.length());
 	}
-	
 	
 	protected static String formatJson2(String str) {
 		return str.replaceAll("\"", "\\\\\"")

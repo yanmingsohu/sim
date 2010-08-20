@@ -15,7 +15,7 @@ public class NumVerify implements IVerify {
 	}
 
 	public String getMessage(Field field, Object value) {
-		if (value==null || !(value instanceof Number) ) return ERROR;
+		if (value==null || !(value instanceof Number) ) return SKIP;
 		
 		double x = ((Number) value).doubleValue();
 		Num anno = (Num) field.getAnnotation(getAnnoClass());

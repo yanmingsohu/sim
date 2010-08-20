@@ -4,6 +4,7 @@ package jym.sim.sql;
 
 import jym.sim.sql.logic.DateRange;
 import jym.sim.sql.logic.DefinitionLogic;
+import jym.sim.sql.logic.FixedLogic;
 import jym.sim.sql.logic.OperatorIN;
 import jym.sim.sql.logic.OperatorOR;
 
@@ -78,6 +79,13 @@ public class Logic implements IWhere {
 	 * */
 		public static final IWhere OR(IWhere ...w) {
 			return new OperatorOR(w);
+		};
+		
+	/**
+	 * 固定的where子句,总是返回参数中设定的sql,一般和其他的逻辑配合使用
+	 * */
+		public static final IWhere FIXED(final String sql) {
+			return new FixedLogic(sql);
 		};
 		
 	/**
