@@ -47,7 +47,6 @@ textarea {
 </div>
 
 <div class='copy'>
-源代码格式化工具<br/><br/>
 yanming-sohu@sohu.com<br/>
 CatfoOD<br/>
 </div>
@@ -56,64 +55,122 @@ CatfoOD<br/>
 
 <script language="javascript">
 
-////////////////////-------------------------------------------////
+////////////////////---- 渲染器定义 ---------------------------------------////
 
-/* 渲染器的定义
-var render = function(key) {
-	return "dosome" + key;
+// 渲染器的定义
+var no_render = function(key) {
+	return key;
 }
-*/
 
+// 空白符
+function sp_render(sp) {
+	var r = false;
+	if (sp==' ') {
+		r = '&nbsp;';
+	} 
+	else if (sp=='\t'){
+		r = '&nbsp;&nbsp;&nbsp;&nbsp;';
+	}
+	return r;
+}
+
+// 关键字
 var key_render = function(k) {
 	return "<span style='color:blue;'>" + k + "</span>";
 }
 
-var key = {
-	"int":		key_render
-,	"float":	key_render
-,	"auto":	key_render
-,	"double":	key_render
-,	"struct":	key_render
-,	"break":	key_render
-,	"else":	key_render
-,	"long":	key_render
-,	"switch":	key_render
-,	"case":	key_render
-,	"enum":	key_render
-,	"register":	key_render
-,	"typedef":	key_render
-,	"char":	key_render
-,	"extern":	key_render
-,	"return":	key_render
-,	"union":	key_render
-,	"const":	key_render
-,	"short":	key_render
-,	"unsigned":	key_render
-,	"continue":	key_render
-,	"for":	key_render
-,	"signed":	key_render
-,	"void":	key_render
-,	"default":	key_render
-,	"goto":	key_render
-,	"sizeof":	key_render
-,	"volatile":	key_render
-,	"do":		key_render
-,	"while":	key_render
-,	"static":	key_render
-,	"auto":	key_render
-,	"if":		key_render
-};
+// 换行
+var enter_render = function(en) {
+	return "<br/>\n";
+}
 
+// 行号
 var line_render = function (l) {
 	return "<div style='float:left;width:40px;background-Color:#bbbbbb;" +
 		"text-align:center;font-family:Courier'>"+l+"</div>";
 }
 
+// 字体
 var font_style = function() {
 	return 'line-height:100%;font-size:x-small';
 }
 
-////////////////////-------------------------------------------////
+// 运算符
+var tag_render = function(t) {
+	return "<b>" + t + "</b>"
+}
+
+// 数字
+var num_render = function(num) {
+	return "<span style='color:#BC8F8F;'>" + num + "</span>";
+}
+
+////////////////////---- 符号定义 ---------------------------------------////
+
+var tag = {
+	"{":	tag_render
+,	"}":	tag_render
+,	"[":	tag_render
+,	"]":	tag_render
+,	"(":	tag_render
+,	")":	tag_render
+,	"=":	tag_render
+,	"+":	tag_render
+,	"-":	tag_render
+,	"*":	tag_render
+,	"/":	tag_render
+,	"'":	tag_render
+,	"\"":	tag_render
+,	".":	tag_render
+,	";":	tag_render
+,	"<":	tag_render
+,	">":	tag_render
+,	"?":	tag_render
+,	"!":	tag_render
+,	":":	tag_render
+,	"|":	tag_render
+,	"&":	tag_render
+,	"%":	tag_render
+,	",":	tag_render
+};
+
+var key = {
+	"int":			key_render
+,	"float":		key_render
+,	"auto":		key_render
+,	"double":		key_render
+,	"struct":		key_render
+,	"break":		key_render
+,	"else":			key_render
+,	"long":			key_render
+,	"switch":		key_render
+,	"case":		key_render
+,	"enum":		key_render
+,	"register":	key_render
+,	"typedef":		key_render
+,	"char":		key_render
+,	"extern":		key_render
+,	"return":		key_render
+,	"union":		key_render
+,	"const":		key_render
+,	"short":		key_render
+,	"unsigned":	key_render
+,	"continue":	key_render
+,	"for":			key_render
+,	"signed":		key_render
+,	"void":			key_render
+,	"default":		key_render
+,	"goto":		key_render
+,	"sizeof":		key_render
+,	"volatile":		key_render
+,	"do":			key_render
+,	"while":		key_render
+,	"static":		key_render
+,	"auto":		key_render
+,	"if":			key_render
+};
+
+////////////////////---- 变量初始化 ---------------------------------------////
 
 var $ = function(id) {
 	return  document.getElementById(id);
@@ -132,14 +189,13 @@ start_button.onclick = startTran;
 
 var swap_cu = true;
 
-////////////////////-------------------------------------------////
+////////////////////---- 事件初始化 ---------------------------------------////
 
 swap_button.onclick = function() {
 	if (swap_cu) {
 		outtext.style.display='none';
 		result_out.style.display='block';
-		
-		result_out.innerHTML = outtext.innerText;
+		write_display();
 	} else {
 		outtext.style.display='block';
 		result_out.style.display='none';
@@ -149,70 +205,164 @@ swap_button.onclick = function() {
 
 function startTran() {
 	var stext = intext.innerHTML;
-	stext = parse(stext);
-	outtext.innerText = stext;
-	result_out.innerHTML = stext;
+	//stext = parse(stext);
+	stext = parse_src(stext);
+	outtext.value = stext;
+	write_display();
+}
+
+function write_display() {
+	result_out.innerHTML = outtext.value;
 }
 
 copy_button.onclick = function() {
 	window.clipboardData.setData("Text",outtext.innerText); 
 }
 
-////////////////////-------------------------------------------////
+////////////////////---- 词法解析 ---------------------------------------////
 
-function parse(src) {
-	var EN = "\r\n";
-	var SP = " ";
-	var result = [];
-	
-	var arren = src.split(EN);
-	var sizeen = arren.length;
-	var line = 1;
-	
-	result.push("<font style='" + font_style() + "'>");
-	
-	for (var j=0; j<sizeen; ++j) {
-		var arr = arren[j].split(SP);
-		var size = arr.length;
-		
-		result.push(line_render(line++));
-		result.push(render_st_sp(arren[j]));
-		
-		for (var i=0; i<size; ++i) {
-			var v = arr[i];
-			var render = key[v];
-			if (render) {
-				result.push(render(v));
-			} else {
-				result.push(v);
-			}
-			result.push(SP);
-		}
-		result.push("<br/>");
-		result.push(EN);
-	}
-	
-	result.push("</font>");
-	return result.join("");
-}
-
-function render_st_sp(str) {
+function parse_src(str) {
 	var result = [];
 	var size = str.length;
-	for (var i=0; i<size; ++i) {
-		var ch = str.charAt(i);
-		if (ch==' ') {
-			result.push('&nbsp;');
-		} 
-		else if (ch=='\t'){
-			result.push('&nbsp;&nbsp;&nbsp;&nbsp;');
-		}
-		else {
-			str.startat = i;
-			break;
+	
+	var word = "";
+	result.line = 1;
+	
+	function pushWord(ch) {
+		render_word(word, result);
+		word = "";
+		
+		if (ch) {
+			render_word(ch, result);
 		}
 	}
-	return result.join("");
+	
+	var ci = 0;
+	
+	function next() {
+		if (ci<size) {
+			return str.charAt(ci++);
+		} else {
+			return false;
+		}
+	}
+	
+	// 范围标记的记号
+	var save = [];
+	
+	function when_newline_cleartag() {
+		save.comment = false;
+		newline();
+	}
+	
+	function newline() {
+		result.push(line_render(result.line++));
+	}
+	
+	newline();
+	
+	while(true) {
+		var ch = next();
+		if (!ch) break;
+		
+		// 符号的解析顺序即优先级
+		
+		// 换行
+		if (ch=='\r') {
+			/*
+			when_newline_cleartag();
+			
+			var ch2 = next();
+			if (ch2 && ch2=='\n') {
+				pushWord('\n');
+				continue;
+			} else {
+				pushWord('\n');
+				ch = ch2;
+			}
+			*/
+			continue;
+		}
+		
+		if (ch=='\n') {
+			pushWord('\n');
+			when_newline_cleartag();
+			continue;
+		}
+		
+		// 单行注释
+		if (save.comment) {
+			continue;
+		}
+		if (ch=='\\') {
+			var ch2 = next();
+			if (ch2 && ch2=='\\') {
+				save.comment = true;
+				continue;
+			}
+		}
+		
+		// html转义符
+		if (save.html) {
+			word += ch;
+			if (ch==';') {
+				pushWord();
+				save.html = false;
+			}
+		}
+		else if (ch=='&') {
+			save.html = true;
+			pushWord();
+			word += ch;
+		}
+		// 运算符
+		else if (tag[ch]) {
+			pushWord(ch);
+		}
+		// 空白符
+		else if (ch=='\t' || ch==' ') {
+			pushWord(ch);
+		}
+		// 普通字符
+		else {
+			word += ch;
+		}
+	}
+	pushWord();
+	
+	return result.join("");;
+}
+
+function render_word(word, result) {
+	var render = false;
+	
+	if (word=='\n') {
+		render = enter_render;
+	}
+	else if (word==' ' || word=='\t') {
+		render = sp_render;
+	} 
+	else {
+		render = key[word];
+		
+		if (!render) {
+			render = tag[word];
+			
+			if (!render) {
+				var num = parseFloat(word);
+				
+				if (num) {
+					render = num_render;
+				}
+			}
+		}
+	}
+	
+	if (render) {
+		result.push(render(word));
+	} else {
+		result.push(word);
+	}
 }
 
 </script>
