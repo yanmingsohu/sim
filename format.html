@@ -44,6 +44,7 @@ textarea {
 	<input type='button' value='开始转换' id='startb'/>
 	<input type='button' value='显示切换' id='swapd'/>
 	<input type='button' value='复制源码' id='clipboard'/>
+	<span id='chlength'></span>
 </div>
 
 <div class='copy'>
@@ -113,6 +114,10 @@ var comment_render = function(c) {
 	return "<font style='color:green;'>" + c + "</font>";
 }
 
+// 引号中的字符串
+var string_render = function(str) {
+	return "<font style='color:turquoise;'>" + str + "</font>";
+}
 
 ////////////////////---- 符号定义 ---------------------------------------////
 
@@ -179,6 +184,32 @@ var key = {
 ,	"if":			key_render
 };
 
+// 块语法定义,有先后顺序
+var scope = [
+	{
+		start: "/*",					// 起始符号
+		end : "*/",					// 结束符号
+		render: comment_render,	// 渲染器
+		recursion: true				// 把语法块的内容递归解析,默认false,可以不写
+	},
+	{
+		start: "//",
+		end: "\n",
+		render: comment_render,
+		recursion: true
+	},
+	{
+		start: "\"",
+		end: "\"",
+		render: string_render
+	},
+	{
+		start: "&",
+		end: ";",
+		render: no_render
+	}
+];
+
 ////////////////////---- 变量初始化 ---------------------------------------////
 
 var $ = function(id) {
@@ -192,6 +223,7 @@ var result_out = $('resultout');
 var swap_button = $('swapd');
 var start_button = $('startb');
 var copy_button = $('clipboard');
+var len_labble = $('chlength');
 
 result_out.style.display='none';
 start_button.onclick = startTran;
@@ -215,13 +247,14 @@ swap_button.onclick = function() {
 function startTran() {
 	var stext = intext.innerHTML;
 	//stext = parse(stext);
-	stext = parse_src(stext);
+	stext = parse(stext);
 	outtext.value = stext;
 	write_display();
 }
 
 function write_display() {
 	result_out.innerHTML = outtext.value;
+	len_labble.innerHTML = outtext.value.length + "个字符";
 }
 
 copy_button.onclick = function() {
@@ -230,131 +263,163 @@ copy_button.onclick = function() {
 
 ////////////////////---- 词法解析 ---------------------------------------////
 
-function parse_src(str) {
+function parse(str) {
 	var result = [];
-	var size = str.length;
+	var line = 1;
 	
-	var word = "";
-	result.line = 1;
-	
-	function pushWord(ch) {
-		render_word(word, result);
-		word = "";
-		
-		if (ch) {
-			render_word(ch, result);
-		}
+	var newline = function() {
+		return line_render(line++);
 	}
 	
-	var ci = 0;
+	result.push("<font style='" + font_style() + "'>");
+	result.push(newline());
+	parse_src(result, str, newline);
+	result.push("<font/>");
+	
+	return result.join("");
+}
+
+function parse_src(result, str, newline, _scope) {
+	var size = str.length;
+	
+	var word = [];
+	var ci = -1;
 	
 	function next() {
+		++ci;
+		var r = current();
+		return r;
+	}
+	
+	function restore(step) {
+		if (step==undefined) step = 1;
+		else if (step<0) step = 0;
+		ci -= step;
+		if (ci<0) ci = 0;
+	}
+	
+	// 必须在next()之后才能调用
+	function current() {
 		if (ci<size) {
-			return str.charAt(ci++);
+			return str.charAt(ci);
 		} else {
 			return false;
 		}
 	}
 	
 	// 范围标记的记号
-	var save = [];
+	var save = false;
 	
-	function when_newline_cleartag() {
-		save.comment = false;
-		newline();
+	function pushWord(ch) {
+		render_word(word.join(""), result, newline, save);
+		word.length = 0;
+		
+		if (ch) {
+			render_word(ch, result, newline, save);
+		}
 	}
 	
-	function newline() {
-		result.push(line_render(result.line++));
+	// 在str中寻找thisStr, 如果找到则str当前指针保留并返回true, 
+	// 否则恢复str指针,并返回false;
+	function nextStrIs(thisStr) {
+		var r = false;
+		var i = 0;
+		var _size = thisStr.length;
+		var ch2 = current();
+		
+		while (ch2 && ch2==thisStr.charAt(i)) {
+			ch2 = (++i<_size) ? next() : false;
+		}
+		
+		if (i==_size) {
+			r = true;
+		} else {
+			restore(i);
+			r = false;
+		}
+		
+		return r;
 	}
 	
-	result.push("<font style='" + font_style() + "'>");
-	newline();
 	
 	while(true) {
 		var ch = next();
 		if (!ch) break;
 		
-		// 符号的解析顺序即优先级
-		
-		// 换行
-		if (ch=='\r') {
-			/* 处理'\r\n'的代码
-			when_newline_cleartag();
-			
-			var ch2 = next();
-			if (ch2 && ch2=='\n') {
-				pushWord('\n');
-				continue;
+	// 语法块
+		if (save) {
+			if (nextStrIs(save.end)) {
+				word.push(save.end);
+				if (save.recursion) {
+					word = parse_src([], word.join(""), newline, save);
+				}
+				pushWord();
+				save = false;
 			} else {
-				pushWord('\n');
-				ch = ch2;
+				word.push(ch);
 			}
-			*/
 			continue;
+		}
+		else {
+			var scope_size = scope.length;
+			
+			for (var ii=0; ii<scope_size; ++ii) {
+				if (scope[ii] == _scope) continue;
+				
+				if (nextStrIs(scope[ii].start)) {
+					pushWord();
+					save = scope[ii];
+					word.push(scope[ii].start);
+					break;
+				}
+			}
+			if (save) continue;
+		}
+		
+	// 换行
+		if (ch=='\r') {
+			var ch2 = next();
+			if (ch2 && ch2!='\n') {
+				restore();
+			}
+			ch = '\n';
 		}
 		
 		if (ch=='\n') {
 			pushWord('\n');
-			when_newline_cleartag();
 			continue;
 		}
 		
-		// 单行注释
-		if (save.comment) {
-			word += ch;
+	// 空白符
+		if (ch=='\t' || ch==' ') {
+			pushWord(ch);
 			continue;
 		}
 		
-		if (ch=='/') {
-			var ch2 = next();
-			if (ch2 && ch2=='/') {
-				word += '//';
-				save.comment = true;
-				continue;
-			}
+	// 运算符
+		if (tag[ch]) {
+			pushWord(ch);
+			continue;
 		}
 		
-		// html转义符
-		if (save.html) {
-			word += ch;
-			if (ch==';') {
-				pushWord();
-				save.html = false;
-			}
-		}
-		else if (ch=='&') {
-			save.html = true;
-			pushWord();
-			word += ch;
-		}
-		// 运算符
-		else if (tag[ch]) {
-			pushWord(ch);
-		}
-		// 空白符
-		else if (ch=='\t' || ch==' ') {
-			pushWord(ch);
-		}
-		// 普通字符
-		else {
-			word += ch;
-		}
+	// 普通字符
+		word.push(ch);
 	}
 	pushWord();
-	result.push("<font/>");
 	
-	return result.join("");;
+	return result;
 }
 
-function render_word(word, result) {
+function render_word(word, result, newline, _save) {
 	var render = false;
 	
-	if (word=='\n') {
-		render = enter_render;
+	if (_save) {
+		render = _save.render;
 	}
-	else if (word.indexOf('//')==0) {
-		render = comment_render;
+	else if (word=='\n') {
+		render = function(en) {
+			return enter_render(en) + newline();
+		};
 	}
 	else if (word==' ' || word=='\t') {
 		render = sp_render;
