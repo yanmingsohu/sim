@@ -23,6 +23,7 @@ public class HtmlDisplayFilter implements ISqlOutputParamFilter<String> {
 		map.put('\'',	"&#39;"	);
 		map.put('"',	"&#34;"	);
 	//	map.put('\\',	"\\\\"	);
+		map.put('&',	"&#38;"	);
 	}
 
 	public String see(String src) throws SimFilterException {

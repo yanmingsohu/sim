@@ -13,18 +13,22 @@
 #resultout {
 	width: 100%;
 	height: 33em;
-	overflow: scroll ;
+	overflow: scroll;
 	border-width: 2px;
-	border-style: outset ;
+	border-style: outset;
 }
 .copy {
 	line-height:100%;
 	font-size: x-small;
 	text-align: right;
 }
+#textin {
+	font-size: x-small;
+	line-height:100%;
+}
 textarea {
-	overflow: scroll ;
-	word-wrap: normal ;
+	overflow: scroll;
+	word-wrap: normal;
 }
 </style>
 </head>
@@ -58,7 +62,8 @@ CatfoOD<br/>
 
 ////////////////////---- 渲染器定义 ---------------------------------------////
 
-// CatfoOD 2010-8-20
+// CatfoOD	2010-8-20
+// Edit		2010-8-22
 // yanming-sohu@sohu.com
 
 // 渲染器的定义
@@ -74,6 +79,7 @@ function sp_render(sp) {
 	} 
 	else if (sp=='\t'){
 		r = '&nbsp;&nbsp;&nbsp;&nbsp;';
+	//	r = "<pre>\t</pre>";
 	}
 	return r;
 }

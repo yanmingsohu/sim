@@ -13,12 +13,12 @@ public interface IUpdate<T> {
 	public boolean add(T model);
 	
 	/**
-	 * 删除数据库中数据
+	 * 删除数据库中数据,如果是数据库错误返回-1
 	 */
 	public int delete(T model);
 	
 	/**
-	 * 更新数据库中的数据
+	 * 更新数据库中的数据,如果是数据库错误返回-1
 	 */
 	public int update(T model);
 }

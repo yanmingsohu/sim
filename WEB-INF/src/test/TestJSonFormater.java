@@ -9,13 +9,13 @@ import jym.sim.util.UsedTime;
 public class TestJSonFormater {
 	
 	public static void main(String[] s) {
-		time();
+	//	time();
 		test();
 	}
 	
 	public static void test() {
-		String a = "dir {\n String s	= \"fdsafdsaf\"; \n}";
-		
+		String a = "dir {\n String s	= \"fdsafdsaf\\\"; \n}";
+		// 输入和输出字符串，相同说明算法正确
 		Tools.pl( formatJson(a) );
 	}
 	

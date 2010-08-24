@@ -145,8 +145,10 @@ public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
 //	}
 
 	private class Refer {
+		public static final int ERROR = -1;
+		
 		private boolean b = false;
-		private int i = 0;
+		private int i = ERROR;
 		private Object value = null;
 	}
 }

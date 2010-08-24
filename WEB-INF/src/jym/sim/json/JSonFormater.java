@@ -9,7 +9,7 @@ package jym.sim.json;
 public class JSonFormater {
 	
 	private static final String[] table;
-	private static final int INDEX = 35;
+	private static final int INDEX = '\\' + 1;
 	
 	static {
 		table = new String[INDEX];
@@ -17,6 +17,7 @@ public class JSonFormater {
 		table['\n'] = "\\n";
 		table['\r'] = "\\r";
 		table['\"'] = "\\\"";
+		table['\\'] = "\\\\";
 	}
 
 	/**

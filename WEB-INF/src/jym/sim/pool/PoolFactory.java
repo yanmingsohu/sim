@@ -103,9 +103,6 @@ public class PoolFactory {
 		String name = conf.getJndiName();
         
 		InitialContext cxt = new InitialContext();
-		if (cxt == null) {
-			throw new NamingException("¥¥Ω®InitialContext ß∞‹");
-		}
 
 		DataSource ds = (DataSource) cxt.lookup(name);
 		if (ds == null) {

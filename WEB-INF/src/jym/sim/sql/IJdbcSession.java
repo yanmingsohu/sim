@@ -5,7 +5,7 @@ package jym.sim.sql;
 import java.sql.Savepoint;
 
 /**
- * 一个数据库会话
+ * 一个数据库会话,该对象由创建的类维护
  */
 public interface IJdbcSession {
 	/**
