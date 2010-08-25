@@ -72,12 +72,14 @@ public abstract class HttpBase extends HttpServlet {
 		
 		try {
 			final Object obj = execute(data);
-			ForwardProcess.exec(data, obj, new ICallBack() {
-
-				public void back() throws Exception {
-					forward(req, resp, (String)obj);
-				}
-			});
+			
+			if (obj!=null) {
+				ForwardProcess.exec(data, obj, new ICallBack() {
+					public void back() throws Exception {
+						forward(req, resp, (String)obj);
+					}
+				});
+			}
 			
 		} catch (ServletException se) {
 			throw se;
@@ -90,7 +92,7 @@ public abstract class HttpBase extends HttpServlet {
 	
 	// …Ë÷√±‡¬ÎºØ£¨∑µªÿformbean
 	private Object common(HttpServletRequest req, HttpServletResponse resp) {
-		charencoding(req,resp);
+	//	charencoding(req,resp);
 		Object formbean = null;
 		if (bean!=null) {
 			formbean = bean.creatBean(req);
@@ -99,6 +101,7 @@ public abstract class HttpBase extends HttpServlet {
 		return formbean;
 	}
 	
+	@SuppressWarnings("unused")
 	private void charencoding(HttpServletRequest req, HttpServletResponse resp){
 		if (req.getLocale().equals(Locale.CHINA)) {
 			resp.setContentType("text/html; charset=gbk");

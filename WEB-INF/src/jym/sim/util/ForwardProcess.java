@@ -4,6 +4,7 @@ package jym.sim.util;
 
 import java.io.PrintWriter;
 
+import jym.sim.json.IjSon;
 import jym.sim.tags.IPrinter;
 
 public final class ForwardProcess {
@@ -30,6 +31,10 @@ public final class ForwardProcess {
 		else if (obj instanceof IPrinter) {
 			IPrinter prt = (IPrinter) obj;
 			prt.printout(out);
+		}
+		else if (obj instanceof IjSon) {
+			IjSon json = (IjSon) obj;
+			json.go(out);
 		}
 		else {
 			out.print(obj);
