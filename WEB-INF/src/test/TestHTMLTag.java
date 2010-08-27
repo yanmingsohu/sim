@@ -26,7 +26,7 @@ public class TestHTMLTag {
 		table.append("d");
 		body.append(table);
 		
-		System.out.println(html);
+		TestHtmlTagBase.openTag(html);
 	}
 
 }

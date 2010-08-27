@@ -61,7 +61,7 @@ public class testTransaction {
 			return new IJdbcSession() {
 				
 				public boolean commit() {
-					Tools.pl("commit");
+					Tools.pl("事务已递交");
 					tv = no;
 					return true;
 				}
@@ -75,7 +75,7 @@ public class testTransaction {
 				}
 
 				public boolean rollback() {
-					Tools.pl("roolback");
+					Tools.pl("出错,事务回滚");
 					return true;
 				}
 

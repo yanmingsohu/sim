@@ -1,16 +1,18 @@
 package test;
 
+import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.PrintWriter;
 
 import jym.sim.jstags.TableMouseOverColor;
 import jym.sim.jstags.TableRowClick;
 import jym.sim.tags.HtmlTagBase;
+import jym.sim.tags.IPrinter;
 import jym.sim.tags.TableTag;
 
 public class TestHtmlTagBase {
 
-	public static void main(String s[]) throws IOException {
+	public static void main(String s[]) throws Exception {
 		TableTag table = new TableTag(4);
 		for (int i=0; i<12; ++i) {
 			table.append(i+" s");
@@ -37,13 +39,38 @@ public class TestHtmlTagBase {
 		click.setTarget(table);
 		click.setTarget(table1);
 		
-		
-		FileOutputStream fout = new FileOutputStream("c:/index.html");
-		fout.write(tag.toString().getBytes());
-		fout.close();
+		openTag(tag);
 	}
 	
 	public static void pl(Object o) {
 		System.out.println(o);
+	}
+	
+	public static void openTag(IPrinter tag) {
+		try {
+			File file = new File("c:/_temp_index.html");
+			
+			FileOutputStream fout = new FileOutputStream(file);
+			PrintWriter pout = new PrintWriter(fout);
+			tag.printout(pout);
+			pout.flush();
+			fout.close();
+			
+			openUrl(file.getPath());
+	
+			file.delete();
+			pl("over.");
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void openUrl(String url) {
+		try {
+			Process p = Runtime.getRuntime().exec("cmd /c \"" + url + "\"");
+			p.waitFor();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
