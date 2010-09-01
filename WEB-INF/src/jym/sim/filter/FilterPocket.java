@@ -26,10 +26,10 @@ public class FilterPocket {
 	 * 注册过滤器
 	 * 
 	 * @param <T> - 被过滤的数据类型
-	 * @param type - 被过滤数据类型的class
+	 * @param type - 被过滤数据类型的class,继承无效
 	 * @param ft - 过滤器，如果T类型的过滤器已经有了，该过滤器会被替代
 	 * 
-	 * @return 返回T类型原来的过滤器，没有返回null
+	 * @return 返回T类型原来的过滤器,没有返回null,返回的过滤器可能是一个过滤链
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> IFilter<T> reg(Class<T> type, IFilter<T> ft) {
@@ -42,7 +42,7 @@ public class FilterPocket {
 	/**
 	 * 把过滤器加入上一个过滤器的后面
 	 * 
-	 * @param <T> - 被过滤的数据类型
+	 * @param <T> - 被过滤的数据类型,继承无效
 	 * @param type - 被过滤数据类型的class
 	 * @param ft - 过滤器
 	 */
@@ -56,6 +56,22 @@ public class FilterPocket {
 		}
 		
 		reg(type, f);
+	}
+	
+	/**
+	 * 删除指定类型的过滤器
+	 * @return 返回被删除的过滤器,没有返回null
+	 */
+	@SuppressWarnings("unchecked")
+	public <T> IFilter<T> remove(Class<T> type) {
+		return (IFilter<T>) filters.remove(type);
+	}
+	
+	/**
+	 * 移除所有的过滤器
+	 */
+	public void removeAll() {
+		filters.clear();
 	}
 	
 	/**
@@ -82,19 +98,18 @@ public class FilterPocket {
 	 * 取得指定类型的过滤器
 	 * 
 	 * @param <T> - 数据类型
-	 * @param type - 类型的class
+	 * @param type - 类型的class,继承无效
 	 * @param getNullFilter - true则如果过滤器类型不存
 	 * 在则返回一个不对数据过滤的过滤器，否则返回null
 	 * 
 	 * @return 对T类型的过滤器
 	 */
-	@SuppressWarnings("unchecked")
-	public <T> IFilter<T> getFilter(Class<T> type, boolean getNullFilter) {
+	public IFilter<?> getFilter(Class<?> type, boolean getNullFilter) {
 		IFilter<?> f = filters.get(type);
 		if (f==null && getNullFilter) {
 			f = NULL_FILTER;
 		}
-		return (IFilter<T>)f;
+		return f;
 	}
 	
 	static {

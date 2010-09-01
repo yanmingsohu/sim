@@ -7,7 +7,6 @@ import java.sql.Statement;
 import javax.sql.DataSource;
 
 import jym.sim.sql.ISql;
-import jym.sim.util.BeanUtil;
 import jym.sim.util.Tools;
 
 public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
@@ -37,7 +36,7 @@ public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
 		loopMethod2Colume(model, new IColumnValue() {
 			boolean first = true;
 			public void set(String column, Object value) {
-				if ( BeanUtil.isValid(value) ) {
+				if ( isValid(value) ) {
 					if (first) first = false;
 					else {
 						columns.append(',');
@@ -73,7 +72,7 @@ public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
 			boolean first = true;
 			
 			public void set(String column, Object value) {
-				if ( BeanUtil.isValid(value) ) {
+				if ( isValid(value) ) {
 					if (first) {
 						first = false;
 					} else {
@@ -108,7 +107,7 @@ public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
 			boolean first = true;
 			
 			public void set(String column, Object value) {
-				if (value!=null) {
+				if ( isValid(value) ) {
 					if ( !column.equalsIgnoreCase(pk) ) {
 						if (first) {
 							first = false;

@@ -19,7 +19,6 @@ import jym.sim.sql.IQuery;
 import jym.sim.sql.ISql;
 import jym.sim.sql.IWhere;
 import jym.sim.sql.JdbcTemplate;
-import jym.sim.util.BeanUtil;
 import jym.sim.util.Tools;
 
 /**
@@ -33,6 +32,7 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 	private IPage pagePlot;
 	private FilterPocket infilter;
 	private FilterPocket outfilter;
+	private CheckVaildValue vaildChecker;
 	
 	
 	/**
@@ -81,6 +81,7 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 	}
 	
 	private void init() {
+		vaildChecker = new CheckVaildValue();
 		infilter = new FilterPocket();
 		outfilter = new FilterPocket();
 		clazz = orm.getModelClass();
@@ -110,9 +111,18 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 	}
 	
 	/**
+	 * 为拼装sql是的实体属性有效配置策略,过滤器只要返回非null,则认为值有效<br>
+	 * 有效的属性值将被用来拼装sql(增删改查),无效的值则会被忽略<br>
+	 * 默认null值总是认为是无效的
+	 */
+	public FilterPocket getCheckVaildValue() {
+		return vaildChecker;
+	}
+	
+	/**
 	 * 从普通对象转换为sql语句字符串
 	 */
-	protected Object transformValue(Object o) {
+	protected final Object transformValue(Object o) {
 		try {
 			return infilter.filter(o);
 		} catch (SimFilterException e) {
@@ -120,6 +130,14 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 			handleException(e);
 		}
 		return o;
+	}
+	
+	/**
+	 * 该值是否有效,有效性测试在getCheckVaildValue返回的对象中设置<br>
+	 * null值总是认为是无效的
+	 */
+	protected final boolean isValid(Object value) {
+		return vaildChecker.isValid(value);
 	}
 	
 	protected void loopMethod2Colume(T model, IColumnValue cv) {
@@ -161,7 +179,7 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 			public void set(String column, Object value) {
 				IWhere logic = plot.getColumnLogic(column);
 				
-				if (logic instanceof ISkipValueCheck || BeanUtil.isValid(value) ) {
+				if (logic instanceof ISkipValueCheck || isValid(value) ) {
 					value = logic.w(column, transformValue( value ), model);
 
 					if (value!=null) {
