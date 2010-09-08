@@ -18,9 +18,20 @@ public class Json implements IjSon {
 		map = new HashMap<String,Object>();
 	}
 	
-	
 	public void set(Object name, Object value) {
 		map.put(formatJson(name.toString() ), value);
+	}
+	
+	public void set(Object name, boolean b) {
+		set(name, new Primitive(b));
+	}
+	
+	public void set(Object name, long i) {
+		set(name, new Primitive(i));
+	}
+	
+	public void set(Object name, double d) {
+		set(name, new Primitive(d));
 	}
 
 	public IjSon createSub(Object name) {
@@ -39,35 +50,50 @@ public class Json implements IjSon {
 		return rj;
 	}
 	
-	public void go(Appendable json) throws IOException {
+	public void go(Appendable out) throws IOException {
 		Iterator<String> it = map.keySet().iterator();
 		
-		json.append('{');
+		out.append('{');
 			while (it.hasNext()) {
 				String name = it.next();
 				Object value = map.get(name);
 				
-				json.append(QUOTATION_MARKS).append(name).append(QUOTATION_MARKS);
-				json.append(':');
+				out.append(QUOTATION_MARKS).append(name).append(QUOTATION_MARKS);
+				out.append(':');
 				if (value instanceof Json) {
 					Json rj = (Json) value;
-					rj.go(json);
+					rj.go(out);
+				}
+				else if (value instanceof Primitive) {
+					out.append(value.toString());
 				}
 				else {
-					json.append(QUOTATION_MARKS).append(
+					out.append(QUOTATION_MARKS).append(
 							formatJson( String.valueOf(value) )
 						).append(QUOTATION_MARKS);
 				}
 				
 				if (it.hasNext()) {
-					json.append(',');
+					out.append(',');
 				}
 			}
-		json.append('}');
+		out.append('}');
 	}
 
 	protected static String formatJson(String str) {
 		return	JSonFormater.frm(str);
 	}
 	
+	
+	private class Primitive {
+		private Object v;
+		
+		private Primitive(Object o) {
+			v = o;
+		}
+		
+		public String toString() {
+			return String.valueOf(v);
+		}
+	}
 }
