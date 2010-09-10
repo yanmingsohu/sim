@@ -36,7 +36,7 @@ public class SqlReader {
 	public SqlReader(String filename) throws IOException {
 		inf = new Info(filename);
 		URL sqlfile = getClass().getResource(filename);
-		
+
 		if (loadClass()) {
 			if (sqlfile!=null) {
 				inf.setUrl(sqlfile);

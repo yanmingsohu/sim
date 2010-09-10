@@ -5,6 +5,8 @@ package jym.sim.sql.compile;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import jym.sim.util.Tools;
 
@@ -22,8 +24,9 @@ import jym.sim.util.Tools;
 public class DynClassLoader extends ClassLoader {
 	
 	private static final String CLASS = ".class";
-	
+	private static final Map<String, CacheClass> 	cache = new HashMap<String, CacheClass>();
 
+	
 	public Class<?> reLoadClass(String classname) throws ClassNotFoundException {
 		
 		char[] chs = classname.toCharArray();
@@ -37,15 +40,31 @@ public class DynClassLoader extends ClassLoader {
 		}
 		
 		File file = new File(u.getFile());
-		byte[] bin = new byte[(int)file.length()];
+		CacheClass cc = cache.get(classname);
+		if (cc!=null) {
+			if (cc.modify==file.lastModified()) {
+				return cc.clazz;
+			}
+		}
 		
+		byte[] bin = new byte[(int)file.length()];
 		try {
 			u.openStream().read(bin);
 		} catch (IOException e) {
 			throw new ClassNotFoundException(e.getMessage());
 		}
 		
-		return super.defineClass(classname, bin, 0, bin.length);
+		cc = new CacheClass();
+		cc.clazz = super.defineClass(classname, bin, 0, bin.length);
+		cc.modify = file.lastModified();
+		cache.put(classname, cc);
+		
+		return cc.clazz;
 	}
 
+	
+	private static class CacheClass {
+		private Class<?> clazz;
+		private long modify;
+	}
 }

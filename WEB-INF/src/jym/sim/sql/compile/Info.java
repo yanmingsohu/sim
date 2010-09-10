@@ -23,7 +23,6 @@ class Info {
 	private String fullClassName;
 	private URL srcFile;
 	
-	private long lastModified;
 	private File sql;
 	private File java;
 	
@@ -45,7 +44,6 @@ class Info {
 		
 		java = new File(javaFileName);
 		sql = new File(srcFile.getFile());
-		lastModified = sql.lastModified();
 	}
 	
 	private void parsePackage() {
@@ -103,7 +101,7 @@ class Info {
 	}
 	
 	public long lastModified() {
-		return lastModified;
+		return sql.lastModified();
 	}
 	
 	public InputStreamReader openSqlInputStream() throws IOException {
