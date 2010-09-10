@@ -187,4 +187,15 @@ public class Tools {
 		return newarr;
 	}
 	
+	/**
+	 * 替换ch数组中所有的s字符为r字符
+	 */
+	public static void replaceAll(char[] ch, char s, char r) {
+		for (int i=0; i<ch.length; ++i) {
+			if (ch[i]==s) {
+				ch[i] = r;
+			}
+		}
+	}
+	
 }

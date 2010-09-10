@@ -4,8 +4,9 @@ Java Web Tools
 ----------------------------------------------------------------------------
 CatfoOD 2009-10-29 
 
-v0.33
-edit: CatfoOD 2010-9-7
+
+v0.34
+edit: CatfoOD 2010-9-10
 
 
 ----------------------------------------------------------------------------
@@ -17,6 +18,7 @@ edit: CatfoOD 2010-9-7
 	struts1 				(可选)
 	commons-logging-1.0.4				http://commons.apache.org/logging/
 	ognl-2.6.1
+	tools.jar				(可选)		http://java.sun.com [JDK中工具]
 	
 	commons-dbcp-1.3		(可选)		http://commons.apache.org/dbcp/
 	commons-pool-1.5.4		(可选)		http://commons.apache.org/pool/
@@ -156,5 +158,11 @@ package: jym.sim.filter {
 	*: [
 		过滤器，提供从页面到数据库过滤器
 		和从数据库到页面过滤器
+	]
+}
+
+package: jym.sim.sql.compile {
+	*: [
+		编译sql文件为class,并执行文件中的sql
 	]
 }
