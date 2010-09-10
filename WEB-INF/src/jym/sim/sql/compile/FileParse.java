@@ -47,6 +47,11 @@ public class FileParse {
 				continue;
 			}
 			
+			if (ch=='"') {
+				invalid("不能有双引号");
+				continue;
+			}
+			
 			if (isVar) {
 				if (ch=='}') {
 					addItem(variables, buff);
@@ -101,11 +106,14 @@ public class FileParse {
 	
 	private void checkVarName(String name) throws IOException {
 		if (!exp.matcher(name).matches()) {
-		throw new IOException(
-				"无效的变量名:[" + name + "], 在文件 " + 
-				info.getSqlFileName() + " 第" + line + "行"
-				);
+			invalid("无效的变量名:[" + name + "]");
 		}
+	}
+	
+	private void invalid(String msg) throws IOException {
+		throw new IOException(
+				msg + ", 在文件 " + info.getSqlFileName() + 
+				" 第" + line + "行" );
 	}
 	
 	private void init() {
