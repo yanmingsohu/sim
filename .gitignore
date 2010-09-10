@@ -1,6 +1,7 @@
 .settings
 outlwbs.xml
 WEB-INF/classes/jym/readme.txt
+WEB-INF/classes/*.*
 doc/
 
 *.class

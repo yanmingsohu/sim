@@ -5,6 +5,7 @@ package jym.sim.util;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.nio.CharBuffer;
@@ -73,6 +74,19 @@ public class ResourceLoader {
 			in.close();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 读取输入流中的数据到输出流
+	 */
+	public static void writeOut(InputStream in, OutputStream out) throws IOException {
+		byte[] buff = new byte[256];
+		int len = in.read(buff);
+		
+		while (len>0) {
+			out.write(buff, 0, len);
+			len = in.read(buff);
 		}
 	}
 }
