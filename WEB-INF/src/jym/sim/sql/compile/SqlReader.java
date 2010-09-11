@@ -89,13 +89,21 @@ public class SqlReader {
 	 * 
 	 * @param name - 被替换的变量名
 	 * @param value - 替换后的值
+	 * @throws NoSuchFieldException - 找不到name指定的变量
 	 */
-	public void set(String name, Object value) {
+	public void set(String name, Object value) throws 
+			NoSuchFieldException {
+		
 		try {
 			Field f = sqlclz.getField(FileParse.VAR_PREFIX + name);
 			f.set(instance, value);
-		} catch (Exception e) {
-			lastErr = e;
+			
+		} catch(SecurityException se) {
+			lastErr = se;
+		} catch(IllegalAccessException ae) {
+			lastErr = ae;
+		} catch(IllegalArgumentException ae) {
+			lastErr = ae;
 		}
 	}
 	

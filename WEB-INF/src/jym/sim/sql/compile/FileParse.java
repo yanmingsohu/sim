@@ -13,25 +13,32 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+/**
+ * 文件解析器，读取文件中的${varname}表达式
+ * varname必须符合Java变量命名规范
+ */
 public class FileParse {
 	
 	private static final Pattern exp = Pattern.compile("^[_A-Za-z][\\$_A-Za-z0-9]*");
 	public static final String VAR_PREFIX = "__";
 	
 	private Set<String> variables;
-	private List<String> sqls;
+	private List<String> texts;
 	private List<String> items;
 	private int line = 1;
-	private Info info;
+	private String filename;
 	
 	
 	public FileParse(Info inf) throws IOException {
-		
-		Reader in = new BufferedReader(inf.openSqlInputStream());
-	try {
-		info = inf;
+		this(inf.getSqlFileName(), inf.openSqlInputStream());
+	}
+	
+	public FileParse(String _filename, Reader reader) throws IOException {
+		Reader in = new BufferedReader(reader);
+		filename = _filename;
 		init();
 		
+	try {
 		StringBuilder buff = new StringBuilder();
 		int ch = ' ';
 		boolean isVar = false;
@@ -43,7 +50,7 @@ public class FileParse {
 			
 			if (ch=='\n') {	
 				line++;	
-				buff.append("\\n");
+				buff.append('\\').append('n');
 				continue;
 			}
 			
@@ -64,7 +71,7 @@ public class FileParse {
 				ch = (char) in.read();
 				
 				if (ch=='{') {
-					addItem(sqls, buff);
+					addItem(texts, buff);
 					isVar = true;
 					continue;
 				} else {
@@ -78,7 +85,7 @@ public class FileParse {
 				break;
 			}
 		}
-		addItem(sqls, buff);
+		addItem(texts, buff);
 		
 	}
 	finally {
@@ -90,7 +97,7 @@ public class FileParse {
 		String s = str.toString();
 		
 		if (s.trim().length()>0) {
-			if (point==sqls) {
+			if (point==texts) {
 				str.insert(0, '"').append('"');
 				s = str.toString();
 			} else {
@@ -112,13 +119,13 @@ public class FileParse {
 	
 	private void invalid(String msg) throws IOException {
 		throw new IOException(
-				msg + ", 在文件 " + info.getSqlFileName() + 
+				msg + ", 在文件 " + filename + 
 				" 第" + line + "行" );
 	}
 	
 	private void init() {
 		variables	= new HashSet<String>();
-		sqls		= new ArrayList<String>();
+		texts		= new ArrayList<String>();
 		items		= new ArrayList<String>();
 	}
 	
@@ -131,8 +138,17 @@ public class FileParse {
 	
 	/**
 	 * 返回解析后的sql文件中元素的迭代器
+	 * 其中，文本已经用双引号包围，而变量则直接返回
 	 */
 	public Iterator<String> getItems() {
 		return items.iterator();
+	}
+	
+	/**
+	 * 返回文件中的文本元素的迭代器，元素被分开的原因
+	 * 可能是中间的变量
+	 */
+	public Iterator<String> getTexts() {
+		return texts.iterator();
 	}
 }

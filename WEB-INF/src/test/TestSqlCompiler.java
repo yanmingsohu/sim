@@ -13,8 +13,8 @@ public class TestSqlCompiler extends com.sun.tools.javac.Main {
 	public static void main(String[] sa) throws Exception {
 		UsedTime.start();
 		
-		for (int i=0; i<3; ++i) {
-			SqlReader sr = new SqlReader("/test/test.sql");
+		for (int i=0; i<1; ++i) {
+			SqlReader sr = new SqlReader("/test/complier.sql");
 			
 			sr.set("where", "xxx");
 			sr.set("from", "yyy");
