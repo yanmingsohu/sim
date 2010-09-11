@@ -14,12 +14,12 @@ import jym.sim.util.BeanUtil;
 
 class MethodMapping {
 
-	@SuppressWarnings("unchecked")
-	private ISelecter 		objcrt;
-	private Method 		method;
-	private ITransition 	trans;
-	private IWhere 		logic;
-	private String 		pkmethod;
+	@SuppressWarnings("rawtypes")
+	private ISelecter		objcrt;
+	private Method			method;
+	private ITransition		trans;
+	private IWhere			logic;
+	private String 			pkmethod;
 	private FilterPocket	outfilter;
 	
 	

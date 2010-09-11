@@ -7,6 +7,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/J2EE 1.4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/struts1"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/struts2"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/java tools"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/java tools"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/jdk1.6.0_21/lib/tools.jar"/>
 	<classpathentry kind="output" path="WEB-INF/classes"/>
 </classpath>

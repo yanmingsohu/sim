@@ -15,7 +15,6 @@ edit: CatfoOD 2010-9-10
 
 	j2ee 1.4							http://java.sun.com/j2ee/overview.html
 	struts2								http://struts.apache.org/
-	struts1 				(可选)
 	commons-logging-1.0.4				http://commons.apache.org/logging/
 	ognl-2.6.1
 	tools.jar				(可选)		http://java.sun.com [JDK中工具]
@@ -150,6 +149,7 @@ packae: jym.sim.json {
 package: jym.sim.pool {
 	*: [
 		数据库连接池的通用封装
+		Demo: test.TestDBPool
 	]
 }
 
@@ -164,5 +164,6 @@ package: jym.sim.filter {
 package: jym.sim.sql.compile {
 	*: [
 		编译sql文件为class,并执行文件中的sql
+		Demo: test.TestSqlCompiler
 	]
 }
