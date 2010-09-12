@@ -16,6 +16,12 @@ public class Compiler {
 	private Info info;
 	
 
+	/**
+	 * 编译sql文件到java格式
+	 * 
+	 * @param inf - 保存了文件的相关信息
+	 * @throws IOException - 编译失败抛出异常
+	 */
 	public Compiler(Info inf) throws IOException {
 		
 		info = inf;

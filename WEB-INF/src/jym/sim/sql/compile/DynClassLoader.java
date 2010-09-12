@@ -29,7 +29,16 @@ public class DynClassLoader extends ClassLoader {
 	private static final String CLASS = ".class";
 	private static final Map<String, Cache> cache = new HashMap<String, Cache>();
 
-	
+	 
+	/**
+	 * 从类目录所在的.class文件中重新生成一个类<br>
+	 * 该类与前一个类内容相同，但是不同的类，可以<br>
+	 * 使用相同的父类引用（或接口）
+	 * 
+	 * @param classname - 类的完整名字
+	 * @return 重新定义的类
+	 * @throws ClassNotFoundException
+	 */
 	public Class<?> reLoadClass(String classname) throws ClassNotFoundException {
 		
 		URL url = openUrl(classname);
@@ -63,7 +72,7 @@ public class DynClassLoader extends ClassLoader {
 	private Cache getCache(String classname, long lastModify) {
 		Cache cc = cache.get(classname);
 		if (cc!=null) {
-			if (cc.modify!=lastModify) {
+			if (lastModify!=0L && cc.modify!=lastModify) {
 				cache.remove(classname);
 				cc = null;
 			}

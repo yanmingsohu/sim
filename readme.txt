@@ -6,7 +6,7 @@ CatfoOD 2009-10-29
 
 
 v0.34
-edit: CatfoOD 2010-9-10
+edit: CatfoOD 2010-9-12
 
 
 ----------------------------------------------------------------------------
@@ -165,5 +165,11 @@ package: jym.sim.sql.compile {
 	*: [
 		编译sql文件为class,并执行文件中的sql
 		Demo: test.TestSqlCompiler
+	]
+}
+
+package: jym.sim.java {
+	*: [
+		Java文件动态生成工具
 	]
 }

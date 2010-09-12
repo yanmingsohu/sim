@@ -2,8 +2,13 @@
 
 package jym.sim.sql.compile;
 
+
+/**
+ * sql编译为Java文件后的样式模板，无实际作用
+ */
 class Template {
 	
+	public long _lastModify = 0l;
 	public Object v1;
 	public Object v2;
 	

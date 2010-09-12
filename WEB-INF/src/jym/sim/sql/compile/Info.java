@@ -10,6 +10,10 @@ import java.net.URL;
 
 import jym.sim.util.Tools;
 
+
+/**
+ * 保存要编译sql文件的相关信息
+ */
 class Info {
 
 	public static final String DEFAULT_PACKAGE = "";

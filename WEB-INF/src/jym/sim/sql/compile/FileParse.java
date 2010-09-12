@@ -33,6 +33,13 @@ public class FileParse {
 		this(inf.getSqlFileName(), inf.openSqlInputStream());
 	}
 	
+	/**
+	 * 开始解析sql文件，并生成相关的信息
+	 * 
+	 * @param _filename - 被解析的文件名，用于输出错误信息，可以为null
+	 * @param reader - 从reader中读取目标文件
+	 * @throws IOException - 如果解析失败，抛出异常
+	 */
 	public FileParse(String _filename, Reader reader) throws IOException {
 		Reader in = new BufferedReader(reader);
 		filename = _filename;
