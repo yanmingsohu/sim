@@ -16,7 +16,7 @@ public class CheckVaildValue extends FilterPocket {
 	 * 如果value!=null但是没有相关的过滤器,则返回true<br>
 	 * 否则,如果过滤器返回null则返回false,非null返回true
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({ "unchecked" })
 	public boolean isValid(Object value) {
 		if (value!=null) {
 			IFilter f = super.getFilter(value.getClass(), false);

@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 
 /**
  * 文件解析器，读取文件中的${varname}表达式
- * varname必须符合Java变量命名规范
+ * varname必须符合Java变量命名规范,如果想要输出$则需要$$
  */
 public class FileParse {
 	
@@ -76,6 +76,8 @@ public class FileParse {
 			else if (ch=='$') {
 				in.mark(3);
 				ch = (char) in.read();
+				
+				if (ch=='$') continue;
 				
 				if (ch=='{') {
 					addItem(texts, buff);

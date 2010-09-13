@@ -14,7 +14,7 @@ import jym.sim.util.BeanUtil;
 
 class MethodMapping {
 
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({ "unchecked" })
 	private ISelecter		objcrt;
 	private Method			method;
 	private ITransition		trans;

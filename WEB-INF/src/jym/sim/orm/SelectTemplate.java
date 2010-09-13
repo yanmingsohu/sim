@@ -111,7 +111,8 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 	}
 	
 	/**
-	 * 为拼装sql是的实体属性有效配置策略,过滤器只要返回非null,则认为值有效<br>
+	 * 为拼装sql时的实体属性有效检查配置策略,<br>
+	 * 过滤器只要返回非null,则认为值有效<br>
 	 * 有效的属性值将被用来拼装sql(增删改查),无效的值则会被忽略<br>
 	 * 默认null值总是认为是无效的
 	 */
