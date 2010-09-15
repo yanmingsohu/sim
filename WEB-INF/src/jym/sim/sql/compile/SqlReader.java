@@ -6,9 +6,15 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
+import jym.sim.sql.IQuery;
+import jym.sim.sql.ISql;
 import jym.sim.util.Tools;
 
 
@@ -119,6 +125,58 @@ public class SqlReader {
 		Statement s = conn.createStatement();
 		s.execute(instance.toString());
 		return s;
+	}
+	
+	/**
+	 * 在IQuery中执行sql文件中的sql语句,每条sql的结果存放在List元素中<br>
+	 * 如果是更新语句,则元素是一个Integer类型,否则该元素是另一个List,<br>
+	 * 该List中每个元素是一个数组,数组的长度等于结果集的列长,第0个元素<br>
+	 * 存放表头的名字,之后的元素是结果集的行数据<br>
+	 * <br>
+	 * 通常,调用此函数前已经清楚sql的类型,并能做正确的转换<br>
+	 * 
+	 * @param iq - 一般传递JdbcTemplate
+	 * @return List<Integer or List<Object[]>> 返回查询的结果集
+	 */
+	public List<Object> execute(IQuery iq) {
+		final List<Object> rel = new ArrayList<Object>();
+		
+		iq.query(new ISql() {
+			public void exe(Statement stm) throws Throwable {
+				do {
+					boolean isSet = stm.execute(instance.toString());
+					int uc = stm.getUpdateCount();
+					
+					if (isSet) {
+						ResultSet rs = stm.getResultSet();
+						ResultSetMetaData smd = rs.getMetaData();
+						int cc = smd.getColumnCount();
+						
+						List<Object[]> resultSet = new ArrayList<Object[]>();
+						Object[] row = new Object[cc];
+						
+						for (int i=0; i<cc; ++i) {
+							row[i] = smd.getColumnLabel(i+1);
+						}
+						resultSet.add(row);
+						
+						while (rs.next()) {
+							row = new Object[cc];
+							for (int i=0; i<cc; ++i) {
+								row[i] = rs.getObject(i+1);
+							}
+							resultSet.add(row);
+						}
+						rel.add(resultSet);
+					}
+					else if (uc>0) {
+						rel.add(uc);
+					}
+				} while(stm.getMoreResults());
+			}
+		});
+		
+		return rel;
 	}
 	
 	/**

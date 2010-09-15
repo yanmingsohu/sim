@@ -2,6 +2,7 @@
 
 package test;
 
+import java.io.IOException;
 import java.sql.Statement;
 
 import jym.sim.sql.ISql;
@@ -12,7 +13,7 @@ public class testJdbcTemplate {
 	
 	public static void main(String[] s) throws Exception {
 		
-		JdbcTemplate jt = new JdbcTemplate(TestDBPool.getDataSource());
+		JdbcTemplate jt = createJdbc();
 		
 		jt.query(new ISql() {
 
@@ -21,6 +22,10 @@ public class testJdbcTemplate {
 			}
 			
 		});
+	}
+	
+	public static JdbcTemplate createJdbc() throws IOException {
+		return new JdbcTemplate(TestDBPool.getDataSource());
 	}
 	
 }
