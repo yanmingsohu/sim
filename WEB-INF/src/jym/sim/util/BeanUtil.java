@@ -208,8 +208,8 @@ public class BeanUtil {
 		
 		if (name.length()>3 && (name.startsWith("set") || name.startsWith("get")) ) {
 			char[] ch = name.toCharArray();
-			ch[3] = Character.toUpperCase(ch[3]);
-			name = new String(ch, 3, ch.length);
+			ch[3] = Character.toLowerCase(ch[3]);
+			name = new String(ch, 3, ch.length-3);
 			try {
 				f = m.getDeclaringClass().getField(name);
 			} catch (Exception e) {

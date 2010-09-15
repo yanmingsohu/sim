@@ -54,7 +54,7 @@ class Plot<T> implements IPlot {
 			String name = ms[i].getName().toLowerCase();
 			
 			Method m = classMethodmap.put(name, ms[i]);
-			// 函数重载
+			// 如果m非空,则可能有函数重载
 			if (m!=null) {
 				Field f = BeanUtil.getMethodTargetField(m);
 				if (f!=null) {
@@ -62,8 +62,10 @@ class Plot<T> implements IPlot {
 					if (pts.length==1) {
 						if ( f.getType().equals(pts[0]) ) {
 							classMethodmap.put(name, m);
-						}
-					}
+						} 
+						// else 属性的类型与方法类型不同
+					} 
+					// else 函数的参数不合法
 				}
 			}
 		}
