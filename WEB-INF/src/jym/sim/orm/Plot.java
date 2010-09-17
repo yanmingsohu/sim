@@ -35,7 +35,7 @@ class Plot<T> implements IPlot {
 	private Method[] ms;
 	private IOrm<T> orm;
 	private boolean usecolnamemap = true;
-	private String order_sub = null;
+	private Order order_sub = new Order();
 	private FilterPocket outfilter;
 	
 	public Plot(IOrm<T> _orm, FilterPocket _outfilter) {
@@ -178,32 +178,52 @@ class Plot<T> implements IPlot {
 		return reverse.get(m);
 	}
 	
-	/**
-	 * 返回排序子句, 如果无需排序返回null
-	 */
-	protected String getOrder() {
-		return order_sub;
-	}
-	
 	private void warnning(Class<?> beanClass, String msg) {
 		Tools.pl("警告:(Plot): (" + beanClass +") " + msg);
 	}
 
 	public IOrder order() {
-		return new IOrder() {
-			public void asc(String columnName) {
-				set(columnName, "asc");
-			}
-
-			public void desc(String columnName) {
-				set(columnName, "desc");
-			}
-			
-			private void set(String cn, String o) {
-				Tools.check(cn, "排序的列名不能为null");
-				order_sub = " ORDER BY " + cn + " " + o;
-			}
-		};
+		return order_sub;
 	}
 	
+	
+	private class Order implements IOrder {
+		private StringBuilder out;
+		private boolean isFirst = false;
+		
+		private Order() {
+			this(new StringBuilder());
+			isFirst = true;
+		}
+		
+		private Order(StringBuilder _out) {
+			out = _out;
+		}
+
+		public IOrder asc(String columnName) {
+			return set(columnName, "asc");
+		}
+
+		public IOrder desc(String columnName) {
+			return set(columnName, "desc");
+		}
+
+		private IOrder set(String cn, String o) {
+			Tools.check(cn, "排序的列名不能为null");
+		if (isFirst) {
+				out.append(" ORDER BY ");
+				isFirst = false;
+			} else {
+				out.append(',');
+			}
+			out.append(cn);
+			out.append(' ');
+			out.append(o);
+			return this;
+		}
+		
+		public String toString() {
+			return out.toString();
+		}
+	}
 }

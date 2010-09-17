@@ -15,10 +15,8 @@ public class NotPagination implements IPage {
 		buff.append(BLANK);
 		buff.append(whereSub);
 		buff.append(BLANK);
+		buff.append(order);
 		
-		if (order!=null) {
-			buff.append(order);
-		}
 		return buff.toString();
 	}
 

@@ -197,7 +197,7 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 		});
 		
 		return select(
-				pagePlot.select(orm.getTableName(), where.toString(), plot.getOrder(), pagedata),
+				pagePlot.select(orm.getTableName(), where.toString(), plot.order().toString(), pagedata),
 				pagedata
 				);
 	}

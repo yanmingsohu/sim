@@ -23,10 +23,7 @@ public class OraclePagination implements IPage {
 		buff.append( 		 BLANK 												);
 		buff.append( 		 whereSub 											);
 		buff.append( 		 BLANK 												);
-		
-	if (order!=null) {
 		buff.append(		 order 												);
-		}
 		
 		buff.append( 	" ) sim__in__table "  									);
 		buff.append(	"where rownum <= "										);

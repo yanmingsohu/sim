@@ -20,7 +20,7 @@ public interface IPage {
 	 * 
 	 * @param tableName - 表名
 	 * @param whereSub - 查询条件子句,字句中包含where关键字
-	 * @param orderSub - 排序子句, 无需排序时返回null
+	 * @param orderSub - 排序子句, 无需排序时为空字符串
 	 * @param page - 分页数据对象
 	 * 
 	 * @return 返回拼装好的select语句

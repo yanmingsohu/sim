@@ -17,6 +17,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import jym.sim.util.Tools;
+import jym.sim.util.UsedTime;
 
 public class JdbcTemplate implements IQuery, ICall {
 	
@@ -89,6 +90,7 @@ public class JdbcTemplate implements IQuery, ICall {
 		Object result = null;
 		
 		try {
+			UsedTime.start("Ö´ÐÐsql");
 			js = initSession();
 			Connection conn = js.getConnection();
 			st = conn.createStatement();
@@ -98,6 +100,7 @@ public class JdbcTemplate implements IQuery, ICall {
 			
 			if (showsql) {
 				Tools.plsql(proxy.getSql());
+				UsedTime.endAndPrint();
 			}
 		
 		} catch (SQLException e) {
