@@ -18,7 +18,8 @@ public interface IUpdate<T> {
 	public int delete(T model);
 	
 	/**
-	 * 更新数据库中的数据,如果是数据库错误返回-1
+	 * 更新数据库中的数据,如果是数据库错误返回-1<br>
+	 * 主键的值不会改变,并且更新条件只是主键
 	 */
 	public int update(T model);
 }
