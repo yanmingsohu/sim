@@ -171,6 +171,8 @@ public class TagBase implements ITag {
 			tag = (TagBase) tag.getParent();
 		}
 		
+		if (tp==null) tp = this;
+		
 		return tp;
 	}
 	
