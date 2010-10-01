@@ -48,21 +48,18 @@ class MethodMapping {
 	 * model.setXxx(sqldata);
 	 */
 	public void invoke(ResultSet rs, int col, Object model) throws Exception {
-		if (rs.getObject(col)!=null) {
-			
-			Object data = null;
-			try {
-				data =  trans.trans(rs, col);
-			
-			} catch (Exception e) {	
-				warnning(model.getClass() + "映射的属性类型与数据库类型不匹配,方法" 
-						+ method + " 将直接使用数据库类型对象");
-				
-				data = rs.getObject(col);
-			}
-			
-			method.invoke(model, outfilter.filter(data) );
+		Object data = null;
+		try {
+			data = trans.trans(rs, col);
+		
+		} catch (Exception e) {
+
+			warnning(method + "与数据库类型不匹配(原因:"
+					+ e.getMessage()
+					+ "),已经设置为null");
 		}
+		
+		method.invoke(model, outfilter.filter(data) );
 	}
 	
 	public String getName() {

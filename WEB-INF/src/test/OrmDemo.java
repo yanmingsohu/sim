@@ -10,7 +10,10 @@ import jym.sim.orm.IPlot;
 import jym.sim.orm.ISelecter;
 import jym.sim.orm.IUpdate;
 import jym.sim.orm.OrmTemplate;
+import jym.sim.orm.page.PageBean;
 import jym.sim.sql.Logic;
+import jym.sim.util.Tools;
+import jym.sim.util.UsedTime;
 
 @SuppressWarnings("unused")
 public class OrmDemo {
@@ -43,7 +46,7 @@ public class OrmDemo {
 			
 		});
 		
-		checkDelete(orm);
+//		checkDelete(orm);
 //		checkUpdate(orm);
 //		checkInsert(orm);
 		
@@ -75,7 +78,7 @@ public class OrmDemo {
 	
 	private static void checkInsert(IUpdate<UserBean> orm) {
 		UserBean user = new UserBean();
-		for (int i=100; i<120; ++i) {
+		for (int i=100; i<12000; ++i) {
 			user.setBrongthname("test " + i);
 			user.setBrongthsn(""+i);
 			user.setBrongthid("i" + i);
@@ -83,12 +86,46 @@ public class OrmDemo {
 		}
 	}
 
+	/**
+	 * odbc驱动:<br>
+	 * 10000条数据,3个字符串字段,不遍历结果集,动态方法快大约100倍<br>
+	 * 遍历结果集,动态方法慢大约3倍
+	 */
 	private static void checkSelect(ISelecter<UserBean> orm) {
+		boolean iteratorResult = true;
+		
 		UserBean user = new UserBean();
-		List<?> list = orm.select(user, "or");
-		Iterator<?> it = list.iterator();
-		while (it.hasNext()) {
-			System.out.println(it.next());
+		PageBean page = new PageBean();
+		
+		for (int i=0; i<3; ++i)
+		{
+			UsedTime.start("动态查询");
+			List<?> list = orm.select(user, "or", null);
+			
+			Tools.pl("size: " + list.size());
+		
+			if (iteratorResult) {
+				Iterator<?> it = list.iterator();
+				while (it.hasNext()) {
+					it.next();
+				}
+			}
+			UsedTime.printAll();
+		}
+		for (int i=0; i<3; ++i)
+		{
+			UsedTime.start("一次性查询");
+			List<?> list = orm.select(user, "or", page);
+			
+			Tools.pl("size: " + list.size());
+		
+			if (iteratorResult) {
+				Iterator<?> it = list.iterator();
+				while (it.hasNext()) {
+					it.next();
+				}
+			}
+			UsedTime.printAll();
 		}
 	}
 }

@@ -10,4 +10,7 @@ public class OrmException extends SimException {
 		super(string);
 	}
 
+	public OrmException(Throwable e) {
+		super(e);
+	}
 }

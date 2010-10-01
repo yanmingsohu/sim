@@ -56,6 +56,10 @@ public class JdbcTemplate implements IQuery, ICall {
 		showsql = show;
 	}
 	
+	public boolean isShowSql() {
+		return showsql;
+	}
+	
 	/**
 	 * 用上下文中的数据源初始化模板
 	 * 
@@ -187,6 +191,16 @@ public class JdbcTemplate implements IQuery, ICall {
 
 	public void regExceptionHandle(IExceptionHandle eh) {
 		handle.set(eh);
+	}
+	
+	/**
+	 * 创建一条到数据库的连接,该连接直接从数据源中取得
+	 * 连接使用结束需要手动关闭
+	 * 
+	 * @throws SQLException
+	 */
+	protected Connection createConnection() throws SQLException {
+		return src.getConnection();
 	}
 	
 	/**
@@ -342,14 +356,22 @@ public class JdbcTemplate implements IQuery, ICall {
 		}
 		
 		public void close() {
-			// 关闭后,JdbcSession在执行sql前会被调用,此时conn被关闭,会导致异常
-//			if (isAutoCommit()) {
-//				try {
-//					conn.close();
-//				} catch (SQLException e) {
-//					handleException(e);
-//				}
-//			}
+		// 关闭后,JdbcSession在执行sql前会被调用,此时conn被关闭,会导致异常
+		/*	if (isAutoCommit()) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					handleException(e);
+				}
+			} */
+		}
+		
+		/**
+		 *  线程对象在线程退出后被释放,conn也会被释放,但是因为
+		 *  conn是数据池创建的所以仍然有引用,必须手动关闭
+		 */
+		protected void finalize() throws Throwable {
+			conn.close();
 		}
 	}
 

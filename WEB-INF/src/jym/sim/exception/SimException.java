@@ -13,7 +13,7 @@ public class SimException extends Exception {
 		super(s);
 	}
 	
-	public SimException(Exception e) {
+	public SimException(Throwable e) {
 		super(e);
 	}
 }

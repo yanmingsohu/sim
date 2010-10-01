@@ -1,6 +1,7 @@
 package jym.sim.orm;
 
 import java.lang.reflect.Method;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -19,6 +20,7 @@ import jym.sim.sql.IQuery;
 import jym.sim.sql.ISql;
 import jym.sim.sql.IWhere;
 import jym.sim.sql.JdbcTemplate;
+import jym.sim.sql.ResultSetList;
 import jym.sim.util.Tools;
 
 /**
@@ -163,15 +165,11 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 	}
 	
 	public List<T> select(T model, String join) {
-		PageBean p = new PageBean();
-		p.setCurrent(1);
-		p.setOnesize(Integer.MAX_VALUE);
-		p.setTotal(1);
-		return select(model, join, p);
+		return select(model, join, null);
 	}
 	
-	public List<T> select(final T model, final String join, final PageBean pagedata) {
-		Tools.check(pagedata, "分页数据不能为null");
+	public List<T> select(final T model, final String join, PageBean pagedata) {
+
 		final StringBuilder where = new StringBuilder();
 		
 		loopMethod2Colume(model, new IColumnValue() {
@@ -196,10 +194,48 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 			}
 		});
 		
-		return select(
-				pagePlot.select(orm.getTableName(), where.toString(), plot.order().toString(), pagedata),
-				pagedata
-				);
+	if (pagedata==null) {
+		NotPagination p = new NotPagination();
+		String sql = p.select(orm.getTableName(), 
+				where.toString(), 
+				plot.order().toString(), 
+				null);
+		return selectWithoutPage(sql);
+	}
+		
+		String sql = pagePlot.select(orm.getTableName(), 
+					where.toString(), 
+					plot.order().toString(), 
+					pagedata);
+		return select(sql, pagedata);
+	}
+	
+	/**
+	 * 该方法返回的List,在取数据时才从数据库查询结果,对于大数据量的查询使用该方法
+	 * 
+	 * @throws SQLException 
+	 */
+	private List<T> selectWithoutPage(final String sql) {
+		try {
+			Connection conn = createConnection();
+
+			ResultSetList.IGetBean<T> gb = new ResultSetList.IGetBean<T>() {
+				public T get(String[] columnNames, ResultSet rs) throws Throwable {
+					T model = clazz.newInstance();
+					for (int i=1; i<=columnNames.length; ++i) {
+						plot.mapping(columnNames[i-1], i, rs, model);
+					}
+					return model;
+				}
+			};
+			
+			if (super.isShowSql()) Tools.plsql(sql);
+			
+			return new ResultSetList<T>(sql, conn, gb);
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 	private List<T> select(final String sql, final PageBean pagedata) {
@@ -214,6 +250,10 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 		return brs;
 	}
 	
+	/**
+	 * 此方法会把rs中所有的数据压入brs中并返回,在数据行很多时,内存溢出<br>
+	 * 但该方法比动态取数据的方法快
+	 */
 	private void select(ResultSet rs, List<T> brs, PageBean pagedata) throws Exception {
 		if (rs==null) return;
 		
