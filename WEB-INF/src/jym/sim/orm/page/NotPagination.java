@@ -3,7 +3,7 @@
 package jym.sim.orm.page;
 
 /**
- * 此实现类不分页数据
+ * 此实现类不分页数据,select方法的page参数可以为null
  */
 public class NotPagination implements IPage {
 	

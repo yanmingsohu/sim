@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.AbstractList;
 
+import jym.sim.orm.SelectTemplate;
+
 /**
  * @param <BEAN> - 存放查询出数据的实体类类型
  */
@@ -18,7 +20,6 @@ public class ResultSetList<BEAN> extends AbstractList<BEAN> {
 	private ResultSet resultSet;
 	private Statement statement;
 	private final String[] columnNames;
-	private final int columnCount;
 	private IGetBean<BEAN> getter;
 	private int currentRow = 0;
 	private int maxRow = -1;
@@ -35,6 +36,7 @@ public class ResultSetList<BEAN> extends AbstractList<BEAN> {
 		connection = conn;
 		getter = gb;
 		
+	//XXX 这是导致resultSet查询速度慢的原因
 		statement = conn.createStatement(
 				ResultSet.TYPE_SCROLL_INSENSITIVE, 
 				ResultSet.CONCUR_READ_ONLY);
@@ -42,12 +44,7 @@ public class ResultSetList<BEAN> extends AbstractList<BEAN> {
 		resultSet = statement.executeQuery(sql);
 		
 		ResultSetMetaData rsmd = resultSet.getMetaData();
-		columnCount = rsmd.getColumnCount();
-		
-		columnNames = new String[columnCount];
-		for (int i=0; i<columnCount; ++i) {
-			columnNames[i] = rsmd.getColumnLabel(i+1);
-		}
+		columnNames = SelectTemplate.getColumnNames(rsmd);
 	}
 	
 	/**
@@ -60,8 +57,8 @@ public class ResultSetList<BEAN> extends AbstractList<BEAN> {
 			throw new IndexOutOfBoundsException("max: "+size()+" not: "+index);
 		}
 		
-		index++;
 		try {
+			index++;
 			if (index-1 == currentRow) {
 				resultSet.next();
 			} else {
@@ -69,7 +66,7 @@ public class ResultSetList<BEAN> extends AbstractList<BEAN> {
 			}
 			currentRow = index;
 			
-			return getter.get(columnNames, resultSet);
+			return getter.fromRowData(columnNames, resultSet);
 		
 		} catch (Throwable e) {
 			throw new RuntimeException(e);
@@ -83,6 +80,8 @@ public class ResultSetList<BEAN> extends AbstractList<BEAN> {
 				if (resultSet.last()) {
 					maxRow = resultSet.getRow();
 					currentRow = maxRow;
+				} else {
+					maxRow = 0;
 				}
 			} catch(Exception e) {
 				maxRow = 0;
@@ -116,7 +115,10 @@ public class ResultSetList<BEAN> extends AbstractList<BEAN> {
 		clear();
 	}
 	
-	
+	/**
+	 * 数据行转换为实体类的实现
+	 * @param <BEAN>
+	 */
 	public interface IGetBean<BEAN> {
 		/**
 		 * 用rs当前行中的数据,生成BEAN对象
@@ -125,6 +127,7 @@ public class ResultSetList<BEAN> extends AbstractList<BEAN> {
 		 * @param rs - 结果集
 		 * @return 结果集当前行对应的实体对象
 		 */
-		public BEAN get(String[] columnNames, ResultSet rs) throws Throwable;
+		public BEAN fromRowData(String[] columnNames, ResultSet rs) throws Exception;
 	}
+	
 }

@@ -26,8 +26,11 @@ import jym.sim.util.Tools;
 /**
  * 数据库实体检索模板
  */
-public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQuery {
+public class SelectTemplate<T> extends JdbcTemplate 
+implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 
+	private final static NotPagination NOPAGE_PLOT = new NotPagination();
+	
 	private Class<T> clazz;
 	private IOrm<T> orm;
 	private Plot<T> plot;
@@ -165,11 +168,35 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 	}
 	
 	public List<T> select(T model, String join) {
-		return select(model, join, null);
+		
+		String where = getWhereSub(model, join);
+		String sql = NOPAGE_PLOT.select(orm.getTableName(), 
+				where, plot.order().toString(), null);
+		
+		return createSelectList(sql);
 	}
 	
-	public List<T> select(final T model, final String join, PageBean pagedata) {
-
+	public List<T> select(T model, String join, final PageBean pagedata) {
+		
+		pagedata.getCurrent();
+		
+		String where = getWhereSub(model, join);
+		final String sql = pagePlot.select(orm.getTableName(), 
+					where, plot.order().toString(), pagedata);
+		
+		final List<T> brs = new ArrayList<T>();
+		
+		query(new ISql() {
+			public void exe(Statement stm) throws Throwable {
+				assembleBeanList( stm.executeQuery(sql), brs, pagedata );
+			}
+		});
+		
+		return brs;
+	}
+	
+	private String getWhereSub(final T model, final String join) {
+		
 		final StringBuilder where = new StringBuilder();
 		
 		loopMethod2Colume(model, new IColumnValue() {
@@ -194,20 +221,7 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 			}
 		});
 		
-	if (pagedata==null) {
-		NotPagination p = new NotPagination();
-		String sql = p.select(orm.getTableName(), 
-				where.toString(), 
-				plot.order().toString(), 
-				null);
-		return selectWithoutPage(sql);
-	}
-		
-		String sql = pagePlot.select(orm.getTableName(), 
-					where.toString(), 
-					plot.order().toString(), 
-					pagedata);
-		return select(sql, pagedata);
+		return where.toString();
 	}
 	
 	/**
@@ -215,52 +229,26 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 	 * 
 	 * @throws SQLException 
 	 */
-	private List<T> selectWithoutPage(final String sql) {
+	private List<T> createSelectList(final String sql) {
 		try {
-			Connection conn = createConnection();
-
-			ResultSetList.IGetBean<T> gb = new ResultSetList.IGetBean<T>() {
-				public T get(String[] columnNames, ResultSet rs) throws Throwable {
-					T model = clazz.newInstance();
-					for (int i=1; i<=columnNames.length; ++i) {
-						plot.mapping(columnNames[i-1], i, rs, model);
-					}
-					return model;
-				}
-			};
-			
 			if (super.isShowSql()) Tools.plsql(sql);
-			
-			return new ResultSetList<T>(sql, conn, gb);
+			Connection conn = createConnection();
+			return new ResultSetList<T>(sql, conn, this);
 			
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}
 	
-	private List<T> select(final String sql, final PageBean pagedata) {
-		final List<T> brs = new ArrayList<T>();
-		
-		query(new ISql() {
-			public void exe(Statement stm) throws Throwable {
-				select( stm.executeQuery(sql), brs, pagedata );
-			}
-		});
-		
-		return brs;
-	}
-	
 	/**
 	 * 此方法会把rs中所有的数据压入brs中并返回,在数据行很多时,内存溢出<br>
 	 * 但该方法比动态取数据的方法快
 	 */
-	private void select(ResultSet rs, List<T> brs, PageBean pagedata) throws Exception {
+	private void assembleBeanList(ResultSet rs, List<T> brs, PageBean pagedata) throws Exception {
 		if (rs==null) return;
 		
 		try {
-			ResultSetMetaData rsmd = rs.getMetaData();
-			
-			int col = rsmd.getColumnCount();
+			String[] cols = getColumnNames(rs.getMetaData());
 			
 			if (rs.next()) {
 				int total = 1;
@@ -273,12 +261,7 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 				pagedata.setTotalRow(total);
 				
 				do {
-					T model = clazz.newInstance();
-					
-					for (int i=1; i<=col; ++i) {
-						// ormmap.set时已经变为小写
-						plot.mapping(rsmd.getColumnLabel(i), i, rs, model);
-					}
+					T model = fromRowData(cols, rs);
 					brs.add(model);
 				} while ( rs.next() );
 			}
@@ -291,6 +274,14 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 				}
 			plot.stopColnameMapping();
 		}
+	}
+	
+	public T fromRowData(String[] columnNames, ResultSet rs) throws Exception {
+		T model = clazz.newInstance();
+		for (int i=1; i<=columnNames.length; ++i) {
+			plot.mapping(columnNames[i-1], i, rs, model);
+		}
+		return model;
 	}
 	
 	private void warnning(String msg) {
@@ -315,4 +306,18 @@ public class SelectTemplate<T> extends JdbcTemplate implements ISelecter<T>, IQu
 		return plot;
 	}
 	
+	/**
+	 * 返回结果集数据中，列名的数组
+	 * @throws SQLException 
+	 */
+	public static final String[] getColumnNames(ResultSetMetaData rsmd) 
+	throws SQLException {
+		int columnCount = rsmd.getColumnCount();
+		
+		String[] columnNames = new String[columnCount];
+		for (int i=0; i<columnCount; ++i) {
+			columnNames[i] = rsmd.getColumnLabel(i+1);
+		}
+		return columnNames;
+	}
 }

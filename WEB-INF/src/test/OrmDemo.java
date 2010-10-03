@@ -2,8 +2,11 @@
 
 package test;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import javax.sql.DataSource;
 
 import jym.sim.orm.IOrm;
 import jym.sim.orm.IPlot;
@@ -23,8 +26,9 @@ public class OrmDemo {
 	 * @throws Exception 
 	 */
 	public static void main(String[] args) throws Exception {
+		DataSource ds = TestDBPool.mySqlSource();
 		
-		OrmTemplate<UserBean> orm = new OrmTemplate<UserBean>(TestDBPool.getDataSource(), new IOrm<UserBean>() {
+		OrmTemplate<UserBean> orm = new OrmTemplate<UserBean>(ds, new IOrm<UserBean>() {
 
 			public Class<UserBean> getModelClass() {
 				return UserBean.class;
@@ -52,7 +56,7 @@ public class OrmDemo {
 		
 		checkSelect(orm);
 		
-		// list do something...
+		Tools.pl("over.");
 	}
 	
 	private static void checkDelete(IUpdate<UserBean> orm) {
@@ -78,53 +82,60 @@ public class OrmDemo {
 	
 	private static void checkInsert(IUpdate<UserBean> orm) {
 		UserBean user = new UserBean();
-		for (int i=100; i<12000; ++i) {
-			user.setBrongthname("test " + i);
-			user.setBrongthsn(""+i);
-			user.setBrongthid("i" + i);
+		for (int i=1; i<12000; ++i) {
+			user.setBrongthname("name " + i);
+			user.setBrongthsn(String.format("%05d", i));
+			user.setBrongthid("id " + i);
 			orm.add(user);
 		}
 	}
 
 	/**
 	 * odbc驱动:<br>
-	 * 10000条数据,3个字符串字段,不遍历结果集,动态方法快大约100倍<br>
-	 * 遍历结果集,动态方法慢大约3倍
+	 * 10000条数据,3个字符串字段,<b>不遍历</b>结果集,动态方法快大约100倍;<br>
+	 * <b>遍历</b>结果集,动态方法慢大约5倍;性能差别的主要原因则是使用可滚动的结果集:<br>
+	 * <code>
+	 * statement = conn.createStatement(
+	 *			ResultSet.TYPE_SCROLL_INSENSITIVE, 
+	 *			ResultSet.CONCUR_READ_ONLY);
+	 *</code>
 	 */
 	private static void checkSelect(ISelecter<UserBean> orm) {
 		boolean iteratorResult = true;
 		
 		UserBean user = new UserBean();
 		PageBean page = new PageBean();
+		int loop = 0;
 		
 		for (int i=0; i<3; ++i)
 		{
 			UsedTime.start("动态查询");
-			List<?> list = orm.select(user, "or", null);
+			List<?> list = orm.select(user, "or");
 			
-			Tools.pl("size: " + list.size());
 		
 			if (iteratorResult) {
 				Iterator<?> it = list.iterator();
 				while (it.hasNext()) {
 					it.next();
+					loop++;
 				}
 			}
+			Tools.pl("size: " + list.size() + " loop: " + loop); loop=0;
 			UsedTime.printAll();
 		}
 		for (int i=0; i<3; ++i)
 		{
 			UsedTime.start("一次性查询");
 			List<?> list = orm.select(user, "or", page);
-			
-			Tools.pl("size: " + list.size());
 		
 			if (iteratorResult) {
 				Iterator<?> it = list.iterator();
 				while (it.hasNext()) {
 					it.next();
+					loop++;
 				}
 			}
+			Tools.pl("size: " + list.size() + " loop: " + loop); loop=0;
 			UsedTime.printAll();
 		}
 	}
