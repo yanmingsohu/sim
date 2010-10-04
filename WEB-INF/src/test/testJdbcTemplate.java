@@ -12,15 +12,12 @@ import jym.sim.util.Tools;
 public class testJdbcTemplate {
 	
 	public static void main(String[] s) throws Exception {
-		
 		JdbcTemplate jt = createJdbc();
 		
 		jt.query(new ISql() {
-
 			public void exe(Statement stm) throws Throwable {
 				Tools.pl( stm.execute("select * from ba_brongth") );
 			}
-			
 		});
 	}
 	

@@ -14,7 +14,9 @@ import jym.sim.pool.PoolFactory;
 public class TestDBPool {
 	
 	private static PoolFactory pool;
-	private static PoolFactory mysql;
+	
+	public static String MDB = "/test/access_source.conf";
+	public static String MYSQL = "/test/mysql_source.conf";
 	
 	public static void main(String s[]) throws IOException {
 		getDataSource();
@@ -22,15 +24,9 @@ public class TestDBPool {
 	
 	public static DataSource getDataSource() throws IOException {
 		if (pool==null) {
-			pool = new PoolFactory("/test/datasource.conf");
+			pool = new PoolFactory(MYSQL);
 		}
 		return pool.getDataSource();
 	}
 	
-	public static DataSource mySqlSource() throws IOException {
-		if (mysql==null) {
-			mysql = new PoolFactory("/test/mysql_datasource.conf");
-		}
-		return mysql.getDataSource();
-	}
 }

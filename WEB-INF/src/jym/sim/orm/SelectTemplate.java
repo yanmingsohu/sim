@@ -1,7 +1,6 @@
 package jym.sim.orm;
 
 import java.lang.reflect.Method;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -173,7 +172,13 @@ implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 		String sql = NOPAGE_PLOT.select(orm.getTableName(), 
 				where, plot.order().toString(), null);
 		
-		return createSelectList(sql);
+		try {
+			if (super.isShowSql()) Tools.plsql(sql);
+			return new ResultSetList<T>(sql, this, this);
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 	public List<T> select(T model, String join, final PageBean pagedata) {
@@ -225,22 +230,6 @@ implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 	}
 	
 	/**
-	 * 该方法返回的List,在取数据时才从数据库查询结果,对于大数据量的查询使用该方法
-	 * 
-	 * @throws SQLException 
-	 */
-	private List<T> createSelectList(final String sql) {
-		try {
-			if (super.isShowSql()) Tools.plsql(sql);
-			Connection conn = createConnection();
-			return new ResultSetList<T>(sql, conn, this);
-			
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-	}
-	
-	/**
 	 * 此方法会把rs中所有的数据压入brs中并返回,在数据行很多时,内存溢出<br>
 	 * 但该方法比动态取数据的方法快
 	 */
@@ -261,7 +250,7 @@ implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 				pagedata.setTotalRow(total);
 				
 				do {
-					T model = fromRowData(cols, rs);
+					T model = fromRowData(cols, rs, 0);
 					brs.add(model);
 				} while ( rs.next() );
 			}
@@ -276,7 +265,12 @@ implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 		}
 	}
 	
-	public T fromRowData(String[] columnNames, ResultSet rs) throws Exception {
+	public T fromRowData(String[] columnNames, ResultSet rs, int rowNum) 
+	throws Exception {
+		
+	if (rowNum<0) 
+		throw new IndexOutOfBoundsException("不能有负值索引: " + rowNum);
+		
 		T model = clazz.newInstance();
 		for (int i=1; i<=columnNames.length; ++i) {
 			plot.mapping(columnNames[i-1], i, rs, model);

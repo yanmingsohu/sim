@@ -26,7 +26,7 @@ public class OrmDemo {
 	 * @throws Exception 
 	 */
 	public static void main(String[] args) throws Exception {
-		DataSource ds = TestDBPool.mySqlSource();
+		DataSource ds = TestDBPool.getDataSource();
 		
 		OrmTemplate<UserBean> orm = new OrmTemplate<UserBean>(ds, new IOrm<UserBean>() {
 
@@ -35,9 +35,9 @@ public class OrmDemo {
 			}
 
 			public void mapping(IPlot plot) {
-				plot.fieldPlot("brongthname", "brongthname", Logic.INCLUDE);
-				plot.fieldPlot("brongthid", "brongthid");
-				plot.fieldPlot("brongthsn", "brongthsn");
+				plot.fieldPlot("name", "name", Logic.INCLUDE);
+				plot.fieldPlot("id", "id");
+				plot.fieldPlot("sn", "sn");
 			}
 
 			public String getKey() {
@@ -45,15 +45,13 @@ public class OrmDemo {
 			}
 
 			public String getTableName() {
-				return "ba_brongth";
+				return "user_bean";
 			}
-			
 		});
 		
 //		checkDelete(orm);
 //		checkUpdate(orm);
 //		checkInsert(orm);
-		
 		checkSelect(orm);
 		
 		Tools.pl("over.");
@@ -62,7 +60,7 @@ public class OrmDemo {
 	private static void checkDelete(IUpdate<UserBean> orm) {
 		UserBean user = new UserBean();
 		for (int i=100; i<120; ++i) {
-			user.setBrongthname("rename2 " + i);
+			user.setName("rename2 " + i);
 			
 			orm.delete(user);
 		}
@@ -71,9 +69,9 @@ public class OrmDemo {
 	private static void checkUpdate(IUpdate<UserBean> orm) {
 		UserBean user = new UserBean();
 		for (int i=100; i<120; ++i) {
-			user.setBrongthname("rename2 " + i);
-			user.setBrongthsn(""+i);
-			user.setBrongthid("i" + i);
+			user.setName("rename2 " + i);
+			user.setSn(""+i);
+			user.setId("i" + i);
 			
 			orm.update(user);
 		}
@@ -82,10 +80,10 @@ public class OrmDemo {
 	
 	private static void checkInsert(IUpdate<UserBean> orm) {
 		UserBean user = new UserBean();
-		for (int i=1; i<12000; ++i) {
-			user.setBrongthname("name " + i);
-			user.setBrongthsn(String.format("%05d", i));
-			user.setBrongthid("id " + i);
+		for (int i=1; i<10; ++i) {
+			user.setName("name " + i);
+			user.setSn(String.format("%05d", i));
+			user.setId("id " + i);
 			orm.add(user);
 		}
 	}
@@ -106,24 +104,25 @@ public class OrmDemo {
 		UserBean user = new UserBean();
 		PageBean page = new PageBean();
 		int loop = 0;
+		int count = 1;
 		
-		for (int i=0; i<3; ++i)
+		for (int i=0; i<count; ++i)
 		{
 			UsedTime.start("动态查询");
 			List<?> list = orm.select(user, "or");
 			
-		
 			if (iteratorResult) {
 				Iterator<?> it = list.iterator();
 				while (it.hasNext()) {
-					it.next();
+					Tools.pl( it.next() );
 					loop++;
 				}
 			}
 			Tools.pl("size: " + list.size() + " loop: " + loop); loop=0;
 			UsedTime.printAll();
 		}
-		for (int i=0; i<3; ++i)
+		
+		for (int i=0; i<count; ++i)
 		{
 			UsedTime.start("一次性查询");
 			List<?> list = orm.select(user, "or", page);

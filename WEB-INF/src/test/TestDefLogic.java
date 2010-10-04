@@ -9,8 +9,8 @@ public class TestDefLogic {
 	
 	public static void main(String[] ss) {
 		UserBean user = new UserBean();
-		user.setBrongthname("开发区");
-		user.setBrongthid("x3000");
+		user.setName("开发区");
+		user.setId("x3000");
 		
 		String s = "fdsaf=fdsaf";//"((bname = '${brongthname}') and (id = '${brongthid}'))";
 		

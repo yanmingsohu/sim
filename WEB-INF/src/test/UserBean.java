@@ -5,33 +5,33 @@ package test;
 
 public class UserBean {
 	
-	private String brongthname;
-	private String brongthid;
-	private String brongthsn;
+	private String name;
+	private String id;
+	private String sn;
 	
 
-	public String getBrongthname() {
-		return brongthname;
+	public String getName() {
+		return name;
 	}
-	public void setBrongthname(String brongthname) {
-		this.brongthname = brongthname;
+	public void setName(String brongthname) {
+		this.name = brongthname;
 	}
-	public String getBrongthid() {
-		return brongthid;
+	public String getId() {
+		return id;
 	}
-	public void setBrongthid(String brongthid) {
-		this.brongthid = brongthid;
+	public void setId(String brongthid) {
+		this.id = brongthid;
 	}
-	public String getBrongthsn() {
-		return brongthsn;
+	public String getSn() {
+		return sn;
 	}
-	public void setBrongthsn(String brongthsn) {
-		this.brongthsn = brongthsn;
+	public void setSn(String brongthsn) {
+		this.sn = brongthsn;
 	}
 	
 	public String toString() {
-		return	"name: " + brongthname
-				+ "\tid: " + brongthid
-				+ "\tsn: " + brongthsn;
+		return	"name: " + name
+				+ "\tid: " + id
+				+ "\tsn: " + sn;
 	}
 }

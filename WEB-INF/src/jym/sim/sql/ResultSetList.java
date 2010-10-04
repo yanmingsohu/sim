@@ -12,6 +12,8 @@ import java.util.AbstractList;
 import jym.sim.orm.SelectTemplate;
 
 /**
+ * 封装查询结果集为List对象
+ * 
  * @param <BEAN> - 存放查询出数据的实体类类型
  */
 public class ResultSetList<BEAN> extends AbstractList<BEAN> {
@@ -25,9 +27,16 @@ public class ResultSetList<BEAN> extends AbstractList<BEAN> {
 	private int maxRow = -1;
 	
 
+	public ResultSetList(String sql, IQuery query, IGetBean<BEAN> gb) 
+	throws SQLException {
+		this(sql, query.createConnection(), gb);
+	}
+	
 	/**
-	 * 封装查询方法
+	 * 封装查询方法,
 	 *
+	 * @param sql - 必须是查询类的sql语句,且只能是单个查询语句
+	 * @param conn - 该连接不能在外部关闭，否则会引起异常
 	 * @throws SQLException 
 	 */
 	public ResultSetList(String sql, Connection conn, IGetBean<BEAN> gb) 
@@ -49,24 +58,27 @@ public class ResultSetList<BEAN> extends AbstractList<BEAN> {
 	
 	/**
 	 * 取得指定数据行上数据映射的实体类,应该使用连续的索引(0,1,2,N)
-	 * 才可以实现很好的兼容性,否则可能抛出异常(驱动不支持的情况)
+	 * 才可以实现很好的兼容性,否则可能抛出异常(驱动不支持的情况)<br>
+	 * <b>负值</b>的索引在不同实现中会有不同，但不会从结果集中取
 	 */
 	@Override
 	public BEAN get(int index) {
-		if (index<0 || index>=size()) {
+		if (index>=size()) {
 			throw new IndexOutOfBoundsException("max: "+size()+" not: "+index);
 		}
 		
 		try {
-			index++;
-			if (index-1 == currentRow) {
-				resultSet.next();
-			} else {
-				resultSet.absolute(index);
+			if (index>=0) {
+				index++;
+				if (index-1 == currentRow) {
+					resultSet.next();
+				} else {
+					resultSet.absolute(index);
+				}
+				currentRow = index;
 			}
-			currentRow = index;
 			
-			return getter.fromRowData(columnNames, resultSet);
+			return getter.fromRowData(columnNames, resultSet, index);
 		
 		} catch (Throwable e) {
 			throw new RuntimeException(e);
@@ -117,17 +129,21 @@ public class ResultSetList<BEAN> extends AbstractList<BEAN> {
 	
 	/**
 	 * 数据行转换为实体类的实现
-	 * @param <BEAN>
+	 * @param <BEAN> 存储数据的对象
 	 */
 	public interface IGetBean<BEAN> {
 		/**
-		 * 用rs当前行中的数据,生成BEAN对象
+		 * 用rs当前行中的数据,生成BEAN对象,
+		 * <b>必须定义</b>负值rowNum的行为,一般是抛出异常
 		 * 
 		 * @param columnNames - 列名表
 		 * @param rs - 结果集
+		 * @param rowNum - 当前数据行，索引负值范围在不同的实现中有不同的定义
+		 *  		rowNum的最大值是查询结果集的最大行数
 		 * @return 结果集当前行对应的实体对象
 		 */
-		public BEAN fromRowData(String[] columnNames, ResultSet rs) throws Exception;
+		public BEAN fromRowData(String[] columnNames, 
+				ResultSet rs, int rowNum) throws Exception;
 	}
 	
 }

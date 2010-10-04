@@ -194,16 +194,6 @@ public class JdbcTemplate implements IQuery, ICall {
 	}
 	
 	/**
-	 * 创建一条到数据库的连接,该连接直接从数据源中取得
-	 * 连接使用结束需要手动关闭
-	 * 
-	 * @throws SQLException
-	 */
-	protected Connection createConnection() throws SQLException {
-		return src.getConnection();
-	}
-	
-	/**
 	 * 数据库抛出的异常注入这个方法中，然后由注册过的异常处理器处理
 	 */
 	protected void handleException(Throwable t) {
@@ -212,6 +202,16 @@ public class JdbcTemplate implements IQuery, ICall {
 			ie.exception(t, t.getMessage());
 			// t.printStackTrace();
 		}
+	}
+	
+	/**
+	 * 创建一条到数据库的连接,该连接直接从数据源中取得
+	 * 连接使用结束需要手动关闭
+	 * 
+	 * @throws SQLException
+	 */
+	public Connection createConnection() throws SQLException {
+		return src.getConnection();
 	}
 	
 	private ProxyStatement getProxy(Statement st) {
