@@ -13,6 +13,7 @@ edit: CatfoOD 2010-9-12
 
 依赖项目:
 
+	javaSE 1.5				(或更高)
 	j2ee 1.4							http://java.sun.com/j2ee/overview.html
 	struts2								http://struts.apache.org/
 	commons-logging-1.0.4				http://commons.apache.org/logging/

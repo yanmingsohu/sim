@@ -2,15 +2,14 @@
 
 package jym.sim.util;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.Stack;
 
 /**
  * 测试一段过程消耗的时间, 线程安全的类, 无需实例
  */
 public final class UsedTime {
 	
-	private static ThreadLocal<Deque<Time>>	times = new ThreadLocal<Deque<Time>>();
+	private static ThreadLocal<Stack<Time>>	times = new ThreadLocal<Stack<Time>>();
 	private static final String NULL_STR = "";
 	
 	
@@ -26,10 +25,10 @@ public final class UsedTime {
 	 * @param desc - 对此次计时的描述
 	 */
 	public static void start(String desc) {
-		Deque<Time> q = times.get();
+		Stack<Time> q = times.get();
 		
 		if (q == null) {
-			q = new ArrayDeque<Time>();
+			q = new Stack<Time>();
 			times.set(q);
 		}
 
@@ -45,7 +44,7 @@ public final class UsedTime {
 	 * 调用此方法会影响结果,所以如果需要多次取得结果,应使用getUsedTime
 	 */
 	public static long end() {
-		Deque<Time> q = times.get();
+		Stack<Time> q = times.get();
 		Time t = q.pop();
 		Tools.check(t, "错误: 尚未调用start()");
 		t.end();
@@ -58,7 +57,7 @@ public final class UsedTime {
 	 * 该方法必须在end(),endAndPrint()之前调用有效
 	 */
 	public static long getUsedTime() {
-		Deque<Time> q = times.get();
+		Stack<Time> q = times.get();
 		Time t = q.peek();
 		Tools.check(t, "错误: 尚未调用start()");
 		return t.usedTime();
@@ -68,7 +67,7 @@ public final class UsedTime {
 	 * 停止计时,并且在控制台输出使用的时间
 	 */
 	public static void endAndPrint() {
-		Deque<Time> q = times.get();
+		Stack<Time> q = times.get();
 		Time t = q.pop();
 		Tools.check(t, "错误: 尚未调用start()");
 		t.end();
@@ -77,12 +76,12 @@ public final class UsedTime {
 	}
 	
 	public static void printAll() {
-		Deque<Time> q = times.get();
-		Time t = q.pollFirst();
+		Stack<Time> q = times.get();
+		Time t = q.pop();
 		while (t!=null) {
 			t.end();
 			Tools.pl(t.getName() + "使用了: " + t.usedTime() + " ms");
-			t = q.pollFirst();
+			t = q.pop();
 		}
 	}
 	
