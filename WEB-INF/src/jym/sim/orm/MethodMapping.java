@@ -53,7 +53,7 @@ class MethodMapping {
 			data = trans.trans(rs, col);
 		
 		} catch (Exception e) {
-
+			e.printStackTrace();
 			warnning(method + "与数据库类型不匹配(原因:"
 					+ e.getMessage()
 					+ "),已经设置为null");
@@ -122,7 +122,7 @@ class MethodMapping {
 		else if (BigDecimal.class.isAssignableFrom(type)) {
 			it = new ITransition() {
 				public Object trans(ResultSet rs, int col) throws SQLException {
-					return new BigDecimal(rs.getString(col));
+					return rs.getBigDecimal(col);
 				}
 			};
 		}

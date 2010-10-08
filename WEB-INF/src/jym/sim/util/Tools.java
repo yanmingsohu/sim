@@ -134,6 +134,13 @@ public class Tools {
 	}
 	
 	/**
+	 * 打印当前过程的调用堆栈
+	 */
+	public static void plStackTrace() {
+		Tools.plerr(new Throwable("调用堆栈"));
+	}
+	
+	/**
 	 * 如果o==null, 则抛出异常,异常信息在msg中定义
 	 * 
 	 * @throws RuntimeException

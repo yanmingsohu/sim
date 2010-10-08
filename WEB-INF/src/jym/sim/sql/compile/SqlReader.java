@@ -13,6 +13,7 @@ import java.util.List;
 
 import jym.sim.sql.IQuery;
 import jym.sim.sql.IResultSql;
+import jym.sim.sql.JdbcTemplate;
 import jym.sim.sql.ResultSetList;
 import jym.sim.util.Tools;
 
@@ -151,13 +152,13 @@ public class SqlReader implements ResultSetList.IGetBean<Object[]> {
 	 * 返回的List中每行元素是一个数组,数组的长度等于结果集的列长,<br>
 	 * List<b>负值索引</b>存放表头名字在数组中的位置,之后的元素是结果集的行数据<br>
 	 * 
-	 * @param iq - 一般传递JdbcTemplate
+	 * @param jdbc
 	 * @return List<Object[]> 返回查询的结果集,如果出现错误则返回null
 	 */
-	public List<Object[]> executeQuery(IQuery iq) {
+	public List<Object[]> executeQuery(JdbcTemplate jdbc) {
 		List<Object[]> list = null;
 		try {
-			list = new ResultSetList<Object[]>(instance.toString(), iq, this);
+			list = new ResultSetList<Object[]>(instance.toString(), jdbc, this);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

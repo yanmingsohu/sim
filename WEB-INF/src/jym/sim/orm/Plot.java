@@ -110,9 +110,9 @@ class Plot<T> implements IPlot {
 				md.invoke(rs, colc, model);
 				
 			} catch(Exception e) {
+				
 				warnning(model.getClass(), "执行方法 (" 
 						+ md.getName() + ") 时错误: " + e.getMessage());
-				e.printStackTrace();
 			}
 		} else {
 			warnning(model.getClass(), colname+" 指定的数据列名没有映射");

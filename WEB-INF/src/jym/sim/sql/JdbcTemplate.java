@@ -205,13 +205,12 @@ public class JdbcTemplate implements IQuery, ICall {
 	}
 	
 	/**
-	 * 创建一条到数据库的连接,该连接直接从数据源中取得
-	 * 连接使用结束需要手动关闭
+	 * 取得线程唯一的Connection对象,返回的Connection不可以关闭,否则会引起错误
 	 * 
 	 * @throws SQLException
 	 */
-	public Connection createConnection() throws SQLException {
-		return src.getConnection();
+	protected Connection getConnection() throws SQLException {
+		return initSession().getConnection();
 	}
 	
 	private ProxyStatement getProxy(Statement st) {
@@ -356,8 +355,9 @@ public class JdbcTemplate implements IQuery, ICall {
 		}
 		
 		public void close() {
-		// 关闭后,JdbcSession在执行sql前会被调用,此时conn被关闭,会导致异常
-		/*	if (isAutoCommit()) {
+			// 关闭后,JdbcSession在执行sql前会被调用,此时conn被关闭,会导致异常
+			/*	
+			if (isAutoCommit()) {
 				try {
 					conn.close();
 				} catch (SQLException e) {

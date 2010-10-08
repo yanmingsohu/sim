@@ -26,10 +26,18 @@ public class ResultSetList<BEAN> extends AbstractList<BEAN> {
 	private int currentRow = 0;
 	private int maxRow = -1;
 	
-
-	public ResultSetList(String sql, IQuery query, IGetBean<BEAN> gb) 
+	
+	/**
+	 * Connection对象由jdbc管理
+	 * 
+	 * @param sql 必须是查询类的sql语句,且只能是单个查询语句
+	 * @throws SQLException
+	 */
+	public ResultSetList(String sql, JdbcTemplate jdbc, IGetBean<BEAN> gb) 
 	throws SQLException {
-		this(sql, query.createConnection(), gb);
+		this(sql, jdbc.getConnection(), gb);
+		// 如果connection==null,则不会关闭它
+		connection = null;
 	}
 	
 	/**
@@ -41,11 +49,10 @@ public class ResultSetList<BEAN> extends AbstractList<BEAN> {
 	 */
 	public ResultSetList(String sql, Connection conn, IGetBean<BEAN> gb) 
 	throws SQLException {
-		
 		connection = conn;
 		getter = gb;
 		
-	//XXX 这是导致resultSet查询速度慢的原因
+		//XXX 这是导致resultSet查询速度慢的原因
 		statement = conn.createStatement(
 				ResultSet.TYPE_SCROLL_INSENSITIVE, 
 				ResultSet.CONCUR_READ_ONLY);
@@ -115,21 +122,22 @@ public class ResultSetList<BEAN> extends AbstractList<BEAN> {
 			statement.close();
 		} catch (SQLException e) {
 		}
-		try {
-			connection.close();
-		} catch (SQLException e) {
+		if (connection!=null) {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+			}
 		}
 	}
 
 	@Override
 	protected void finalize() throws Throwable {
-		super.finalize();
 		clear();
 	}
 	
 	/**
-	 * 数据行转换为实体类的实现
-	 * @param <BEAN> 存储数据的对象
+	 * 数据行转换为实体类过程的实现
+	 * @param <BEAN> 存储数据的对象类型
 	 */
 	public interface IGetBean<BEAN> {
 		/**
@@ -138,8 +146,8 @@ public class ResultSetList<BEAN> extends AbstractList<BEAN> {
 		 * 
 		 * @param columnNames - 列名表
 		 * @param rs - 结果集
-		 * @param rowNum - 当前数据行，索引负值范围在不同的实现中有不同的定义
-		 *  		rowNum的最大值是查询结果集的最大行数
+		 * @param rowNum - 当前数据行，索引负值范围在不同的实现中有不同的定义,
+		 *  		通常会抛异常;rowNum的最大值是查询结果集的最大行数
 		 * @return 结果集当前行对应的实体对象
 		 */
 		public BEAN fromRowData(String[] columnNames, 
