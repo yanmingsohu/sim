@@ -3,6 +3,7 @@
 package jym.sim.json;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -33,14 +34,42 @@ public class Json implements IjSon {
 	public void set(Object name, double d) {
 		set(name, new Primitive(d));
 	}
+	
+	public void set(Object name, Collection<?> c) {
+		set(name, new FromCollection(c));
+	}
+	
+	public void set(Object name, Map<?, ?> map) {
+		set(name, new FromMap(map));
+	}
+	
+	public void setBean(Object name, Object bean) {
+		set(name, new FromBean(bean));
+	}
+	
+	/**
+	 * 设置值，如果result是null数字或布尔，则不使用引号包围
+	 * 不在输出时判断是为了兼容之前的代码
+	 */
+	protected void setOrPrimitive(Object name, Object result) {
+		if (result==null 
+				|| result.getClass().isPrimitive()
+				|| result instanceof Number
+				|| result instanceof Boolean ) 
+		{
+			set(name, new Primitive(result));
+		} else {
+			set(name, result);
+		}
+	}
 
 	public IjSon createSub(Object name) {
-		Json rj = null;
+		IjSon rj = null;
 		
 		Object obj = map.get(formatJson(name.toString()));
 		
-		if (obj instanceof Json) {
-			rj = (Json) obj;
+		if (obj instanceof IjSon) {
+			rj = (IjSon) obj;
 		} 
 		else if (obj==null) {
 			rj = new Json();
@@ -60,12 +89,9 @@ public class Json implements IjSon {
 				
 				out.append(QUOTATION_MARKS).append(name).append(QUOTATION_MARKS);
 				out.append(':');
-				if (value instanceof Json) {
-					Json rj = (Json) value;
+				if (value instanceof IGo) {
+					IGo rj = (IGo) value;
 					rj.go(out);
-				}
-				else if (value instanceof Primitive) {
-					out.append(value.toString());
 				}
 				else {
 					out.append(QUOTATION_MARKS).append(
@@ -84,16 +110,14 @@ public class Json implements IjSon {
 		return	JSonFormater.frm(str);
 	}
 	
-	
-	private class Primitive {
-		private Object v;
-		
-		private Primitive(Object o) {
-			v = o;
+	public String toString() {
+		StringBuilder out = new StringBuilder();
+		try {
+			go(out);
+		} catch (IOException e) {
+			out.append(e);
 		}
-		
-		public String toString() {
-			return String.valueOf(v);
-		}
+		return out.toString();
 	}
+
 }
