@@ -4,8 +4,8 @@ package jym.sim.json;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Json implements IjSon {
@@ -16,7 +16,7 @@ public class Json implements IjSon {
 	
 	
 	public Json() {
-		map = new HashMap<String,Object>();
+		map = new LinkedHashMap<String,Object>();
 	}
 	
 	public void set(Object name, Object value) {

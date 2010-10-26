@@ -155,10 +155,20 @@ public class BeanUtil {
 	/**
 	 * 执行targer对象的method方法, 参数是params
 	 */
-	public static Object invoke(Object targer, String method, Object...params) 
+	public static Object invoke(Object target, String method, Object...params) 
 	throws Exception, NoSuchMethodException {
 		
-		Class<?> clazz = targer.getClass();
+		Method m = getMethod(target, method, params);
+		return m.invoke(target, params);
+	}
+	
+	/**
+	 * 取得targer对象的method方法, 参数是params
+	 */
+	public static Method getMethod(Object target, String method, Object...params) 
+	throws Exception, NoSuchMethodException {
+		
+		Class<?> clazz = target.getClass();
 		Class<?>[] cls = null;
 		
 		if (params!=null) {
@@ -168,8 +178,7 @@ public class BeanUtil {
 			}
 		}
 		
-		Method m = clazz.getMethod(method, cls);
-		return m.invoke(targer, params);
+		return clazz.getMethod(method, cls);
 	}
 	
 	/**
