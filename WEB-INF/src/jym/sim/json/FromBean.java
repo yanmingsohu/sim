@@ -5,6 +5,7 @@ package jym.sim.json;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
 import jym.sim.util.BeanUtil;
 import jym.sim.util.Tools;
@@ -25,6 +26,9 @@ public class FromBean extends Json {
 		Field[] fields = clazz.getDeclaredFields();
 		if (fields.length>0) {
 			for (int i=0; i<fields.length; ++i) {
+				if ( Modifier.isStatic(fields[i].getModifiers()) ) 
+					continue;
+				
 				String fname = fields[i].getName();
 				String geterName = BeanUtil.getGetterName(fname);
 				
