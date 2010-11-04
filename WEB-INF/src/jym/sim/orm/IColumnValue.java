@@ -12,7 +12,8 @@ public interface IColumnValue {
 	 * 
 	 * @param column - 列名,不会是null
 	 * @param value - 值
+	 * @param valueType - 值的类型
 	 */
-	void set(String column, Object value);
+	void set(String column, Object value, Class<?> valueType);
 	
 }

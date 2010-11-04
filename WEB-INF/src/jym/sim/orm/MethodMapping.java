@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
 
@@ -116,6 +117,13 @@ class MethodMapping {
 			it = new ITransition() {
 				public Object trans(ResultSet rs, int col) throws SQLException {
 					return rs.getDate(col);
+				}
+			};
+		}
+		else if (Timestamp.class.isAssignableFrom(type)) {
+			it = new ITransition() {
+				public Object trans(ResultSet rs, int col) throws SQLException {
+					return rs.getTimestamp(col);
 				}
 			};
 		}

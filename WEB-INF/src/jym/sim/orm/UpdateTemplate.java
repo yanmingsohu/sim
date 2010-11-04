@@ -35,8 +35,8 @@ public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
 		
 		loopMethod2Colume(model, new IColumnValue() {
 			boolean first = true;
-			public void set(String column, Object value) {
-				if ( isValid(value) ) {
+			public void set(String column, Object value, Class<?> valueType) {
+				if ( isValid(value, valueType) ) {
 					if (first) first = false;
 					else {
 						columns.append(',');
@@ -71,8 +71,8 @@ public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
 		loopMethod2Colume(model, new IColumnValue() {
 			boolean first = true;
 			
-			public void set(String column, Object value) {
-				if ( isValid(value) ) {
+			public void set(String column, Object value, Class<?> valueType) {
+				if ( isValid(value, valueType) ) {
 					if (first) {
 						first = false;
 					} else {
@@ -106,8 +106,8 @@ public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
 		loopMethod2Colume(model, new IColumnValue() {
 			boolean first = true;
 			
-			public void set(String column, Object value) {
-				if ( isValid(value) ) {
+			public void set(String column, Object value, Class<?> valueType) {
+				if ( isValid(value, valueType) ) {
 					if ( !column.equalsIgnoreCase(pk) ) {
 						if (first) {
 							first = false;

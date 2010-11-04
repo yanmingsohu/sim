@@ -108,14 +108,13 @@ class Plot<T> implements IPlot {
 		if (md!=null) {
 			try {
 				md.invoke(rs, colc, model);
-				
-			} catch(Exception e) {
-				
-				warnning(model.getClass(), "执行方法 (" 
-						+ md.getName() + ") 时错误: " + e.getMessage());
+			} 
+			catch(Exception e) {
+				warnning(model.getClass(), "执行方法 (", 
+						md.getName(), ") 时错误: ", e.getMessage());
 			}
 		} else {
-			warnning(model.getClass(), colname+" 指定的数据列名没有映射");
+			warnning(model.getClass(), colname, " 指定的数据列名没有映射");
 		}
 	}
 	
@@ -140,8 +139,8 @@ class Plot<T> implements IPlot {
 			reverse.put(getm, colname);
 			
 		} catch (OrmException e) {
-			warnning(orm.getModelClass(),
-					"映射属性(" + fieldname + ")时错误: " + e.getMessage());
+			warnning(orm.getModelClass(), "映射属性(", 
+					fieldname, ")时错误: ", e.getMessage());
 		}
 		
 		return mm;
@@ -178,8 +177,8 @@ class Plot<T> implements IPlot {
 		return reverse.get(m);
 	}
 	
-	private void warnning(Class<?> beanClass, String msg) {
-		Tools.pl("警告:(Plot): (" + beanClass +") " + msg);
+	private void warnning(Class<?> beanClass, String ...msg) {
+		Tools.pl("警告:(Plot): (", beanClass, ") ", msg);
 	}
 
 	public IOrder order() {

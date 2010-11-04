@@ -118,7 +118,7 @@ implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 	 * 为拼装sql时的实体属性有效检查配置策略,<br>
 	 * 过滤器只要返回非null,则认为值有效<br>
 	 * 有效的属性值将被用来拼装sql(增删改查),无效的值则会被忽略<br>
-	 * 默认null值总是认为是无效的
+	 * 默认null值总是认为是无效的(除非配置相关类型的过滤器)
 	 */
 	public FilterPocket getCheckVaildValue() {
 		return vaildChecker;
@@ -141,8 +141,8 @@ implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 	 * 该值是否有效,有效性测试在getCheckVaildValue返回的对象中设置<br>
 	 * null值总是认为是无效的
 	 */
-	protected final boolean isValid(Object value) {
-		return vaildChecker.isValid(value);
+	protected final boolean isValid(Object value, Class<?> valueType) {
+		return vaildChecker.isValid(value, valueType);
 	}
 	
 	protected void loopMethod2Colume(T model, IColumnValue cv) {
@@ -155,8 +155,7 @@ implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 				try {
 					Tools.check(model, "bean参数不能为null.");
 					Object value = ms[i].invoke(model, new Object[0]);
-					
-					cv.set(colname, value);
+					cv.set(colname, value, ms[i].getReturnType());
 					
 				} catch (Exception e) {
 					warnning("invoke错误: "+ e);
@@ -207,10 +206,10 @@ implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 		loopMethod2Colume(model, new IColumnValue() {
 			boolean first = true;
 
-			public void set(String column, Object value) {
+			public void set(String column, Object value, Class<?> valueType) {
 				IWhere logic = plot.getColumnLogic(column);
 				
-				if (logic instanceof ISkipValueCheck || isValid(value) ) {
+				if (logic instanceof ISkipValueCheck || isValid(value, valueType) ) {
 					value = logic.w(column, transformValue( value ), model);
 
 					if (value!=null) {
