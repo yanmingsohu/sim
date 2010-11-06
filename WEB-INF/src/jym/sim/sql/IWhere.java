@@ -3,7 +3,7 @@
 package jym.sim.sql;
 
 /**
- * sql的where子句中列于值的判断方法
+ * sql的where子句中列值的判断方法
  */
 public interface IWhere {
 	

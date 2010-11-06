@@ -47,6 +47,8 @@ public interface IPlot {
 	 * @param getter -- 创建fieldName类型对象需要的ISelecter对象,
 	 * 					如果为null则和调用两个参数的方法效果相同
 	 * @param pkname -- 外键对象的主键属性名
+	 * 
+	 * @deprecated 该方法尚未详细测试
 	 */
 	public void fieldPlot(String fieldName, String colname, ISelecter<?> getter, String pkname);
 	
