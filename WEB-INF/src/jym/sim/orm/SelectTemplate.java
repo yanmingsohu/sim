@@ -138,7 +138,7 @@ implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 	}
 	
 	/**
-	 * 该值是否有效,有效性测试在getCheckVaildValue返回的对象中设置<br>
+	 * 测试value值是否有效,有效性测试在getCheckVaildValue返回的对象中设置<br>
 	 * null值总是认为是无效的
 	 */
 	protected final boolean isValid(Object value, Class<?> valueType) {
@@ -210,6 +210,7 @@ implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 				IWhere logic = plot.getColumnLogic(column);
 				
 				if (logic instanceof ISkipValueCheck || isValid(value, valueType) ) {
+					//XXX transformValue 负责按照策略转换输入值
 					value = logic.w(column, transformValue( value ), model);
 
 					if (value!=null) {

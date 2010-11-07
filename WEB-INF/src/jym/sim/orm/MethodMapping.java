@@ -13,6 +13,9 @@ import jym.sim.sql.IWhere;
 import jym.sim.sql.Logic;
 import jym.sim.util.BeanUtil;
 
+/**
+ * 保存实体属性与数据库之间映射的关系，和列的转换相关策略
+ */
 class MethodMapping {
 
 	@SuppressWarnings({ "unchecked" })
@@ -60,6 +63,7 @@ class MethodMapping {
 					+ "),已经设置为null");
 		}
 		
+		//XXX outfilter 按策略转换数据库中的值到实体属性中
 		method.invoke(model, outfilter.filter(data) );
 	}
 	

@@ -38,6 +38,7 @@ class Plot<T> implements IPlot {
 	private Order order_sub = new Order();
 	private FilterPocket outfilter;
 	
+	
 	public Plot(IOrm<T> _orm, FilterPocket _outfilter) {
 		orm = _orm;
 		outfilter = _outfilter;
