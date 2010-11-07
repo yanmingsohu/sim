@@ -113,17 +113,17 @@ class MethodMapping {
 				}
 			};
 		}
-		else if (Date.class.isAssignableFrom(type)) {
-			it = new ITransition() {
-				public Object trans(ResultSet rs, int col) throws SQLException {
-					return rs.getDate(col);
-				}
-			};
-		}
 		else if (Timestamp.class.isAssignableFrom(type)) {
 			it = new ITransition() {
 				public Object trans(ResultSet rs, int col) throws SQLException {
 					return rs.getTimestamp(col);
+				}
+			};
+		}
+		else if (Date.class.isAssignableFrom(type)) {
+			it = new ITransition() {
+				public Object trans(ResultSet rs, int col) throws SQLException {
+					return rs.getDate(col);
 				}
 			};
 		}
