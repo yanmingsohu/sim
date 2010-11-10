@@ -2,10 +2,12 @@
 
 package jym.sim.sql;
 
+import jym.sim.orm.ISqlLogic;
+
 /**
  * sql的where子句中列值的判断方法
  */
-public interface IWhere {
+public interface IWhere extends ISqlLogic {
 	
 	/**
 	 * 如果要忽略此where子句则在w()中返回SKIP_WHERE_SUB

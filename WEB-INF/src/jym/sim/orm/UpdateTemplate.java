@@ -107,20 +107,38 @@ public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
 			boolean first = true;
 			
 			public void set(String column, Object value, Class<?> valueType) {
-				if ( isValid(value, valueType) ) {
+				IUpdateLogic logic = getPlot().getWhereLogic(column).getUpdateLogic();
+				
+				do {
+					// 列的逻辑策略会覆盖全局的策略
+					if (logic!=null) {
+						value = logic.up(value);
+						
+						if (value==null) 
+							break;
+					}
+					else if ( !isValid(value, valueType) ) {
+						break;
+					}
+					
 					if ( !column.equalsIgnoreCase(pk) ) {
 						if (first) {
 							first = false;
 						} else {
 							sql.append(" , ");
 						}
+						
 						sql.append(column).append('=');
-						sql.append('\'').append(transformValue(value)).append('\'');
+						if (value==IUpdateLogic.NULL) {
+							sql.append("null");
+						} else {
+							sql.append('\'').append(transformValue(value)).append('\'');
+						}
 						
 					} else {
 						result.value = value;
 					}
-				}
+				} while(false);
 			}
 		});
 		

@@ -207,7 +207,7 @@ implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 			boolean first = true;
 
 			public void set(String column, Object value, Class<?> valueType) {
-				IWhere logic = plot.getColumnLogic(column);
+				IWhere logic = plot.getWhereLogic(column).getWhereLogic();
 				
 				if (logic instanceof ISkipValueCheck || isValid(value, valueType) ) {
 					//XXX transformValue 负责按照策略转换输入值

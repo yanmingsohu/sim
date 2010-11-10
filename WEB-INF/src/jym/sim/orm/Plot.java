@@ -11,7 +11,6 @@ import java.util.Map;
 import jym.sim.exception.OrmException;
 import jym.sim.filter.FilterPocket;
 import jym.sim.sql.IOrder;
-import jym.sim.sql.IWhere;
 import jym.sim.util.BeanUtil;
 import jym.sim.util.Tools;
 
@@ -79,15 +78,15 @@ class Plot<T> implements IPlot {
 	}
 	
 	public void fieldPlot(String fn, String cn) {
-		setMappingPlot(fn, cn, null, null, null);
+		setMappingPlot(fn, cn, null, null);
 	}
 
 	public void fieldPlot(String fieldName, String colname, ISelecter<?> getter, String pk) {
-		setMappingPlot(fieldName, colname, getter, pk, null);
+		setMappingPlot(fieldName, colname, getter, pk);
 	}
 	
-	public void fieldPlot(String fieldName, String colname, IWhere log) {
-		setMappingPlot(fieldName, colname, null, null, log);
+	public void fieldPlot(String fieldName, String colname, ISqlLogic ...logics) {
+		setMappingPlot(fieldName, colname, null, null, logics);
 	}
 	
 	protected void mapping(String colname, int colc, ResultSet rs, T model) {
@@ -100,7 +99,7 @@ class Plot<T> implements IPlot {
 
 		// 自动使用表格列名进行映射
 		if (usecolnamemap && !ormmap.containsKey(colname)) {
-			md = setMappingPlot(colname, colname, null, null, null);
+			md = setMappingPlot(colname, colname, null, null);
 			
 		} else {
 			md = ormmap.get(colname);
@@ -111,11 +110,11 @@ class Plot<T> implements IPlot {
 				md.invoke(rs, colc, model);
 			} 
 			catch(Exception e) {
-				warnning(model.getClass(), "执行方法 (", 
-						md.getName(), ") 时错误: ", e.getMessage());
+				warnning(model.getClass(), "执行方法 (" 
+						+ md.getName() + ") 时错误: " + e.getMessage());
 			}
 		} else {
-			warnning(model.getClass(), colname, " 指定的数据列名没有映射");
+			warnning(model.getClass(), colname + " 指定的数据列名没有映射");
 		}
 	}
 	
@@ -124,7 +123,7 @@ class Plot<T> implements IPlot {
 	 * sql可以为null
 	 */
 	protected MethodMapping setMappingPlot(
-			String fieldname, String colname, ISelecter<?> is, String pk, IWhere log) {
+			String fieldname, String colname, ISelecter<?> is, String pk, ISqlLogic ...logics) {
 
 		Method setm = getMethod( BeanUtil.getSetterName(fieldname) );
 		Method getm = getMethod( BeanUtil.getGetterName(fieldname) );
@@ -134,14 +133,14 @@ class Plot<T> implements IPlot {
 			if (setm==null) {
 				throw new OrmException("没有setter方法");
 			}
-			mm = new MethodMapping(setm, is, pk, log, outfilter);
+			mm = new MethodMapping(setm, is, pk, logics, outfilter);
 			// ormmap.set 的参数变为小写
 			ormmap.put(colname.toLowerCase(), mm);
 			reverse.put(getm, colname);
 			
 		} catch (OrmException e) {
-			warnning(orm.getModelClass(), "映射属性(", 
-					fieldname, ")时错误: ", e.getMessage());
+			warnning(orm.getModelClass(), "映射属性("
+					+ fieldname + ")时错误: " + e.getMessage());
 		}
 		
 		return mm;
@@ -156,13 +155,16 @@ class Plot<T> implements IPlot {
 	}
 	
 	/**
-	 * 取得指定列的比较方式, 大小写不敏感
+	 * 取得指定列where的比较方式, 大小写不敏感<br>
+	 * 该方法不会返回null
 	 */
-	public IWhere getColumnLogic(String colname) {
-		IWhere log = null;
+	protected LogicPackage getWhereLogic(String colname) {
+		LogicPackage log = null;
 		MethodMapping mm = ormmap.get(colname.toLowerCase());
 		if (mm!=null) {
-			log = mm.getColumnLogic();
+			log = mm.getLogicPackage();
+		} else {
+			log = LogicPackage.DEFAULT;
 		}
 		return log;
 	}
@@ -178,7 +180,7 @@ class Plot<T> implements IPlot {
 		return reverse.get(m);
 	}
 	
-	private void warnning(Class<?> beanClass, String ...msg) {
+	private void warnning(Class<?> beanClass, String msg) {
 		Tools.pl("警告:(Plot): (", beanClass, ") ", msg);
 	}
 

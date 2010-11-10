@@ -9,8 +9,6 @@ import java.util.Collection;
 import java.util.Date;
 
 import jym.sim.filter.FilterPocket;
-import jym.sim.sql.IWhere;
-import jym.sim.sql.Logic;
 import jym.sim.util.BeanUtil;
 
 /**
@@ -21,19 +19,19 @@ class MethodMapping {
 	@SuppressWarnings({ "unchecked" })
 	private ISelecter		objcrt;
 	private Method			method;
-	private ITransition		trans;
-	private IWhere			logic;
-	private String 			pkmethod;
+	private ITransition	trans;
+	private String 		pkmethod;
 	private FilterPocket	outfilter;
+	private LogicPackage	logics;
 	
 	
 	/**
 	 * 抛出异常,说明方法不符合要求<br>
 	 * if log==null log=Logic.EQ
 	 */
-	MethodMapping(Method md, ISelecter<?> is, String pk, IWhere log, FilterPocket _outfilter)	{
-
-		logic 		= (log==null) ? Logic.EQ : log;
+	MethodMapping(Method md, ISelecter<?> is, String pk, ISqlLogic[] log, FilterPocket _outfilter)	{
+		
+		logics		= new LogicPackage(log);
 		objcrt 		= is;
 		method 		= md; 
 		pkmethod 	= (pk!=null) ? BeanUtil.getSetterName(pk) : null;
@@ -189,11 +187,12 @@ class MethodMapping {
 		};
 	}
 	
-	protected IWhere getColumnLogic() {
-		return logic;
+	protected LogicPackage getLogicPackage() {
+		return logics;
 	}
 	
 	private void warnning(String msg) {
 		System.out.println("警告: (MethodMapping): " + msg);
 	}
+	
 }

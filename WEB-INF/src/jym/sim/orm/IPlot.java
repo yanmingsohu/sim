@@ -1,7 +1,6 @@
 package jym.sim.orm;
 
 import jym.sim.sql.IOrder;
-import jym.sim.sql.IWhere;
 
 /**
  * 实体属性与数据库列映射策略
@@ -12,15 +11,23 @@ public interface IPlot {
 	 * 把需要映射的实体属性名fieldName与数据库列名colname进行匹配<br>
 	 * 未映射的实体属性使用表格名匹配<br>
 	 * <br>
-	 * <b>如果fieldName不是简单变量类型:</b>则必须调用三个参数的fieldPlot方法
+	 * <b>如果fieldName不是简单变量类型:</b>则必须调用三个参数的fieldPlot方法<br>
+	 * <br>
+	 * logics参数的说明:<br>
+	 * <b>select语句使用IWhere接口:</b><br>
+	 * 	当使用实体做参数执行select时, colname列的逻辑方法<br>
+	 *  如果fieldName=='value', log==Logic.EQ, 则where语句为<br>
+	 * 	<code>where colname = 'value'</code>
+	 * <br>
+	 * <b>update语句使用IUpdateLogic接口:</b><br>
+	 *  当实体做参数执行updata时, colname列如何拼装为sql, 该接口为更新为null值提供支持<br>
+	 *  如果未指定行为,默认使用全局有效检查策略,否则全局策略会被覆盖
 	 * 
 	 * @param fieldName -- 属性名,必须有相应的setter方法,不区分大小写
 	 * @param colname -- 列名,不区分大小写
-	 * @param log -- 当使用实体做参数执行select时, colname列的逻辑方法<br>
-	 * 				如果fieldName=='value', log==Logic.EQ, 则where语句为<br>
-	 * 				<code>where colname = 'value'</code>
+	 * @param logics -- 属性值开始拼装sql时,不同的sql语句有不同的逻辑方式
 	 */
-	public void fieldPlot(String fieldName, String colname, IWhere log);
+	public void fieldPlot(String fieldName, String colname, ISqlLogic ...logics);
 	
 	/**
 	 * 把需要映射的实体属性名fieldName与数据库列名colname进行匹配<br>
