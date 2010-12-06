@@ -31,7 +31,7 @@ public class Logic implements IWhere {
 	/** 大于等于 */
 		public static final IWhere GE = new Easy(">=");
 		
-	/** like查询 */
+	/** 自定义的like查询, 属性的值需要加上模糊条件 */
 		public static final IWhere LIKE = new Easy("like");
 		
 	/** 包含查询; 如果结果中含有子串则为true */
