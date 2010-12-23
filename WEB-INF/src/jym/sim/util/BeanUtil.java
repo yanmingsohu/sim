@@ -166,7 +166,7 @@ public class BeanUtil {
 	 * 取得targer对象的method方法, 参数是params
 	 */
 	public static Method getMethod(Object target, String method, Object...params) 
-	throws Exception, NoSuchMethodException {
+	throws SecurityException, NoSuchMethodException {
 		
 		Class<?> clazz = target.getClass();
 		Class<?>[] cls = null;
@@ -225,5 +225,29 @@ public class BeanUtil {
 			}
 		}
 		return f;
+	}
+	
+	/**
+	 * 通过bean对象fieldname属性对应的getter方法取得该属性的值
+	 * 
+	 * @param bean - 数据对象, 如果为null, 会抛出异常
+	 * @param fieldname - 属性名, 如果为null, 则返回null
+	 * @return 属性的值
+	 * 
+	 * @throws Exception - 出现了其他的错误
+	 * @throws NoSuchMethodException - 找不到属性对应的getter方法
+	 */
+	public static Object getFieldValue(Object bean, String fieldname) 
+	throws Exception, NoSuchMethodException {
+		
+		Object value = null;
+		
+		if (fieldname!=null) {
+			String fieldGetMethod = getGetterName(fieldname);
+			if (fieldGetMethod!=null) {
+				value = invoke(bean, fieldGetMethod, new Object[0]);	
+			}
+		}
+		return value;
 	}
 }
