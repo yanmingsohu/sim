@@ -11,6 +11,8 @@ public class TestBean {
 	private String c;
 	private BigDecimal d;
 	private boolean e;
+	private char f;
+	
 	
 	public boolean getE() {
 		return e;
@@ -44,5 +46,11 @@ public class TestBean {
 	}
 	public void setD(BigDecimal d) {
 		this.d = d;
+	}
+	public char getF() {
+		return f;
+	}
+	public void setF(char f) {
+		this.f = f;
 	}
 }

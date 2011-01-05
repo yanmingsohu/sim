@@ -14,6 +14,7 @@ import jym.sim.util.Tools;
 public class TestJson {
 	
 	public static void main(String[] args) {
+		bean();
 		list();
 		map();
 	}

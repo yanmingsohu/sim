@@ -57,8 +57,16 @@ public class Json implements IjSon {
 				|| result instanceof Number
 				|| result instanceof Boolean ) 
 		{
+			
 			set(name, new Primitive(result));
 		} else {
+			if (result instanceof Character) {
+				char c = (Character) result;
+				if ( Character.isISOControl(c) ) {
+					set(name, String.format("\\u%04x", (int) c));
+					return;
+				}
+			}
 			set(name, result);
 		}
 	}
@@ -119,5 +127,4 @@ public class Json implements IjSon {
 		}
 		return out.toString();
 	}
-
 }
