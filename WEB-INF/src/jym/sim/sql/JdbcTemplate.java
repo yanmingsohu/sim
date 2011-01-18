@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Savepoint;
 import java.sql.Statement;
+import java.util.Date;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -22,10 +23,13 @@ import jym.sim.util.UsedTime;
 public class JdbcTemplate implements IQuery, ICall {
 	
 	private static ThreadLocal<JdbcSession> db_connect = new ThreadLocal<JdbcSession>();
-	
+
+	private static int maxSessCount = 20;
+	private static int sessionCount = 1;
+	private ThreadLocal<IExceptionHandle> handle;
 	private boolean showsql = false;
 	private DataSource src;
-	private ThreadLocal<IExceptionHandle> handle;
+	
 	
 	/**
 	 * 用数据源初始化模板
@@ -35,18 +39,28 @@ public class JdbcTemplate implements IQuery, ICall {
 		handle = new ThreadLocal<IExceptionHandle>();
 	}
 	
-	private JdbcSession initSession() throws SQLException {
+	/**
+	 * 初始化session,默认的事务是基于线程的
+	 */
+	protected JdbcSession initSession() throws SQLException {
 		JdbcSession js = db_connect.get();
 		if (js==null) {
-			js = new JdbcSession();
+			js = createSessionInstance();
 			db_connect.set(js);
 		}
 		return js;
 	}
 	
-	public IJdbcSession getSession() throws SQLException {
-		return initSession();
+	public IJdbcSession getSession() {
+		try {
+			return initSession();
+		} catch(SQLException e) {
+			handleException(e);
+		}
+
+		return null;
 	}
+	
 	
 	/**
 	 * 是否回显sql语句,默认不显示
@@ -266,14 +280,25 @@ public class JdbcTemplate implements IQuery, ICall {
 		public String getSql();
 	}
 	
+	protected JdbcSession createSessionInstance() throws SQLException {
+		return new JdbcSession();
+	}
+
+
 	/**
 	 * 默认自动递交的事务
 	 */
-	private class JdbcSession implements IJdbcSession {
+	public class JdbcSession implements IJdbcSession {
 		private Connection conn;
 		
 		private JdbcSession() throws SQLException {
+			++sessionCount;
 			getConnection();
+			
+			if (sessionCount%maxSessCount==0) {
+				Tools.pl(new Date() + "使用的数据库连接: " + sessionCount);
+				maxSessCount += 20;
+			}
 		}
 		
 		public Connection getConnection() throws SQLException {
@@ -355,23 +380,23 @@ public class JdbcTemplate implements IQuery, ICall {
 		}
 		
 		public void close() {
-			// 关闭后,JdbcSession在执行sql前会被调用,此时conn被关闭,会导致异常
-			/*	
 			if (isAutoCommit()) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					handleException(e);
-				}
-			} */
+				// 把JdbcSession从线程变量中移除,
+				// 直到没有其他引用时再释放连接
+				db_connect.set(null);
+			}
 		}
 		
 		/**
 		 *  线程对象在线程退出后被释放,conn也会被释放,但是因为
 		 *  conn是数据池创建的所以仍然有引用,必须手动关闭
 		 */
-		protected void finalize() throws Throwable {
-			conn.close();
+		protected void finalize() throws Throwable {			
+			if (conn!=null) {
+				conn.close();
+				conn = null;
+				--sessionCount;
+			}
 		}
 	}
 
