@@ -36,8 +36,6 @@ public class ResultSetList<BEAN> extends AbstractList<BEAN> {
 	public ResultSetList(String sql, JdbcTemplate jdbc, IGetBean<BEAN> gb) 
 	throws SQLException {
 		this(sql, jdbc.getConnection(), gb);
-		// 如果connection==null,则不会关闭它
-		connection = null;
 	}
 	
 	/**

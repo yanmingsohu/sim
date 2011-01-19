@@ -22,12 +22,19 @@ import jym.sim.util.UsedTime;
 
 public class JdbcTemplate implements IQuery, ICall {
 	
-	private static ThreadLocal<JdbcSession> db_connect = new ThreadLocal<JdbcSession>();
+	private final static ThreadLocal<JdbcSession> 
+				db_connect = new ThreadLocal<JdbcSession>();
 
+	private final ThreadLocal<IExceptionHandle> 
+				handle = new ThreadLocal<IExceptionHandle>();
+	
+	private final static int ADD_BASE = 5;
 	private static int maxSessCount = 20;
-	private static int sessionCount = 1;
-	private ThreadLocal<IExceptionHandle> handle;
+	private static int connectCount = 1;
+	
 	private boolean showsql = false;
+	private boolean lazyMode = false;
+	private boolean debug = false;
 	private DataSource src;
 	
 	
@@ -36,17 +43,15 @@ public class JdbcTemplate implements IQuery, ICall {
 	 */
 	public JdbcTemplate(DataSource ds) {
 		init(ds);
-		handle = new ThreadLocal<IExceptionHandle>();
 	}
 	
 	/**
 	 * 初始化session,默认的事务是基于线程的
 	 */
-	protected JdbcSession initSession() throws SQLException {
+	private JdbcSession initSession() throws SQLException {
 		JdbcSession js = db_connect.get();
 		if (js==null) {
-			js = createSessionInstance();
-			db_connect.set(js);
+			js = new JdbcSession();
 		}
 		return js;
 	}
@@ -61,7 +66,6 @@ public class JdbcTemplate implements IQuery, ICall {
 		return null;
 	}
 	
-	
 	/**
 	 * 是否回显sql语句,默认不显示
 	 * @param show - true显示
@@ -72,6 +76,26 @@ public class JdbcTemplate implements IQuery, ICall {
 	
 	public boolean isShowSql() {
 		return showsql;
+	}
+	
+	/**
+	 * 设置关闭数据库连接的模式<br>
+	 * 
+	 * false - (默认的) 在执行完请求后立即关闭数据库连接<br>
+	 * 
+	 * true - 请求结束后会释放对数据库的引用,但是直到虚拟
+	 * 机的垃圾回收进程启动才会关闭数据库连接,<b>该方法会占用
+	 * 较多的数据库连接</b><br>
+	 * 
+	 * 注意如果当前的连接处于手动递交状态,则数据库绝不会关闭连接<br>
+	 * 修改该设置,需要测试与数据库的兼容性
+	 */
+	public void setConnectMode(boolean lazy) {
+		lazyMode = lazy;
+	}
+	
+	public void setDebug(boolean debug) {
+		this.debug = debug;
 	}
 	
 	/**
@@ -188,8 +212,8 @@ public class JdbcTemplate implements IQuery, ICall {
 			
 		} catch (Throwable t) {
 			Tools.pl("存储过程错误:" + buff.toString());
-			t.printStackTrace();
 			handleException(t);
+			t.printStackTrace();
 			
 		} finally {
 			if (cs!=null) {
@@ -214,17 +238,15 @@ public class JdbcTemplate implements IQuery, ICall {
 		IExceptionHandle ie = handle.get();
 		if (ie!=null) {
 			ie.exception(t, t.getMessage());
-			// t.printStackTrace();
 		}
 	}
 	
 	/**
-	 * 取得线程唯一的Connection对象,返回的Connection不可以关闭,否则会引起错误
-	 * 
+	 * 取得一个Connection对象,返回的Connection必须自行管理
 	 * @throws SQLException
 	 */
 	protected Connection getConnection() throws SQLException {
-		return initSession().getConnection();
+		return src.getConnection();
 	}
 	
 	private ProxyStatement getProxy(Statement st) {
@@ -279,10 +301,6 @@ public class JdbcTemplate implements IQuery, ICall {
 	private interface ProxyStatement extends Statement {
 		public String getSql();
 	}
-	
-	protected JdbcSession createSessionInstance() throws SQLException {
-		return new JdbcSession();
-	}
 
 
 	/**
@@ -292,24 +310,32 @@ public class JdbcTemplate implements IQuery, ICall {
 		private Connection conn;
 		
 		private JdbcSession() throws SQLException {
-			++sessionCount;
 			getConnection();
 			
-			if (sessionCount%maxSessCount==0) {
-				Tools.pl(new Date() + "使用的数据库连接: " + sessionCount);
-				maxSessCount += 20;
+			if (connectCount%maxSessCount==0 && connectCount>0) {
+				Tools.pl(new Date() + " Jdbc使用的数据库连接: " + connectCount);
+				maxSessCount += ADD_BASE;
 			}
 		}
 		
 		public Connection getConnection() throws SQLException {
-			if (conn==null || conn.isClosed()) {
+			if (isClosed()) {
 				conn = src.getConnection();
+				++connectCount;
+				
+				if (debug) Tools.pl("create conn@" 
+						+ conn.hashCode() + " sess@" + this.hashCode());
 			}
 			return conn;
+		}
+		
+		public boolean isClosed() throws SQLException {
+			return conn==null || conn.isClosed();
 		}
 
 		public boolean commit() {
 			try {
+				if (debug) Tools.pl("commit conn@" + conn.hashCode());
 				conn.commit();
 				return true;
 			} catch (SQLException e) {
@@ -355,6 +381,9 @@ public class JdbcTemplate implements IQuery, ICall {
 
 		public void setCommit(boolean isAuto) {
 			try {
+				if (debug) Tools.pl("setCommit("+isAuto+") conn@" + conn.hashCode());
+				
+				db_connect.set(isAuto ? null : this);
 				conn.setAutoCommit(isAuto);
 			} catch (SQLException e) {
 				handleException(e);
@@ -380,22 +409,28 @@ public class JdbcTemplate implements IQuery, ICall {
 		}
 		
 		public void close() {
-			if (isAutoCommit()) {
+			if (conn!=null && isAutoCommit()) {
 				// 把JdbcSession从线程变量中移除,
 				// 直到没有其他引用时再释放连接
 				db_connect.set(null);
+				
+				if (!lazyMode) {
+					try {
+						finalize();
+					} catch (Throwable e) {
+					}
+				}
 			}
 		}
 		
-		/**
-		 *  线程对象在线程退出后被释放,conn也会被释放,但是因为
-		 *  conn是数据池创建的所以仍然有引用,必须手动关闭
-		 */
 		protected void finalize() throws Throwable {			
 			if (conn!=null) {
+				if (debug) Tools.pl("close conn@" 
+						+ conn.hashCode() + " sess@" + this.hashCode());
+				
 				conn.close();
 				conn = null;
-				--sessionCount;
+				--connectCount;
 			}
 		}
 	}

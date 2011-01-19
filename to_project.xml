@@ -31,6 +31,14 @@
 		</jar>
 		
 		<delete dir="${utf8_srcdir}"></delete>
+		
+		<!-- 复制打包好的jar文件复制到指定的项目目录 -->
+		<copy todir="F:/workspace/LWBS/WebRoot/WEB-INF/lib" overwrite="true">
+			<fileset file="${outdir}/sim.jar"/>
+		</copy>
+		<copy todir="F:/workspace/RMCSI/WebRoot/WEB-INF/lib" overwrite="true">
+			<fileset file="${outdir}/sim.jar"/>
+		</copy>
 	</target>
 
 </project>
