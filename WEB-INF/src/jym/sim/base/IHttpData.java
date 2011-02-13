@@ -4,10 +4,10 @@ package jym.sim.base;
 
 import jym.sim.util.IServletData;
 
-public interface IHttpData extends IServletData {
+public interface IHttpData<TYPE> extends IServletData {
 	/**
 	 * 返回：
 	 * web.xml配置中beanclass属性的对象，使用post/get参数初始化
 	 */
-	Object getFormObj();
+	TYPE getFormObj();
 }
