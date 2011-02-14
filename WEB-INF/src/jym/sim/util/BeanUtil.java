@@ -6,19 +6,24 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
-public class BeanUtil {
+public class BeanUtil<TYPE> {
 	
-	private Class<?> beanclass;
+	private Class<TYPE> beanclass;
 	private String m_beanname;
 	
+	
+	@SuppressWarnings("unchecked")
 	public BeanUtil(String beanname) throws ServletException {
 		try {
-			beanclass = Class.forName(beanname);
+			beanclass = (Class<TYPE>) Class.forName(beanname);
 			m_beanname = beanclass.getSimpleName().toLowerCase();
 		} catch (ClassNotFoundException e) {
 			throw new ServletException(e);
@@ -29,8 +34,8 @@ public class BeanUtil {
 		return m_beanname;
 	}
 	
-	public Object creatBean(HttpServletRequest req) {
-		Object bean = null;
+	public TYPE creatBean(HttpServletRequest req) {
+		TYPE bean = null;
 		
 		try {
 			bean = beanclass.newInstance();
@@ -64,6 +69,7 @@ public class BeanUtil {
 		IllegalAccessException, InvocationTargetException 
 	{
 		Object o = null;
+		
 		if (String.class.isAssignableFrom(type)) {
 			o = value;
 		}
@@ -80,6 +86,15 @@ public class BeanUtil {
 			o = new Long(value);
 		}
 		else if (Short.class.isAssignableFrom(type)) {
+			o = new Short(value);
+		}
+		else if (Timestamp.class.isAssignableFrom(type)) {
+			o = new Short(value);
+		}
+		else if (Date.class.isAssignableFrom(type)) {
+			o = new Short(value);
+		}
+		else if (BigDecimal.class.isAssignableFrom(type)) {
 			o = new Short(value);
 		}
 		else {
