@@ -18,8 +18,8 @@ public class SnaqDBPool implements IPoolCreater {
 		pool.setUser(				conf.getUser()		);
 		pool.setPassword(			conf.getPass()		);
 		
-		pool.setMaxPool(			conf.getMaxActive()	);
-		pool.setMinPool(			conf.getMaxWait()	);
+		pool.setMaxSize(			conf.getMaxActive()	);
+		pool.setMaxPool(			conf.getMaxIdle()	);
 		
 		if (conf.isHasValidation()) {
 			pool.setValidationQuery(conf.getValidation());

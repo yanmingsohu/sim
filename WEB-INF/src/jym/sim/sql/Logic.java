@@ -2,6 +2,8 @@
 
 package jym.sim.sql;
 
+import jym.sim.orm.ISqlLogic;
+import jym.sim.orm.IUpdateLogic;
 import jym.sim.sql.logic.DateRange;
 import jym.sim.sql.logic.DefinitionLogic;
 import jym.sim.sql.logic.FixedLogic;
@@ -11,39 +13,60 @@ import jym.sim.sql.logic.OperatorOR;
 /**
  * 数据库查询where字句中逻辑判断策略,IWhere.w()方法返回null,则忽略这个条件
  */
-public class Logic implements IWhere {
+public class Logic implements ISqlLogic {
 	
-	/** 等于 */
+////////////////////// -----------更新判断-------------------------------- ////
+	
+	/** 更新判断, 允许该字段设置为NULL */
+		public static final IUpdateLogic ALLOW_NULL = new IUpdateLogic() {
+			public Object up(Object columnValue) {
+				
+				if (columnValue==null) {
+					return NULL;
+					
+				} else if (columnValue instanceof String) {
+					if (((String) columnValue).trim().length() < 1) {
+						return NULL;
+					}
+				}
+				
+				return columnValue;
+			}
+		};
+	
+////////////////////// -----------查询判断-------------------------------- ////
+	
+	/** 查询判断, 等于 */
 		public static final IWhere EQ = new Easy("=");
 		
-	/** 不等于 */
+	/** 查询判断, 不等于 */
 		public static final IWhere NE = new Easy("!=");
 		
-	/** 小于 */
+	/** 查询判断, 小于 */
 		public static final IWhere LT = new Easy("<");
 		
-	/** 小于等于 */
+	/** 查询判断, 小于等于 */
 		public static final IWhere LE = new Easy("<=");
 		
-	/** 大于 */
+	/** 查询判断, 大于 */
 		public static final IWhere GT = new Easy(">");
 		
-	/** 大于等于 */
+	/** 查询判断, 大于等于 */
 		public static final IWhere GE = new Easy(">=");
 		
 	/** 自定义的like查询, 属性的值需要加上模糊条件 */
 		public static final IWhere LIKE = new Easy("like");
 		
 	/** 包含查询; 如果结果中含有子串则为true */
-		public static final IWhere INCLUDE = new Logic("%1$s like '%%%2$s%%'");
+		public static final IWhere INCLUDE = new Format("%1$s like '%%%2$s%%'");
 		
 	/** 排除查询; 如果结果中不含有子串则为true */
-		public static final IWhere EXCLUDE = new Logic("%1$s not like '%%%2$s%%'");
+		public static final IWhere EXCLUDE = new Format("%1$s not like '%%%2$s%%'");
 		
 	/** 日期查询,精确到日 */
-		public static final IWhere DATE = new Logic("to_char(%1$s, 'yyyy-mm-dd') = '%2$s'");
+		public static final IWhere DATE = new Format("to_char(%1$s, 'yyyy-mm-dd') = '%2$s'");
 		
-	/** 属性不作为查询结果的条件 */
+	/** 查询判断, 属性不作为查询结果的条件 */
 		public static final IWhere NONE = new IWhere() {
 			public String w(String columnName, Object value, Object model) {
 				return null;
@@ -75,14 +98,14 @@ public class Logic implements IWhere {
 		};
 	
 	/**
-	 * 包装多个IWhere条件,实现可选择的逻辑,如果w[n]的结果为null,则使用w[n+1]的结果
+	 * 查询判断, 包装多个IWhere条件,实现可选择的逻辑,如果w[n]的结果为null,则使用w[n+1]的结果
 	 * */
 		public static final IWhere OR(IWhere ...w) {
 			return new OperatorOR(w);
 		};
 		
 	/**
-	 * 固定的where子句,总是返回参数中设定的sql,一般和其他的逻辑配合使用
+	 * 查询判断, 固定的where子句,总是返回参数中设定的sql,一般和其他的逻辑配合使用
 	 * */
 		public static final IWhere FIXED(final String sql) {
 			return new FixedLogic(sql);
@@ -109,30 +132,38 @@ public class Logic implements IWhere {
 		};
 		
 		
-	////////////////////// ------------------------------------------------- ////
+////////////////////// ------------------------------------------------- ////
+	
+	/**
+	 * 使用字符串替换来拼装查询语句
+	 * %1$s - 列名
+	 * %2$s - 属性的值 
+	 */
+	public static class Format implements IWhere {
 		
-	
-	private final String format;
-	
-	private Logic(String fmt) {
-		format = fmt;
-	};
-
-	public String w(String columnName, Object value, Object model) {
-		return String.format(format, columnName, value);
+		private final String format;
+		
+		public Format(String fmt) {
+			format = fmt;
+		}
+		
+		public String w(String columnName, Object value, Object model) {
+			return String.format(format, columnName, value);
+		}
 	}
+	
 	
 	/**
 	 * 简单逻辑表达式, "columnName OP 'value'"
 	 */
-	private static class Easy implements IWhere {
+	public static class Easy implements IWhere {
 		
 		private String op;
 		
 		/**
 		 * <code>columnName OP 'value'</code>
 		 */
-		private Easy(String op) {
+		public Easy(String op) {
 			this.op = op;
 		}
 		

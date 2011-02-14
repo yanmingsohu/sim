@@ -319,7 +319,7 @@ public class JdbcTemplate implements IQuery, ICall {
 		}
 		
 		public Connection getConnection() throws SQLException {
-			if (isClosed()) {
+			if (conn==null || conn.isClosed()) {
 				conn = src.getConnection();
 				++connectCount;
 				
@@ -327,10 +327,6 @@ public class JdbcTemplate implements IQuery, ICall {
 						+ conn.hashCode() + " sess@" + this.hashCode());
 			}
 			return conn;
-		}
-		
-		public boolean isClosed() throws SQLException {
-			return conn==null || conn.isClosed();
 		}
 
 		public boolean commit() {
