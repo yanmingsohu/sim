@@ -1,5 +1,6 @@
 .settings
 outlwbs.xml
+to_rmcs.xml
 /WEB-INF/classes/jym/readme.txt
 /WEB-INF/classes/**
 utf8-src/**

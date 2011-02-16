@@ -64,6 +64,16 @@ public abstract class HttpBase<BEAN> extends HttpServlet {
 				charset = Charset.defaultCharset().name();
 			}
 		}
+		
+		init2(config);
+	}
+	
+	/**
+	 * 子类重写在init方法之后被调用
+	 * @param config
+	 * @throws ServletException
+	 */
+	protected void init2(ServletConfig config) throws ServletException {
 	}
 	
 	/**

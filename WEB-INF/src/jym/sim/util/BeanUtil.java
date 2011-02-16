@@ -8,6 +8,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -15,6 +17,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 public class BeanUtil<TYPE> {
+	
+	public static final String DATE_FMT_TIME = "yyyy-MM-dd kk:mm:ss";
 	
 	private Class<TYPE> beanclass;
 	private String m_beanname;
@@ -89,13 +93,23 @@ public class BeanUtil<TYPE> {
 			o = new Short(value);
 		}
 		else if (Timestamp.class.isAssignableFrom(type)) {
-			o = new Short(value);
+			SimpleDateFormat sdf = new SimpleDateFormat(DATE_FMT_TIME);
+			try {
+				o = new Timestamp( sdf.parse(value).getTime() );
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 		}
 		else if (Date.class.isAssignableFrom(type)) {
-			o = new Short(value);
+			SimpleDateFormat sdf = new SimpleDateFormat(DATE_FMT_TIME);
+			try {
+				o = sdf.parse(value);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 		}
 		else if (BigDecimal.class.isAssignableFrom(type)) {
-			o = new Short(value);
+			o = new BigDecimal(value);
 		}
 		else {
 			Constructor<?> cons = type.getConstructor(String.class);
