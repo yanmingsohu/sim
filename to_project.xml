@@ -4,7 +4,7 @@
 	<!--ANT 1.7 is required											-->
 
 	<!--jar输出路径													-->
-	<property name="outdir" 		value="F:/project/eclipse_webapp/commonageChart/webroot/WEB-INF/lib"/>
+	<property name="outdir" 		value="E:/[web-project]/commonageChart/webroot/WEB-INF/lib"/>
 	
 	<property name="utf8_srcdir" 	value="${basedir}/utf8-src"/>
 	<property name="src_dir" 		value="${basedir}/WEB-INF/src"/>
