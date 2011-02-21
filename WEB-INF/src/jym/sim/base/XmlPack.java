@@ -13,8 +13,8 @@ public class XmlPack implements IPrinter {
 	public final static String SYSTEM = "SYSTEM";
 	public final static String PUBLIC = "PUBLIC";
 	
-	private String head = "<?xml version=\"1.0\" encoding=\"%1s\"?>";
-	private String doctype = "<!DOCTYPE %1s %2s \"%3s\" \"%4s\">";
+	private final static String head = "<?xml version=\"1.0\" encoding=\"%1s\"?>";
+	private final static String doctype = "<!DOCTYPE %1s %2s \"%3s\" \"%4s\">";
 	
 	private CharArrayWriter buff;
 	private PrintWriter out;

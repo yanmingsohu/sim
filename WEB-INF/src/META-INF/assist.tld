@@ -7,11 +7,11 @@
   <tlib-version>1.0</tlib-version>
   <jsp-version>1.2</jsp-version>
   <short-name>assist tag</short-name>
-  <uri>/WEB-INF/assist.tld</uri>
+  <uri>/WEB-INF/jym/assist.tld</uri>
   
   <tag>
     <name>itr</name>
-    <tag-class>com.llb.fw.tagLib.IteratorTag</tag-class>
+    <tag-class>jym.sim.jsptag.IteratorTag</tag-class>
     <body-content>JSP</body-content>
     <description>
 		循环遍历集合中的对象
@@ -51,7 +51,7 @@
   
   <tag>
   	<name>notnull</name>
-  	<tag-class>com.llb.fw.tagLib.NotnullTag</tag-class>
+  	<tag-class>jym.sim.jsptag.NotnullTag</tag-class>
     <body-content>JSP</body-content>
     <description>
        	 测试对象是否为空(null),如果不加参数则默认执行标签体
@@ -73,7 +73,7 @@
   
    <tag>
   	<name>isnull</name>
-  	<tag-class>com.llb.fw.tagLib.IsNullTag</tag-class>
+  	<tag-class>jym.sim.jsptag.IsNullTag</tag-class>
     <body-content>JSP</body-content>
     <description>
        	 测试对象是否为空(null),null则执行标签体,如果不加参数则默认执行标签体
@@ -95,7 +95,7 @@
   
   <tag>
   	<name>select</name>
-  	<tag-class>com.llb.fw.tagLib.SelectTag</tag-class>
+  	<tag-class>jym.sim.jsptag.SelectTag</tag-class>
   	<body-content>empty</body-content>
   	<description>
   		遍历一个对象的静态集合属性作为枚举,类型:String[]或Map,
@@ -140,7 +140,7 @@
   
   <tag>
   	<name>enum</name>
-  	<tag-class>com.llb.fw.tagLib.EnumTag</tag-class>
+  	<tag-class>jym.sim.jsptag.EnumTag</tag-class>
   	<body-content>empty</body-content>
   	<description>
   		取得集合中指定索引的值
@@ -166,7 +166,7 @@
   
   <tag>
   	<name>error</name>
-  	<tag-class>com.llb.fw.tagLib.ErrorTag</tag-class>
+  	<tag-class>jym.sim.jsptag.ErrorTag</tag-class>
   	<body-content>empty</body-content>
   	<description>
   		打印错误堆栈,打印出的错误数据使用如下css类(class):

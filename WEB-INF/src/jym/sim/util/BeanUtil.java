@@ -49,20 +49,22 @@ public class BeanUtil<TYPE> {
 		try {
 			bean = beanclass.newInstance();
 			Field[] fields = beanclass.getDeclaredFields();
+			
 			for (int i=0; i<fields.length; ++i) {
+				Field f = fields[i];					
+				String name = f.getName();
+				String methodname = "set" + firstUp(name);
+				
 				try {
-					Field f = fields[i];					
-					String name = f.getName();
 					Class<?> paramclass = f.getType();
 					
-					String methodname = "set" + firstUp(name);
 					Method method = beanclass.getDeclaredMethod(methodname, paramclass);
 					String value = req.getParameter(name);
 					
 					method.invoke(bean, transitionType(value, paramclass) );
 					
 				} catch (Exception e) {
-					System.out.println("初始化"+e);
+					System.out.println("初始化异常:" + e + " " + methodname);
 				}
 			}
 		} catch (Exception e) {
