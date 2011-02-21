@@ -34,6 +34,11 @@ public class BeanUtil<TYPE> {
 		}
 	}
 	
+	public BeanUtil(Class<TYPE> cl) throws ServletException {
+		beanclass = cl;
+		m_beanname = beanclass.getSimpleName().toLowerCase();
+	}
+	
 	public String getBeanName() {
 		return m_beanname;
 	}

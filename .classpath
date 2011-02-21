@@ -8,7 +8,5 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/struts2"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/java tools"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/mysql"/>
-	<classpathentry kind="lib" path="E:/tomcat-6.0.18/lib/jsp-api.jar"/>
-	<classpathentry kind="lib" path="E:/tomcat-6.0.18/lib/servlet-api.jar"/>
 	<classpathentry kind="output" path="WEB-INF/classes"/>
 </classpath>

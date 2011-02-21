@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	<!DOCTYPE right-uri-mapping SYSTEM "rightMap.dtd">
+-->
+
+<!ELEMENT right-uri-mapping (permit-uri*,right-group+)>
+
+<!ELEMENT permit-uri (#PCDATA)>
+
+<!ELEMENT right-group (name,desc?,right+)>
+<!ATTLIST right-group
+	id CDATA #REQUIRED
+>
+
+<!ELEMENT right (name,desc?,uri+)>
+<!ATTLIST right
+	id CDATA #REQUIRED
+>
+
+<!ELEMENT name (#PCDATA)>
+
+<!ELEMENT desc (#PCDATA)>
+
+<!ELEMENT uri (#PCDATA)>

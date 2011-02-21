@@ -47,11 +47,18 @@ public abstract class HttpBase<BEAN> extends HttpServlet {
 	public final void init(ServletConfig config) throws ServletException {
 		super.init(config);
 		
-		String bclass = config.getInitParameter(PARM_CLASSNAME);
-		if (bclass!=null) {
-			bean = new BeanUtil<BEAN>(bclass);
+		Class<BEAN> bc = getBeanClass();
+		
+		if (bc!=null) {
+			bean = new BeanUtil<BEAN>(bc);
 		} else {
-			Tools.pl(PARM_CLASSNAME + " init-param not set.");
+			String bclass = config.getInitParameter(PARM_CLASSNAME);
+			
+			if (bclass!=null) {
+				bean = new BeanUtil<BEAN>(bclass);
+			} else {
+				Tools.pl(PARM_CLASSNAME + " init-param not set, or getBeanClass() return NULL");
+			}
 		}
 		
 		if (charset==null) {
@@ -74,6 +81,14 @@ public abstract class HttpBase<BEAN> extends HttpServlet {
 	 * @throws ServletException
 	 */
 	protected void init2(ServletConfig config) throws ServletException {
+	}
+	
+	/**
+	 * 返回实体类的类型, 默认返回null, 此时需要在web.xml中配置实体类型<br>
+	 * 推荐使用该方法配置类型, 并且该方法的优先级更高
+	 */
+	protected Class<BEAN> getBeanClass() {
+		return null;
 	}
 	
 	/**
