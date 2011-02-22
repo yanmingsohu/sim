@@ -11,6 +11,7 @@ import jym.sim.tags.ITag;
 import jym.sim.tags.TagBase;
 
 public class HtmlPack implements IPrinter {
+	
 	private PrintWriter out;
 	private CharArrayWriter buff;
 	private ITag head;
@@ -18,6 +19,7 @@ public class HtmlPack implements IPrinter {
 	private ITag title;
 	private TagBase html;
 	private boolean closed;
+	
 	
 	public HtmlPack() {
 		buff = new CharArrayWriter();

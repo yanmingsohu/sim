@@ -20,6 +20,8 @@ public class CharsetFilter implements Filter {
 			FilterChain chain) throws IOException, ServletException {
 		
 		request.setCharacterEncoding(encode);
+		response.setCharacterEncoding(encode);
+		
 		chain.doFilter(request, response);
 	}
 

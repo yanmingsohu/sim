@@ -15,5 +15,6 @@ public class SimException extends Exception {
 	
 	public SimException(Throwable e) {
 		super(e);
+		setStackTrace(e.getStackTrace());
 	}
 }

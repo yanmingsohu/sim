@@ -13,6 +13,9 @@ public class TestBean {
 	private boolean e;
 	private char f;
 	
+	@SuppressWarnings("unused")
+	private String pc;
+	
 	
 	public boolean getE() {
 		return e;
@@ -20,9 +23,6 @@ public class TestBean {
 	public void setE(boolean e) {
 		this.e = e;
 	}
-	@SuppressWarnings("unused")
-	private String pc;
-	
 	public int getA() {
 		return a;
 	}

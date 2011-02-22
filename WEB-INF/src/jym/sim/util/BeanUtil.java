@@ -6,126 +6,12 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 
 public class BeanUtil<TYPE> {
 	
-	public static final String DATE_FMT_TIME = "yyyy-MM-dd kk:mm:ss";
 	
-	private Class<TYPE> beanclass;
-	private String m_beanname;
-	
-	
-	@SuppressWarnings("unchecked")
-	public BeanUtil(String beanname) throws ServletException {
-		try {
-			beanclass = (Class<TYPE>) Class.forName(beanname);
-			m_beanname = beanclass.getSimpleName().toLowerCase();
-		} catch (ClassNotFoundException e) {
-			throw new ServletException(e);
-		}
-	}
-	
-	public BeanUtil(Class<TYPE> cl) throws ServletException {
-		beanclass = cl;
-		m_beanname = beanclass.getSimpleName().toLowerCase();
-	}
-	
-	public String getBeanName() {
-		return m_beanname;
-	}
-	
-	public TYPE creatBean(HttpServletRequest req) {
-		TYPE bean = null;
-		
-		try {
-			bean = beanclass.newInstance();
-			Field[] fields = beanclass.getDeclaredFields();
-			
-			for (int i=0; i<fields.length; ++i) {
-				Field f = fields[i];					
-				String name = f.getName();
-				String methodname = "set" + firstUp(name);
-				
-				try {
-					Class<?> paramclass = f.getType();
-					
-					Method method = beanclass.getDeclaredMethod(methodname, paramclass);
-					String value = req.getParameter(name);
-					
-					method.invoke(bean, transitionType(value, paramclass) );
-					
-				} catch (Exception e) {
-					System.out.println("≥ı ºªØ“Ï≥£:" + e + " " + methodname);
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return bean;
-	}
-	
-	private Object transitionType(String value, Class<?> type) 
-	throws SecurityException, NoSuchMethodException, 
-		IllegalArgumentException, InstantiationException, 
-		IllegalAccessException, InvocationTargetException 
-	{
-		Object o = null;
-		
-		if (String.class.isAssignableFrom(type)) {
-			o = value;
-		}
-		else if (Integer.class.isAssignableFrom(type)) {
-			o = new Integer(value);
-		}
-		else if (Double.class.isAssignableFrom(type)) {
-			o = new Double(value);
-		}
-		else if (Float.class.isAssignableFrom(type)) {
-			o = new Float(value);
-		}
-		else if (Long.class.isAssignableFrom(type)) {
-			o = new Long(value);
-		}
-		else if (Short.class.isAssignableFrom(type)) {
-			o = new Short(value);
-		}
-		else if (Timestamp.class.isAssignableFrom(type)) {
-			SimpleDateFormat sdf = new SimpleDateFormat(DATE_FMT_TIME);
-			try {
-				o = new Timestamp( sdf.parse(value).getTime() );
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
-		else if (Date.class.isAssignableFrom(type)) {
-			SimpleDateFormat sdf = new SimpleDateFormat(DATE_FMT_TIME);
-			try {
-				o = sdf.parse(value);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
-		else if (BigDecimal.class.isAssignableFrom(type)) {
-			o = new BigDecimal(value);
-		}
-		else {
-			Constructor<?> cons = type.getConstructor(String.class);
-			o = cons.newInstance(value);
-		}
-		return o;
-	}
-	
-	private String firstUp(String s) {
+	public static String firstUp(String s) {
 		char[] cs = s.toCharArray();
 		cs[0] = Character.toUpperCase(cs[0]);
 		return new String(cs);

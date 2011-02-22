@@ -3,9 +3,7 @@
 package jym.sim.base;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
-import java.nio.charset.Charset;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -14,7 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jym.sim.util.BeanUtil;
+import jym.sim.exception.BeanException;
 import jym.sim.util.ForwardProcess;
 import jym.sim.util.ICallBack;
 import jym.sim.util.ServletData;
@@ -29,14 +27,12 @@ import jym.sim.util.Tools;
  */
 public abstract class HttpBase<BEAN> extends HttpServlet {
 	
-	private static final long serialVersionUID = 4056930472082034056L;
-	private static final String PARM_CLASSNAME = "bean-class";
-	private static final String PARM_CHARSET = "charset";
-	private static final String PARM_METHOD = "do";
-	private static final String DEFAULT_METHOD = "execute";
+	private static final long serialVersionUID	= 4056930472082034056L;
+	private static final String PARM_CLASSNAME	= "bean-class";
+	private static final String PARM_METHOD		= "do";
+	private static final String DEFAULT_METHOD	= "execute";
 	
-	private static String charset = null;
-	private BeanUtil<BEAN> bean = null;
+	private BeanBuilder<BEAN> bean = null;
 	
 	
 	/**
@@ -50,25 +46,18 @@ public abstract class HttpBase<BEAN> extends HttpServlet {
 		Class<BEAN> bc = getBeanClass();
 		
 		if (bc!=null) {
-			bean = new BeanUtil<BEAN>(bc);
+			bean = new BeanBuilder<BEAN>(bc);
 		} else {
 			String bclass = config.getInitParameter(PARM_CLASSNAME);
 			
 			if (bclass!=null) {
-				bean = new BeanUtil<BEAN>(bclass);
+				try {
+					bean = new BeanBuilder<BEAN>(bclass);
+				} catch (ClassNotFoundException e) {
+					new ServletException(e);
+				}
 			} else {
 				Tools.pl(PARM_CLASSNAME + " init-param not set, or getBeanClass() return NULL");
-			}
-		}
-		
-		if (charset==null) {
-			charset = config.getServletContext().getInitParameter(PARM_CHARSET);
-			try {
-				Charset _cs = Charset.forName(charset);
-				charset = _cs.name();
-			} catch(Exception e) {
-				Tools.pl(PARM_CHARSET + " context-param not set." + e);
-				charset = Charset.defaultCharset().name();
 			}
 		}
 		
@@ -130,7 +119,6 @@ public abstract class HttpBase<BEAN> extends HttpServlet {
 			final HttpServletResponse resp)
 			throws ServletException, IOException {
 
-		charCoding(req, resp);
 		BEAN formbean = packBean(req, resp);
 		HttpData data = new HttpData(req, resp, formbean);
 		
@@ -173,23 +161,17 @@ public abstract class HttpBase<BEAN> extends HttpServlet {
 		return result;
 	}
 	
-	private BEAN packBean(HttpServletRequest req, HttpServletResponse resp) {
+	private BEAN packBean(HttpServletRequest req, HttpServletResponse resp) throws ServletException {
 		BEAN formbean = null;
 		if (bean!=null) {
-			formbean = bean.creatBean(req);
+			try {
+				formbean = bean.creatBean(req);
+			} catch (BeanException e) {
+				throw new ServletException(e);
+			}
 			req.setAttribute(bean.getBeanName(), formbean);
 		}
 		return formbean;
-	}
-	
-	private void charCoding(HttpServletRequest req, HttpServletResponse resp){
-		resp.setContentType("text/html; charset=" + charset);
-		resp.setCharacterEncoding(charset);
-		try {
-			req.setCharacterEncoding(charset);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	private void forward(HttpServletRequest req, HttpServletResponse resp, String path) 
@@ -202,6 +184,7 @@ public abstract class HttpBase<BEAN> extends HttpServlet {
 			}
 		}
 	}
+	
 	
 	private class HttpData extends ServletData implements IHttpData<BEAN> {
 		private BEAN fb;
