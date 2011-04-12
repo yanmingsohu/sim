@@ -205,4 +205,30 @@ public class Tools {
 		}
 	}
 	
+	/**
+	 * 返回当前代码行的信息
+	 */
+	public static String source() {
+		return source(0);
+	}
+	
+	/**
+	 * 返回代码所在行的信息,用于调试
+	 * @param functionCount - 函数的调用深度,通常:
+	 * 		如果直接显示当前的行,则为0,否则如果要显示
+	 * 		调用当前函数的入口代码则为1
+	 */
+	public static String source(int functionCount) {
+		Exception e = new Exception();
+		StackTraceElement[] st = e.getStackTrace();
+		functionCount++;
+		String msg = null;
+		
+		if (st!=null && st.length>functionCount) {
+			msg = st[functionCount].toString();
+		} else {
+			msg = "can't located source info.";
+		}
+		return msg;
+	}
 }
