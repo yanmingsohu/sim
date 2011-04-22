@@ -167,7 +167,8 @@ public class JdbcTemplate implements IQuery, ICall {
 			if (st!=null) {
 				try {
 					st.close();
-				} catch (SQLException e) {}
+				} catch (SQLException e) 
+				{}
 			}
 			if (js!=null) {
 				js.close();
