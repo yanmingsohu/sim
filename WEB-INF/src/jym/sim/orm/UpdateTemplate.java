@@ -16,6 +16,7 @@ public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
 	private final static String UPDATE = "UPDATE ";
 	private final String pk;
 
+	
 	public UpdateTemplate(DataSource ds, Class<T> modelclass, String tablename, String key) {
 		super(ds, modelclass, tablename, key);
 		pk = key;
