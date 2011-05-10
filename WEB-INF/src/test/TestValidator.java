@@ -21,11 +21,12 @@ import jym.sim.validator.annotation.Stringlen;
  * 测试字段验证器的效率
  */
 @SuppressWarnings("unused")
-public class validatorTest {
+public class TestValidator {
 
+	
 	public static void main(String[] args) throws Throwable {
-		pressure();
-		//test();
+		//pressure();
+		test();
 	}
 	
 	private static void pressure() {
@@ -37,7 +38,7 @@ public class validatorTest {
 		
 		for (int i=0; i<10000; ++i) {
 			VerifyMessage vm = v.validate(u);
-//			showMsg( vm ); // 显示会占用时间
+			// showMsg( vm ); // 显示会占用时间
 		}
 		UsedTime.endAndPrint();
 	}
@@ -50,7 +51,8 @@ public class validatorTest {
 		c.set(Calendar.YEAR, 2101);
 		u.setStart(c.getTime());
 		
-		u.setEmail("f@sohu.f");
+		// u.setEmail("f@sohu.f");
+		u.setEmail("");
 		
 		Validator v = new Validator();
 		VerifyMessage msg = v.validate(u);
@@ -123,7 +125,7 @@ class User {
 
 class User2 extends User {
 	
-	@Notnull(msg="邮箱不能为空")
+	//@Notnull(msg="邮箱不能为空")
 	@Email(msg="邮箱格式无效")
 	private String email;
 

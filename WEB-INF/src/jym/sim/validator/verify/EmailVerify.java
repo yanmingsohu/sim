@@ -6,6 +6,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.regex.Pattern;
 
+import jym.sim.util.Tools;
 import jym.sim.validator.IVerify;
 import jym.sim.validator.annotation.Email;
 
@@ -26,7 +27,8 @@ public class EmailVerify implements IVerify {
 	}
 
 	public String getMessage(Field field, Object value) {
-		if (value==null && !(value instanceof String)) return SKIP;
+		if (value==null || !(value instanceof String)) return SKIP;
+		if ( Tools.isNull(value.toString()) ) return SKIP;
 		
 		String email = (String) value;
 		if (p.matcher(email).matches()) {

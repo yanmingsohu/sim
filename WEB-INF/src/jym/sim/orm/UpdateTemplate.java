@@ -108,7 +108,7 @@ public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
 			boolean first = true;
 			
 			public void set(String column, Object value, Class<?> valueType) {
-				IUpdateLogic logic = getPlot().getWhereLogic(column).getUpdateLogic();
+				IUpdateLogic logic = getPlot().getLogicPackage(column).getUpdateLogic();
 				
 				do {
 					// 列的逻辑策略会覆盖全局的策略
