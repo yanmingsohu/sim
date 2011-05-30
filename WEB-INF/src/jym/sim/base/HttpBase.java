@@ -57,7 +57,8 @@ public abstract class HttpBase<BEAN> extends HttpServlet {
 					new ServletException(e);
 				}
 			} else {
-				Tools.pl(PARM_CLASSNAME + " init-param not set, or getBeanClass() return NULL");
+				Tools.pl(this + ": '" + PARM_CLASSNAME 
+						+ "' init-param not set, or getBeanClass() return NULL");
 			}
 		}
 		
