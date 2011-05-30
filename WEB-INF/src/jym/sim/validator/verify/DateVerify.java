@@ -11,7 +11,9 @@ import jym.sim.validator.IVerify;
 import jym.sim.validator.annotation.Daterange;
 
 public class DateVerify implements IVerify {
+	
 	private SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+	
 	
 	public Class<? extends Annotation> getAnnoClass() {
 		return Daterange.class;

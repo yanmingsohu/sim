@@ -6,10 +6,10 @@ import java.net.URL;
 
 import jym.sim.util.ResourceLoader;
 
-public class testClassLoader {
+public class TestClassLoader {
 	
 	public static void main(String s[]) {
-		testClassLoader t = new testClassLoader();
+		TestClassLoader t = new TestClassLoader();
 		
 		String str = "/test/datasource.conf";
 		

@@ -14,7 +14,7 @@ public class TestSqlReader {
 	
 	public static void main(String[] sa) throws Exception {
 		UsedTime.start("×Ü¹²");
-		JdbcTemplate jdbc = testJdbcTemplate.createJdbc();
+		JdbcTemplate jdbc = TestJdbcTemplate.createJdbc();
 		
 		for (int i=0; i<1; ++i) {
 			SqlReader sr = new SqlReader("/test/complier.sql");

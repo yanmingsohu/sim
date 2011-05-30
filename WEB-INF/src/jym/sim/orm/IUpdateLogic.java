@@ -9,6 +9,7 @@ package jym.sim.orm;
 public interface IUpdateLogic extends ISqlLogic {
 	
 	/**
+	 * 如果up方法返回该值,则允许把列值设置为null<br>
 	 * 如果要设置为null值,则up方法必须返回这个属性而非"null"字符串
 	 */
 	String NULL = "null";
