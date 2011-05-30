@@ -1,4 +1,4 @@
-// CatfoOD 2010-9-9 涓婂崍09:23:15 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-9-9 上午09:23:15 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.js;
 
@@ -18,7 +18,7 @@ import jym.sim.util.Tools;
 
 
 /**
- * 鑴氭湰杞彂
+ * 脚本转发
  */
 public class ScriptServlet extends HttpServlet {
 
@@ -58,10 +58,10 @@ public class ScriptServlet extends HttpServlet {
 				urimapping.load(in);
 				in.close();
 			} catch (IOException e) {
-				Tools.pl("璇诲彇鑴氭湰鏄犲皠閰嶇疆鏂囦欢鏃跺嚭閿? [" + file + "] " + e);
+				Tools.pl("读取脚本映射配置文件时出错? [" + file + "] " + e);
 			}
 		} else {
-			Tools.pl("鑴氭湰鏄犲皠閰嶇疆鏂囦欢涓嶅瓨鍦? " + file);
+			Tools.pl("脚本映射配置文件不存在? " + file);
 		}
 	}
 	
@@ -72,7 +72,7 @@ public class ScriptServlet extends HttpServlet {
 		String path = req.getServletPath();
 		
 		if (path.indexOf(SYS_PATH)>=0) {
-			Tools.pl("绂佹璇锋眰绯荤粺璧勬簮: " + req.getRequestURL() 
+			Tools.pl("禁止请求系统资源: " + req.getRequestURL() 
 					+ " - IP: " + req.getLocalAddr());
 			
 			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -89,7 +89,7 @@ public class ScriptServlet extends HttpServlet {
 		ServletOutputStream out = resp.getOutputStream();
 		
 		try {
-			//XXX JSMin浼氬鑷撮儴鍒嗕唬鐮佹棤鏁?..娴嬭瘯涓?
+			//XXX JSMin会导致部分代码无效?..测试中?
 			boolean compress = !debug;
 			if (compress) {
 				compress = JSMin.compress(in, out);
