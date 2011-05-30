@@ -1,9 +1,9 @@
-// CatfoOD 2009-12-17 下午10:04:26
+// CatfoOD 2009-12-17 涓嬪崍10:04:26
 
 package jym.sim.util;
 
 /**
- * 安全异常
+ * 瀹夊叏寮傚父
  */
 public class SafeException extends Exception {
 

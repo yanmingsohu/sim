@@ -1,60 +1,60 @@
-// CatfoOD 2009-10-20 ÏÂÎç08:44:10
+// CatfoOD 2009-10-20 ä¸‹åˆ08:44:10
 
 package jym.sim.tags;
 
 import java.io.PrintWriter;
 
 /**
- * Xml±ê¼Ç£¬¿ÉÒÔ´´½¨×Ó±ê¼ÇÓëÎÄ±¾½Úµã
+ * Xmlæ ‡è®°ï¼Œå¯ä»¥åˆ›å»ºå­æ ‡è®°ä¸æ–‡æœ¬èŠ‚ç‚¹
  */
 public interface ITag extends IPrinter {
 	final String SP = "&nbsp;";
 	
 	/**
-	 * ´´½¨Ò»¸öxmlÔªËØ½Úµã
-	 * @param newtagname - ÔªËØµÄÃû³Æ
-	 * @return xmlÔªËØ½Úµã
+	 * åˆ›å»ºä¸€ä¸ªxmlå…ƒç´ èŠ‚ç‚¹
+	 * @param newtagname - å…ƒç´ çš„åç§°
+	 * @return xmlå…ƒç´ èŠ‚ç‚¹
 	 */
 	ITag create(String newtagname);
 	
 	/**
-	 * ´´½¨Ò»¸öÎÄ±¾½Úµã
-	 * @return - ÎÄ±¾½ÚµãµÄÊä³öÁ÷
+	 * åˆ›å»ºä¸€ä¸ªæ–‡æœ¬èŠ‚ç‚¹
+	 * @return - æ–‡æœ¬èŠ‚ç‚¹çš„è¾“å‡ºæµ
 	 */
 	PrintWriter createText();
 	
 	/**
-	 * Ìí¼Ó±êÇ©µÄÊôĞÔ
-	 * @param name - ÊôĞÔµÄÃû×Ö
-	 * @param value - ÊôĞÔµÄÖµ
+	 * æ·»åŠ æ ‡ç­¾çš„å±æ€§
+	 * @param name - å±æ€§çš„åå­—
+	 * @param value - å±æ€§çš„å€¼
 	 */
 	void addAttribute(String name, String value);
 	
 	/**
-	 * Ö±½ÓÌí¼ÓÎÄ±¾µ½µ±Ç°Î»ÖÃ£¬Æµ·±Ê¹ÓÃÓ°ÏìĞ§ÂÊ<br/>
-	 * ³É¹¦·µ»Øtrue
+	 * ç›´æ¥æ·»åŠ æ–‡æœ¬åˆ°å½“å‰ä½ç½®ï¼Œé¢‘ç¹ä½¿ç”¨å½±å“æ•ˆç‡<br/>
+	 * æˆåŠŸè¿”å›true
 	 */
 	boolean append(String text);
 	
 	/**
-	 * Ìí¼Ó±êÇ©µ½µ±Ç°±êÇ©ÄÚÈİµÄ½áÎ²<br/>
-	 * ³É¹¦·µ»Øtrue
+	 * æ·»åŠ æ ‡ç­¾åˆ°å½“å‰æ ‡ç­¾å†…å®¹çš„ç»“å°¾<br/>
+	 * æˆåŠŸè¿”å›true
 	 */
 	boolean append(ITag tag);
 	
 	/**
-	 * Èç¹ûÊÇ×Ô¹Ø±Õ±ê¼Ç·µ»Øtrue<br>
-	 * ×Ô¹Ø±Õ±ê¼Ç²»ÄÜÌí¼Ó×Ó±ê¼ÇµÈ·½·¨
+	 * å¦‚æœæ˜¯è‡ªå…³é—­æ ‡è®°è¿”å›true<br>
+	 * è‡ªå…³é—­æ ‡è®°ä¸èƒ½æ·»åŠ å­æ ‡è®°ç­‰æ–¹æ³•
 	 */
 	boolean isEndSelf();
 	
 	/**
-	 * È¡µÃ±êÇ©µÄID
+	 * å–å¾—æ ‡ç­¾çš„ID
 	 */
 	String getID();
 	
 	/**
-	 * ·µ»Ø±êÇ©Ãû
+	 * è¿”å›æ ‡ç­¾å
 	 */
 	String getTagName();
 }

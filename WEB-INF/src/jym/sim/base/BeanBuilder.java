@@ -1,4 +1,4 @@
-// CatfoOD 2011-2-22 ÉÏÎç10:27:38
+// CatfoOD 2011-2-22 ä¸Šåˆ10:27:38
 
 package jym.sim.base;
 

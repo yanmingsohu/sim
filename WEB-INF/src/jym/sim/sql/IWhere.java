@@ -1,27 +1,27 @@
-// CatfoOD 2010-6-3 ÉÏÎç10:18:19 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-6-3 ä¸Šåˆ10:18:19 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.sql;
 
 import jym.sim.orm.ISqlLogic;
 
 /**
- * sqlµÄwhere×Ó¾äÖĞÁĞÖµµÄÅĞ¶Ï·½·¨
+ * sqlçš„whereå­å¥ä¸­åˆ—å€¼çš„åˆ¤æ–­æ–¹æ³•
  */
 public interface IWhere extends ISqlLogic {
 	
 	/**
-	 * Èç¹ûÒªºöÂÔ´Ëwhere×Ó¾äÔòÔÚw()ÖĞ·µ»ØSKIP_WHERE_SUB
+	 * å¦‚æœè¦å¿½ç•¥æ­¤whereå­å¥åˆ™åœ¨w()ä¸­è¿”å›SKIP_WHERE_SUB
 	 */
 	public static final String SKIP_WHERE_SUB = null;
 	
 	/**
-	 * ·µ»ØwhereµÄÒ»¸öÅĞ¶Ï×Ó¾ä
+	 * è¿”å›whereçš„ä¸€ä¸ªåˆ¤æ–­å­å¥
 	 * 
-	 * @param columnName - Êı¾İ¿âÁĞµÄÃû×Ö
-	 * @param value - ¶ÔÓ¦Êı¾İ¿âÁĞÃûµÄÊı¾İÊµÌåÊôĞÔµÄÖµ
-	 * @param model - Ö´ĞĞ²éÑ¯µÄÊı¾İ¶ÔÏó,Ìõ¼ş·ÅÓÚÆäÖĞ
+	 * @param columnName - æ•°æ®åº“åˆ—çš„åå­—
+	 * @param value - å¯¹åº”æ•°æ®åº“åˆ—åçš„æ•°æ®å®ä½“å±æ€§çš„å€¼
+	 * @param model - æ‰§è¡ŒæŸ¥è¯¢çš„æ•°æ®å¯¹è±¡,æ¡ä»¶æ”¾äºå…¶ä¸­
 	 * 
-	 * @return ÈçºÎÅĞ¶ÏcolumnNameµÄsql,Èç¹û·µ»ØnullÔòºöÂÔ´Ë×Ó¾äµÄÅĞ¶Ï
+	 * @return å¦‚ä½•åˆ¤æ–­columnNameçš„sql,å¦‚æœè¿”å›nullåˆ™å¿½ç•¥æ­¤å­å¥çš„åˆ¤æ–­
 	 */
 	public String w(String columnName, Object value, Object model);
 }

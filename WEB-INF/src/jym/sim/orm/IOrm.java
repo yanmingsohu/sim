@@ -1,32 +1,32 @@
 package jym.sim.orm;
 
 /**
- * ormÓ³ÉäÊ±Ê¹ÓÃµÄÊµÌåÓ³Éä²ßÂÔ,
+ * ormæ˜ å°„æ—¶ä½¿ç”¨çš„å®ä½“æ˜ å°„ç­–ç•¥,
  * 
- * @param <T> - Êı¾İÊµÌå
+ * @param <T> - æ•°æ®å®ä½“
  */
 public interface IOrm<T> {
 	
 	/**
-	 * ·µ»ØTÀàĞÍµÄclass
+	 * è¿”å›Tç±»å‹çš„class
 	 * 
-	 * @return TÀàĞÍµÄclass
+	 * @return Tç±»å‹çš„class
 	 */
 	public Class<T> getModelClass();
 	
 	/**
-	 * ·µ»ØÊı¾İ¿â±íÃû
+	 * è¿”å›æ•°æ®åº“è¡¨å
 	 */
 	public String getTableName();
 	
 	/**
-	 * Êı¾İÓëÊµÌåµÄÓ³Éä²ßÂÔ
-	 * ÔÚplotÖĞ·ÅÈëÊµÌåÊôĞÔÓëÊı¾İ¿âÁĞÃûµÄ¶ÔÓ¦¹ØÏµ
+	 * æ•°æ®ä¸å®ä½“çš„æ˜ å°„ç­–ç•¥
+	 * åœ¨plotä¸­æ”¾å…¥å®ä½“å±æ€§ä¸æ•°æ®åº“åˆ—åçš„å¯¹åº”å…³ç³»
 	 */
 	public void mapping(IPlot plot);
 	
 	/**
-	 * ·µ»Ø±í¸ñµÄÖ÷¼üÁĞµÄÁĞÃû×Ó
+	 * è¿”å›è¡¨æ ¼çš„ä¸»é”®åˆ—çš„åˆ—åå­
 	 */
 	public String getKey();
 	

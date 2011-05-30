@@ -1,4 +1,4 @@
-// CatfoOD 2010-4-21 ÉÏÎç09:21:10 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-4-21 ä¸Šåˆ09:21:10 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.validator;
 
@@ -10,7 +10,7 @@ import java.util.List;
 import jym.sim.util.Tools;
 
 /**
- * ÑéÖ¤½á¹û¼¯
+ * éªŒè¯ç»“æœé›†
  */
 public class VerifyMessage {
 	
@@ -19,28 +19,28 @@ public class VerifyMessage {
 	private String suffix = "";
 	
 	/**
-	 * ÑéÖ¤ÏûÏ¢
+	 * éªŒè¯æ¶ˆæ¯
 	 */
 	public VerifyMessage() {
 		msgs = new ArrayList<Msg>();
 	}
 	
 	/**
-	 * Ñ¹ÈëÏûÏ¢
+	 * å‹å…¥æ¶ˆæ¯
 	 */
 	protected void putMsg(Field field, String msg) {
 		msgs.add(new Msg(field, msg));
 	}
 	
 	/**
-	 * È¡µÃ´íÎóÏûÏ¢µÄµü´úÆ÷,µü´úÆ÷ÖĞµÄÔªËØ¿ÉÒÔÈ¡µÃ´íÎóÏêÏ¸ĞÅÏ¢
+	 * å–å¾—é”™è¯¯æ¶ˆæ¯çš„è¿­ä»£å™¨,è¿­ä»£å™¨ä¸­çš„å…ƒç´ å¯ä»¥å–å¾—é”™è¯¯è¯¦ç»†ä¿¡æ¯
 	 */
 	public Iterator<Msg> getMessages() {
 		return msgs.iterator();
 	}
 	
 	/**
-	 * Èç¹ûÃ»ÓĞ´íÎóÏûÏ¢·µ»Øtrue,·ñÔòÓÃgetMessages()·½·¨È¡³ö´íÎóÏûÏ¢
+	 * å¦‚æœæ²¡æœ‰é”™è¯¯æ¶ˆæ¯è¿”å›true,å¦åˆ™ç”¨getMessages()æ–¹æ³•å–å‡ºé”™è¯¯æ¶ˆæ¯
 	 */
 	public boolean isSuccess() {
 		return msgs.size()==0;
@@ -56,7 +56,7 @@ public class VerifyMessage {
 			msg = m;
 		}
 		/**
-		 * ·µ»Ø·½·¨µÄÃû×Ö,²¢ÇÒ¼ÓÈëÇ°×ººó×º
+		 * è¿”å›æ–¹æ³•çš„åå­—,å¹¶ä¸”åŠ å…¥å‰ç¼€åç¼€
 		 */
 		public String getFieldName() {
 			return prefix + field.getName() + suffix;
@@ -70,7 +70,7 @@ public class VerifyMessage {
 	}
 
 	/**
-	 * °ÑÁíÒ»¸öVerifyMessageÖĞµÄËùÓĞÏûÏ¢¼ÓÈëµ±Ç°µÄVerifyMessageÖĞ
+	 * æŠŠå¦ä¸€ä¸ªVerifyMessageä¸­çš„æ‰€æœ‰æ¶ˆæ¯åŠ å…¥å½“å‰çš„VerifyMessageä¸­
 	 */
 	public void add(VerifyMessage vm) {
 		this.msgs.addAll(vm.msgs);
@@ -85,12 +85,12 @@ public class VerifyMessage {
 	}
 
 	public void setPrefix(String prefix) {
-		Tools.check(prefix, "Ç°×º²»ÄÜÎªnull");
+		Tools.check(prefix, "å‰ç¼€ä¸èƒ½ä¸ºnull");
 		this.prefix = prefix;
 	}
 
 	public void setSuffix(String suffix) {
-		Tools.check(suffix, "ºó×º²»ÄÜÎªnull");
+		Tools.check(suffix, "åç¼€ä¸èƒ½ä¸ºnull");
 		this.suffix = suffix;
 	}
 	

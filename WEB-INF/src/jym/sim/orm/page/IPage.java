@@ -1,29 +1,29 @@
-// CatfoOD 2010-5-24 ÉÏÎç09:28:42 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-5-24 ä¸Šåˆ09:28:42 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.orm.page;
 
 /**
- * ISelecterµÄ·ÖÒ³²ßÂÔ,ÊµÏÖÀàÓ¦×ñÑ­µ¥ÀàÄ£Ê½
+ * ISelecterçš„åˆ†é¡µç­–ç•¥,å®ç°ç±»åº”éµå¾ªå•ç±»æ¨¡å¼
  */
 public interface IPage {
 	
-	/** Ò»¸ö¿Õ¸ñ */
+	/** ä¸€ä¸ªç©ºæ ¼ */
 	public final char BLANK = ' ';
 	
-	/** ·ÖÒ³²éÑ¯Óï¾ä·µ»ØµÄ±íÖĞÓĞÒ»ÁĞ±êÊ¶Õû¸ö±íµÄ´óĞ¡,Õâ¸öÁĞµÄ±ğÃû */
+	/** åˆ†é¡µæŸ¥è¯¢è¯­å¥è¿”å›çš„è¡¨ä¸­æœ‰ä¸€åˆ—æ ‡è¯†æ•´ä¸ªè¡¨çš„å¤§å°,è¿™ä¸ªåˆ—çš„åˆ«å */
 	public final String TOTAL_COLUMN_NAME = "sim__total__row";
 	
 	
 	/**
-	 * Éú³ÉselectÓï¾ä,¾ßÌåµÄ·ÖÒ³·½·¨ÓÉÊµÏÖÀàÀ´Íê³É<br>
-	 * Éú³ÉµÄÓï¾äÖĞÈç¹ûÊ¹ÓÃ±ğÃû,Ó¦¸ÃÒÔ'sim__'ÎªÇ°×º
+	 * ç”Ÿæˆselectè¯­å¥,å…·ä½“çš„åˆ†é¡µæ–¹æ³•ç”±å®ç°ç±»æ¥å®Œæˆ<br>
+	 * ç”Ÿæˆçš„è¯­å¥ä¸­å¦‚æœä½¿ç”¨åˆ«å,åº”è¯¥ä»¥'sim__'ä¸ºå‰ç¼€
 	 * 
-	 * @param tableName - ±íÃû
-	 * @param whereSub - ²éÑ¯Ìõ¼ş×Ó¾ä,×Ö¾äÖĞ°üº¬where¹Ø¼ü×Ö
-	 * @param orderSub - ÅÅĞò×Ó¾ä, ÎŞĞèÅÅĞòÊ±Îª¿Õ×Ö·û´®
-	 * @param page - ·ÖÒ³Êı¾İ¶ÔÏó
+	 * @param tableName - è¡¨å
+	 * @param whereSub - æŸ¥è¯¢æ¡ä»¶å­å¥,å­—å¥ä¸­åŒ…å«whereå…³é”®å­—
+	 * @param orderSub - æ’åºå­å¥, æ— éœ€æ’åºæ—¶ä¸ºç©ºå­—ç¬¦ä¸²
+	 * @param page - åˆ†é¡µæ•°æ®å¯¹è±¡
 	 * 
-	 * @return ·µ»ØÆ´×°ºÃµÄselectÓï¾ä
+	 * @return è¿”å›æ‹¼è£…å¥½çš„selectè¯­å¥
 	 */
 	public String select(String tableName, String whereSub, String orderSub, PageBean page);
 }

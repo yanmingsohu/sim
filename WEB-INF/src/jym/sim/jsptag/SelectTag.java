@@ -1,4 +1,4 @@
-// CatfoOD 2010-5-11 ÏÂÎç12:39:24 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-5-11 ä¸‹åˆ12:39:24 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.jsptag;
 
@@ -24,7 +24,7 @@ public class SelectTag extends TagSupport {
 	private String sname;
 	private String cname;
 	private String fname;
-	/** Õâ¸öÖµÊÇ¼¯ºÏµÄË÷Òı,Ö¸Ã÷¼¯ºÏÖĞµÄÄÄ¸öÔªËØÊÇÄ¬ÈÏÑ¡Ïî */
+	/** è¿™ä¸ªå€¼æ˜¯é›†åˆçš„ç´¢å¼•,æŒ‡æ˜é›†åˆä¸­çš„å“ªä¸ªå…ƒç´ æ˜¯é»˜è®¤é€‰é¡¹ */
 	private String value;
 	private JspWriter out;
 	private boolean empty = false;
@@ -49,29 +49,29 @@ public class SelectTag extends TagSupport {
 				}
 				else {
 					error(getEnumObjName() 
-							+ "ÊôĞÔÀàĞÍ²»ÊÇÓĞĞ§µÄÃ¶¾ÙÀàĞÍ-(String[], Map)");
+							+ "å±æ€§ç±»å‹ä¸æ˜¯æœ‰æ•ˆçš„æšä¸¾ç±»å‹-(String[], Map)");
 				}
 			} else {
-				error(getEnumObjName() + "ÊôĞÔÖµÎªnull");
+				error(getEnumObjName() + "å±æ€§å€¼ä¸ºnull");
 			}
 			
 		} catch (ClassNotFoundException e) {
-			error(cname + "²»ÊÇÓĞĞ§µÄÀàÃû×Ö");
+			error(cname + "ä¸æ˜¯æœ‰æ•ˆçš„ç±»åå­—");
 			
 		} catch (SecurityException e) {
-			error(getEnumObjName() + "»ñÈ¡ÊôĞÔÊ±´íÎó" + e.getMessage());
+			error(getEnumObjName() + "è·å–å±æ€§æ—¶é”™è¯¯" + e.getMessage());
 			
 		} catch (NoSuchFieldException e) {
-			error(getEnumObjName() + "²»ÊÇÓĞĞ§µÄÊôĞÔÃû");
+			error(getEnumObjName() + "ä¸æ˜¯æœ‰æ•ˆçš„å±æ€§å");
 			
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 			
 		} catch (IllegalAccessException e) {
-			error(getEnumObjName() + "²»¿É·ÃÎÊ");
+			error(getEnumObjName() + "ä¸å¯è®¿é—®");
 			
 		} catch (NullPointerException  e) {
-			error(getEnumObjName() + "²»ÊÇ¾²Ì¬×Ö¶Î");
+			error(getEnumObjName() + "ä¸æ˜¯é™æ€å­—æ®µ");
 		}
 	}
 	
@@ -108,7 +108,7 @@ public class SelectTag extends TagSupport {
 	
 	private void printSelect() throws IOException {
 		if (!empty) {
-			out.print("<option selected disabled>ÇëÑ¡Ôñ</option>");
+			out.print("<option selected disabled>è¯·é€‰æ‹©</option>");
 		}
 		
 		Iterator<String> it = enumMap.keySet().iterator();
@@ -148,7 +148,7 @@ public class SelectTag extends TagSupport {
 		fname = name;
 	}
 	
-	/** Ã¶¾Ù¶ÔÏóÓòµÄÍêÕûÃû×Ö */
+	/** æšä¸¾å¯¹è±¡åŸŸçš„å®Œæ•´åå­— */
 	public String getEnumObjName() {
 		return cname + '.' + fname;
 	}
@@ -163,7 +163,7 @@ public class SelectTag extends TagSupport {
 	}
 
 	/**
-	 * ·µ»ØÃ¶¾Ù¶ÔÏó,Ã»ÓĞ·µ»Ønull
+	 * è¿”å›æšä¸¾å¯¹è±¡,æ²¡æœ‰è¿”å›null
 	 */
 	public Map<String, String> getEnumMap() {
 		return enumMap;

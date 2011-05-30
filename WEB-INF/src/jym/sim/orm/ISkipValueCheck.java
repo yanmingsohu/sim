@@ -1,11 +1,11 @@
-// CatfoOD 2010-6-17 ÏÂÎç01:02:49 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-6-17 ä¸‹åˆ01:02:49 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.orm;
 
 
 /**
- * ¼Ì³Ğ´Ë½Ó¿ÚµÄÀà,ËµÃ÷½øÈëIWhere.w·½·¨µÄvalue²ÎÊı¿ÉÒÔÎŞĞ§,
- * ÅĞ¶Ï²ÎÊıÊÇ·ñÓĞĞ§µÄ·½·¨ÔÚValueCheckÀàÖĞ
+ * ç»§æ‰¿æ­¤æ¥å£çš„ç±»,è¯´æ˜è¿›å…¥IWhere.wæ–¹æ³•çš„valueå‚æ•°å¯ä»¥æ— æ•ˆ,
+ * åˆ¤æ–­å‚æ•°æ˜¯å¦æœ‰æ•ˆçš„æ–¹æ³•åœ¨ValueCheckç±»ä¸­
  */
 public interface ISkipValueCheck {
 }

@@ -1,4 +1,4 @@
-// CatfoOD 2009-10-20 ÏÂÎç08:09:12
+// CatfoOD 2009-10-20 ä¸‹åˆ08:09:12
 
 package jym.sim.base;
 
@@ -45,7 +45,7 @@ public class HtmlPack implements IPrinter {
 	}
 	
 	/**
-	 * ¹Ø±Õ²¢Ğ´³ö
+	 * å…³é—­å¹¶å†™å‡º
 	 */
 	public void close() {
 		checkclosed();
@@ -55,7 +55,7 @@ public class HtmlPack implements IPrinter {
 	}
 	
 	/**
-	 * Õâ¸ö·½·¨Ğ§ÂÊÌ«µÍ£¬Ó¦¸ÃÓÃIPrinterĞ´³ö
+	 * è¿™ä¸ªæ–¹æ³•æ•ˆç‡å¤ªä½ï¼Œåº”è¯¥ç”¨IPrinterå†™å‡º
 	 */
 	public String toString() {
 		if (!closed) close();
@@ -64,7 +64,7 @@ public class HtmlPack implements IPrinter {
 	
 	private void checkclosed() {
 		if (closed) 
-			throw new IllegalStateException("ÒÑ¾­¹Ø±Õ");
+			throw new IllegalStateException("å·²ç»å…³é—­");
 	}
 
 	public void printout(PrintWriter out) {

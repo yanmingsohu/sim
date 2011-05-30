@@ -1,4 +1,4 @@
-// CatfoOD 2010-8-4 ÉÏÎç10:23:01 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-8-4 ä¸Šåˆ10:23:01 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.pool;
 

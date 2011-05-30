@@ -1,10 +1,10 @@
-// CatfoOD 2010-7-29 ÉÏÎç09:19:39 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-7-29 ä¸Šåˆ09:19:39 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.json;
 
 /**
- * ¸ñÊ½»¯Java×Ö·û´®, ×ªÒå²»¿É¼û×Ö·ûÎªÎÄ±¾<br>
- * ´ËÊµÏÖ±ÈÓÃ <b>String.replaceAll</b> ¿ì4±¶
+ * æ ¼å¼åŒ–Javaå­—ç¬¦ä¸², è½¬ä¹‰ä¸å¯è§å­—ç¬¦ä¸ºæ–‡æœ¬<br>
+ * æ­¤å®ç°æ¯”ç”¨ <b>String.replaceAll</b> å¿«4å€
  */
 public class JSonFormater {
 	
@@ -21,7 +21,7 @@ public class JSonFormater {
 	}
 
 	/**
-	 * ¸ñÊ½»¯×Ö·û´®
+	 * æ ¼å¼åŒ–å­—ç¬¦ä¸²
 	 */
 	public static String frm(String src) {
 		if (src==null) return null;

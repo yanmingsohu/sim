@@ -1,4 +1,4 @@
-// CatfoOD 2010-9-10 ÉÏÎç08:35:22 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-9-10 ä¸Šåˆ08:35:22 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.sql.compile;
 
@@ -14,8 +14,8 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 /**
- * ÎÄ¼ş½âÎöÆ÷£¬¶ÁÈ¡ÎÄ¼şÖĞµÄ${varname}±í´ïÊ½
- * varname±ØĞë·ûºÏJava±äÁ¿ÃüÃû¹æ·¶,Èç¹ûÏëÒªÊä³ö$ÔòĞèÒª$$
+ * æ–‡ä»¶è§£æå™¨ï¼Œè¯»å–æ–‡ä»¶ä¸­çš„${varname}è¡¨è¾¾å¼
+ * varnameå¿…é¡»ç¬¦åˆJavaå˜é‡å‘½åè§„èŒƒ,å¦‚æœæƒ³è¦è¾“å‡º$åˆ™éœ€è¦$$
  */
 public class FileParse {
 	
@@ -34,11 +34,11 @@ public class FileParse {
 	}
 	
 	/**
-	 * ¿ªÊ¼½âÎösqlÎÄ¼ş£¬²¢Éú³ÉÏà¹ØµÄĞÅÏ¢
+	 * å¼€å§‹è§£æsqlæ–‡ä»¶ï¼Œå¹¶ç”Ÿæˆç›¸å…³çš„ä¿¡æ¯
 	 * 
-	 * @param _filename - ±»½âÎöµÄÎÄ¼şÃû£¬ÓÃÓÚÊä³ö´íÎóĞÅÏ¢£¬¿ÉÒÔÎªnull
-	 * @param reader - ´ÓreaderÖĞ¶ÁÈ¡Ä¿±êÎÄ¼ş
-	 * @throws IOException - Èç¹û½âÎöÊ§°Ü£¬Å×³öÒì³£
+	 * @param _filename - è¢«è§£æçš„æ–‡ä»¶åï¼Œç”¨äºè¾“å‡ºé”™è¯¯ä¿¡æ¯ï¼Œå¯ä»¥ä¸ºnull
+	 * @param reader - ä»readerä¸­è¯»å–ç›®æ ‡æ–‡ä»¶
+	 * @throws IOException - å¦‚æœè§£æå¤±è´¥ï¼ŒæŠ›å‡ºå¼‚å¸¸
 	 */
 	public FileParse(String _filename, Reader reader) throws IOException {
 		Reader in = new BufferedReader(reader);
@@ -62,7 +62,7 @@ public class FileParse {
 			}
 			
 			if (ch=='"') {
-				invalid("²»ÄÜÓĞË«ÒıºÅ");
+				invalid("ä¸èƒ½æœ‰åŒå¼•å·");
 				continue;
 			}
 			
@@ -122,14 +122,14 @@ public class FileParse {
 	
 	private void checkVarName(String name) throws IOException {
 		if (!exp.matcher(name).matches()) {
-			invalid("ÎŞĞ§µÄ±äÁ¿Ãû:[" + name + "]");
+			invalid("æ— æ•ˆçš„å˜é‡å:[" + name + "]");
 		}
 	}
 	
 	private void invalid(String msg) throws IOException {
 		throw new IOException(
-				msg + ", ÔÚÎÄ¼ş " + filename + 
-				" µÚ" + line + "ĞĞ" );
+				msg + ", åœ¨æ–‡ä»¶ " + filename + 
+				" ç¬¬" + line + "è¡Œ" );
 	}
 	
 	private void init() {
@@ -139,23 +139,23 @@ public class FileParse {
 	}
 	
 	/**
-	 * ·µ»Ø±äÁ¿ÃûµÄµü´úÆ÷
+	 * è¿”å›å˜é‡åçš„è¿­ä»£å™¨
 	 */
 	public Iterator<String> getVariableNames() {
 		return variables.iterator();
 	}
 	
 	/**
-	 * ·µ»Ø½âÎöºóµÄsqlÎÄ¼şÖĞÔªËØµÄµü´úÆ÷
-	 * ÆäÖĞ£¬ÎÄ±¾ÒÑ¾­ÓÃË«ÒıºÅ°üÎ§£¬¶ø±äÁ¿ÔòÖ±½Ó·µ»Ø
+	 * è¿”å›è§£æåçš„sqlæ–‡ä»¶ä¸­å…ƒç´ çš„è¿­ä»£å™¨
+	 * å…¶ä¸­ï¼Œæ–‡æœ¬å·²ç»ç”¨åŒå¼•å·åŒ…å›´ï¼Œè€Œå˜é‡åˆ™ç›´æ¥è¿”å›
 	 */
 	public Iterator<String> getItems() {
 		return items.iterator();
 	}
 	
 	/**
-	 * ·µ»ØÎÄ¼şÖĞµÄÎÄ±¾ÔªËØµÄµü´úÆ÷£¬ÔªËØ±»·Ö¿ªµÄÔ­Òò
-	 * ¿ÉÄÜÊÇÖĞ¼äµÄ±äÁ¿
+	 * è¿”å›æ–‡ä»¶ä¸­çš„æ–‡æœ¬å…ƒç´ çš„è¿­ä»£å™¨ï¼Œå…ƒç´ è¢«åˆ†å¼€çš„åŸå› 
+	 * å¯èƒ½æ˜¯ä¸­é—´çš„å˜é‡
 	 */
 	public Iterator<String> getTexts() {
 		return texts.iterator();

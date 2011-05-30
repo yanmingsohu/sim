@@ -1,4 +1,4 @@
-// CatfoOD 2010-5-19 ÏÂÎç12:25:50 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-5-19 ä¸‹åˆ12:25:50 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.jsptag;
 

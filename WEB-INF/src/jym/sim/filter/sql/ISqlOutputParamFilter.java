@@ -1,11 +1,11 @@
-// CatfoOD 2010-8-19 ÉÏÎç11:13:47 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-8-19 ä¸Šåˆ11:13:47 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.filter.sql;
 
 import jym.sim.filter.IFilter;
 
 /**
- * ´ÓÊı¾İ¿âÊä³öµÄÖµ×ª»»ÎªÊµÌåÊôĞÔÊ¹ÓÃµÄ¹ıÂËÆ÷ÀàĞÍ
+ * ä»æ•°æ®åº“è¾“å‡ºçš„å€¼è½¬æ¢ä¸ºå®ä½“å±æ€§ä½¿ç”¨çš„è¿‡æ»¤å™¨ç±»å‹
  */
 public interface ISqlOutputParamFilter<T> extends IFilter<T> {
 }

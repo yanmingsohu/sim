@@ -1,4 +1,4 @@
-// CatfoOD 2010-4-20 ÉÏÎç08:24:37 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-4-20 ä¸Šåˆ08:24:37 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.sql;
 
@@ -6,10 +6,10 @@ package jym.sim.sql;
 public interface IExceptionHandle {
 
 	/**
-	 * Èç¹ûexe()Å×³öÒì³£Õâ¸ö·½·¨±»Ö´ĞĞ
+	 * å¦‚æœexe()æŠ›å‡ºå¼‚å¸¸è¿™ä¸ªæ–¹æ³•è¢«æ‰§è¡Œ
 	 *  
-	 * @param tr - Å×³öµÄÒì³£
-	 * @param msg - Òì³£ĞÅÏ¢
+	 * @param tr - æŠ›å‡ºçš„å¼‚å¸¸
+	 * @param msg - å¼‚å¸¸ä¿¡æ¯
 	 */
 	public void exception(Throwable tr, String msg);
 	

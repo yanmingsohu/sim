@@ -1,4 +1,4 @@
-// CatfoOD 2010-7-28 ÏÂÎç02:10:10 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-7-28 ä¸‹åˆ02:10:10 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.json;
 
@@ -48,8 +48,8 @@ public class Json implements IjSon {
 	}
 	
 	/**
-	 * ÉèÖÃÖµ£¬Èç¹ûresultÊÇnullÊı×Ö»ò²¼¶û£¬Ôò²»Ê¹ÓÃÒıºÅ°üÎ§
-	 * ²»ÔÚÊä³öÊ±ÅĞ¶ÏÊÇÎªÁË¼æÈİÖ®Ç°µÄ´úÂë
+	 * è®¾ç½®å€¼ï¼Œå¦‚æœresultæ˜¯nullæ•°å­—æˆ–å¸ƒå°”ï¼Œåˆ™ä¸ä½¿ç”¨å¼•å·åŒ…å›´
+	 * ä¸åœ¨è¾“å‡ºæ—¶åˆ¤æ–­æ˜¯ä¸ºäº†å…¼å®¹ä¹‹å‰çš„ä»£ç 
 	 */
 	protected void setOrPrimitive(Object name, Object result) {
 		if (result==null 

@@ -1,4 +1,4 @@
-// CatfoOD 2009-10-25 下午11:51:14
+// CatfoOD 2009-10-25 涓嬪崍11:51:14
 
 package jym.sim.base;
 
@@ -76,7 +76,7 @@ public class XmlPack implements IPrinter {
 	}
 	
 	/**
-	 * 这个方法效率太低，应该用IPrinter写出
+	 * 杩欎釜鏂规硶鏁堢巼澶綆锛屽簲璇ョ敤IPrinter鍐欏嚭
 	 */
 	public String toString() {
 		if (!closed) close();
@@ -85,7 +85,7 @@ public class XmlPack implements IPrinter {
 	
 	private void checkclosed() {
 		if (closed) 
-			throw new IllegalStateException("已经关闭");
+			throw new IllegalStateException("宸茬粡鍏抽棴");
 	}
 
 	public void printout(PrintWriter out) {

@@ -1,18 +1,18 @@
-// CatfoOD 2010-4-19 ÉÏÎç08:28:23 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-4-19 ä¸Šåˆ08:28:23 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.orm;
 
 /**
- * ±í¸ñÁĞµÄÖµ
+ * è¡¨æ ¼åˆ—çš„å€¼
  */
 public interface IColumnValue {
 	
 	/**
-	 * Ä£°å¶ÔÏóÍ¨¹ıÕâ¸ö·½·¨°Ñ±í¸ñÁĞÓëÁĞÖµ´«¸øÊµÏÖÕâ¸ö½Ó¿ÚµÄ¶ÔÏó
+	 * æ¨¡æ¿å¯¹è±¡é€šè¿‡è¿™ä¸ªæ–¹æ³•æŠŠè¡¨æ ¼åˆ—ä¸åˆ—å€¼ä¼ ç»™å®ç°è¿™ä¸ªæ¥å£çš„å¯¹è±¡
 	 * 
-	 * @param column - ÁĞÃû,²»»áÊÇnull
-	 * @param value - Öµ
-	 * @param valueType - ÖµµÄÀàĞÍ
+	 * @param column - åˆ—å,ä¸ä¼šæ˜¯null
+	 * @param value - å€¼
+	 * @param valueType - å€¼çš„ç±»å‹
 	 */
 	void set(String column, Object value, Class<?> valueType);
 	

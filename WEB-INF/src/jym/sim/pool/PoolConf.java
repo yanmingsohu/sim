@@ -1,11 +1,11 @@
-// CatfoOD 2010-8-4 ÉÏÎç09:02:28 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-8-4 ä¸Šåˆ09:02:28 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.pool;
 
 import jym.sim.util.Tools;
 
 /**
- * Êı¾İ¿âµÄÅäÖÃÏî
+ * æ•°æ®åº“çš„é…ç½®é¡¹
  */
 public class PoolConf {
 
@@ -25,7 +25,7 @@ public class PoolConf {
 	private boolean hasValidation;
 	
 	
-	/** µÇÂ¼Êı¾İ¿âµÄÓÃ»§Ãû */
+	/** ç™»å½•æ•°æ®åº“çš„ç”¨æˆ·å */
 	public String getUser() {
 		return user;
 	}
@@ -35,7 +35,7 @@ public class PoolConf {
 	public String getUrl() {
 		return url;
 	}
-	/** Êı¾İ¿âÇı¶¯Ãû */
+	/** æ•°æ®åº“é©±åŠ¨å */
 	public String getDriver() {
 		return driver;
 	}
@@ -48,11 +48,11 @@ public class PoolConf {
 	public int getMaxActive() {
 		return maxActive;
 	}
-	/** ÑéÖ¤Êı¾İ¿âÁ¬½ÓÓĞĞ§ĞÔµÄsqlÓï¾ä */
+	/** éªŒè¯æ•°æ®åº“è¿æ¥æœ‰æ•ˆæ€§çš„sqlè¯­å¥ */
 	public String getValidation() {
 		return validation;
 	}
-	/** Èç¹ûgetValidation()·µ»Ø·Ç¿Õ×Ö·û´®, Ôò·µ»Øtrue */
+	/** å¦‚æœgetValidation()è¿”å›éç©ºå­—ç¬¦ä¸², åˆ™è¿”å›true */
 	public boolean isHasValidation() {
 		return hasValidation;
 	}

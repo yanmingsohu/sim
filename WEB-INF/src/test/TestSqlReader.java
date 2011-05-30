@@ -1,4 +1,4 @@
-// CatfoOD 2010-9-9 ÏÂÎç02:04:39 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-9-9 ä¸‹åˆ02:04:39 yanming-sohu@sohu.com/@qq.com
 
 package test;
 
@@ -13,7 +13,7 @@ import jym.sim.util.UsedTime;
 public class TestSqlReader {
 	
 	public static void main(String[] sa) throws Exception {
-		UsedTime.start("×Ü¹²");
+		UsedTime.start("æ€»å…±");
 		JdbcTemplate jdbc = TestJdbcTemplate.createJdbc();
 		
 		for (int i=0; i<1; ++i) {

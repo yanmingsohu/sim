@@ -1,4 +1,4 @@
-// CatfoOD 2009-11-10 ÏÂÎç02:03:27
+// CatfoOD 2009-11-10 ä¸‹åˆ02:03:27
 
 package jym.sim.jstags;
 
@@ -16,16 +16,16 @@ public class TableRowClick extends InnerScript {
 	}
 	
 	/**
-	 * Ìí¼ÓÒ»¸ö¼àÌıº¯Êıµ½±í¸ñĞĞ£¬¼àÌıº¯ÊıµÄ¸ñÊ½£º<br>
+	 * æ·»åŠ ä¸€ä¸ªç›‘å¬å‡½æ•°åˆ°è¡¨æ ¼è¡Œï¼Œç›‘å¬å‡½æ•°çš„æ ¼å¼ï¼š<br>
 	 * 		function clickListener(row, rowindex) {}
 	 * 
-	 * <li>rowÎªµ±Ç°´¥·¢ÊÂ¼şµÄ±í¸ñĞĞ¶ÔÏó</li>
-	 * <li>rowindexÎª±í¸ñËùÔÚµÄĞĞµÄË÷Òı£¬´Ó0¿ªÊ¼£¬°üº¬±í¸ñÍ·</li>
+	 * <li>rowä¸ºå½“å‰è§¦å‘äº‹ä»¶çš„è¡¨æ ¼è¡Œå¯¹è±¡</li>
+	 * <li>rowindexä¸ºè¡¨æ ¼æ‰€åœ¨çš„è¡Œçš„ç´¢å¼•ï¼Œä»0å¼€å§‹ï¼ŒåŒ…å«è¡¨æ ¼å¤´</li>
 	 * 
-	 * <br/>¼àÌıº¯ÊıÀ´×ÔjsurlÖ¸¶¨µÄ×ÊÔ´
+	 * <br/>ç›‘å¬å‡½æ•°æ¥è‡ªjsurlæŒ‡å®šçš„èµ„æº
 	 * 
-	 * @param jsurl - ½Å±¾ÎÄ¼şËùÔÚµÄ×ÊÔ´url
-	 * @param funname - º¯ÊıµÄÃû×Ö
+	 * @param jsurl - è„šæœ¬æ–‡ä»¶æ‰€åœ¨çš„èµ„æºurl
+	 * @param funname - å‡½æ•°çš„åå­—
 	 */
 	public void appendCall(String jsurl, String funname) {
 		readJavaScript(jsurl);
@@ -34,7 +34,7 @@ public class TableRowClick extends InnerScript {
 	
 	/**
 	 * 	
-	 * ×¢ÒâË³Ğò£¬Õâ¸ö·½·¨±ØĞëÔÚ±í¸ñµÄÊı¾İÒÑ¾­¼ÓÔØ½áÊøµÄÊ±ºòµ÷ÓÃ
+	 * æ³¨æ„é¡ºåºï¼Œè¿™ä¸ªæ–¹æ³•å¿…é¡»åœ¨è¡¨æ ¼çš„æ•°æ®å·²ç»åŠ è½½ç»“æŸçš„æ—¶å€™è°ƒç”¨
 	 *
 	 */
 	@Override

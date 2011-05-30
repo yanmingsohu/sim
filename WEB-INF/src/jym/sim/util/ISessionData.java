@@ -1,18 +1,18 @@
-// CatfoOD 2009-12-15 ÏÂÎç08:10:04
+// CatfoOD 2009-12-15 ä¸‹åˆ08:10:04
 
 package jym.sim.util;
 
 /**
- * servlet sessionÊı¾İ¶ÔÏó
+ * servlet sessionæ•°æ®å¯¹è±¡
  */
 public interface ISessionData {
 	/**
-	 * HttpSessionµÄ±ã½İ·½·¨
+	 * HttpSessionçš„ä¾¿æ·æ–¹æ³•
 	 */
 	void setSessionAttribute(String name, Object obj);
 	
 	/**
-	 * HttpSessionµÄ±ã½İ·½·¨
+	 * HttpSessionçš„ä¾¿æ·æ–¹æ³•
 	 */
 	Object getSessionAttribute(String name);
 	

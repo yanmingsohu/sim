@@ -1,19 +1,19 @@
-// CatfoOD 2010-4-16 ÉÏÎç08:22:29 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-4-16 ä¸Šåˆ08:22:29 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.sql;
 
 import java.sql.Statement;
 
 /**
- * sqlÓï¾äµÄÖ´ĞĞÕß
+ * sqlè¯­å¥çš„æ‰§è¡Œè€…
  */
 public interface ISql {
 	
 	/**
-	 * JdbcTemplate»Øµ÷º¯Êı, ´¦ÀíÖĞµÄsql¶ÔÏó¶¼ÎŞĞè¹Ø±Õ
+	 * JdbcTemplateå›è°ƒå‡½æ•°, å¤„ç†ä¸­çš„sqlå¯¹è±¡éƒ½æ— éœ€å…³é—­
 	 * 
-	 * @param stm - JdbcTemplate´´½¨µÄStatement 
-	 * @throws Throwable - º¯ÊıÖĞ²»ĞèÒª²¶×½ÈÎºÎÒì³£
+	 * @param stm - JdbcTemplateåˆ›å»ºçš„Statement 
+	 * @throws Throwable - å‡½æ•°ä¸­ä¸éœ€è¦æ•æ‰ä»»ä½•å¼‚å¸¸
 	 */
 	public void exe(Statement stm) throws Throwable;
 	

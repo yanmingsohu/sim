@@ -1,4 +1,4 @@
-// CatfoOD 2010-4-16 上午10:07:01 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-4-16 涓婂崍10:07:01 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.orm;
 
@@ -7,12 +7,12 @@ import java.sql.SQLException;
 
 
 /**
- * 类型转换接口
+ * 绫诲瀷杞崲鎺ュ彛
  */
 interface ITransition {
 	
 	/**
-	 * 从rs的col列的数据取出转换成指定的类型,返回
+	 * 浠巖s鐨刢ol鍒楃殑鏁版嵁鍙栧嚭杞崲鎴愭寚瀹氱殑绫诲瀷,杩斿洖
 	 */
 	Object trans(ResultSet rs, int col) throws SQLException;
 	

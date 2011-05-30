@@ -1,4 +1,4 @@
-// CatfoOD 2011-2-21 ÏÂÎç07:37:52
+// CatfoOD 2011-2-21 ä¸‹åˆ07:37:52
 
 package jym.sim.util;
 
@@ -16,11 +16,11 @@ import jym.sim.exception.BeanException;
 
 
 /**
- * XXX Î´Íê³É,²»ÄÜÊ¹ÓÃ
+ * XXX æœªå®Œæˆ,ä¸èƒ½ä½¿ç”¨
  * 
- * @param <Bean> - Òª²Ù×÷µÄÀàĞÍ
- * @param <TARGET_TYPE> - ÔÚ¶ÁÈ¡Ê±ÊÇÒª×ª»»³ÉµÄÄ¿±êÀàĞÍ,
- * ÔÚÉèÖÃÊ±ÊÇ½øÈëµÄÊı¾İÀàĞÍ
+ * @param <Bean> - è¦æ“ä½œçš„ç±»å‹
+ * @param <TARGET_TYPE> - åœ¨è¯»å–æ—¶æ˜¯è¦è½¬æ¢æˆçš„ç›®æ ‡ç±»å‹,
+ * åœ¨è®¾ç½®æ—¶æ˜¯è¿›å…¥çš„æ•°æ®ç±»å‹
  */
 public class LoopBeanField<Bean, TARGET_TYPE> {
 	
@@ -36,7 +36,7 @@ public class LoopBeanField<Bean, TARGET_TYPE> {
 	}
 	
 	/**
-	 * ´ÓbeanµÄÊôĞÔÖĞÈ¡³öÖµ,µ½ÁíÒ»¸öÀàĞÍ,Í¨³£ÓÃÓÚ³Ö¾Ã»¯,Ö»ÄÜÊ¹ÓÃload·½·¨
+	 * ä»beançš„å±æ€§ä¸­å–å‡ºå€¼,åˆ°å¦ä¸€ä¸ªç±»å‹,é€šå¸¸ç”¨äºæŒä¹…åŒ–,åªèƒ½ä½¿ç”¨loadæ–¹æ³•
 	 * 
 	 * @param bean
 	 * @param it
@@ -47,7 +47,7 @@ public class LoopBeanField<Bean, TARGET_TYPE> {
 	}
 	
 	/**
-	 * ´ÓÊı¾İÔ´ÖĞ¶Á³öÊı¾İ²¢ÉèÖÃµ½beanÖĞ, Ö»ÄÜÊ¹ÓÃsave·½·¨
+	 * ä»æ•°æ®æºä¸­è¯»å‡ºæ•°æ®å¹¶è®¾ç½®åˆ°beanä¸­, åªèƒ½ä½¿ç”¨saveæ–¹æ³•
 	 * 
 	 * @param bean
 	 * @param it
@@ -104,7 +104,7 @@ public class LoopBeanField<Bean, TARGET_TYPE> {
 	}
 	
 	/**
-	 * ¶Á³öbeanÖĞµÄÊôĞÔ²¢×ª»»³ÉTARGET_TYPEÍÆËÍµ½saverÖĞ
+	 * è¯»å‡ºbeanä¸­çš„å±æ€§å¹¶è½¬æ¢æˆTARGET_TYPEæ¨é€åˆ°saverä¸­
 	 * 
 	 * @param bean
 	 * @param saver
@@ -125,7 +125,7 @@ public class LoopBeanField<Bean, TARGET_TYPE> {
 	}
 	
 	/**
-	 * ´ÓsaverÖĞ¶ÁÈ¡Êı¾İ²¢ÍÆÈëµ½beanÖĞ
+	 * ä»saverä¸­è¯»å–æ•°æ®å¹¶æ¨å…¥åˆ°beanä¸­
 	 * 
 	 * @param bean
 	 * @param saver
@@ -178,35 +178,35 @@ public class LoopBeanField<Bean, TARGET_TYPE> {
 	
 	public interface ISaver<LOAD_TYPE> {
 		/**
-		 * ´ÓÊµÌåÖĞ¶Á³öÊı¾İ,²¢ÔÚ¸Ã·½·¨ÖĞ±£´æÆğÀ´
-		 * @param data - ÒÑ¾­×ª»»ºóÊôĞÔµÄÖµ
-		 * @param fieldName - ÊôĞÔÃû
+		 * ä»å®ä½“ä¸­è¯»å‡ºæ•°æ®,å¹¶åœ¨è¯¥æ–¹æ³•ä¸­ä¿å­˜èµ·æ¥
+		 * @param data - å·²ç»è½¬æ¢åå±æ€§çš„å€¼
+		 * @param fieldName - å±æ€§å
 		 */
 		void save(LOAD_TYPE data, String fieldName);
 	}
 	
 	public interface ILoader<SAVE_TYPE> {
 		/** 
-		 * Èç¹û·½·¨·µ»ØSKIP,ÔòºöÂÔ¶Ô¸ÃÊôĞÔµÄ²Ù×÷ 
+		 * å¦‚æœæ–¹æ³•è¿”å›SKIP,åˆ™å¿½ç•¥å¯¹è¯¥å±æ€§çš„æ“ä½œ 
 		 */
 		String SKIP = LoopBeanField.SKIP;
 		/**
-		 * È¡µÃÒªÉèÖÃµ½ÊôĞÔÖĞµÄÊı¾İ
-		 * @param fieldName - ÊôĞÔÃû
-		 * @return ·µ»ØÒªÉèÖÃµÄÊı¾İ, Ö®ºó»á±»×ª»»ÎªÊôĞÔµÄÀàĞÍ
+		 * å–å¾—è¦è®¾ç½®åˆ°å±æ€§ä¸­çš„æ•°æ®
+		 * @param fieldName - å±æ€§å
+		 * @return è¿”å›è¦è®¾ç½®çš„æ•°æ®, ä¹‹åä¼šè¢«è½¬æ¢ä¸ºå±æ€§çš„ç±»å‹
 		 */
 		SAVE_TYPE load(String fieldName);
 	}
 
 	/**
-	 * ÓëÀàĞÍ°ó¶¨µÄ×ª»»º¯Êı, ÄÚ²¿ÒÀÀµ
+	 * ä¸ç±»å‹ç»‘å®šçš„è½¬æ¢å‡½æ•°, å†…éƒ¨ä¾èµ–
 	 */
 	public interface IMethod {
 		Object from(Object value);
 	}
 	
 	/**
-	 * ×ª»»½Ó¿Ú,ÓÃÓÚ°Ñ´ÓÊµÌåÖĞµÄÊôĞÔÖµ×ª»»ÎªÒ»¸öÄ¿±êÀàĞÍÖµ
+	 * è½¬æ¢æ¥å£,ç”¨äºæŠŠä»å®ä½“ä¸­çš„å±æ€§å€¼è½¬æ¢ä¸ºä¸€ä¸ªç›®æ ‡ç±»å‹å€¼
 	 */
 	public interface ITransForGet<TARGET_TYPE> {
 		TARGET_TYPE from(String		value);
@@ -224,7 +224,7 @@ public class LoopBeanField<Bean, TARGET_TYPE> {
 	}
 	
 	/**
-	 * ×ª»»½Ó¿Ú,ÓÃÓÚ°ÑÒ»ÖÖÊı¾İÀàĞÍ×ª»»ÎªÊµÌåÊôĞÔµÄÀàĞÍ
+	 * è½¬æ¢æ¥å£,ç”¨äºæŠŠä¸€ç§æ•°æ®ç±»å‹è½¬æ¢ä¸ºå®ä½“å±æ€§çš„ç±»å‹
 	 */
 	public interface ITransForSet<TARGET_TYPE> {
 		String		fromS(TARGET_TYPE value);

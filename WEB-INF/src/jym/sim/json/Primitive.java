@@ -1,4 +1,4 @@
-// CatfoOD 2010-10-16 ÏÂÎç07:57:16
+// CatfoOD 2010-10-16 ä¸‹åˆ07:57:16
 
 package jym.sim.json;
 

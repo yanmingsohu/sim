@@ -1,4 +1,4 @@
-// CatfoOD 2010-8-20 ÉÏÎç08:29:10 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-8-20 ä¸Šåˆ08:29:10 yanming-sohu@sohu.com/@qq.com
 
 package test;
 
@@ -9,7 +9,7 @@ import javax.sql.DataSource;
 import jym.sim.pool.PoolFactory;
 
 /**
- * ²âÊÔÊı¾İÔ´¹¤³§£¬Í¬Ê±¿ÉÒÔµÃµ½Êı¾İÔ´
+ * æµ‹è¯•æ•°æ®æºå·¥å‚ï¼ŒåŒæ—¶å¯ä»¥å¾—åˆ°æ•°æ®æº
  */
 public class TestDBPool {
 	

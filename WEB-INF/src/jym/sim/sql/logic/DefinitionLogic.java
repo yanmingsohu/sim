@@ -1,4 +1,4 @@
-// CatfoOD 2010-7-12 上午08:12:42 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-7-12 涓婂崍08:12:42 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.sql.logic;
 
@@ -33,7 +33,7 @@ public class DefinitionLogic implements IWhere, ISkipValueCheck {
 		}
 		
 		if (nofind) {
-			throw new IllegalArgumentException("参数不是有效的表达式");
+			throw new IllegalArgumentException("鍙傛暟涓嶆槸鏈夋晥鐨勮〃杈惧紡");
 		}
 	}
 	

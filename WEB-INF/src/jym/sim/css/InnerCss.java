@@ -1,4 +1,4 @@
-// CatfoOD 2009-12-21 ÏÂÎç08:34:38
+// CatfoOD 2009-12-21 ä¸‹åˆ08:34:38
 
 package jym.sim.css;
 
@@ -21,8 +21,8 @@ public final class InnerCss extends HtmlTagBase {
 	}
 	
 	/**
-	 * ´ÓÍâ²¿ÎÄ¼şÖĞÔØÈëÑùÊ½±í
-	 * @param fromClassPath - ÑùÊ½±íËùÔÚµÄÂ·¾¶,Â·¾¶ÒÔ '/' ¿ªÊ¼
+	 * ä»å¤–éƒ¨æ–‡ä»¶ä¸­è½½å…¥æ ·å¼è¡¨
+	 * @param fromClassPath - æ ·å¼è¡¨æ‰€åœ¨çš„è·¯å¾„,è·¯å¾„ä»¥ '/' å¼€å§‹
 	 */
 	public InnerCss(String fromClassPath) {
 		this();
@@ -32,7 +32,7 @@ public final class InnerCss extends HtmlTagBase {
 			PrintWriter out = this.createText();
 			ResourceLoader.urlWriteOut(url, out);
 		} else {
-			System.out.println("InnerCss: ÕÒ²»µ½url ("+fromClassPath+")");
+			System.out.println("InnerCss: æ‰¾ä¸åˆ°url ("+fromClassPath+")");
 		}
 	}
 
@@ -50,7 +50,7 @@ public final class InnerCss extends HtmlTagBase {
 	}
 
 	/**
-	 * Ö±½ÓÏòÑùÊ½±íÖĞÌí¼ÓÎÄ±¾£¬×¢Òâ¸ñÊ½
+	 * ç›´æ¥å‘æ ·å¼è¡¨ä¸­æ·»åŠ æ–‡æœ¬ï¼Œæ³¨æ„æ ¼å¼
 	 */
 	@Override
 	public boolean append(String text) {
@@ -58,21 +58,21 @@ public final class InnerCss extends HtmlTagBase {
 	}
 	
 	/**
-	 * ÏòÑùÊ½±íÖĞÌí¼ÓÑùÊ½
+	 * å‘æ ·å¼è¡¨ä¸­æ·»åŠ æ ·å¼
 	 */
 	public boolean append(Css css) {
 		return cs.add(css);
 	}
 	
 	/**
-	 * Ö±½ÓÏòÑùÊ½±íÖĞÌí¼ÓÎÄ±¾£¬×¢Òâ¸ñÊ½
+	 * ç›´æ¥å‘æ ·å¼è¡¨ä¸­æ·»åŠ æ–‡æœ¬ï¼Œæ³¨æ„æ ¼å¼
 	 */
 	@Override
 	public PrintWriter createText() {
 		return super.createText();
 	}
 
-	// ------------------------------------- ²»Ö§³ÖµÄ·½·¨
+	// ------------------------------------- ä¸æ”¯æŒçš„æ–¹æ³•
 	
 	private void unsupport() {
 		throw new UnsupportedOperationException();

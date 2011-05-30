@@ -1,4 +1,4 @@
-// CatfoOD 2010-4-19 ÉÏÎç10:59:36 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-4-19 ä¸Šåˆ10:59:36 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.orm;
 
@@ -9,7 +9,7 @@ import javax.sql.DataSource;
 import jym.sim.sql.IQuery;
 
 /**
- * ÊµÌå¶ÔÏóÓ³Éä
+ * å®ä½“å¯¹è±¡æ˜ å°„
  */
 public class OrmTemplate<T> 
 	extends UpdateTemplate<T> 
@@ -17,12 +17,12 @@ public class OrmTemplate<T>
 	
 
 	/**
-	 * ormÄ£°å¹¹Ôìº¯Êı, È«²¿Ê¹ÓÃ±í¸ñÃûÓ³ÉäÊµÌåÊôĞÔ
+	 * ormæ¨¡æ¿æ„é€ å‡½æ•°, å…¨éƒ¨ä½¿ç”¨è¡¨æ ¼åæ˜ å°„å®ä½“å±æ€§
 	 * 
-	 * @param ds - Êı¾İÔ´
-	 * @param modelclass - Êı¾İÄ£ĞÍµÄclassÀà
-	 * @param tablename - Êı¾İ¿â±íÃû
-	 * @param priKey - Ö÷¼üÃû
+	 * @param ds - æ•°æ®æº
+	 * @param modelclass - æ•°æ®æ¨¡å‹çš„classç±»
+	 * @param tablename - æ•°æ®åº“è¡¨å
+	 * @param priKey - ä¸»é”®å
 	 */
 	public OrmTemplate(DataSource ds, Class<T> modelclass, String tablename,
 			String priKey) {
@@ -30,10 +30,10 @@ public class OrmTemplate<T>
 	}
 
 	/**
-	 * jdbcÄ£°å¹¹Ôìº¯Êı,Ä¬ÈÏÃ¿´ÎÁ¬½Ó²»»á×Ô¶¯¹Ø±ÕÁ¬½Ó
+	 * jdbcæ¨¡æ¿æ„é€ å‡½æ•°,é»˜è®¤æ¯æ¬¡è¿æ¥ä¸ä¼šè‡ªåŠ¨å…³é—­è¿æ¥
 	 * 
-	 * @param orm - Êı¾İ¿âÁĞÊı¾İÓëbeanÊµÌåÊôĞÔÓ³Éä²ßÂÔ
-	 * @throws SQLException - Êı¾İ¿â´íÎóÅ×³öÒì³£
+	 * @param orm - æ•°æ®åº“åˆ—æ•°æ®ä¸beanå®ä½“å±æ€§æ˜ å°„ç­–ç•¥
+	 * @throws SQLException - æ•°æ®åº“é”™è¯¯æŠ›å‡ºå¼‚å¸¸
 	 */
 	public OrmTemplate(DataSource ds, IOrm<T> orm) {
 		super(ds, orm);

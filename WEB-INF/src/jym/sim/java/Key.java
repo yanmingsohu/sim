@@ -1,7 +1,7 @@
 package jym.sim.java;
 
 /**
- * Java关键字，不可变类
+ * Java鍏抽敭瀛楋紝涓嶅彲鍙樼被
  */
 public class Key {
 	

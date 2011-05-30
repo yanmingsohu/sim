@@ -1,4 +1,4 @@
-// CatfoOD 2010-9-9 下午03:44:13 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-9-9 涓嬪崍03:44:13 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.sql.compile;
 
@@ -17,10 +17,10 @@ public class Compiler {
 	
 
 	/**
-	 * 编译sql文件到java格式
+	 * 缂栬瘧sql鏂囦欢鍒癹ava鏍煎紡
 	 * 
-	 * @param inf - 保存了文件的相关信息
-	 * @throws IOException - 编译失败抛出异常
+	 * @param inf - 淇濆瓨浜嗘枃浠剁殑鐩稿叧淇℃伅
+	 * @throws IOException - 缂栬瘧澶辫触鎶涘嚭寮傚父
 	 */
 	public Compiler(Info inf) throws IOException {
 		
@@ -53,7 +53,7 @@ public class Compiler {
 	}
 	
 	/**
-	 * 编译已经转换为Java文件的sql为class文件,成功返回true
+	 * 缂栬瘧宸茬粡杞崲涓篔ava鏂囦欢鐨剆ql涓篶lass鏂囦欢,鎴愬姛杩斿洖true
 	 */
 	public boolean start() {
 		return EXIT_OK == com.sun.tools.javac.Main.compile(new String[] {

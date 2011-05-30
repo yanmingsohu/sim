@@ -1,4 +1,4 @@
-// CatfoOD 2010-8-13 ÏÂÎç02:09:12 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-8-13 ä¸‹åˆ02:09:12 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.sql;
 
@@ -6,20 +6,20 @@ import jym.sim.util.Tools;
 
 
 /**
- * ·â×°Êı¾İ¿âÊÂÎñ²Ù×÷
+ * å°è£…æ•°æ®åº“äº‹åŠ¡æ“ä½œ
  */
 public class Transaction {
 	
 	private IJsGeter getter;
 	
 	/**
-	 * ÎªIQuery½Ó¿ÚÌá¹©ÊÂÎñÖ§³Ö
+	 * ä¸ºIQueryæ¥å£æä¾›äº‹åŠ¡æ”¯æŒ
 	 */
 	public Transaction(final IQuery iq) {		
 		this(new IJsGeter() {
 			public IJdbcSession get() throws Exception {
 				if (iq==null) {
-					throw new NullPointerException("Transaction ³õÊ¼»¯Ê±IQuery²»ÄÜÎªnull");
+					throw new NullPointerException("Transaction åˆå§‹åŒ–æ—¶IQueryä¸èƒ½ä¸ºnull");
 				}
 				return iq.getSession();
 			}
@@ -27,18 +27,18 @@ public class Transaction {
 	}
 	
 	/**
-	 * Í¨¹ıIJsGeter½Ó¿ÚÌá¹©ÊÂÎñÖ§³Ö
+	 * é€šè¿‡IJsGeteræ¥å£æä¾›äº‹åŠ¡æ”¯æŒ
 	 */
 	public Transaction(IJsGeter g) {
-		Tools.check(g, "Transaction ³õÊ¼»¯Ê§°Ü£¬²ÎÊı²»ÄÜÎªnull");
+		Tools.check(g, "Transaction åˆå§‹åŒ–å¤±è´¥ï¼Œå‚æ•°ä¸èƒ½ä¸ºnull");
 		getter = g;
 	}
 	
 	/**
-	 * ¿ªÊ¼Ò»¸öÊÂÎñ
+	 * å¼€å§‹ä¸€ä¸ªäº‹åŠ¡
 	 * 
-	 * @param handle - ´¦ÀíÊÂÎñµÄ¶ÔÏó
-	 * @return Èç¹ûÊÂÎñ³É¹¦²¢µİ½»·µ»Ønull, ·ñÔò·µ»ØÊÂÎñÊ§°ÜµÄÔ­Òò
+	 * @param handle - å¤„ç†äº‹åŠ¡çš„å¯¹è±¡
+	 * @return å¦‚æœäº‹åŠ¡æˆåŠŸå¹¶é€’äº¤è¿”å›null, å¦åˆ™è¿”å›äº‹åŠ¡å¤±è´¥çš„åŸå› 
 	 */
 	public Exception start(ITransactionHanle handle) {
 		IJdbcSession js = null;
@@ -51,7 +51,7 @@ public class Transaction {
 			handle.start();
 			
 			if (!js.commit()) {
-				throw new Exception("Transaction µİ½»Ê§°Ü£¬Î´ÖªµÄ´íÎó.");
+				throw new Exception("Transaction é€’äº¤å¤±è´¥ï¼ŒæœªçŸ¥çš„é”™è¯¯.");
 			}
 			
 		} catch(Exception e) {
@@ -70,7 +70,7 @@ public class Transaction {
 	}
 	
 	/**
-	 * Ìá¹©IJdbcSessionµÄÀà
+	 * æä¾›IJdbcSessionçš„ç±»
 	 */
 	public interface IJsGeter {
 		IJdbcSession get() throws Exception;

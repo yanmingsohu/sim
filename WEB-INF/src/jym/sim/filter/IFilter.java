@@ -1,17 +1,17 @@
-// CatfoOD 2010-8-19 ÉÏÎç08:32:40 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-8-19 ä¸Šåˆ08:32:40 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.filter;
 
 /**
- * ËùÓĞ¹ıÂËÆ÷µÄ¸¸½Ó¿Ú¸¸,·ºĞÍÖ¸Ê¾¸Ã¹ıÂËÆ÷¹ıÂËµÄÊı¾İÀàĞÍ
+ * æ‰€æœ‰è¿‡æ»¤å™¨çš„çˆ¶æ¥å£çˆ¶,æ³›å‹æŒ‡ç¤ºè¯¥è¿‡æ»¤å™¨è¿‡æ»¤çš„æ•°æ®ç±»å‹
  */
 public interface IFilter<T> {
 	/**
-	 * ¹ıÂËTÀàĞÍÊı
+	 * è¿‡æ»¤Tç±»å‹æ•°
 	 * 
-	 * @param src - Ô´Êı¾İ
-	 * @throws SimFilterException - Èç¹ûÅ×³ö¸ÃÒì³£¾ßÌåµÄÊµÏÖ²»Í¬,´¦Àí·½Ê½²»Í¬
-	 * @return ¹ıÂËºóµÄÊı¾İ
+	 * @param src - æºæ•°æ®
+	 * @throws SimFilterException - å¦‚æœæŠ›å‡ºè¯¥å¼‚å¸¸å…·ä½“çš„å®ç°ä¸åŒ,å¤„ç†æ–¹å¼ä¸åŒ
+	 * @return è¿‡æ»¤åçš„æ•°æ®
 	 */
 	public T see(T src) throws SimFilterException;
 }

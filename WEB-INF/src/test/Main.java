@@ -1,4 +1,4 @@
-// CatfoOD 2010-4-16 ÏÂÎç01:47:40 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-4-16 ä¸‹åˆ01:47:40 yanming-sohu@sohu.com/@qq.com
 
 package test;
 
@@ -19,7 +19,7 @@ import jym.sim.util.Version;
 public class Main {
 
 	public static void main(String[] args) {
-		Tools.pl("»¶Ó­Ê¹ÓÃsim¹¤¾ß¼¯ºÏ " + Version.v);
+		Tools.pl("æ¬¢è¿ä½¿ç”¨simå·¥å…·é›†åˆ " + Version.v);
 		
 		TextArea t = new TextArea();
 		t.setText(getText());
@@ -42,8 +42,8 @@ public class Main {
 	}
 
 	public static String getText() {
-		return "Îª¿ª·¢ java-web ³ÌĞòÉè¼ÆµÄ¿ªÔ´¹¤¾ß¼¯ºÏ\n\n" +
-				"ÓÉCatfoOD¸ºÔğÖ§³Ö Em: yanming-sohu@sohu.com\n\n" +
+		return "ä¸ºå¼€å‘ java-web ç¨‹åºè®¾è®¡çš„å¼€æºå·¥å…·é›†åˆ\n\n" +
+				"ç”±CatfoODè´Ÿè´£æ”¯æŒ Em: yanming-sohu@sohu.com\n\n" +
 				"http://github.com/yanmingsohu\n\n" +
 				"-------------------------------------------------------------------------------------------\n\n\n" +
 				getReadme();

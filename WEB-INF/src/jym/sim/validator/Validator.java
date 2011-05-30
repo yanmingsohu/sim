@@ -1,4 +1,4 @@
-// CatfoOD 2010-4-21 ÉÏÎç09:14:14 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-4-21 ä¸Šåˆ09:14:14 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.validator;
 
@@ -11,8 +11,8 @@ import java.util.List;
 import jym.sim.util.Tools;
 
 /**
- * ¶ÔÏóÑéÖ¤Æ÷,»º´æÇ°Ò»¸ö¶ÔÏóµÄÏà¹ØĞÅÏ¢<br>
- * ÑéÖ¤¶ÔÏóÊ±Ê¹ÓÃÍ¬Ò»¸öValidator¶ÔÏó¸üÓĞĞ§ÂÊ
+ * å¯¹è±¡éªŒè¯å™¨,ç¼“å­˜å‰ä¸€ä¸ªå¯¹è±¡çš„ç›¸å…³ä¿¡æ¯<br>
+ * éªŒè¯å¯¹è±¡æ—¶ä½¿ç”¨åŒä¸€ä¸ªValidatorå¯¹è±¡æ›´æœ‰æ•ˆç‡
  */
 public class Validator {
 	
@@ -22,7 +22,7 @@ public class Validator {
 	private List<IVerify> cachedverifys;
 
 	/**
-	 * ÑéÖ¤¶ÔÏó,²¢·µ»ØÑéÖ¤½á¹û
+	 * éªŒè¯å¯¹è±¡,å¹¶è¿”å›éªŒè¯ç»“æœ
 	 */
 	public VerifyMessage validate(Object o) {
 		VerifyMessage msg = new VerifyMessage();
@@ -53,7 +53,7 @@ public class Validator {
 				}
 				superclass = superclass.getSuperclass();
 			}
-			// »º´æ
+			// ç¼“å­˜
 			classkey = clazz;
 			cachedfields = flist;
 		}
@@ -75,7 +75,7 @@ public class Validator {
 	}
 
 	private void vfield(Object obj, Field field, VerifyMessage msg) {
-		// Í»ÆÆ·ÃÎÊÏŞÖÆ
+		// çªç ´è®¿é—®é™åˆ¶
 		field.setAccessible(true);
 		Iterator<IVerify> ite = getFieldVerifys(field);
 		
@@ -94,7 +94,7 @@ public class Validator {
 			}
 			
 		} catch (Exception e) {
-			Tools.pl("Validator·ÃÎÊÊôĞÔÊ±´íÎó:" + e.getMessage());
+			Tools.pl("Validatorè®¿é—®å±æ€§æ—¶é”™è¯¯:" + e.getMessage());
 		}
 	}
 }

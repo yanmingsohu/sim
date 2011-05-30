@@ -1,10 +1,10 @@
-// CatfoOD 2010-9-9 下午03:40:42 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-9-9 涓嬪崍03:40:42 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.sql.compile;
 
 
 /**
- * sql编译为Java文件后的样式模板，无实际作用
+ * sql缂栬瘧涓篔ava鏂囦欢鍚庣殑鏍峰紡妯℃澘锛屾棤瀹為檯浣滅敤
  */
 class Template {
 	

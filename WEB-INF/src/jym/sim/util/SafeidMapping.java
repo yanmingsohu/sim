@@ -1,4 +1,4 @@
-// CatfoOD 2009-12-17 ÏÂÎç09:28:22
+// CatfoOD 2009-12-17 ä¸‹åˆ09:28:22
 
 package jym.sim.util;
 
@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Random;
 
 /**
- * °²È«µÄIDÓ³Éä£¬·ÀÖ¹Êı¾İ¿âIDÖ±½Ó´«µ½¿Í»§¶Ë
+ * å®‰å…¨çš„IDæ˜ å°„ï¼Œé˜²æ­¢æ•°æ®åº“IDç›´æ¥ä¼ åˆ°å®¢æˆ·ç«¯
  */
 public class SafeidMapping {
 	
@@ -23,13 +23,13 @@ public class SafeidMapping {
 	}
 	
 	/**
-	 * ±ã½İµÄ·½·¨<br>
-	 * ´ÓsessionÖĞÈ¡µÃSafeidMapping¶ÔÏó²¢µÃµ½°²È«id</br>
-	 * Èç¹ûSafeidMapping²»´æÔÚÔò³õÊ¼»¯Ëü
+	 * ä¾¿æ·çš„æ–¹æ³•<br>
+	 * ä»sessionä¸­å–å¾—SafeidMappingå¯¹è±¡å¹¶å¾—åˆ°å®‰å…¨id</br>
+	 * å¦‚æœSafeidMappingä¸å­˜åœ¨åˆ™åˆå§‹åŒ–å®ƒ
 	 * 
-	 * @param id - Ô­Ê¼id
-	 * @param data - ActionÊı¾İ¶ÔÏó
-	 * @return °²È«µÄID
+	 * @param id - åŸå§‹id
+	 * @param data - Actionæ•°æ®å¯¹è±¡
+	 * @return å®‰å…¨çš„ID
 	 */
 	public static int getSafeID(int id, ISessionData data) {
 		SafeidMapping smp = (SafeidMapping) data.getSessionAttribute(NAME);
@@ -40,13 +40,13 @@ public class SafeidMapping {
 	}
 	
 	/**
-	 * ±ã½İµÄ·½·¨<br>
-	 * Çå³ısessionÖĞSafeidMapping¶ÔÏóµÄËùÓĞidÓ³Éä<br>
-	 * Èç¹ûSafeidMapping²»´æÔÚÔò´´½¨Ëü<br>
-	 * <b>´Ë·½·¨Ò»°ãÔÚ¹¹½¨Êı¾İÖ®Ç°µ÷ÓÃ</b>
+	 * ä¾¿æ·çš„æ–¹æ³•<br>
+	 * æ¸…é™¤sessionä¸­SafeidMappingå¯¹è±¡çš„æ‰€æœ‰idæ˜ å°„<br>
+	 * å¦‚æœSafeidMappingä¸å­˜åœ¨åˆ™åˆ›å»ºå®ƒ<br>
+	 * <b>æ­¤æ–¹æ³•ä¸€èˆ¬åœ¨æ„å»ºæ•°æ®ä¹‹å‰è°ƒç”¨</b>
 	 * 
-	 * @param data - ActionÊı¾İ¶ÔÏó
-	 * @return ·µ»ØÓësession°ó¶¨µÄSafeidMapping
+	 * @param data - Actionæ•°æ®å¯¹è±¡
+	 * @return è¿”å›ä¸sessionç»‘å®šçš„SafeidMapping
 	 */
 	public static SafeidMapping resetSafeID(ISessionData data) {
 		SafeidMapping smp = (SafeidMapping) data.getSessionAttribute(NAME);
@@ -59,13 +59,13 @@ public class SafeidMapping {
 	}
 	
 	/**
-	 * ±ã½İµÄ·½·¨<br>
-	 * ´ÓsessionÖĞÈ¡µÃSafeidMapping¶ÔÏó²¢µÃµ½Ô­Ê¼id
+	 * ä¾¿æ·çš„æ–¹æ³•<br>
+	 * ä»sessionä¸­å–å¾—SafeidMappingå¯¹è±¡å¹¶å¾—åˆ°åŸå§‹id
 	 * 
-	 * @param sid - °²È«id
-	 * @param data - ActionÊı¾İ¶ÔÏó
-	 * @return Ô­Ê¼µÄID
-	 * @throws SafeException - Èç¹ûSafeidMapping²»ÄÜ´æÔÚ»òÕßÃ»ÓĞsidµÄÓ³Éä
+	 * @param sid - å®‰å…¨id
+	 * @param data - Actionæ•°æ®å¯¹è±¡
+	 * @return åŸå§‹çš„ID
+	 * @throws SafeException - å¦‚æœSafeidMappingä¸èƒ½å­˜åœ¨æˆ–è€…æ²¡æœ‰sidçš„æ˜ å°„
 	 */
 	public static int getRealID(int sid, ISessionData data) throws SafeException {
 		SafeidMapping smp = (SafeidMapping) data.getSessionAttribute(NAME);
@@ -77,8 +77,8 @@ public class SafeidMapping {
 	
 	
 	/**
-	 * ´ÓÊı¾İ¿âÖĞÈ¡µÃ°²È«Ó³Éä<br>
-	 * Í¬Ê±IDÖµ±»±£´æÒÔ±ã·´ÏòÓ³Éä
+	 * ä»æ•°æ®åº“ä¸­å–å¾—å®‰å…¨æ˜ å°„<br>
+	 * åŒæ—¶IDå€¼è¢«ä¿å­˜ä»¥ä¾¿åå‘æ˜ å°„
 	 */
 	public int getSafe(int id) {
 		int sid = safe();
@@ -96,8 +96,8 @@ public class SafeidMapping {
 	}
 	
 	/**
-	 * ´ÓÓ³ÉäÖĞÈ¡µÃÕæÊµID
-	 * @throws SafeException - Èç¹ûsid²¢²»´æËµÃ÷sidÊÇ²»°²È«µÄ£¬ÔòÅ×³öÕâ¸öÒì³£
+	 * ä»æ˜ å°„ä¸­å–å¾—çœŸå®ID
+	 * @throws SafeException - å¦‚æœsidå¹¶ä¸å­˜è¯´æ˜sidæ˜¯ä¸å®‰å…¨çš„ï¼Œåˆ™æŠ›å‡ºè¿™ä¸ªå¼‚å¸¸
 	 */
 	public int getReal(int sid) throws SafeException {
 		if (!idmap.containsKey(sid)) {
@@ -107,7 +107,7 @@ public class SafeidMapping {
 	}
 	
 	/**
-	 * Çå³ıËùÓĞµÄÓ³ÉäID
+	 * æ¸…é™¤æ‰€æœ‰çš„æ˜ å°„ID
 	 */
 	public void reset() {
 		idmap.clear();

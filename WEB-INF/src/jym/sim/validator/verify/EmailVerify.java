@@ -1,4 +1,4 @@
-// CatfoOD 2010-4-21 ÏÂÎç02:37:35 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-4-21 ä¸‹åˆ02:37:35 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.validator.verify;
 

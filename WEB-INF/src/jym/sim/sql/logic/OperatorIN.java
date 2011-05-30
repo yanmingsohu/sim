@@ -1,4 +1,4 @@
-// CatfoOD 2010-7-5 ÏÂÎç04:04:50 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-7-5 ä¸‹åˆ04:04:50 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.sql.logic;
 
@@ -11,7 +11,7 @@ import jym.sim.util.BeanUtil;
 import jym.sim.util.Tools;
 
 /**
- * ÁĞ±íÔËËã·û(ÅĞ¶Ï±í´ïÊ½ÊÇ·ñÎªÁĞ±íÖĞµÄÖ¸¶¨Ïî)£ºIN (Ïî1,Ïî2¡­¡­)
+ * åˆ—è¡¨è¿ç®—ç¬¦(åˆ¤æ–­è¡¨è¾¾å¼æ˜¯å¦ä¸ºåˆ—è¡¨ä¸­çš„æŒ‡å®šé¡¹)ï¼šIN (é¡¹1,é¡¹2â€¦â€¦)
  */
 public class OperatorIN implements IWhere, ISkipValueCheck {
 	
@@ -57,10 +57,10 @@ public class OperatorIN implements IWhere, ISkipValueCheck {
 			value = BeanUtil.invoke(model, methodName, new Object[0]);
 			
 		} catch (NoSuchMethodException e) {
-			error("ÕÒ²»µ½ "+fieldname+" µÄget·½·¨: " + e.getMessage());
+			error("æ‰¾ä¸åˆ° "+fieldname+" çš„getæ–¹æ³•: " + e.getMessage());
 			
 		} catch (Exception e) {
-			error("´íÎó: " + e.getMessage());
+			error("é”™è¯¯: " + e.getMessage());
 		}
 		
 		return value;

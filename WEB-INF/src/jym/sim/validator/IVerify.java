@@ -1,4 +1,4 @@
-// CatfoOD 2010-4-21 ÉÏÎç09:20:02 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-4-21 ä¸Šåˆ09:20:02 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.validator;
 
@@ -6,38 +6,38 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
 /**
- * ÑéÖ¤×¢½âµÄÊµÏÖ½Ó¿Ú
+ * éªŒè¯æ³¨è§£çš„å®ç°æ¥å£
  */
 public interface IVerify {
 	
 	/**
-	 * ÑéÖ¤³É¹¦
+	 * éªŒè¯æˆåŠŸ
 	 */
 	public final String SUCCESS = "SUCCESS";
 	
 	/**
-	 * ÑéÖ¤¹ı³ÌÖĞ³öÏÖ´íÎó
+	 * éªŒè¯è¿‡ç¨‹ä¸­å‡ºç°é”™è¯¯
 	 */
 	public final String ERROR = "ERR";
 	
 	/**
-	 * ÑéÖ¤Æ÷Ìø¹ıÑéÖ¤
+	 * éªŒè¯å™¨è·³è¿‡éªŒè¯
 	 */
 	public final String SKIP = "SKIP";
 	
 	/**
-	 * ·µ»ØÑéÖ¤Æ÷ÒªÑéÖ¤µÄ'×¢½â'µÄclass
+	 * è¿”å›éªŒè¯å™¨è¦éªŒè¯çš„'æ³¨è§£'çš„class
 	 */
 	public Class<? extends Annotation> getAnnoClass();
 	
 	/**
-	 * °´ÕÕÖ¸¶¨µÄ¹æÔòÑéÖ¤fieldµÄÖµvalue,<br>
-	 * Èç¹û·ûºÏ¹æÔò(ÑéÖ¤³É¹¦)·µ»Ønull,<br>
-	 * ·ñÔò·µ»Ø´íÎó×Ö·û´®<br>
-	 * <b>Èç¹ûvalueÖµÎŞ·¨ÑéÖ¤(valueÎªnull, »òÀàĞÍ²»¶Ô)Ò²·µ»Ønull</b>
+	 * æŒ‰ç…§æŒ‡å®šçš„è§„åˆ™éªŒè¯fieldçš„å€¼value,<br>
+	 * å¦‚æœç¬¦åˆè§„åˆ™(éªŒè¯æˆåŠŸ)è¿”å›null,<br>
+	 * å¦åˆ™è¿”å›é”™è¯¯å­—ç¬¦ä¸²<br>
+	 * <b>å¦‚æœvalueå€¼æ— æ³•éªŒè¯(valueä¸ºnull, æˆ–ç±»å‹ä¸å¯¹)ä¹Ÿè¿”å›null</b>
 	 * 
-	 * @param field - ÒªÑéÖ¤µÄ×Ö¶Î
-	 * @param value - ×Ö¶ÎËùÊô¶ÔÏóµÄÖµ
+	 * @param field - è¦éªŒè¯çš„å­—æ®µ
+	 * @param value - å­—æ®µæ‰€å±å¯¹è±¡çš„å€¼
 	 */
 	public String getMessage(Field field, Object value);
 	

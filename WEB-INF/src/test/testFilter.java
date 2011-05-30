@@ -1,4 +1,4 @@
-// CatfoOD 2010-8-10 ÏÂÎç01:50:19 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-8-10 ä¸‹åˆ01:50:19 yanming-sohu@sohu.com/@qq.com
 
 package test;
 
@@ -31,7 +31,7 @@ public class TestFilter {
 		
 		int count = 100;
 		
-		UsedTime.start(count+"´Î²âÊÔ");
+		UsedTime.start(count+"æ¬¡æµ‹è¯•");
 		for (int i=0; i<count; ++i) {
 			fb.filter(a);
 			fb.filter(d);

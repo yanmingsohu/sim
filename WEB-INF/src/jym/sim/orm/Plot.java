@@ -1,4 +1,4 @@
-// CatfoOD 2010-4-16 ÉÏÎç09:38:08 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-4-16 ä¸Šåˆ09:38:08 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.orm;
 
@@ -16,19 +16,19 @@ import jym.sim.util.Tools;
 
 
 /**
- * ÊµÌåÊôĞÔÓëÊı¾İ¿âÁĞÓ³Éä²ßÂÔÊµÏÖ
+ * å®ä½“å±æ€§ä¸æ•°æ®åº“åˆ—æ˜ å°„ç­–ç•¥å®ç°
  *
- * @param <T> - ÊµÌåÀàĞÍ
+ * @param <T> - å®ä½“ç±»å‹
  */
 class Plot<T> implements IPlot {
 	
 	private final static String PASS_COLM_NAME = "sim__";
 	
-	/** Ê¹ÓÃĞ¡Ğ´±È½ÏString <±íÁĞÃû, ·½·¨·â×°>*/
+	/** ä½¿ç”¨å°å†™æ¯”è¾ƒString <è¡¨åˆ—å, æ–¹æ³•å°è£…>*/
 	private Map<String, MethodMapping> ormmap;
-	/** Ê¹ÓÃĞ¡Ğ´±È½ÏString <·½·¨Ğ¡Ğ´Ãû, ·½·¨>*/
+	/** ä½¿ç”¨å°å†™æ¯”è¾ƒString <æ–¹æ³•å°å†™å, æ–¹æ³•>*/
 	private Map<String, Method> classMethodmap;
-	/** ´óĞ¡Ğ´Ãô¸Ğ, <·½·¨, ÁĞÃû> */
+	/** å¤§å°å†™æ•æ„Ÿ, <æ–¹æ³•, åˆ—å> */
 	private Map<Method, String> reverse;
 	
 	private Method[] ms;
@@ -50,11 +50,11 @@ class Plot<T> implements IPlot {
 		classMethodmap = new HashMap<String, Method>();
 		
 		for (int i=0; i<ms.length; ++i) {
-			// Ê¹ÓÃĞ¡Ğ´±È½Ï
+			// ä½¿ç”¨å°å†™æ¯”è¾ƒ
 			String name = ms[i].getName().toLowerCase();
 			
 			Method m = classMethodmap.put(name, ms[i]);
-			// Èç¹ûm·Ç¿Õ,Ôò¿ÉÄÜÓĞº¯ÊıÖØÔØ
+			// å¦‚æœméç©º,åˆ™å¯èƒ½æœ‰å‡½æ•°é‡è½½
 			if (m!=null) {
 				Field f = BeanUtil.getMethodTargetField(m);
 				if (f!=null) {
@@ -63,9 +63,9 @@ class Plot<T> implements IPlot {
 						if ( f.getType().equals(pts[0]) ) {
 							classMethodmap.put(name, m);
 						} 
-						// else ÊôĞÔµÄÀàĞÍÓë·½·¨ÀàĞÍ²»Í¬
+						// else å±æ€§çš„ç±»å‹ä¸æ–¹æ³•ç±»å‹ä¸åŒ
 					} 
-					// else º¯ÊıµÄ²ÎÊı²»ºÏ·¨
+					// else å‡½æ•°çš„å‚æ•°ä¸åˆæ³•
 				}
 			}
 		}
@@ -97,7 +97,7 @@ class Plot<T> implements IPlot {
 		
 		MethodMapping md = null;
 
-		// ×Ô¶¯Ê¹ÓÃ±í¸ñÁĞÃû½øĞĞÓ³Éä
+		// è‡ªåŠ¨ä½¿ç”¨è¡¨æ ¼åˆ—åè¿›è¡Œæ˜ å°„
 		if (usecolnamemap && !ormmap.containsKey(colname)) {
 			md = setMappingPlot(colname, colname, null, null);
 			
@@ -110,17 +110,17 @@ class Plot<T> implements IPlot {
 				md.invoke(rs, colc, model);
 			} 
 			catch(Exception e) {
-				warnning(model.getClass(), "Ö´ĞĞ·½·¨ (" 
-						+ md.getName() + ") Ê±´íÎó: " + e.getMessage());
+				warnning(model.getClass(), "æ‰§è¡Œæ–¹æ³• (" 
+						+ md.getName() + ") æ—¶é”™è¯¯: " + e.getMessage());
 			}
 		} else {
-			warnning(model.getClass(), colname + " Ö¸¶¨µÄÊı¾İÁĞÃûÃ»ÓĞÓ³Éä");
+			warnning(model.getClass(), colname + " æŒ‡å®šçš„æ•°æ®åˆ—åæ²¡æœ‰æ˜ å°„");
 		}
 	}
 	
 	/**
-	 * Èç¹ûfilednameµÄÀàĞÍ²»ÊÇ¼òµ¥ÀàĞÍ,ÔòÊ¹ÓÃsql´´½¨<br>
-	 * sql¿ÉÒÔÎªnull
+	 * å¦‚æœfilednameçš„ç±»å‹ä¸æ˜¯ç®€å•ç±»å‹,åˆ™ä½¿ç”¨sqlåˆ›å»º<br>
+	 * sqlå¯ä»¥ä¸ºnull
 	 */
 	protected MethodMapping setMappingPlot(
 			String fieldname, String colname, ISelecter<?> is, String pk, ISqlLogic ...logics) {
@@ -131,16 +131,16 @@ class Plot<T> implements IPlot {
 		
 		try {
 			if (setm==null) {
-				throw new OrmException("Ã»ÓĞsetter·½·¨");
+				throw new OrmException("æ²¡æœ‰setteræ–¹æ³•");
 			}
 			mm = new MethodMapping(setm, is, pk, logics, outfilter);
-			// ormmap.set µÄ²ÎÊı±äÎªĞ¡Ğ´
+			// ormmap.set çš„å‚æ•°å˜ä¸ºå°å†™
 			ormmap.put(colname.toLowerCase(), mm);
 			reverse.put(getm, colname);
 			
 		} catch (OrmException e) {
-			warnning(orm.getModelClass(), "Ó³ÉäÊôĞÔ("
-					+ fieldname + ")Ê±´íÎó: " + e.getMessage());
+			warnning(orm.getModelClass(), "æ˜ å°„å±æ€§("
+					+ fieldname + ")æ—¶é”™è¯¯: " + e.getMessage());
 		}
 		
 		return mm;
@@ -155,8 +155,8 @@ class Plot<T> implements IPlot {
 	}
 	
 	/**
-	 * È¡µÃÖ¸¶¨ÁĞwhereµÄ±È½Ï·½Ê½, ´óĞ¡Ğ´²»Ãô¸Ğ<br>
-	 * ¸Ã·½·¨²»»á·µ»Ønull
+	 * å–å¾—æŒ‡å®šåˆ—whereçš„æ¯”è¾ƒæ–¹å¼, å¤§å°å†™ä¸æ•æ„Ÿ<br>
+	 * è¯¥æ–¹æ³•ä¸ä¼šè¿”å›null
 	 */
 	protected LogicPackage getLogicPackage(String colname) {
 		LogicPackage log = null;
@@ -174,14 +174,14 @@ class Plot<T> implements IPlot {
 	}
 	
 	/**
-	 * È¡µÃÊµÌåget·½·¨¶Ô±íÃûµÄÓ³Éä, Çø·Ö´óĞ¡Ğ´
+	 * å–å¾—å®ä½“getæ–¹æ³•å¯¹è¡¨åçš„æ˜ å°„, åŒºåˆ†å¤§å°å†™
 	 */
 	protected String getColname(Method m) {
 		return reverse.get(m);
 	}
 	
 	private void warnning(Class<?> beanClass, String msg) {
-		Tools.pl("¾¯¸æ:(Plot): (", beanClass, ") ", msg);
+		Tools.pl("è­¦å‘Š:(Plot): (", beanClass, ") ", msg);
 	}
 
 	public IOrder order() {
@@ -211,7 +211,7 @@ class Plot<T> implements IPlot {
 		}
 
 		private IOrder set(String cn, String o) {
-			Tools.check(cn, "ÅÅĞòµÄÁĞÃû²»ÄÜÎªnull");
+			Tools.check(cn, "æ’åºçš„åˆ—åä¸èƒ½ä¸ºnull");
 		if (isFirst) {
 				out.append(" ORDER BY ");
 				isFirst = false;

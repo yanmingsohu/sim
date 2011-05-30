@@ -1,4 +1,4 @@
-// CatfoOD 2010-4-21 ÏÂÎç02:20:45 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-4-21 ä¸‹åˆ02:20:45 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.validator.annotation;
 
@@ -9,17 +9,17 @@ import java.lang.annotation.Target;
 
 
 /**
- * ÕıÔò±í´ïÊ½ÑéÖ¤
+ * æ­£åˆ™è¡¨è¾¾å¼éªŒè¯
  */
 @Retention(value=RetentionPolicy.RUNTIME)
 @Target(value=ElementType.FIELD)
 public @interface Regex {
 	/**
-	 * ÑéÖ¤´íÎóÊ±µÄÏûÏ¢
+	 * éªŒè¯é”™è¯¯æ—¶çš„æ¶ˆæ¯
 	 */
 	String msg();
 	/**
-	 * ÕıÔò±í´ïÊ½
+	 * æ­£åˆ™è¡¨è¾¾å¼
 	 */
 	String exp();
 }

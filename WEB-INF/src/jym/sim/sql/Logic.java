@@ -1,4 +1,4 @@
-// CatfoOD 2010-4-16 ÉÏÎç11:07:11 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-4-16 ä¸Šåˆ11:07:11 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.sql;
 
@@ -11,13 +11,13 @@ import jym.sim.sql.logic.OperatorIN;
 import jym.sim.sql.logic.OperatorOR;
 
 /**
- * Êı¾İ¿â²éÑ¯where×Ö¾äÖĞÂß¼­ÅĞ¶Ï²ßÂÔ,IWhere.w()·½·¨·µ»Ønull,ÔòºöÂÔÕâ¸öÌõ¼ş
+ * æ•°æ®åº“æŸ¥è¯¢whereå­—å¥ä¸­é€»è¾‘åˆ¤æ–­ç­–ç•¥,IWhere.w()æ–¹æ³•è¿”å›null,åˆ™å¿½ç•¥è¿™ä¸ªæ¡ä»¶
  */
 public class Logic implements ISqlLogic {
 	
-////////////////////// -----------¸üĞÂÅĞ¶Ï-------------------------------- ////
+////////////////////// -----------æ›´æ–°åˆ¤æ–­-------------------------------- ////
 	
-	/** ¸üĞÂÅĞ¶Ï, ÔÊĞí¸Ã×Ö¶ÎÉèÖÃÎªNULL */
+	/** æ›´æ–°åˆ¤æ–­, å…è®¸è¯¥å­—æ®µè®¾ç½®ä¸ºNULL */
 		public static final IUpdateLogic ALLOW_NULL = new IUpdateLogic() {
 			public Object up(Object columnValue) {
 				
@@ -34,39 +34,39 @@ public class Logic implements ISqlLogic {
 			}
 		};
 	
-////////////////////// -----------²éÑ¯ÅĞ¶Ï-------------------------------- ////
+////////////////////// -----------æŸ¥è¯¢åˆ¤æ–­-------------------------------- ////
 	
-	/** ²éÑ¯ÅĞ¶Ï, µÈÓÚ */
+	/** æŸ¥è¯¢åˆ¤æ–­, ç­‰äº */
 		public static final IWhere EQ = new Easy("=");
 		
-	/** ²éÑ¯ÅĞ¶Ï, ²»µÈÓÚ */
+	/** æŸ¥è¯¢åˆ¤æ–­, ä¸ç­‰äº */
 		public static final IWhere NE = new Easy("!=");
 		
-	/** ²éÑ¯ÅĞ¶Ï, Ğ¡ÓÚ */
+	/** æŸ¥è¯¢åˆ¤æ–­, å°äº */
 		public static final IWhere LT = new Easy("<");
 		
-	/** ²éÑ¯ÅĞ¶Ï, Ğ¡ÓÚµÈÓÚ */
+	/** æŸ¥è¯¢åˆ¤æ–­, å°äºç­‰äº */
 		public static final IWhere LE = new Easy("<=");
 		
-	/** ²éÑ¯ÅĞ¶Ï, ´óÓÚ */
+	/** æŸ¥è¯¢åˆ¤æ–­, å¤§äº */
 		public static final IWhere GT = new Easy(">");
 		
-	/** ²éÑ¯ÅĞ¶Ï, ´óÓÚµÈÓÚ */
+	/** æŸ¥è¯¢åˆ¤æ–­, å¤§äºç­‰äº */
 		public static final IWhere GE = new Easy(">=");
 		
-	/** ×Ô¶¨ÒåµÄlike²éÑ¯, ÊôĞÔµÄÖµĞèÒª¼ÓÉÏÄ£ºıÌõ¼ş */
+	/** è‡ªå®šä¹‰çš„likeæŸ¥è¯¢, å±æ€§çš„å€¼éœ€è¦åŠ ä¸Šæ¨¡ç³Šæ¡ä»¶ */
 		public static final IWhere LIKE = new Easy("like");
 		
-	/** °üº¬²éÑ¯; Èç¹û½á¹ûÖĞº¬ÓĞ×Ó´®ÔòÎªtrue */
+	/** åŒ…å«æŸ¥è¯¢; å¦‚æœç»“æœä¸­å«æœ‰å­ä¸²åˆ™ä¸ºtrue */
 		public static final IWhere INCLUDE = new Format("%1$s like '%%%2$s%%'");
 		
-	/** ÅÅ³ı²éÑ¯; Èç¹û½á¹ûÖĞ²»º¬ÓĞ×Ó´®ÔòÎªtrue */
+	/** æ’é™¤æŸ¥è¯¢; å¦‚æœç»“æœä¸­ä¸å«æœ‰å­ä¸²åˆ™ä¸ºtrue */
 		public static final IWhere EXCLUDE = new Format("%1$s not like '%%%2$s%%'");
 		
-	/** ÈÕÆÚ²éÑ¯,¾«È·µ½ÈÕ */
+	/** æ—¥æœŸæŸ¥è¯¢,ç²¾ç¡®åˆ°æ—¥ */
 		public static final IWhere DATE = new Format("to_char(%1$s, 'yyyy-mm-dd') = '%2$s'");
 		
-	/** ²éÑ¯ÅĞ¶Ï, ÊôĞÔ²»×÷Îª²éÑ¯½á¹ûµÄÌõ¼ş */
+	/** æŸ¥è¯¢åˆ¤æ–­, å±æ€§ä¸ä½œä¸ºæŸ¥è¯¢ç»“æœçš„æ¡ä»¶ */
 		public static final IWhere NONE = new IWhere() {
 			public String w(String columnName, Object value, Object model) {
 				return null;
@@ -74,14 +74,14 @@ public class Logic implements ISqlLogic {
 		};
 		
 	/**
-	 * ÈÕÆÚ·¶Î§²éÑ¯,²éÑ¯µÄ½á¹û½éÓÚÁ½¸ö²ÎÊıÖ®¼ä(°üº¬µ±ÌìµÄÈÕÆÚ),ºöÂÔÊ±¼ä²¿·Ö<br/>
+	 * æ—¥æœŸèŒƒå›´æŸ¥è¯¢,æŸ¥è¯¢çš„ç»“æœä»‹äºä¸¤ä¸ªå‚æ•°ä¹‹é—´(åŒ…å«å½“å¤©çš„æ—¥æœŸ),å¿½ç•¥æ—¶é—´éƒ¨åˆ†<br/>
 	 * <code>beginFieldName <= result <= endFieldName</code><br/>
-	 * Èç¹ûÓĞÒ»¸öÊôĞÔÓòÎªnullÔò´ËÊôĞÔÓòÊ¹ÓÃµ±Ç°ÈÕÆÚ,Èç¹ûÁ½¸ö¶¼Îªnull,ÔòºöÂÔ´ËÁĞµÄ±È½Ï<br/>
+	 * å¦‚æœæœ‰ä¸€ä¸ªå±æ€§åŸŸä¸ºnullåˆ™æ­¤å±æ€§åŸŸä½¿ç”¨å½“å‰æ—¥æœŸ,å¦‚æœä¸¤ä¸ªéƒ½ä¸ºnull,åˆ™å¿½ç•¥æ­¤åˆ—çš„æ¯”è¾ƒ<br/>
 	 * <br/>
-	 * <b>Á½¸ö±È½ÏÓÃµÄÊı¾İÓò,ÀàĞÍ¿ÉÒÔÊÇString,µ«Èç¹ûÖµÎª''»òÕß¸ñÊ½ÎŞĞ§Ôò±È½Ï½á¹û¿ÉÄÜ²»ÕıÈ·</b><br/>
+	 * <b>ä¸¤ä¸ªæ¯”è¾ƒç”¨çš„æ•°æ®åŸŸ,ç±»å‹å¯ä»¥æ˜¯String,ä½†å¦‚æœå€¼ä¸º''æˆ–è€…æ ¼å¼æ— æ•ˆåˆ™æ¯”è¾ƒç»“æœå¯èƒ½ä¸æ­£ç¡®</b><br/>
 	 * 
-	 * @param beginFieldName - ÊµÌåÀàµÄÊôĞÔÃû,²éÑ¯½á¹û´óÓÚµÈÓÚ´ËÊôĞÔÖĞµÄÖµ
-	 * @param endFieldName - ÊµÌåÀàµÄÊôĞÔÃû,²éÑ¯½á¹ûĞ¡ÓÚµÈÓÚ´ËÊôĞÔÖĞµÄÖµ
+	 * @param beginFieldName - å®ä½“ç±»çš„å±æ€§å,æŸ¥è¯¢ç»“æœå¤§äºç­‰äºæ­¤å±æ€§ä¸­çš„å€¼
+	 * @param endFieldName - å®ä½“ç±»çš„å±æ€§å,æŸ¥è¯¢ç»“æœå°äºç­‰äºæ­¤å±æ€§ä¸­çš„å€¼
 	 * 
 	 * */
 		public static final IWhere DATE_RANGE(String beginFieldName, String endFieldName) {
@@ -89,43 +89,43 @@ public class Logic implements ISqlLogic {
 		};
 		
 	/**
-	 * ÁĞ±í²éÑ¯,±éÀúarrayFieldNameµÄÖµ·ÅÈëINµÄ²éÑ¯Ìõ¼şÖĞ
+	 * åˆ—è¡¨æŸ¥è¯¢,éå†arrayFieldNameçš„å€¼æ”¾å…¥INçš„æŸ¥è¯¢æ¡ä»¶ä¸­
 	 * 
-	 * @param arrayFieldName - ÊµÌåÀàµÄÊôĞÔÃû,ÊôĞÔµÄÀàĞÍÊÇÒ»¸ö¼¯ºÏ
+	 * @param arrayFieldName - å®ä½“ç±»çš„å±æ€§å,å±æ€§çš„ç±»å‹æ˜¯ä¸€ä¸ªé›†åˆ
 	 * */
 		public static final IWhere IN(String arrayFieldName) {
 			return new OperatorIN(arrayFieldName);
 		};
 	
 	/**
-	 * ²éÑ¯ÅĞ¶Ï, °ü×°¶à¸öIWhereÌõ¼ş,ÊµÏÖ¿ÉÑ¡ÔñµÄÂß¼­,Èç¹ûw[n]µÄ½á¹ûÎªnull,ÔòÊ¹ÓÃw[n+1]µÄ½á¹û
+	 * æŸ¥è¯¢åˆ¤æ–­, åŒ…è£…å¤šä¸ªIWhereæ¡ä»¶,å®ç°å¯é€‰æ‹©çš„é€»è¾‘,å¦‚æœw[n]çš„ç»“æœä¸ºnull,åˆ™ä½¿ç”¨w[n+1]çš„ç»“æœ
 	 * */
 		public static final IWhere OR(IWhere ...w) {
 			return new OperatorOR(w);
 		};
 		
 	/**
-	 * ²éÑ¯ÅĞ¶Ï, ¹Ì¶¨µÄwhere×Ó¾ä,×ÜÊÇ·µ»Ø²ÎÊıÖĞÉè¶¨µÄsql,Ò»°ãºÍÆäËûµÄÂß¼­ÅäºÏÊ¹ÓÃ
+	 * æŸ¥è¯¢åˆ¤æ–­, å›ºå®šçš„whereå­å¥,æ€»æ˜¯è¿”å›å‚æ•°ä¸­è®¾å®šçš„sql,ä¸€èˆ¬å’Œå…¶ä»–çš„é€»è¾‘é…åˆä½¿ç”¨
 	 * */
 		public static final IWhere FIXED(final String sql) {
 			return new FixedLogic(sql);
 		};
 		
 	/**
-	 * where×Ó¾äÓÉÖ¸¶¨µÄ¸ñÊ½×Ö·û´®Éú³É
-	 * <br>¸ñÊ½×Ö·û´®ÓÉ<b>¹Ì¶¨</b>µÄ²¿·Ö,ºÍ<b>Æ´×°</b>µÄ²¿·Ö×é³É,
-	 * <br>¹Ì¶¨µÄ²¿·ÖÔ­ÑùÊä³ö,Æ´×°µÄ²¿·ÖÔòÖ¸¶¨Ê¹ÓÃbeanÖĞÄÇ¸öÊôĞÔµÄÖµ
-	 * <br><br>±ÈÈçÈçÏÂ×Ö·û´®:
+	 * whereå­å¥ç”±æŒ‡å®šçš„æ ¼å¼å­—ç¬¦ä¸²ç”Ÿæˆ
+	 * <br>æ ¼å¼å­—ç¬¦ä¸²ç”±<b>å›ºå®š</b>çš„éƒ¨åˆ†,å’Œ<b>æ‹¼è£…</b>çš„éƒ¨åˆ†ç»„æˆ,
+	 * <br>å›ºå®šçš„éƒ¨åˆ†åŸæ ·è¾“å‡º,æ‹¼è£…çš„éƒ¨åˆ†åˆ™æŒ‡å®šä½¿ç”¨beanä¸­é‚£ä¸ªå±æ€§çš„å€¼
+	 * <br><br>æ¯”å¦‚å¦‚ä¸‹å­—ç¬¦ä¸²:
 	 * <br>
 	 * <code>"${field1} < ${field2}"</code>
-	 * <br>Èç¹ûbeanÖĞfield1=10,field2=40Ôò×îÖÕµÄ½á¹ûÊÇ
+	 * <br>å¦‚æœbeanä¸­field1=10,field2=40åˆ™æœ€ç»ˆçš„ç»“æœæ˜¯
 	 * <br>
 	 * <code>"10 < 40"</code>
-	 * <br><br>Èç¹ûfieldµÄÀàĞÍ²»ÊÇString,ÔòÊ¹ÓÃ¸Ã¶ÔÏóµÄtoString()·½·¨,
-	 * <br>Èç¹û¸ñÊ½×Ö·û´®ÖĞÖ¸¶¨µÄÓòµÄÖµÓĞÒ»¸öÎªnull,ÔòºöÂÔÕûÌõ×Ó¾äµÄÉú³É
-	 * <br><b>${}Ö®¼ä²»ÄÜÓĞ¿Õ¸ñ</b>
+	 * <br><br>å¦‚æœfieldçš„ç±»å‹ä¸æ˜¯String,åˆ™ä½¿ç”¨è¯¥å¯¹è±¡çš„toString()æ–¹æ³•,
+	 * <br>å¦‚æœæ ¼å¼å­—ç¬¦ä¸²ä¸­æŒ‡å®šçš„åŸŸçš„å€¼æœ‰ä¸€ä¸ªä¸ºnull,åˆ™å¿½ç•¥æ•´æ¡å­å¥çš„ç”Ÿæˆ
+	 * <br><b>${}ä¹‹é—´ä¸èƒ½æœ‰ç©ºæ ¼</b>
 	 * 
-	 * @param defstr - Éú³Éwhere×Ó¾äµÄÄ£Ê½×Ö·û´®
+	 * @param defstr - ç”Ÿæˆwhereå­å¥çš„æ¨¡å¼å­—ç¬¦ä¸²
 	 * */
 		public static final IWhere DEF(String defstr) {
 			return new DefinitionLogic(defstr);
@@ -135,9 +135,9 @@ public class Logic implements ISqlLogic {
 ////////////////////// ------------------------------------------------- ////
 	
 	/**
-	 * Ê¹ÓÃ×Ö·û´®Ìæ»»À´Æ´×°²éÑ¯Óï¾ä
-	 * %1$s - ÁĞÃû
-	 * %2$s - ÊôĞÔµÄÖµ 
+	 * ä½¿ç”¨å­—ç¬¦ä¸²æ›¿æ¢æ¥æ‹¼è£…æŸ¥è¯¢è¯­å¥
+	 * %1$s - åˆ—å
+	 * %2$s - å±æ€§çš„å€¼ 
 	 */
 	public static class Format implements IWhere {
 		
@@ -154,7 +154,7 @@ public class Logic implements ISqlLogic {
 	
 	
 	/**
-	 * ¼òµ¥Âß¼­±í´ïÊ½, "columnName OP 'value'"
+	 * ç®€å•é€»è¾‘è¡¨è¾¾å¼, "columnName OP 'value'"
 	 */
 	public static class Easy implements IWhere {
 		

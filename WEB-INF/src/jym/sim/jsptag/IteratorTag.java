@@ -14,8 +14,8 @@ public class IteratorTag extends TagSupport {
 	
 	private static final long serialVersionUID = -6643507593386688055L;
 	/**
-	 * ÔÚActionÖĞ°Ñ²éÑ¯µÄ´íÎóĞÅÏ¢Ê¹ÓÃÕâ¸öname·ÅÈërequest.attributeÖĞ<br>
-	 * È·±£Õâ¸ö±êÇ©±»Ö´ĞĞ,Ôò´íÎóµÄĞÅÏ¢»á´òÓ¡µ½Ò³ÃæÉÏ,<b>ActionTemplateÒÑ¾­×Ô¶¯ÊµÏÖ</b>
+	 * åœ¨Actionä¸­æŠŠæŸ¥è¯¢çš„é”™è¯¯ä¿¡æ¯ä½¿ç”¨è¿™ä¸ªnameæ”¾å…¥request.attributeä¸­<br>
+	 * ç¡®ä¿è¿™ä¸ªæ ‡ç­¾è¢«æ‰§è¡Œ,åˆ™é”™è¯¯çš„ä¿¡æ¯ä¼šæ‰“å°åˆ°é¡µé¢ä¸Š,<b>ActionTemplateå·²ç»è‡ªåŠ¨å®ç°</b>
 	 */
 	public static final String SEARCH_ERROR = "iterator.tag.SEARCH_ERROR";
 	
@@ -62,7 +62,7 @@ public class IteratorTag extends TagSupport {
 	public void setList(String v) {
 		Collection<?> list = (Collection<?>) pageContext.getRequest().getAttribute(v);
 		if (list==null) {
-			error("'" + v + "' ÊôĞÔ==null.");
+			error("'" + v + "' å±æ€§==null.");
 		}
 		setListobj(list);
 	}
@@ -71,7 +71,7 @@ public class IteratorTag extends TagSupport {
 		if (list!=null) {
 			itr = list.iterator();
 		} else {
-			error("list²ÎÊıÎªnull.");
+			error("listå‚æ•°ä¸ºnull.");
 			itr = new Iterator<Object>() {
 				public boolean hasNext() {
 					return false;
@@ -94,7 +94,7 @@ public class IteratorTag extends TagSupport {
 			if (e!=null) {
 				err = e.getMessage();
 			} else {
-				err = "Ã»ÓĞ·ûºÏÌõ¼şµÄ¼ÇÂ¼";
+				err = "æ²¡æœ‰ç¬¦åˆæ¡ä»¶çš„è®°å½•";
 			}
 			
 			JspWriter out = super.pageContext.getOut();

@@ -1,9 +1,9 @@
-// CatfoOD 2010-5-24 ÉÏÎç09:44:10 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-5-24 ä¸Šåˆ09:44:10 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.orm.page;
 
 /**
- * ´æ´¢·ÖÒ³Êı¾İµÄÀà
+ * å­˜å‚¨åˆ†é¡µæ•°æ®çš„ç±»
  */
 public class PageBean {
 	
@@ -11,15 +11,15 @@ public class PageBean {
 	public final static int DEFAULT_TOTAL_PAGE = 1;
 	public final static int DEFAULT_ONE_SIZE = 20;
 	
-	// µ±Ç°Ò³,´Ó1¿ªÊ¼
+	// å½“å‰é¡µ,ä»1å¼€å§‹
 	private int current;
-	// Ò³Âë×ÜÊı
+	// é¡µç æ€»æ•°
 	private int total;
-	// Ò»Ò³ÏÔÊ¾µÄÊıÁ¿
+	// ä¸€é¡µæ˜¾ç¤ºçš„æ•°é‡
 	private int onesize;
 	
 	/**
-	 * Ä¬ÈÏÖµ: current = 1, total = 1, onesize = 20
+	 * é»˜è®¤å€¼: current = 1, total = 1, onesize = 20
 	 */
 	public PageBean() {
 		current = DEFAULT_CURRENT_PAGE;
@@ -28,29 +28,29 @@ public class PageBean {
 	}
 
 	/**
-	 * µ±Ç°Ò³µÄÓĞĞ§Öµ1~*
+	 * å½“å‰é¡µçš„æœ‰æ•ˆå€¼1~*
 	 */
 	public int getCurrent() {
 		return current;
 	}
 
 	/**
-	 * ×ÜÒ³ÊıµÄÓĞĞ§Öµ 1~*
+	 * æ€»é¡µæ•°çš„æœ‰æ•ˆå€¼ 1~*
 	 */
 	public int getTotal() {
 		return total;
 	}
 
 	/**
-	 * µ±Ç°Ò³µÄÓĞĞ§Öµ1~*
+	 * å½“å‰é¡µçš„æœ‰æ•ˆå€¼1~*
 	 */
 	public void setCurrent(int current) {
 		this.current = current;
 	}
 
 	/**
-	 * ×ÜÒ³ÊıµÄÓĞĞ§Öµ 1~*<br>
-	 * Èç¹ûtotal<=0ÔòÖÃ1
+	 * æ€»é¡µæ•°çš„æœ‰æ•ˆå€¼ 1~*<br>
+	 * å¦‚æœtotal<=0åˆ™ç½®1
 	 */
 	public void setTotal(int total) {
 		if (total<=0) total = 1;
@@ -58,7 +58,7 @@ public class PageBean {
 	}
 
 	/**
-	 * Ä¬ÈÏÖµ20
+	 * é»˜è®¤å€¼20
 	 */
 	public int getOnesize() {
 		return onesize;
@@ -69,19 +69,19 @@ public class PageBean {
 	}
 
 	/**
-	 * ·µ»Ø·ÖÒ³ºóÊı¾İĞĞµÄÆğÊ¼Ë÷Òı, µÚÒ»ĞĞÊı¾İµÄË÷ÒıºÅÎª<b>1</b><br>
+	 * è¿”å›åˆ†é¡µåæ•°æ®è¡Œçš„èµ·å§‹ç´¢å¼•, ç¬¬ä¸€è¡Œæ•°æ®çš„ç´¢å¼•å·ä¸º<b>1</b><br>
 	 * <br>
-	 * <b>µ±Ç°Ò³(current)µÄÖµÓ¦¸ÃÒÑ¾­±»ÉèÖÃ, µ¥Ò³Êı¾İ³¤¶È(onesize)Ò²±ØĞëÓĞĞ§</b>
+	 * <b>å½“å‰é¡µ(current)çš„å€¼åº”è¯¥å·²ç»è¢«è®¾ç½®, å•é¡µæ•°æ®é•¿åº¦(onesize)ä¹Ÿå¿…é¡»æœ‰æ•ˆ</b>
 	 */
 	public int getStartPosition() {
 		return (getCurrent() - 1) * getOnesize() + 1;
 	}
 	
 	/**
-	 * ÉèÖÃÕû¸ö½á¹û¼¯µÄÊı¾İĞĞÊı<br>
-	 * ´Ë½á¹û½«×ª»»Îª×ÜÒ³Êı<br>
+	 * è®¾ç½®æ•´ä¸ªç»“æœé›†çš„æ•°æ®è¡Œæ•°<br>
+	 * æ­¤ç»“æœå°†è½¬æ¢ä¸ºæ€»é¡µæ•°<br>
 	 * <br>
-	 * <b>µ¥Ò³Êı¾İ³¤¶È(onesize)Ò²±ØĞëÓĞĞ§<b/>
+	 * <b>å•é¡µæ•°æ®é•¿åº¦(onesize)ä¹Ÿå¿…é¡»æœ‰æ•ˆ<b/>
 	 */
 	public void setTotalRow(int rownum) {
 		int tp = rownum / getOnesize();
@@ -91,9 +91,9 @@ public class PageBean {
 	}
 	
 	/**
-	 * ·µ»Ø·ÖÒ³ºóÊı¾İĞĞµÄ½áÊøË÷Òı, µÚÒ»ĞĞÊı¾İµÄË÷ÒıºÅÎª<b>1</b><br>
+	 * è¿”å›åˆ†é¡µåæ•°æ®è¡Œçš„ç»“æŸç´¢å¼•, ç¬¬ä¸€è¡Œæ•°æ®çš„ç´¢å¼•å·ä¸º<b>1</b><br>
 	 * <br>
-	 * <b>µ±Ç°Ò³(current)µÄÖµÓ¦¸ÃÒÑ¾­±»ÉèÖÃ, µ¥Ò³Êı¾İ³¤¶È(onesize)Ò²±ØĞëÓĞĞ§</b>
+	 * <b>å½“å‰é¡µ(current)çš„å€¼åº”è¯¥å·²ç»è¢«è®¾ç½®, å•é¡µæ•°æ®é•¿åº¦(onesize)ä¹Ÿå¿…é¡»æœ‰æ•ˆ</b>
 	 */
 	public int getEndPosition() {
 		return getStartPosition() + getOnesize() - 1;

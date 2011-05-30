@@ -1,4 +1,4 @@
-// CatfoOD 2010-8-4 ÉÏÎç09:24:10 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-8-4 ä¸Šåˆ09:24:10 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.pool;
 
@@ -7,17 +7,17 @@ import java.io.IOException;
 import javax.sql.DataSource;
 
 /**
- * ²»Í¬Êı¾İ³ØµÄ´´½¨Àà,ÊµÏÖÕâ¸ö½Ó¿Ú<br>
- * ²¢ÇÒÓĞÎŞ²Î¹¹Ôìº¯Êı
+ * ä¸åŒæ•°æ®æ± çš„åˆ›å»ºç±»,å®ç°è¿™ä¸ªæ¥å£<br>
+ * å¹¶ä¸”æœ‰æ— å‚æ„é€ å‡½æ•°
  */
 public interface IPoolCreater {
 	
 	/**
-	 * ´ÓÅäÖÃÖĞ´´½¨Á¬½Ó³Ø¶ÔÏó, <b>²»ÄÜ·µ»Ønull</b>
+	 * ä»é…ç½®ä¸­åˆ›å»ºè¿æ¥æ± å¯¹è±¡, <b>ä¸èƒ½è¿”å›null</b>
 	 * 
-	 * @param conf - Êı¾İ¿âÁ¬½ÓÅäÖÃ
-	 * @return Êı¾İ³Ø
-	 * @exception ÎŞĞ§µÄÅäÖÃ,»òÊı¾İ¿âÁ¬½Ó´íÎó
+	 * @param conf - æ•°æ®åº“è¿æ¥é…ç½®
+	 * @return æ•°æ®æ± 
+	 * @exception æ— æ•ˆçš„é…ç½®,æˆ–æ•°æ®åº“è¿æ¥é”™è¯¯
 	 */
 	DataSource create(PoolConf conf) throws IOException;
 }

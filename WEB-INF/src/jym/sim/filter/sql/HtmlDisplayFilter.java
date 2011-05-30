@@ -1,4 +1,4 @@
-// CatfoOD 2010-8-19 下午12:46:30 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-8-19 涓嬪崍12:46:30 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.filter.sql;
 
@@ -8,7 +8,7 @@ import java.util.Map;
 import jym.sim.filter.SimFilterException;
 
 /**
- * 把从数据库输出的字符串，装换为在HTML页面上显示时不会出错的字符串
+ * 鎶婁粠鏁版嵁搴撹緭鍑虹殑瀛楃涓诧紝瑁呮崲涓哄湪HTML椤甸潰涓婃樉绀烘椂涓嶄細鍑洪敊鐨勫瓧绗︿覆
  */
 public class HtmlDisplayFilter implements ISqlOutputParamFilter<String> {
 	

@@ -6,9 +6,9 @@ function editTableData(row, rowindex) {
 }
 
 /**
- * 移动div指定的层到屏幕的中央
+ * 绉诲姩div鎸囧畾鐨勫眰鍒板睆骞曠殑涓ぎ
  * 
- * @param div - div对象
+ * @param div - div瀵硅薄
  */
 function moveCenter(div) {
 	var w = div.clientWidth;

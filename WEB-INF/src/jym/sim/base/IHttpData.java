@@ -1,4 +1,4 @@
-// CatfoOD 2010-1-4 ÉÏÎç09:56:18
+// CatfoOD 2010-1-4 ä¸Šåˆ09:56:18
 
 package jym.sim.base;
 
@@ -6,8 +6,8 @@ import jym.sim.util.IServletData;
 
 public interface IHttpData<TYPE> extends IServletData {
 	/**
-	 * ·µ»Ø£º
-	 * web.xmlÅäÖÃÖĞbeanclassÊôĞÔµÄ¶ÔÏó£¬Ê¹ÓÃpost/get²ÎÊı³õÊ¼»¯
+	 * è¿”å›ï¼š
+	 * web.xmlé…ç½®ä¸­beanclasså±æ€§çš„å¯¹è±¡ï¼Œä½¿ç”¨post/getå‚æ•°åˆå§‹åŒ–
 	 */
 	TYPE getFormObj();
 }

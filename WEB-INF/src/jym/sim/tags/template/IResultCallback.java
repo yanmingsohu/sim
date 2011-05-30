@@ -1,47 +1,47 @@
-// CatfoOD 2009-12-14 ÏÂÎç08:25:03
+// CatfoOD 2009-12-14 ä¸‹åˆ08:25:03
 
 package jym.sim.tags.template;
 
 import java.util.List;
 
 /**
- * ½á¹û¼¯±í¸ñµÄ»Øµ÷º¯Êı
+ * ç»“æœé›†è¡¨æ ¼çš„å›è°ƒå‡½æ•°
  */
 public interface IResultCallback<E> {
 	/**
-	 * ·µ»Ø±í¸ñÁĞÊı
+	 * è¿”å›è¡¨æ ¼åˆ—æ•°
 	 */
 	int getColumn();
 	
 	/**
-	 * ·ÖÒ³ºóµÄ×ÜÒ³Êı
+	 * åˆ†é¡µåçš„æ€»é¡µæ•°
 	 */
 	int getTotalPage();
 	
 	/**
-	 * ·ÖÒ³ºóµÄµ±Ç°Ò³
+	 * åˆ†é¡µåçš„å½“å‰é¡µ
 	 */
 	int getCurrentPage();
 	
 	/**
-	 * ·µ»ØÒ³Âë³¬Á´½ÓurlÄ£Ê½×Ö·û´®%page×ª»»ÎªÒ³Êı
+	 * è¿”å›é¡µç è¶…é“¾æ¥urlæ¨¡å¼å­—ç¬¦ä¸²%pageè½¬æ¢ä¸ºé¡µæ•°
 	 */
 	String getUrlPattern();
 	
 	/**
-	 * ·µ»ØÁĞÃû£¬×÷Îª±íÍ·
-	 * @param column - ÁĞµÄË÷Òı
-	 * @return ÁĞÖµ
+	 * è¿”å›åˆ—åï¼Œä½œä¸ºè¡¨å¤´
+	 * @param column - åˆ—çš„ç´¢å¼•
+	 * @return åˆ—å€¼
 	 */
 	String getColumnName(int column);
 	
 	/**
-	 * Ó³ÉäĞĞÊı¾İ
-	 * ´Ósource¶ÔÏóÈ¡³öÊôĞÔ£¬²¢ÒÀĞò·ÅÈëListÖĞ
-	 * ResultTableTemplate±éÀúÃ¿ĞĞÊı¾İ£¬²¢ÔÚÃ¿ĞĞÖĞµ÷ÓÃÕâ¸öº¯Êı
+	 * æ˜ å°„è¡Œæ•°æ®
+	 * ä»sourceå¯¹è±¡å–å‡ºå±æ€§ï¼Œå¹¶ä¾åºæ”¾å…¥Listä¸­
+	 * ResultTableTemplateéå†æ¯è¡Œæ•°æ®ï¼Œå¹¶åœ¨æ¯è¡Œä¸­è°ƒç”¨è¿™ä¸ªå‡½æ•°
 	 * 
-	 * @param target - ĞĞµÄ½á¹ûÖµ
-	 * @param source - Êı¾İÀ´Ô´¶ÔÏó
+	 * @param target - è¡Œçš„ç»“æœå€¼
+	 * @param source - æ•°æ®æ¥æºå¯¹è±¡
 	 */
 	void mappingRowValue(List<String>target, E source);
 }

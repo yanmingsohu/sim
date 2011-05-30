@@ -1,4 +1,4 @@
-// CatfoOD 2010-8-4 ÉÏÎç08:58:28 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-8-4 ä¸Šåˆ08:58:28 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.pool;
 
@@ -17,7 +17,7 @@ import jym.sim.util.ResourceLoader;
 import jym.sim.util.Tools;
 
 /**
- * Êı¾İ³Ø¹¤³§,Ó¦ÓÃÒ»°ãÖ»ĞèÒª³ÖÓĞ´ËÀàµÄÒ»¸ö¶ÔÏó
+ * æ•°æ®æ± å·¥å‚,åº”ç”¨ä¸€èˆ¬åªéœ€è¦æŒæœ‰æ­¤ç±»çš„ä¸€ä¸ªå¯¹è±¡
  */
 public class PoolFactory {
 	
@@ -25,10 +25,10 @@ public class PoolFactory {
 	
 	
 	/**
-	 * ´´½¨Á¬½Ó³Ø¹¤³§,ÅäÖÃ´ÓÎÄ¼şclasspath/[fromfile]ÖĞ¶ÁÈ¡
+	 * åˆ›å»ºè¿æ¥æ± å·¥å‚,é…ç½®ä»æ–‡ä»¶classpath/[fromfile]ä¸­è¯»å–
 	 * 
-	 * @param fromfile ÅäÖÃÎÄ¼şµÄÂ·¾¶,ÅäÖÃÎÄ¼şµÄ¸ñÊ½²Î¿¼ test/datasource.conf
-	 * @throws IOException - ÅäÖÃÎÄ¼ş¶ÁÈ¡´íÎó,Á¬½ÓÊı¾İ¿â´íÎó
+	 * @param fromfile é…ç½®æ–‡ä»¶çš„è·¯å¾„,é…ç½®æ–‡ä»¶çš„æ ¼å¼å‚è€ƒ test/datasource.conf
+	 * @throws IOException - é…ç½®æ–‡ä»¶è¯»å–é”™è¯¯,è¿æ¥æ•°æ®åº“é”™è¯¯
 	 */
 	public PoolFactory(String fromfile) throws IOException {
 		Properties prop = new Properties();
@@ -39,7 +39,7 @@ public class PoolFactory {
 		if (!Tools.isNull(pc.getJndiName())) {
 			try {
 				_ds = createFromJndi(pc);
-				success("Ê¹ÓÃ·şÎñÆ÷ÔÚjndiÖĞÌá¹©µÄÊı¾İÔ´");
+				success("ä½¿ç”¨æœåŠ¡å™¨åœ¨jndiä¸­æä¾›çš„æ•°æ®æº");
 			} catch (Exception e) {
 				Tools.pl(e);
 			}
@@ -47,7 +47,7 @@ public class PoolFactory {
 		
 		if (_ds==null) {
 			_ds = createFromLocal(pc);
-			success("´´½¨ÁË¶ÀÁ¢µÄÊı¾İÔ´");
+			success("åˆ›å»ºäº†ç‹¬ç«‹çš„æ•°æ®æº");
 		}
 	}
 	
@@ -77,26 +77,26 @@ public class PoolFactory {
 			Class<?> clazz = Class.forName(cname);
 			Object o = clazz.newInstance();
 			if (!(o instanceof IPoolCreater)) {
-				error("Ö¸¶¨µÄÀàÃ»ÓĞÊµÏÖ IPoolCreater", conf);
+				error("æŒ‡å®šçš„ç±»æ²¡æœ‰å®ç° IPoolCreater", conf);
 			}
 			IPoolCreater creater = (IPoolCreater) o;
 			return creater.create(conf);
 			
 		} catch (ClassNotFoundException e) {
-			error("Ö¸¶¨µÄÀàÎŞĞ§", conf);
+			error("æŒ‡å®šçš„ç±»æ— æ•ˆ", conf);
 			
 		} catch (InstantiationException e) {
-			error("Ö¸¶¨µÄÀà³õÊ¼»¯Ê§°Ü", conf);
+			error("æŒ‡å®šçš„ç±»åˆå§‹åŒ–å¤±è´¥", conf);
 			
 		} catch (IllegalAccessException e) {
-			error("Ö¸¶¨µÄÀàµÄ¹¹Ôì·½·¨²»¿É·ÃÎÊ", conf);
+			error("æŒ‡å®šçš„ç±»çš„æ„é€ æ–¹æ³•ä¸å¯è®¿é—®", conf);
 		}
 		
 		return null;
 	}
 	
 	private void error(String msg, PoolConf conf) throws IOException {
-		throw new IOException("´´½¨Á¬½Ó³ØÊ§°Ü(" + conf.getPoolClassName() + ")");
+		throw new IOException("åˆ›å»ºè¿æ¥æ± å¤±è´¥(" + conf.getPoolClassName() + ")");
 	}
 	
 	private DataSource createFromJndi(PoolConf conf) throws IOException, NamingException {
@@ -106,7 +106,7 @@ public class PoolFactory {
 
 		DataSource ds = (DataSource) cxt.lookup(name);
 		if (ds == null) {
-			throw new NamingException("DataSourceÎª¿Õ,poolnameÖ¸¶¨µÄnameÎŞĞ§:" + name);
+			throw new NamingException("DataSourceä¸ºç©º,poolnameæŒ‡å®šçš„nameæ— æ•ˆ:" + name);
 		}
 
 		return ds;
@@ -130,12 +130,12 @@ public class PoolFactory {
 	}
 	
 	private void success(String msg) {
-		Tools.pl("PoolFactory : Êı¾İÔ´Á¬½Ó³Ø´´½¨Íê³É," + msg);
+		Tools.pl("PoolFactory : æ•°æ®æºè¿æ¥æ± åˆ›å»ºå®Œæˆ," + msg);
 		
 		try {
 			_ds.setLogWriter(new LogStream().getOut());
 		} catch (SQLException e) {
-			Tools.pl("Êı¾İÔ´Á¬½ÓÈÕÖ¾³õÊ¼»¯Ê§°Ü");
+			Tools.pl("æ•°æ®æºè¿æ¥æ—¥å¿—åˆå§‹åŒ–å¤±è´¥");
 			Tools.plerr(e);
 		}
 	}

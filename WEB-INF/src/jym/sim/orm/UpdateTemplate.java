@@ -1,4 +1,4 @@
-// CatfoOD 2010-4-16 ÏÂÎç04:49:18 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-4-16 ä¸‹åˆ04:49:18 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.orm;
 
@@ -97,7 +97,7 @@ public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
 	}
 
 	public int update(final T model) {
-		Tools.check(pk, "IOrm.getKey()·µ»Ønull, update²»ÄÜÖ´ĞĞ.");
+		Tools.check(pk, "IOrm.getKey()è¿”å›null, updateä¸èƒ½æ‰§è¡Œ.");
 		
 		final Refer result = new Refer();
 		
@@ -111,7 +111,7 @@ public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
 				IUpdateLogic logic = getPlot().getLogicPackage(column).getUpdateLogic();
 				
 				do {
-					// ÁĞµÄÂß¼­²ßÂÔ»á¸²¸ÇÈ«¾ÖµÄ²ßÂÔ
+					// åˆ—çš„é€»è¾‘ç­–ç•¥ä¼šè¦†ç›–å…¨å±€çš„ç­–ç•¥
 					if (logic!=null) {
 						value = logic.up(value);
 						
@@ -143,8 +143,8 @@ public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
 			}
 		});
 		
-		Tools.check(result.value, "Çë¼ì²éIOrm.getKey()·½·¨ÊÇ·ñ·µ»ØÕıÈ·µÄÁĞÃû:" + pk
-				+ " »òÖ÷¼üÊôĞÔÊÇ·ñ·µ»ØnullÖµ:" + model.getClass() );
+		Tools.check(result.value, "è¯·æ£€æŸ¥IOrm.getKey()æ–¹æ³•æ˜¯å¦è¿”å›æ­£ç¡®çš„åˆ—å:" + pk
+				+ " æˆ–ä¸»é”®å±æ€§æ˜¯å¦è¿”å›nullå€¼:" + model.getClass() );
 		
 		sql.append(" WHERE ").append( pk )
 				.append("= '").append( result.value ).append("'");
@@ -159,7 +159,7 @@ public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
 	}
 	
 //	private void warnning(String msg) {
-//		System.out.println("¾¯¸æ:(UpdataTemplate): " + msg);
+//		System.out.println("è­¦å‘Š:(UpdataTemplate): " + msg);
 //	}
 
 	private class Refer {

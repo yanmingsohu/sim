@@ -1,4 +1,4 @@
-// CatfoOD 2010-8-20 上午08:44:23 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-8-20 涓婂崍08:44:23 yanming-sohu@sohu.com/@qq.com
 
 package test;
 
@@ -18,7 +18,7 @@ public class CreateTestTable {
 		SqlReader sr = new SqlReader("/test/create_test_data.sql");
 		sr.execute(con);
 		
-		Tools.pl("数据库未出现异常");
+		Tools.pl("鏁版嵁搴撴湭鍑虹幇寮傚父");
 	}
 	
 }

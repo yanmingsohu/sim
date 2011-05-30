@@ -1,4 +1,4 @@
-// CatfoOD 2010-8-20 上午10:48:05 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-8-20 涓婂崍10:48:05 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.sql.logic;
 
@@ -6,7 +6,7 @@ import jym.sim.orm.ISkipValueCheck;
 import jym.sim.sql.IWhere;
 
 /**
- * 固定的sql where子句,总是返回已经定义的sql
+ * 鍥哄畾鐨剆ql where瀛愬彞,鎬绘槸杩斿洖宸茬粡瀹氫箟鐨剆ql
  */
 public class FixedLogic implements IWhere, ISkipValueCheck {
 	

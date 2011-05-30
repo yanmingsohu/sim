@@ -6,45 +6,45 @@ import jym.sim.orm.page.IPage;
 import jym.sim.orm.page.PageBean;
 
 /**
- * ¿ÉÒÔÖ´ÐÐsql-selectÃüÁî
+ * å¯ä»¥æ‰§è¡Œsql-selectå‘½ä»¤
  */
 public interface ISelecter<T> {
 	
 	/**
-	 * Ê¹ÓÃmodelÖÐµÄÓÐÐ§ÊôÐÔ²éÑ¯½á¹û¼¯,²»·ÖÒ³<br>
-	 * ¸Ã·½·¨·µ»ØµÄList»áÕÒ²éÑ¯ÐèÇó´ÓÊý¾Ý¿âÖÐÌáÈ¡Êý¾Ý,¶ø²»ÊÇÒ»´ÎÈ«²¿ÌáÈ¡<br>
-	 * ´Ë·½·¨ÔÚ¶¯Ì¬ÌáÈ¡Ê±»áÓÐÐÔÄÜËðÊ§,²»ÏûºÄÄÚ´æ,µ«»áÕ¼ÓÃÊý¾Ý¿âÁ¬½Ó¶ÔÏó<br><br>
-	 * <b>ÓÉÓÚ´Ó·µ»ØListÖÐÌáÈ¡µÄÊý¾Ý¶¼ÊÇÁÙÊ±µÄ,ËùÒÔ¶ÔËûÃÇµÄÐÞ¸Ä¶¼ÊÇÎÞÐ§µÄ</b>
+	 * ä½¿ç”¨modelä¸­çš„æœ‰æ•ˆå±žæ€§æŸ¥è¯¢ç»“æžœé›†,ä¸åˆ†é¡µ<br>
+	 * è¯¥æ–¹æ³•è¿”å›žçš„Listä¼šæ‰¾æŸ¥è¯¢éœ€æ±‚ä»Žæ•°æ®åº“ä¸­æå–æ•°æ®,è€Œä¸æ˜¯ä¸€æ¬¡å…¨éƒ¨æå–<br>
+	 * æ­¤æ–¹æ³•åœ¨åŠ¨æ€æå–æ—¶ä¼šæœ‰æ€§èƒ½æŸå¤±,ä¸æ¶ˆè€—å†…å­˜,ä½†ä¼šå ç”¨æ•°æ®åº“è¿žæŽ¥å¯¹è±¡<br><br>
+	 * <b>ç”±äºŽä»Žè¿”å›žListä¸­æå–çš„æ•°æ®éƒ½æ˜¯ä¸´æ—¶çš„,æ‰€ä»¥å¯¹ä»–ä»¬çš„ä¿®æ”¹éƒ½æ˜¯æ— æ•ˆçš„</b>
 	 * 
-	 * @param model - bean¶ÔÏó,Èç¹ûËùÓÐµÄÊôÐÔ¶¼ÎÞÐ§ÔòÎÞÌõ¼þ·µ»ØËùÓÐÊý¾ÝÐÐ
-	 * @param join - where×Ó¾äÃ¿¸öÂß¼­µÄÁ¬½Ó·½Ê½ and/or
-	 * @return T¶ÔÏóÁÐ±í -- Èç¹ûÃ»ÓÐ¶ÔÏó·µ»Ø,Ôò·µ»Ø¿ÕµÄList(List.size()==0)
+	 * @param model - beanå¯¹è±¡,å¦‚æžœæ‰€æœ‰çš„å±žæ€§éƒ½æ— æ•ˆåˆ™æ— æ¡ä»¶è¿”å›žæ‰€æœ‰æ•°æ®è¡Œ
+	 * @param join - whereå­å¥æ¯ä¸ªé€»è¾‘çš„è¿žæŽ¥æ–¹å¼ and/or
+	 * @return Tå¯¹è±¡åˆ—è¡¨ -- å¦‚æžœæ²¡æœ‰å¯¹è±¡è¿”å›ž,åˆ™è¿”å›žç©ºçš„List(List.size()==0)
 	 */
 	public List<T> select(T model, String join);
 	
 	/**
-	 * Ê¹ÓÃmodelÖÐµÄÓÐÐ§ÊôÐÔ²éÑ¯½á¹û¼¯,·ÖÒ³<br/>
-	 * ´Ë·½·¨·µ»Øºó,page.totalÊôÐÔ½«±»ÉèÖÃÎª×ÜÒ³Êý<br>
-	 * ¸Ã·½·¨ÈÏÎª·ÖÒ³ÒÑ¾­ºÏÀíÉèÖÃ,²¢Ò»´ÎÐÔ°ÑËùÐèÒªµÄÈ«²¿Êý¾Ý±£´æÔÚListÖÐ<br>
-	 * ´Ë·½·¨ÔÚ²éÑ¯½áÊøºóÊý¾Ý¿âÁ¬½Ó¶ÔÏóÒÑ¾­ÊÍ·Å,µ«Èç¹ûÊý¾Ý¹ý¶àÔòÏûºÄÄÚ´æ
-	 * (»òÄÚ´æÒç³ö)ÒòÎªListÐèÒª±£´æËùÓÐ²éÑ¯µ½µÄÊý¾Ý<br>
+	 * ä½¿ç”¨modelä¸­çš„æœ‰æ•ˆå±žæ€§æŸ¥è¯¢ç»“æžœé›†,åˆ†é¡µ<br/>
+	 * æ­¤æ–¹æ³•è¿”å›žåŽ,page.totalå±žæ€§å°†è¢«è®¾ç½®ä¸ºæ€»é¡µæ•°<br>
+	 * è¯¥æ–¹æ³•è®¤ä¸ºåˆ†é¡µå·²ç»åˆç†è®¾ç½®,å¹¶ä¸€æ¬¡æ€§æŠŠæ‰€éœ€è¦çš„å…¨éƒ¨æ•°æ®ä¿å­˜åœ¨Listä¸­<br>
+	 * æ­¤æ–¹æ³•åœ¨æŸ¥è¯¢ç»“æŸåŽæ•°æ®åº“è¿žæŽ¥å¯¹è±¡å·²ç»é‡Šæ”¾,ä½†å¦‚æžœæ•°æ®è¿‡å¤šåˆ™æ¶ˆè€—å†…å­˜
+	 * (æˆ–å†…å­˜æº¢å‡º)å› ä¸ºListéœ€è¦ä¿å­˜æ‰€æœ‰æŸ¥è¯¢åˆ°çš„æ•°æ®<br>
 	 * 
-	 * @param model -  bean¶ÔÏó,Èç¹ûËùÓÐµÄÊôÐÔ¶¼ÎÞÐ§ÔòÎÞÌõ¼þ·µ»ØËùÓÐÊý¾ÝÐÐ
-	 * @param join - where×Ó¾äÃ¿¸öÂß¼­µÄÁ¬½Ó·½Ê½ and/or
-	 * @param page - ·ÖÒ³Êý¾Ý,²»ÄÜÎªnull,·ñÔò»áÅ×³öÒì³£
-	 * @return - T¶ÔÏóÁÐ±í -- Èç¹ûÃ»ÓÐ¶ÔÏó·µ»Ø,Ôò·µ»Ø¿ÕµÄList(List.size()==0)
+	 * @param model -  beanå¯¹è±¡,å¦‚æžœæ‰€æœ‰çš„å±žæ€§éƒ½æ— æ•ˆåˆ™æ— æ¡ä»¶è¿”å›žæ‰€æœ‰æ•°æ®è¡Œ
+	 * @param join - whereå­å¥æ¯ä¸ªé€»è¾‘çš„è¿žæŽ¥æ–¹å¼ and/or
+	 * @param page - åˆ†é¡µæ•°æ®,ä¸èƒ½ä¸ºnull,å¦åˆ™ä¼šæŠ›å‡ºå¼‚å¸¸
+	 * @return - Tå¯¹è±¡åˆ—è¡¨ -- å¦‚æžœæ²¡æœ‰å¯¹è±¡è¿”å›ž,åˆ™è¿”å›žç©ºçš„List(List.size()==0)
 	 */
 	public List<T> select(T model, String join, PageBean page);
 	
 	/**
-	 * ÉèÖÃÊý¾Ý¿âµÄ·ÖÒ³·½·¨,´Ë·½·¨µÄÀàÔÚjym.sim.orm.page.*ÖÐ<br/>
-	 * Ä¬ÈÏ²»·ÖÒ³
-	 * @param plot - Êý¾Ý¿â·ÖÒ³²ßÂÔÀà
+	 * è®¾ç½®æ•°æ®åº“çš„åˆ†é¡µæ–¹æ³•,æ­¤æ–¹æ³•çš„ç±»åœ¨jym.sim.orm.page.*ä¸­<br/>
+	 * é»˜è®¤ä¸åˆ†é¡µ
+	 * @param plot - æ•°æ®åº“åˆ†é¡µç­–ç•¥ç±»
 	 */
 	public void setPaginationPlot(IPage plot);
 	
 	/**
-	 * ·µ»Øbean¶ÔÏóµÄclass
+	 * è¿”å›žbeanå¯¹è±¡çš„class
 	 */
 	public Class<T> getModelClass();
 	

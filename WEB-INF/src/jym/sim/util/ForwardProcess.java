@@ -1,4 +1,4 @@
-// CatfoOD 2010-1-4 ÉÏÎç10:17:32
+// CatfoOD 2010-1-4 ä¸Šåˆ10:17:32
 
 package jym.sim.util;
 
@@ -10,14 +10,14 @@ import jym.sim.tags.IPrinter;
 public final class ForwardProcess {
 	
 	/**
-	 * ¶Ôexec·µ»ØÀàĞÍµÄÍ¨ÓÃ´¦ÀíÆ÷
+	 * å¯¹execè¿”å›ç±»å‹çš„é€šç”¨å¤„ç†å™¨
 	 * 
-	 * @param data - Êı¾İ¶ÔÏó
-	 * @param obj - Èç¹ûÊÇStringÀàĞÍ£¬ÔòStringÎªÓĞĞ§µÄmappingÂ·¾¶<br>
-	 * 			Èç¹ûÊÇIPrinterÀàĞÍ£¬Ôò´òÓ¡Ëû£¬²¢·µ»ØnullÂ·¾¶<br>
-	 * 			Èç¹ûÊÇÆäËûÀàĞÍ£¬ÔòÖ±½Ó°ÑtoStringµÄ½á¹ûÊä³öµ½¿Í»§¶Ë
+	 * @param data - æ•°æ®å¯¹è±¡
+	 * @param obj - å¦‚æœæ˜¯Stringç±»å‹ï¼Œåˆ™Stringä¸ºæœ‰æ•ˆçš„mappingè·¯å¾„<br>
+	 * 			å¦‚æœæ˜¯IPrinterç±»å‹ï¼Œåˆ™æ‰“å°ä»–ï¼Œå¹¶è¿”å›nullè·¯å¾„<br>
+	 * 			å¦‚æœæ˜¯å…¶ä»–ç±»å‹ï¼Œåˆ™ç›´æ¥æŠŠtoStringçš„ç»“æœè¾“å‡ºåˆ°å®¢æˆ·ç«¯
 	 * 
-	 * @param back - Èç¹ûobjÎªStringÀàĞÍ£¬Ôòµ÷ÓÃbak.back()
+	 * @param back - å¦‚æœobjä¸ºStringç±»å‹ï¼Œåˆ™è°ƒç”¨bak.back()
 	 * @throws Exception
 	 */
 	public static void exec(IServletData data, Object obj, ICallBack back)

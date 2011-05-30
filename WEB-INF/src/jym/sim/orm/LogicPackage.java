@@ -1,4 +1,4 @@
-// CatfoOD 2010-11-10 ÉÏÎç10:48:52 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-11-10 ä¸Šåˆ10:48:52 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.orm;
 
@@ -30,14 +30,14 @@ public class LogicPackage {
 	private LogicPackage() {}
 	
 	/**
-	 * Ä¬ÈÏÈç¹ûÃ»ÓĞÖ¸¶¨where²ßÂÔ,Ôò·µ»ØÏàµÈ±È½Ï²ßÂÔ
+	 * é»˜è®¤å¦‚æœæ²¡æœ‰æŒ‡å®šwhereç­–ç•¥,åˆ™è¿”å›ç›¸ç­‰æ¯”è¾ƒç­–ç•¥
 	 */
 	protected IWhere getWhereLogic() {
 		return whereLogic;
 	}
 	
 	/**
-	 * Èç¹ûÃ»ÓĞÖ¸¶¨²ßÂÔ,Ôò·µ»Ønull
+	 * å¦‚æœæ²¡æœ‰æŒ‡å®šç­–ç•¥,åˆ™è¿”å›null
 	 */
 	protected IUpdateLogic getUpdateLogic() {
 		return updateLogic;

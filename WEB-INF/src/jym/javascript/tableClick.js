@@ -1,10 +1,10 @@
 /**
- * ±í¸ñĞĞÊó±êµã»÷ÊÂ¼ş
+ * è¡¨æ ¼è¡Œé¼ æ ‡ç‚¹å‡»äº‹ä»¶
  * 
- * @param tableid - Òª¼àÌıµÄ±í¸ñid
- * @param func - ¼àÌıº¯Êı,µÚÒ»¸ö²ÎÊıÎªµ±Ç°Êó±êĞüÍ£µÄtr¶ÔÏó,
- * 						µÚ¶ş¸ö²ÎÊıÊÇµ±Ç°ĞĞµÄË÷Òı´Ó0¿ªÊ¼
- * @return ·µ»ØtableidµÄ¶ÔÏó
+ * @param tableid - è¦ç›‘å¬çš„è¡¨æ ¼id
+ * @param func - ç›‘å¬å‡½æ•°,ç¬¬ä¸€ä¸ªå‚æ•°ä¸ºå½“å‰é¼ æ ‡æ‚¬åœçš„trå¯¹è±¡,
+ * 						ç¬¬äºŒä¸ªå‚æ•°æ˜¯å½“å‰è¡Œçš„ç´¢å¼•ä»0å¼€å§‹
+ * @return è¿”å›tableidçš„å¯¹è±¡
  */
 function tableRowMouseOverListener(tableid, func) {
 	var table = document.getElementById(tableid);

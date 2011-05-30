@@ -1,4 +1,4 @@
-// CatfoOD 2010-10-1 ÏÂÎç03:32:04
+// CatfoOD 2010-10-1 ä¸‹åˆ03:32:04
 
 package jym.sim.sql;
 
@@ -12,9 +12,9 @@ import java.util.AbstractList;
 import jym.sim.orm.SelectTemplate;
 
 /**
- * ·â×°²éÑ¯½á¹û¼¯ÎªList¶ÔÏó
+ * å°è£…æŸ¥è¯¢ç»“æœé›†ä¸ºListå¯¹è±¡
  * 
- * @param <BEAN> - ´æ·Å²éÑ¯³öÊı¾İµÄÊµÌåÀàÀàĞÍ
+ * @param <BEAN> - å­˜æ”¾æŸ¥è¯¢å‡ºæ•°æ®çš„å®ä½“ç±»ç±»å‹
  */
 public class ResultSetList<BEAN> extends AbstractList<BEAN> {
 	
@@ -28,9 +28,9 @@ public class ResultSetList<BEAN> extends AbstractList<BEAN> {
 	
 	
 	/**
-	 * Connection¶ÔÏóÓÉjdbc¹ÜÀí
+	 * Connectionå¯¹è±¡ç”±jdbcç®¡ç†
 	 * 
-	 * @param sql ±ØĞëÊÇ²éÑ¯ÀàµÄsqlÓï¾ä,ÇÒÖ»ÄÜÊÇµ¥¸ö²éÑ¯Óï¾ä
+	 * @param sql å¿…é¡»æ˜¯æŸ¥è¯¢ç±»çš„sqlè¯­å¥,ä¸”åªèƒ½æ˜¯å•ä¸ªæŸ¥è¯¢è¯­å¥
 	 * @throws SQLException
 	 */
 	public ResultSetList(String sql, JdbcTemplate jdbc, IGetBean<BEAN> gb) 
@@ -39,10 +39,10 @@ public class ResultSetList<BEAN> extends AbstractList<BEAN> {
 	}
 	
 	/**
-	 * ·â×°²éÑ¯·½·¨,
+	 * å°è£…æŸ¥è¯¢æ–¹æ³•,
 	 *
-	 * @param sql - ±ØĞëÊÇ²éÑ¯ÀàµÄsqlÓï¾ä,ÇÒÖ»ÄÜÊÇµ¥¸ö²éÑ¯Óï¾ä
-	 * @param conn - ¸ÃÁ¬½Ó²»ÄÜÔÚÍâ²¿¹Ø±Õ£¬·ñÔò»áÒıÆğÒì³£
+	 * @param sql - å¿…é¡»æ˜¯æŸ¥è¯¢ç±»çš„sqlè¯­å¥,ä¸”åªèƒ½æ˜¯å•ä¸ªæŸ¥è¯¢è¯­å¥
+	 * @param conn - è¯¥è¿æ¥ä¸èƒ½åœ¨å¤–éƒ¨å…³é—­ï¼Œå¦åˆ™ä¼šå¼•èµ·å¼‚å¸¸
 	 * @throws SQLException 
 	 */
 	public ResultSetList(String sql, Connection conn, IGetBean<BEAN> gb) 
@@ -50,7 +50,7 @@ public class ResultSetList<BEAN> extends AbstractList<BEAN> {
 		connection = conn;
 		getter = gb;
 		
-		//XXX ÕâÊÇµ¼ÖÂresultSet²éÑ¯ËÙ¶ÈÂıµÄÔ­Òò
+		//XXX è¿™æ˜¯å¯¼è‡´resultSetæŸ¥è¯¢é€Ÿåº¦æ…¢çš„åŸå› 
 		statement = conn.createStatement(
 				ResultSet.TYPE_SCROLL_INSENSITIVE, 
 				ResultSet.CONCUR_READ_ONLY);
@@ -62,9 +62,9 @@ public class ResultSetList<BEAN> extends AbstractList<BEAN> {
 	}
 	
 	/**
-	 * È¡µÃÖ¸¶¨Êı¾İĞĞÉÏÊı¾İÓ³ÉäµÄÊµÌåÀà,Ó¦¸ÃÊ¹ÓÃÁ¬ĞøµÄË÷Òı(0,1,2,N)
-	 * ²Å¿ÉÒÔÊµÏÖºÜºÃµÄ¼æÈİĞÔ,·ñÔò¿ÉÄÜÅ×³öÒì³£(Çı¶¯²»Ö§³ÖµÄÇé¿ö)<br>
-	 * <b>¸ºÖµ</b>µÄË÷ÒıÔÚ²»Í¬ÊµÏÖÖĞ»áÓĞ²»Í¬£¬µ«²»»á´Ó½á¹û¼¯ÖĞÈ¡
+	 * å–å¾—æŒ‡å®šæ•°æ®è¡Œä¸Šæ•°æ®æ˜ å°„çš„å®ä½“ç±»,åº”è¯¥ä½¿ç”¨è¿ç»­çš„ç´¢å¼•(0,1,2,N)
+	 * æ‰å¯ä»¥å®ç°å¾ˆå¥½çš„å…¼å®¹æ€§,å¦åˆ™å¯èƒ½æŠ›å‡ºå¼‚å¸¸(é©±åŠ¨ä¸æ”¯æŒçš„æƒ…å†µ)<br>
+	 * <b>è´Ÿå€¼</b>çš„ç´¢å¼•åœ¨ä¸åŒå®ç°ä¸­ä¼šæœ‰ä¸åŒï¼Œä½†ä¸ä¼šä»ç»“æœé›†ä¸­å–
 	 */
 	@Override
 	public BEAN get(int index) {
@@ -108,7 +108,7 @@ public class ResultSetList<BEAN> extends AbstractList<BEAN> {
 	}
 
 	/**
-	 * ÊÍ·ÅÓëÊı¾İ¿âÁ¬½ÓµÄ¶ÔÏó,Ïàµ±ÓÚclose()
+	 * é‡Šæ”¾ä¸æ•°æ®åº“è¿æ¥çš„å¯¹è±¡,ç›¸å½“äºclose()
 	 */
 	@Override
 	public void clear() {
@@ -134,19 +134,19 @@ public class ResultSetList<BEAN> extends AbstractList<BEAN> {
 	}
 	
 	/**
-	 * Êı¾İĞĞ×ª»»ÎªÊµÌåÀà¹ı³ÌµÄÊµÏÖ
-	 * @param <BEAN> ´æ´¢Êı¾İµÄ¶ÔÏóÀàĞÍ
+	 * æ•°æ®è¡Œè½¬æ¢ä¸ºå®ä½“ç±»è¿‡ç¨‹çš„å®ç°
+	 * @param <BEAN> å­˜å‚¨æ•°æ®çš„å¯¹è±¡ç±»å‹
 	 */
 	public interface IGetBean<BEAN> {
 		/**
-		 * ÓÃrsµ±Ç°ĞĞÖĞµÄÊı¾İ,Éú³ÉBEAN¶ÔÏó,
-		 * <b>±ØĞë¶¨Òå</b>¸ºÖµrowNumµÄĞĞÎª,Ò»°ãÊÇÅ×³öÒì³£
+		 * ç”¨rså½“å‰è¡Œä¸­çš„æ•°æ®,ç”ŸæˆBEANå¯¹è±¡,
+		 * <b>å¿…é¡»å®šä¹‰</b>è´Ÿå€¼rowNumçš„è¡Œä¸º,ä¸€èˆ¬æ˜¯æŠ›å‡ºå¼‚å¸¸
 		 * 
-		 * @param columnNames - ÁĞÃû±í
-		 * @param rs - ½á¹û¼¯
-		 * @param rowNum - µ±Ç°Êı¾İĞĞ£¬Ë÷Òı¸ºÖµ·¶Î§ÔÚ²»Í¬µÄÊµÏÖÖĞÓĞ²»Í¬µÄ¶¨Òå,
-		 *  		Í¨³£»áÅ×Òì³£;rowNumµÄ×î´óÖµÊÇ²éÑ¯½á¹û¼¯µÄ×î´óĞĞÊı
-		 * @return ½á¹û¼¯µ±Ç°ĞĞ¶ÔÓ¦µÄÊµÌå¶ÔÏó
+		 * @param columnNames - åˆ—åè¡¨
+		 * @param rs - ç»“æœé›†
+		 * @param rowNum - å½“å‰æ•°æ®è¡Œï¼Œç´¢å¼•è´Ÿå€¼èŒƒå›´åœ¨ä¸åŒçš„å®ç°ä¸­æœ‰ä¸åŒçš„å®šä¹‰,
+		 *  		é€šå¸¸ä¼šæŠ›å¼‚å¸¸;rowNumçš„æœ€å¤§å€¼æ˜¯æŸ¥è¯¢ç»“æœé›†çš„æœ€å¤§è¡Œæ•°
+		 * @return ç»“æœé›†å½“å‰è¡Œå¯¹åº”çš„å®ä½“å¯¹è±¡
 		 */
 		public BEAN fromRowData(String[] columnNames, 
 				ResultSet rs, int rowNum) throws Exception;

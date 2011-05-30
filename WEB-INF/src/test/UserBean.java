@@ -1,4 +1,4 @@
-// CatfoOD 2010-4-19 ÉÏÎç09:44:55 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-4-19 ä¸Šåˆ09:44:55 yanming-sohu@sohu.com/@qq.com
 
 package test;
 

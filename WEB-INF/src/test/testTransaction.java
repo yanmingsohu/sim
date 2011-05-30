@@ -1,4 +1,4 @@
-// CatfoOD 2010-8-13 下午02:15:21 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-8-13 涓嬪崍02:15:21 yanming-sohu@sohu.com/@qq.com
 
 package test;
 
@@ -24,7 +24,7 @@ public class TestTransaction {
 			public void start() throws Exception {
 				p.set(1);
 				System.out.println(p);
-				throw new Exception("测试事务错误");
+				throw new Exception("娴嬭瘯浜嬪姟閿欒");
 			}
 		});
 		
@@ -61,7 +61,7 @@ public class TestTransaction {
 			return new IJdbcSession() {
 				
 				public boolean commit() {
-					Tools.pl("事务已递交");
+					Tools.pl("浜嬪姟宸查�掍氦");
 					tv = no;
 					return true;
 				}
@@ -75,7 +75,7 @@ public class TestTransaction {
 				}
 
 				public boolean rollback() {
-					Tools.pl("出错,事务回滚");
+					Tools.pl("鍑洪敊,浜嬪姟鍥炴粴");
 					return true;
 				}
 

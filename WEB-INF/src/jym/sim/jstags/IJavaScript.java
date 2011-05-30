@@ -1,4 +1,4 @@
-// CatfoOD 2009-11-10 ÏÂÎç01:46:53
+// CatfoOD 2009-11-10 ä¸‹åˆ01:46:53
 
 package jym.sim.jstags;
 
@@ -8,35 +8,35 @@ import java.util.Map;
 import jym.sim.tags.ITag;
 
 /**
- * js½Å±¾±êÇ©
+ * jsè„šæœ¬æ ‡ç­¾
  */
 public interface IJavaScript extends ITag {
 	
 	/**
-	 * ½«jsÓ¦ÓÃµ½Ä¿±ê±êÇ©ÖĞ£¬·ñÔòjs±êÇ©²»Æğ×÷ÓÃ
+	 * å°†jsåº”ç”¨åˆ°ç›®æ ‡æ ‡ç­¾ä¸­ï¼Œå¦åˆ™jsæ ‡ç­¾ä¸èµ·ä½œç”¨
 	 * 
-	 * @param tag - Ä¿±ê±êÇ©
+	 * @param tag - ç›®æ ‡æ ‡ç­¾
 	 */
 	void setTarget(ITag tag);
 	
 	/**
-	 * ¼ÓÔØfromfileÖÆ¶¨µÄjsÎÄ¼şµ½±ê¼ÇÖĞ<br/>
-	 * fromfileÎª±ê×¼Íâ²¿jsÎÄ¼ş
+	 * åŠ è½½fromfileåˆ¶å®šçš„jsæ–‡ä»¶åˆ°æ ‡è®°ä¸­<br/>
+	 * fromfileä¸ºæ ‡å‡†å¤–éƒ¨jsæ–‡ä»¶
 	 * 
-	 * @param fromfile - jsÎÄ¼şÂ·¾¶£¬´ÓClass.getResource()ÖĞ¼ÓÔØÎÄ¼ş
+	 * @param fromfile - jsæ–‡ä»¶è·¯å¾„ï¼Œä»Class.getResource()ä¸­åŠ è½½æ–‡ä»¶
 	 */
 	void readJavaScript(String fromfile);
 	
 	/**
-	 * ¼ÓÔØÍâ²¿jsµ½±êÇ©ÖĞ
+	 * åŠ è½½å¤–éƒ¨jsåˆ°æ ‡ç­¾ä¸­
 	 * 
-	 * @param fromurl - jsÎÄ¼şµÄurl
+	 * @param fromurl - jsæ–‡ä»¶çš„url
 	 */
 	void readJavaScript(URL fromurl);
 	
 	/**
-	 * ·µ»Ø´ÓÎÄ¼ş¼ÓÔØµÄ½Å±¾URL
-	 * Object ÊÇ½Å±¾µÄ±êÊ¶£¬Èç¹û±êÊ¶ÖØ¸´£¬Ôò½Å±¾Ö»±»Êä³öÒ»´Î
+	 * è¿”å›ä»æ–‡ä»¶åŠ è½½çš„è„šæœ¬URL
+	 * Object æ˜¯è„šæœ¬çš„æ ‡è¯†ï¼Œå¦‚æœæ ‡è¯†é‡å¤ï¼Œåˆ™è„šæœ¬åªè¢«è¾“å‡ºä¸€æ¬¡
 	 */
 	Map<Object, URL> getInnerJs();
 }

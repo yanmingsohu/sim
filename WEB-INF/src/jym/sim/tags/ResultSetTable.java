@@ -1,4 +1,4 @@
-// CatfoOD 2009-11-4 ÏÂÎç08:46:38
+// CatfoOD 2009-11-4 ä¸‹åˆ08:46:38
 
 package jym.sim.tags;
 

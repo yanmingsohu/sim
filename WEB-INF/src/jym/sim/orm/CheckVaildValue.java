@@ -1,4 +1,4 @@
-// CatfoOD 2010-9-1 ÉÏÎç10:11:26 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-9-1 ä¸Šåˆ10:11:26 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.orm;
 
@@ -7,16 +7,16 @@ import jym.sim.filter.IFilter;
 import jym.sim.filter.SimFilterException;
 
 /**
- * ÊäÈëÖµÓĞĞ§ĞÔ¼ì²é
+ * è¾“å…¥å€¼æœ‰æ•ˆæ€§æ£€æŸ¥
  */
 public class CheckVaildValue extends FilterPocket {
 	
 	/**
-	 * <strike>Èç¹ûvalue==null·µ»Øfalse<br>
-	 * Èç¹ûvalue!=nullµ«ÊÇÃ»ÓĞÏà¹ØµÄ¹ıÂËÆ÷,Ôò·µ»Øtrue ·ñÔò,</strike>
+	 * <strike>å¦‚æœvalue==nullè¿”å›false<br>
+	 * å¦‚æœvalue!=nullä½†æ˜¯æ²¡æœ‰ç›¸å…³çš„è¿‡æ»¤å™¨,åˆ™è¿”å›true å¦åˆ™,</strike>
 	 * 
-	 * Èç¹ûÃ»ÓĞÏà¹Ø¹ıÂËÆ÷µ«ÖµÎªnullÔò·µ»Øfalse, ·ñÔò·µ»Øtrue(¼´Ä¬ÈÏ²»ÄÜÎªnull)<br>
-	 * Èç¹ûÓĞ¹ıÂËÆ÷Ôò,¹ıÂËÆ÷·µ»ØnullÔò·µ»Øfalse,·Çnull·µ»Øtrue
+	 * å¦‚æœæ²¡æœ‰ç›¸å…³è¿‡æ»¤å™¨ä½†å€¼ä¸ºnullåˆ™è¿”å›false, å¦åˆ™è¿”å›true(å³é»˜è®¤ä¸èƒ½ä¸ºnull)<br>
+	 * å¦‚æœæœ‰è¿‡æ»¤å™¨åˆ™,è¿‡æ»¤å™¨è¿”å›nullåˆ™è¿”å›false,énullè¿”å›true
 	 */
 	@SuppressWarnings({ "unchecked" })
 	public boolean isValid(Object value, Class<?> valueType) {

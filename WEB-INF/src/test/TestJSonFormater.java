@@ -1,4 +1,4 @@
-// CatfoOD 2010-7-29 ÉÏÎç09:48:27 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-7-29 ä¸Šåˆ09:48:27 yanming-sohu@sohu.com/@qq.com
 
 package test;
 
@@ -15,7 +15,7 @@ public class TestJSonFormater {
 	
 	public static void test() {
 		String a = "dir {\n String s	= \"fdsafdsaf\\\"; \n}";
-		// ÊäÈëºÍÊä³ö×Ö·û´®£¬ÏàÍ¬ËµÃ÷Ëã·¨ÕıÈ·
+		// è¾“å…¥å’Œè¾“å‡ºå­—ç¬¦ä¸²ï¼Œç›¸åŒè¯´æ˜ç®—æ³•æ­£ç¡®
 		Tools.pl( formatJson(a) );
 	}
 	
@@ -33,16 +33,16 @@ public class TestJSonFormater {
 		
 		for (int i=0; i<9; ++i) {
 			System.out.println("---");
-			UsedTime.start("Ê¹ÓÃStrng.replaceAll");
+			UsedTime.start("ä½¿ç”¨Strng.replaceAll");
 			formatJson2(a);
 			UsedTime.endAndPrint();
 			
-			UsedTime.start("Ê¹ÓÃJSonFormater");
+			UsedTime.start("ä½¿ç”¨JSonFormater");
 			formatJson(a);
 			UsedTime.endAndPrint();
 			System.out.println("---");
 		}
-		System.out.println("×Ö·û´®³¤¶È" + a.length());
+		System.out.println("å­—ç¬¦ä¸²é•¿åº¦" + a.length());
 	}
 	
 	protected static String formatJson2(String str) {

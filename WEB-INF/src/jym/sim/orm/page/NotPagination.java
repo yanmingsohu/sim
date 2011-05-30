@@ -1,9 +1,9 @@
-// CatfoOD 2010-5-24 ÉÏÎç09:55:00 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-5-24 ä¸Šåˆ09:55:00 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.orm.page;
 
 /**
- * ´ËÊµÏÖÀà²»·ÖÒ³Êı¾İ,select·½·¨µÄpage²ÎÊı¿ÉÒÔÎªnull
+ * æ­¤å®ç°ç±»ä¸åˆ†é¡µæ•°æ®,selectæ–¹æ³•çš„pageå‚æ•°å¯ä»¥ä¸ºnull
  */
 public class NotPagination implements IPage {
 	

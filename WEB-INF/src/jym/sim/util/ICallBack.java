@@ -1,4 +1,4 @@
-// CatfoOD 2010-1-4 ÉÏÎç10:20:52
+// CatfoOD 2010-1-4 ä¸Šåˆ10:20:52
 
 package jym.sim.util;
 

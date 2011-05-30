@@ -31,7 +31,6 @@
 		<!--<fileset dir="${utf8_srcdir}"/>-->
 		</jar>
 		
-		<delete dir="${utf8_srcdir}"></delete>
 	</target>
 
 </project>

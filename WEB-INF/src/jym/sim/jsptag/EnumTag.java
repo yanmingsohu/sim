@@ -1,4 +1,4 @@
-// CatfoOD 2010-5-11 ÏÂÎç02:28:03 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-5-11 ä¸‹åˆ02:28:03 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.jsptag;
 
@@ -12,7 +12,7 @@ import jym.sim.util.Tools;
 public class EnumTag extends SelectTag {
 
 	private static final long serialVersionUID = 4858481581469242308L;
-	private static final String UNKONW = "Î´ÖªÖµ";
+	private static final String UNKONW = "æœªçŸ¥å€¼";
 	private String key;
 
 	public int doStartTag() throws JspException {
@@ -29,7 +29,7 @@ public class EnumTag extends SelectTag {
 		Map<String, String> obj = super.getEnumMap();
 		
 		if (obj==null) {
-			print("·şÎñÆ÷´íÎó");
+			print("æœåŠ¡å™¨é”™è¯¯");
 			return;
 		}
 	
@@ -38,7 +38,7 @@ public class EnumTag extends SelectTag {
 			print(v);
 		} else {
 			print(UNKONW+key);
-			Tools.pl("EnumTag: keyÊôĞÔÖµÎŞĞ§:" + key + " ÔÚ:" + getEnumObjName());
+			Tools.pl("EnumTag: keyå±æ€§å€¼æ— æ•ˆ:" + key + " åœ¨:" + getEnumObjName());
 		}
 	}
 	

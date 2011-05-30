@@ -1,4 +1,4 @@
-// CatfoOD 2009-10-20 下午08:21:54
+// CatfoOD 2009-10-20 涓嬪崍08:21:54
 
 package jym.sim.tags;
 
@@ -12,8 +12,8 @@ import java.util.Map;
 import jym.sim.util.Tools;
 
 /**
- * 标准xml标记,不支持内嵌的js <br/>
- * 如果需要内嵌js，需要使用HtmlTagBase
+ * 鏍囧噯xml鏍囪,涓嶆敮鎸佸唴宓岀殑js <br/>
+ * 濡傛灉闇�瑕佸唴宓宩s锛岄渶瑕佷娇鐢℉tmlTagBase
  */
 public class TagBase implements ITag {
 	
@@ -23,13 +23,13 @@ public class TagBase implements ITag {
 	private ArrayList<Object> subtags;
 	private Map<String,String> attrib;
 	private TagBase parent = null;
-	/** 是否是自终结标记 */
+	/** 鏄惁鏄嚜缁堢粨鏍囪 */
 	private boolean isSelf;
 	
 	
 	/**
-	 * 标准xml标记,不支持内嵌的js <br/>
-	 * 如果需要内嵌js，需要使用HtmlTagBase
+	 * 鏍囧噯xml鏍囪,涓嶆敮鎸佸唴宓岀殑js <br/>
+	 * 濡傛灉闇�瑕佸唴宓宩s锛岄渶瑕佷娇鐢℉tmlTagBase
 	 */
 	public TagBase(String tagname) {
 		this(tagname, false);
@@ -160,7 +160,7 @@ public class TagBase implements ITag {
 	}
 	
 	/**
-	 * 返回跟节点，如果返回null说明当前节点为无上层节点
+	 * 杩斿洖璺熻妭鐐癸紝濡傛灉杩斿洖null璇存槑褰撳墠鑺傜偣涓烘棤涓婂眰鑺傜偣
 	 */
 	protected ITag getRoot() {
 		TagBase tag = (TagBase) getParent();

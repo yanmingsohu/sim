@@ -1,19 +1,19 @@
-// CatfoOD 2009-12-21 ÏÂÎç08:50:28
+// CatfoOD 2009-12-21 ä¸‹åˆ08:50:28
 
 package jym.sim.tags;
 
 import java.io.PrintWriter;
 
 /**
- * ¿ÉÒÔÊä³ö¶ÔÏó
+ * å¯ä»¥è¾“å‡ºå¯¹è±¡
  */
 public interface IPrinter {
 	
 	/**
-	 * µ±Ç°¶ÔÏóÄÚÈİĞ´³öµ½out<br>
-	 * ÓÉÄÚ²¿ÊµÏÖµ÷ÓÃ
+	 * å½“å‰å¯¹è±¡å†…å®¹å†™å‡ºåˆ°out<br>
+	 * ç”±å†…éƒ¨å®ç°è°ƒç”¨
 	 * 
-	 * @param out - Ïòout¿ªÅÚ~
+	 * @param out - å‘outå¼€ç‚®~
 	 */
 	void printout(PrintWriter out);
 }

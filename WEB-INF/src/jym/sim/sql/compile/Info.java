@@ -1,4 +1,4 @@
-// CatfoOD 2010-9-9 ÏÂÎç04:09:20 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-9-9 ä¸‹åˆ04:09:20 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.sql.compile;
 
@@ -12,7 +12,7 @@ import jym.sim.util.Tools;
 
 
 /**
- * ±£´æÒª±àÒësqlÎÄ¼şµÄÏà¹ØĞÅÏ¢
+ * ä¿å­˜è¦ç¼–è¯‘sqlæ–‡ä»¶çš„ç›¸å…³ä¿¡æ¯
  */
 class Info {
 
@@ -97,7 +97,7 @@ class Info {
 	}
 	
 	/**
-	 * Çå³ıÖĞ¼äÎÄ¼şºÍÔ­Ê¼sqlÎÄ¼ş
+	 * æ¸…é™¤ä¸­é—´æ–‡ä»¶å’ŒåŸå§‹sqlæ–‡ä»¶
 	 */
 	public void clear() {
 		java.delete();

@@ -3,64 +3,64 @@ package jym.sim.orm;
 import jym.sim.sql.IOrder;
 
 /**
- * ÊµÌåÊôÐÔÓëÊý¾Ý¿âÁÐÓ³Éä²ßÂÔ
+ * å®žä½“å±žæ€§ä¸Žæ•°æ®åº“åˆ—æ˜ å°„ç­–ç•¥
  */
 public interface IPlot {
 	
 	/**
-	 * °ÑÐèÒªÓ³ÉäµÄÊµÌåÊôÐÔÃûfieldNameÓëÊý¾Ý¿âÁÐÃûcolname½øÐÐÆ¥Åä<br>
-	 * Î´Ó³ÉäµÄÊµÌåÊôÐÔÊ¹ÓÃ±í¸ñÃûÆ¥Åä<br>
+	 * æŠŠéœ€è¦æ˜ å°„çš„å®žä½“å±žæ€§åfieldNameä¸Žæ•°æ®åº“åˆ—åcolnameè¿›è¡ŒåŒ¹é…<br>
+	 * æœªæ˜ å°„çš„å®žä½“å±žæ€§ä½¿ç”¨è¡¨æ ¼ååŒ¹é…<br>
 	 * <br>
-	 * <b>Èç¹ûfieldName²»ÊÇ¼òµ¥±äÁ¿ÀàÐÍ:</b>Ôò±ØÐëµ÷ÓÃÈý¸ö²ÎÊýµÄfieldPlot·½·¨<br>
+	 * <b>å¦‚æžœfieldNameä¸æ˜¯ç®€å•å˜é‡ç±»åž‹:</b>åˆ™å¿…é¡»è°ƒç”¨ä¸‰ä¸ªå‚æ•°çš„fieldPlotæ–¹æ³•<br>
 	 * <br>
-	 * logics²ÎÊýµÄËµÃ÷:<br>
-	 * <b>selectÓï¾äÊ¹ÓÃIWhere½Ó¿Ú:</b><br>
-	 * 	µ±Ê¹ÓÃÊµÌå×ö²ÎÊýÖ´ÐÐselectÊ±, colnameÁÐµÄÂß¼­·½·¨<br>
-	 *  Èç¹ûfieldName=='value', log==Logic.EQ, ÔòwhereÓï¾äÎª<br>
+	 * logicså‚æ•°çš„è¯´æ˜Ž:<br>
+	 * <b>selectè¯­å¥ä½¿ç”¨IWhereæŽ¥å£:</b><br>
+	 * 	å½“ä½¿ç”¨å®žä½“åšå‚æ•°æ‰§è¡Œselectæ—¶, colnameåˆ—çš„é€»è¾‘æ–¹æ³•<br>
+	 *  å¦‚æžœfieldName=='value', log==Logic.EQ, åˆ™whereè¯­å¥ä¸º<br>
 	 * 	<code>where colname = 'value'</code>
 	 * <br>
-	 * <b>updateÓï¾äÊ¹ÓÃIUpdateLogic½Ó¿Ú:</b><br>
-	 *  µ±ÊµÌå×ö²ÎÊýÖ´ÐÐupdataÊ±, colnameÁÐÈçºÎÆ´×°Îªsql, ¸Ã½Ó¿ÚÎª¸üÐÂÎªnullÖµÌá¹©Ö§³Ö<br>
-	 *  Èç¹ûÎ´Ö¸¶¨ÐÐÎª,Ä¬ÈÏÊ¹ÓÃÈ«¾ÖÓÐÐ§¼ì²é²ßÂÔ,·ñÔòÈ«¾Ö²ßÂÔ»á±»¸²¸Ç
+	 * <b>updateè¯­å¥ä½¿ç”¨IUpdateLogicæŽ¥å£:</b><br>
+	 *  å½“å®žä½“åšå‚æ•°æ‰§è¡Œupdataæ—¶, colnameåˆ—å¦‚ä½•æ‹¼è£…ä¸ºsql, è¯¥æŽ¥å£ä¸ºæ›´æ–°ä¸ºnullå€¼æä¾›æ”¯æŒ<br>
+	 *  å¦‚æžœæœªæŒ‡å®šè¡Œä¸º,é»˜è®¤ä½¿ç”¨å…¨å±€æœ‰æ•ˆæ£€æŸ¥ç­–ç•¥,å¦åˆ™å…¨å±€ç­–ç•¥ä¼šè¢«è¦†ç›–
 	 * 
-	 * @param fieldName -- ÊôÐÔÃû,±ØÐëÓÐÏàÓ¦µÄsetter·½·¨,²»Çø·Ö´óÐ¡Ð´
-	 * @param colname -- ÁÐÃû,²»Çø·Ö´óÐ¡Ð´
-	 * @param logics -- ÊôÐÔÖµ¿ªÊ¼Æ´×°sqlÊ±,²»Í¬µÄsqlÓï¾äÓÐ²»Í¬µÄÂß¼­·½Ê½
+	 * @param fieldName -- å±žæ€§å,å¿…é¡»æœ‰ç›¸åº”çš„setteræ–¹æ³•,ä¸åŒºåˆ†å¤§å°å†™
+	 * @param colname -- åˆ—å,ä¸åŒºåˆ†å¤§å°å†™
+	 * @param logics -- å±žæ€§å€¼å¼€å§‹æ‹¼è£…sqlæ—¶,ä¸åŒçš„sqlè¯­å¥æœ‰ä¸åŒçš„é€»è¾‘æ–¹å¼
 	 */
 	public void fieldPlot(String fieldName, String colname, ISqlLogic ...logics);
 	
 	/**
-	 * °ÑÐèÒªÓ³ÉäµÄÊµÌåÊôÐÔÃûfieldNameÓëÊý¾Ý¿âÁÐÃûcolname½øÐÐÆ¥Åä<br>
-	 * Î´Ó³ÉäµÄÊµÌåÊôÐÔÊ¹ÓÃ±í¸ñÃûÆ¥Åä<br>
-	 * µ±Ê¹ÓÃÊµÌå×ö²ÎÊýÖ´ÐÐselectÊ±, colnameÁÐµÄÂß¼­·½·¨Ä¬ÈÏÊ¹ÓÃ Login.EQ
+	 * æŠŠéœ€è¦æ˜ å°„çš„å®žä½“å±žæ€§åfieldNameä¸Žæ•°æ®åº“åˆ—åcolnameè¿›è¡ŒåŒ¹é…<br>
+	 * æœªæ˜ å°„çš„å®žä½“å±žæ€§ä½¿ç”¨è¡¨æ ¼ååŒ¹é…<br>
+	 * å½“ä½¿ç”¨å®žä½“åšå‚æ•°æ‰§è¡Œselectæ—¶, colnameåˆ—çš„é€»è¾‘æ–¹æ³•é»˜è®¤ä½¿ç”¨ Login.EQ
 	 * <br>
-	 * <b>Èç¹ûfieldName²»ÊÇ¼òµ¥±äÁ¿ÀàÐÍ:</b>Ôò±ØÐëµ÷ÓÃÈý¸ö²ÎÊýµÄfieldPlot·½·¨
+	 * <b>å¦‚æžœfieldNameä¸æ˜¯ç®€å•å˜é‡ç±»åž‹:</b>åˆ™å¿…é¡»è°ƒç”¨ä¸‰ä¸ªå‚æ•°çš„fieldPlotæ–¹æ³•
 	 * 
-	 * @param fieldName -- ÊôÐÔÃû,±ØÐëÓÐÏàÓ¦µÄsetter·½·¨,²»Çø·Ö´óÐ¡Ð´
-	 * @param colname -- ÁÐÃû,²»Çø·Ö´óÐ¡Ð´
+	 * @param fieldName -- å±žæ€§å,å¿…é¡»æœ‰ç›¸åº”çš„setteræ–¹æ³•,ä¸åŒºåˆ†å¤§å°å†™
+	 * @param colname -- åˆ—å,ä¸åŒºåˆ†å¤§å°å†™
 	 */
 	public void fieldPlot(String fieldName, String colname);
 	
 	/**
-	 * Íâ¼üÓ³Éä<br>
-	 * °ÑÐèÒªÓ³ÉäµÄÊµÌåÊôÐÔÃûfieldNameÓëÊý¾Ý¿âÁÐÃûcolname½øÐÐÆ¥Åä<br>
-	 * Î´Ó³ÉäµÄÊµÌåÊôÐÔÊ¹ÓÃ±í¸ñÃûÆ¥Åä<br>
+	 * å¤–é”®æ˜ å°„<br>
+	 * æŠŠéœ€è¦æ˜ å°„çš„å®žä½“å±žæ€§åfieldNameä¸Žæ•°æ®åº“åˆ—åcolnameè¿›è¡ŒåŒ¹é…<br>
+	 * æœªæ˜ å°„çš„å®žä½“å±žæ€§ä½¿ç”¨è¡¨æ ¼ååŒ¹é…<br>
 	 * <br>
-	 * Èç¹ûÕÒµ½Æ¥Åä, ´´½¨<?>ÀàÐÍ¶ÔÏó, °ÑpknameÖ¸¶¨µÄÊôÐÔÓÃcolnameÈ¡µÃÖµ³õÊ¼»¯<br>
-	 * È»ºóµ÷ÓÃgetter.select(<?>), °Ñ·µ»ØµÄ¼¯ºÏ·ÅÈëfieldNameÊôÐÔÖÐ
+	 * å¦‚æžœæ‰¾åˆ°åŒ¹é…, åˆ›å»º<?>ç±»åž‹å¯¹è±¡, æŠŠpknameæŒ‡å®šçš„å±žæ€§ç”¨colnameå–å¾—å€¼åˆå§‹åŒ–<br>
+	 * ç„¶åŽè°ƒç”¨getter.select(<?>), æŠŠè¿”å›žçš„é›†åˆæ”¾å…¥fieldNameå±žæ€§ä¸­
 	 * 
-	 * @param fieldName -- ÊôÐÔÃû,±ØÐëÓÐÏàÓ¦µÄsetter·½·¨,²»Çø·Ö´óÐ¡Ð´
-	 * @param colname -- ÁÐÃû,²»Çø·Ö´óÐ¡Ð´
-	 * @param getter -- ´´½¨fieldNameÀàÐÍ¶ÔÏóÐèÒªµÄISelecter¶ÔÏó,
-	 * 					Èç¹ûÎªnullÔòºÍµ÷ÓÃÁ½¸ö²ÎÊýµÄ·½·¨Ð§¹ûÏàÍ¬
-	 * @param pkname -- Íâ¼ü¶ÔÏóµÄÖ÷¼üÊôÐÔÃû
+	 * @param fieldName -- å±žæ€§å,å¿…é¡»æœ‰ç›¸åº”çš„setteræ–¹æ³•,ä¸åŒºåˆ†å¤§å°å†™
+	 * @param colname -- åˆ—å,ä¸åŒºåˆ†å¤§å°å†™
+	 * @param getter -- åˆ›å»ºfieldNameç±»åž‹å¯¹è±¡éœ€è¦çš„ISelecterå¯¹è±¡,
+	 * 					å¦‚æžœä¸ºnullåˆ™å’Œè°ƒç”¨ä¸¤ä¸ªå‚æ•°çš„æ–¹æ³•æ•ˆæžœç›¸åŒ
+	 * @param pkname -- å¤–é”®å¯¹è±¡çš„ä¸»é”®å±žæ€§å
 	 * 
-	 * @deprecated ¸Ã·½·¨ÉÐÎ´ÏêÏ¸²âÊÔ
+	 * @deprecated è¯¥æ–¹æ³•å°šæœªè¯¦ç»†æµ‹è¯•
 	 */
 	public void fieldPlot(String fieldName, String colname, ISelecter<?> getter, String pkname);
 	
 	/**
-	 * È¡µÃÅÅÐò½Ó¿Ú
+	 * å–å¾—æŽ’åºæŽ¥å£
 	 */
 	public IOrder order();
 }

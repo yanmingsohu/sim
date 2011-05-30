@@ -12,7 +12,7 @@ import jym.sim.filter.FilterPocket;
 import jym.sim.util.BeanUtil;
 
 /**
- * ±£´æÊµÌåÊôĞÔÓëÊı¾İ¿âÖ®¼äÓ³ÉäµÄ¹ØÏµ£¬ºÍÁĞµÄ×ª»»Ïà¹Ø²ßÂÔ
+ * ä¿å­˜å®ä½“å±æ€§ä¸æ•°æ®åº“ä¹‹é—´æ˜ å°„çš„å…³ç³»ï¼Œå’Œåˆ—çš„è½¬æ¢ç›¸å…³ç­–ç•¥
  */
 class MethodMapping {
 
@@ -26,7 +26,7 @@ class MethodMapping {
 	
 	
 	/**
-	 * Å×³öÒì³£,ËµÃ÷·½·¨²»·ûºÏÒªÇó<br>
+	 * æŠ›å‡ºå¼‚å¸¸,è¯´æ˜æ–¹æ³•ä¸ç¬¦åˆè¦æ±‚<br>
 	 * if log==null log=Logic.EQ
 	 */
 	MethodMapping(Method md, ISelecter<?> is, String pk, ISqlLogic[] log, FilterPocket _outfilter)	{
@@ -41,12 +41,12 @@ class MethodMapping {
 		if (pt0.length==1) {
 			trans = getTransitionType(pt0[0]);
 		} else {
-			warnning(md.getName() + " ÊµÌå·½·¨²ÎÊıÊıÁ¿²»Æ¥Åä");
+			warnning(md.getName() + " å®ä½“æ–¹æ³•å‚æ•°æ•°é‡ä¸åŒ¹é…");
 		}
 	}
 	
 	/** 
-	 * ×ª»¯À´×ÔÊı¾İ¿âÖĞµÄÊı¾İ£¬setterµ½ÊµÌåÖĞ
+	 * è½¬åŒ–æ¥è‡ªæ•°æ®åº“ä¸­çš„æ•°æ®ï¼Œsetteråˆ°å®ä½“ä¸­
 	 * model.setXxx(sqldata);
 	 */
 	public void invoke(ResultSet rs, int col, Object model) throws Exception {
@@ -56,12 +56,12 @@ class MethodMapping {
 		
 		} catch (Exception e) {
 			e.printStackTrace();
-			warnning(method + "ÓëÊı¾İ¿âÀàĞÍ²»Æ¥Åä(Ô­Òò:"
+			warnning(method + "ä¸æ•°æ®åº“ç±»å‹ä¸åŒ¹é…(åŸå› :"
 					+ e.getMessage()
-					+ "),ÒÑ¾­ÉèÖÃÎªnull");
+					+ "),å·²ç»è®¾ç½®ä¸ºnull");
 		}
 		
-		//XXX outfilter °´²ßÂÔ×ª»»Êı¾İ¿âÖĞµÄÖµµ½ÊµÌåÊôĞÔÖĞ
+		//XXX outfilter æŒ‰ç­–ç•¥è½¬æ¢æ•°æ®åº“ä¸­çš„å€¼åˆ°å®ä½“å±æ€§ä¸­
 		method.invoke(model, outfilter.filter(data) );
 	}
 	
@@ -160,11 +160,11 @@ class MethodMapping {
 						return objcrt.select(pkobj, "and");
 						
 					} catch (Exception e) {
-						warnning("Íâ¼üÓ³Éä´íÎó:" + e.getMessage());
+						warnning("å¤–é”®æ˜ å°„é”™è¯¯:" + e.getMessage());
 					}
 				}
 				else {
-					warnning("Íâ¼üÊµÌåÎ´Ó³Éä.");
+					warnning("å¤–é”®å®ä½“æœªæ˜ å°„.");
 				}
 				return null;
 			}
@@ -179,8 +179,8 @@ class MethodMapping {
 					return BeanUtil.creatBean(type, rs.getObject(col));
 					
 				} catch (Exception e) {
-					warnning("µ÷ÓÃ·½·¨" + method.getName() + "Ê±,×÷Îª²ÎÊı´´½¨" 
-							+ type + "ÀàĞÍ,¸ÃÀàÃ»ÓĞ(String)¹¹Ôìº¯Êı.(ÊÇ·ñÊ¹ÓÃÁË·½·¨ÖØÔØ?)");
+					warnning("è°ƒç”¨æ–¹æ³•" + method.getName() + "æ—¶,ä½œä¸ºå‚æ•°åˆ›å»º" 
+							+ type + "ç±»å‹,è¯¥ç±»æ²¡æœ‰(String)æ„é€ å‡½æ•°.(æ˜¯å¦ä½¿ç”¨äº†æ–¹æ³•é‡è½½?)");
 				}
 				return null;
 			}
@@ -192,7 +192,7 @@ class MethodMapping {
 	}
 	
 	private void warnning(String msg) {
-		System.out.println("¾¯¸æ: (MethodMapping): " + msg);
+		System.out.println("è­¦å‘Š: (MethodMapping): " + msg);
 	}
 	
 }

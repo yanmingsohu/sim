@@ -1,4 +1,4 @@
-// CatfoOD 2010-4-30 ÉÏÎç08:54:36 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-4-30 ä¸Šåˆ08:54:36 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.exception;
 

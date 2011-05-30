@@ -1,4 +1,4 @@
-// CatfoOD 2010-8-19 ÉÏÎç08:47:45 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-8-19 ä¸Šåˆ08:47:45 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.filter;
 
@@ -8,11 +8,11 @@ import java.util.Map;
 import jym.sim.util.Tools;
 
 /**
- * Îª¹ıÂËÆ÷Ìá¹©Í³Ò»·ÖÅäÓë¼¯³É
+ * ä¸ºè¿‡æ»¤å™¨æä¾›ç»Ÿä¸€åˆ†é…ä¸é›†æˆ
  */
 public class FilterPocket {
 	
-	/** ¸Ã¹ıÂËÆ÷Êä³öÊäÈëµÄÖµ */
+	/** è¯¥è¿‡æ»¤å™¨è¾“å‡ºè¾“å…¥çš„å€¼ */
 	public static final IFilter<Object> NULL_FILTER;
 	
 	private Map<Class<Object>, IFilter<Object>> filters;
@@ -23,28 +23,28 @@ public class FilterPocket {
 	}
 	
 	/**
-	 * ×¢²á¹ıÂËÆ÷
+	 * æ³¨å†Œè¿‡æ»¤å™¨
 	 * 
-	 * @param <T> - ±»¹ıÂËµÄÊı¾İÀàĞÍ
-	 * @param type - ±»¹ıÂËÊı¾İÀàĞÍµÄclass,¼Ì³ĞÎŞĞ§
-	 * @param ft - ¹ıÂËÆ÷£¬Èç¹ûTÀàĞÍµÄ¹ıÂËÆ÷ÒÑ¾­ÓĞÁË£¬¸Ã¹ıÂËÆ÷»á±»Ìæ´ú
+	 * @param <T> - è¢«è¿‡æ»¤çš„æ•°æ®ç±»å‹
+	 * @param type - è¢«è¿‡æ»¤æ•°æ®ç±»å‹çš„class,ç»§æ‰¿æ— æ•ˆ
+	 * @param ft - è¿‡æ»¤å™¨ï¼Œå¦‚æœTç±»å‹çš„è¿‡æ»¤å™¨å·²ç»æœ‰äº†ï¼Œè¯¥è¿‡æ»¤å™¨ä¼šè¢«æ›¿ä»£
 	 * 
-	 * @return ·µ»ØTÀàĞÍÔ­À´µÄ¹ıÂËÆ÷,Ã»ÓĞ·µ»Ønull,·µ»ØµÄ¹ıÂËÆ÷¿ÉÄÜÊÇÒ»¸ö¹ıÂËÁ´
+	 * @return è¿”å›Tç±»å‹åŸæ¥çš„è¿‡æ»¤å™¨,æ²¡æœ‰è¿”å›null,è¿”å›çš„è¿‡æ»¤å™¨å¯èƒ½æ˜¯ä¸€ä¸ªè¿‡æ»¤é“¾
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> IFilter<T> reg(Class<T> type, IFilter<T> ft) {
-		Tools.check(type, "²ÎÊıtype²»ÄÜÎªnull");
-		Tools.check(ft, "²ÎÊıft²»ÄÜÎªnull");
+		Tools.check(type, "å‚æ•°typeä¸èƒ½ä¸ºnull");
+		Tools.check(ft, "å‚æ•°ftä¸èƒ½ä¸ºnull");
 		
 		return (IFilter<T>) filters.put((Class<Object>)type, (IFilter<Object>)ft);
 	}
 	
 	/**
-	 * °Ñ¹ıÂËÆ÷¼ÓÈëÉÏÒ»¸ö¹ıÂËÆ÷µÄºóÃæ
+	 * æŠŠè¿‡æ»¤å™¨åŠ å…¥ä¸Šä¸€ä¸ªè¿‡æ»¤å™¨çš„åé¢
 	 * 
-	 * @param <T> - ±»¹ıÂËµÄÊı¾İÀàĞÍ,¼Ì³ĞÎŞĞ§
-	 * @param type - ±»¹ıÂËÊı¾İÀàĞÍµÄclass
-	 * @param ft - ¹ıÂËÆ÷
+	 * @param <T> - è¢«è¿‡æ»¤çš„æ•°æ®ç±»å‹,ç»§æ‰¿æ— æ•ˆ
+	 * @param type - è¢«è¿‡æ»¤æ•°æ®ç±»å‹çš„class
+	 * @param ft - è¿‡æ»¤å™¨
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> void add(Class<T> type, IFilter<T> ft) {
@@ -59,8 +59,8 @@ public class FilterPocket {
 	}
 	
 	/**
-	 * É¾³ıÖ¸¶¨ÀàĞÍµÄ¹ıÂËÆ÷
-	 * @return ·µ»Ø±»É¾³ıµÄ¹ıÂËÆ÷,Ã»ÓĞ·µ»Ønull
+	 * åˆ é™¤æŒ‡å®šç±»å‹çš„è¿‡æ»¤å™¨
+	 * @return è¿”å›è¢«åˆ é™¤çš„è¿‡æ»¤å™¨,æ²¡æœ‰è¿”å›null
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> IFilter<T> remove(Class<T> type) {
@@ -68,19 +68,19 @@ public class FilterPocket {
 	}
 	
 	/**
-	 * ÒÆ³ıËùÓĞµÄ¹ıÂËÆ÷
+	 * ç§»é™¤æ‰€æœ‰çš„è¿‡æ»¤å™¨
 	 */
 	public void removeAll() {
 		filters.clear();
 	}
 	
 	/**
-	 * ¹ıÂËsrcÊı¾İ£¬Ê¹ÓÃµÄ¹ıÂËÆ÷Í¨¹ı¼ì²ésrcµÄÀàĞÍ×Ô¶¯¾ö¶¨£¬Èç¹ûsrc==null
-	 * Ôò·µ»Ønull,Èç¹ûÕÒ²»µ½¸ÃÀàĞÍµÄ¹ıÂËÆ÷Ôò·µ»Øsrc
+	 * è¿‡æ»¤srcæ•°æ®ï¼Œä½¿ç”¨çš„è¿‡æ»¤å™¨é€šè¿‡æ£€æŸ¥srcçš„ç±»å‹è‡ªåŠ¨å†³å®šï¼Œå¦‚æœsrc==null
+	 * åˆ™è¿”å›null,å¦‚æœæ‰¾ä¸åˆ°è¯¥ç±»å‹çš„è¿‡æ»¤å™¨åˆ™è¿”å›src
 	 * 
-	 * @param src - Òª¹ıÂËµÄÖµ
-	 * @return ¹ıÂËºóµÄÖµ
-	 * @throws SimFilterException - ¹ıÂËÆ÷ÔÚ¹ıÂËÊ±Å×³öµÄÒì³£
+	 * @param src - è¦è¿‡æ»¤çš„å€¼
+	 * @return è¿‡æ»¤åçš„å€¼
+	 * @throws SimFilterException - è¿‡æ»¤å™¨åœ¨è¿‡æ»¤æ—¶æŠ›å‡ºçš„å¼‚å¸¸
 	 */
 	public Object filter(Object src) throws SimFilterException {
 		if (src!=null) {
@@ -95,14 +95,14 @@ public class FilterPocket {
 	}
 	
 	/**
-	 * È¡µÃÖ¸¶¨ÀàĞÍµÄ¹ıÂËÆ÷
+	 * å–å¾—æŒ‡å®šç±»å‹çš„è¿‡æ»¤å™¨
 	 * 
-	 * @param <T> - Êı¾İÀàĞÍ
-	 * @param type - ÀàĞÍµÄclass,¼Ì³ĞÎŞĞ§
-	 * @param getNullFilter - trueÔòÈç¹û¹ıÂËÆ÷ÀàĞÍ²»´æ
-	 * ÔÚÔò·µ»ØÒ»¸ö²»¶ÔÊı¾İ¹ıÂËµÄ¹ıÂËÆ÷£¬·ñÔò·µ»Ønull
+	 * @param <T> - æ•°æ®ç±»å‹
+	 * @param type - ç±»å‹çš„class,ç»§æ‰¿æ— æ•ˆ
+	 * @param getNullFilter - trueåˆ™å¦‚æœè¿‡æ»¤å™¨ç±»å‹ä¸å­˜
+	 * åœ¨åˆ™è¿”å›ä¸€ä¸ªä¸å¯¹æ•°æ®è¿‡æ»¤çš„è¿‡æ»¤å™¨ï¼Œå¦åˆ™è¿”å›null
 	 * 
-	 * @return ¶ÔTÀàĞÍµÄ¹ıÂËÆ÷
+	 * @return å¯¹Tç±»å‹çš„è¿‡æ»¤å™¨
 	 */
 	public IFilter<?> getFilter(Class<?> type, boolean getNullFilter) {
 		IFilter<?> f = filters.get(type);

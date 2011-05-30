@@ -1,4 +1,4 @@
-// CatfoOD 2009-11-16 上午12:53:28
+// CatfoOD 2009-11-16 涓婂崍12:53:28
 
 package test;
 
@@ -19,7 +19,7 @@ public class TestClassLoader {
 		URL url2 = t.getUrlFromRL(str);
 		pl( url2 );
 		
-		// 两个方法是用了相同的原理
+		// 涓や釜鏂规硶鏄敤浜嗙浉鍚岀殑鍘熺悊
 	}
 	
 	public URL getUrlRes(String urlstr) {

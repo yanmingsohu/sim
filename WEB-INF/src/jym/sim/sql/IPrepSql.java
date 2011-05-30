@@ -1,24 +1,24 @@
-// CatfoOD 2011-4-25 ÉÏÎç08:49:39 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2011-4-25 ä¸Šåˆ08:49:39 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.sql;
 
 import java.sql.PreparedStatement;
 
 /**
- * sqlÓï¾äµÄÖ´ĞĞÕß
+ * sqlè¯­å¥çš„æ‰§è¡Œè€…
  */
 public interface IPrepSql {
 	
 	/**
-	 * JdbcTemplate»Øµ÷º¯Êı, ´¦ÀíÖĞµÄsql¶ÔÏó¶¼ÎŞĞè¹Ø±Õ
+	 * JdbcTemplateå›è°ƒå‡½æ•°, å¤„ç†ä¸­çš„sqlå¯¹è±¡éƒ½æ— éœ€å…³é—­
 	 * 
-	 * @param pstm - JdbcTemplate´´½¨µÄPreparedStatement 
-	 * @throws Throwable - º¯ÊıÖĞ²»ĞèÒª²¶×½ÈÎºÎÒì³£
+	 * @param pstm - JdbcTemplateåˆ›å»ºçš„PreparedStatement 
+	 * @throws Throwable - å‡½æ•°ä¸­ä¸éœ€è¦æ•æ‰ä»»ä½•å¼‚å¸¸
 	 */
 	public void exe(PreparedStatement pstm) throws Throwable;
 	
 	/**
-	 * ·µ»ØsqlÓï¾ä, ÓÃÀ´³õÊ¼»¯PreparedStatement
+	 * è¿”å›sqlè¯­å¥, ç”¨æ¥åˆå§‹åŒ–PreparedStatement
 	 * @see java.sql.PreparedStatement
 	 */
 	public String getSql();

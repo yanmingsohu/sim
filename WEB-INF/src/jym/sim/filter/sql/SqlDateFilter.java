@@ -1,4 +1,4 @@
-// CatfoOD 2010-8-19 ÉÏÎç11:03:41 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-8-19 ä¸Šåˆ11:03:41 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.filter.sql;
 
@@ -8,26 +8,26 @@ import java.util.Date;
 import jym.sim.filter.SimFilterException;
 
 /**
- * ÈÕÆÚ×ª»»Îªsql×Ö·û´®
+ * æ—¥æœŸè½¬æ¢ä¸ºsqlå­—ç¬¦ä¸²
  */
 public class SqlDateFilter implements ISqlInputParamFilter<Date> {
 	
 	public final static String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
-	public final static String ORACLE_DEFAULT_FMT = "dd-MÔÂ -yy";
+	public final static String ORACLE_DEFAULT_FMT = "dd-Mæœˆ -yy";
 
 	private SimpleDateFormat sqlDateFormat;
 	
 	
 	/**
-	 * Ê¹ÓÃÄ¬ÈÏ¸ñÊ½Æ´×°sqlÈÕÆÚ
+	 * ä½¿ç”¨é»˜è®¤æ ¼å¼æ‹¼è£…sqlæ—¥æœŸ
 	 */
 	public SqlDateFilter() {
 		this(DEFAULT_DATE_FORMAT);
 	}
 	
 	/**
-	 * Ê¹ÓÃÖ¸¶¨µÄ¸ñÊ½Æ´×°sqlÈÕÆÚ
-	 * @param format - ÈÕÆÚ¸ñÊ½
+	 * ä½¿ç”¨æŒ‡å®šçš„æ ¼å¼æ‹¼è£…sqlæ—¥æœŸ
+	 * @param format - æ—¥æœŸæ ¼å¼
 	 */
 	public SqlDateFilter(String format) {
 		this(new SimpleDateFormat(format));

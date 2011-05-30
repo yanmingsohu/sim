@@ -1,4 +1,4 @@
-// CatfoOD 2010-10-16 下午07:55:49
+// CatfoOD 2010-10-16 涓嬪崍07:55:49
 
 package jym.sim.json;
 
@@ -16,7 +16,7 @@ public class FromBean extends Json {
 	
 	public FromBean(Object targetBean) {
 		if (targetBean==null) {
-			throw new NullPointerException("bean对象不能为null");
+			throw new NullPointerException("bean瀵硅薄涓嶈兘涓簄ull");
 		}
 		bean = targetBean;
 	}

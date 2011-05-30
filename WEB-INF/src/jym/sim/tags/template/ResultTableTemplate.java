@@ -1,4 +1,4 @@
-// CatfoOD 2009-12-14 ÏÂÎç08:14:05
+// CatfoOD 2009-12-14 ä¸‹åˆ08:14:05
 
 package jym.sim.tags.template;
 
@@ -13,16 +13,16 @@ import jym.sim.tags.PaginationTag;
 import jym.sim.tags.TableTag;
 
 /**
- * ·â×°·ÖÒ³µÄ½á¹û¼¯±í¸ñ
+ * å°è£…åˆ†é¡µçš„ç»“æœé›†è¡¨æ ¼
  * 
- * ÄÚÈİ¸ñÊ½:<br/>
+ * å†…å®¹æ ¼å¼:<br/>
  * <code>
  * &lt;div&gt; <br/>
  * &nbsp;&nbsp; &lt;table&gt; <br/>
- * 	&nbsp;&nbsp;&nbsp;&nbsp;... // Êı¾İµÄ±í¸ñ <br/>
+ * 	&nbsp;&nbsp;&nbsp;&nbsp;... // æ•°æ®çš„è¡¨æ ¼ <br/>
  * &nbsp;&nbsp; &lt;/table&gt; <br/>
  * &nbsp;&nbsp; &lt;div&gt; <br/>
- * &nbsp;&nbsp;&nbsp;&nbsp;... // ·ÖÒ³°´Å¥ <br/>
+ * &nbsp;&nbsp;&nbsp;&nbsp;... // åˆ†é¡µæŒ‰é’® <br/>
  * &nbsp;&nbsp; &lt;/div&gt; <br/>
  * &lt;/div&gt; <br/>
  * <code>
@@ -34,11 +34,11 @@ public class ResultTableTemplate<E> extends HtmlTagBase {
 	private String tableid;
 
 	/**
-	 * ·â×°·ÖÒ³µÄ½á¹û¼¯±í¸ñ
+	 * å°è£…åˆ†é¡µçš„ç»“æœé›†è¡¨æ ¼
 	 * 
-	 * @param t - »Øµ÷º¯Êı
-	 * @param li - Êı¾İÁĞ±í
-	 * @param ip - ·ÖÒ³Êı¾İ
+	 * @param t - å›è°ƒå‡½æ•°
+	 * @param li - æ•°æ®åˆ—è¡¨
+	 * @param ip - åˆ†é¡µæ•°æ®
 	 */
 	public ResultTableTemplate(IResultCallback<E> t, List<E> li) {
 		super("div");

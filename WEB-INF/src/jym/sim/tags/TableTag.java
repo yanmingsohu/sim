@@ -1,4 +1,4 @@
-// CatfoOD 2009-10-27 ÉÏÎç01:40:23
+// CatfoOD 2009-10-27 ä¸Šåˆ01:40:23
 
 package jym.sim.tags;
 
@@ -6,9 +6,9 @@ import java.io.PrintWriter;
 
 
 /**
- * appendÓëcreatµÄĞĞÎªÓëÆÕÍ¨µÄ±ê¼Ç²»Í¬<br>
- * Ã¿´Îappend,creat·µ»ØµÄ±ê¼ÇÒÑ¾­±»·â×°ÔÚ±í¸ñÖĞ<br>
- * ±í¸ñÊÇ×Ô¶¯Ôö³¤µÄ
+ * appendä¸creatçš„è¡Œä¸ºä¸æ™®é€šçš„æ ‡è®°ä¸åŒ<br>
+ * æ¯æ¬¡append,creatè¿”å›çš„æ ‡è®°å·²ç»è¢«å°è£…åœ¨è¡¨æ ¼ä¸­<br>
+ * è¡¨æ ¼æ˜¯è‡ªåŠ¨å¢é•¿çš„
  */
 public class TableTag extends HtmlTagBase {
 	//private ITag table;
@@ -19,8 +19,8 @@ public class TableTag extends HtmlTagBase {
 	private int c = 0;
 	
 	/**
-	 * table±êÇ©µÄ·â×°
-	 * @param colume - ±í¸ñµÄÁĞ
+	 * tableæ ‡ç­¾çš„å°è£…
+	 * @param colume - è¡¨æ ¼çš„åˆ—
 	 */
 	public TableTag(int colume) {
 		super("table");
@@ -52,9 +52,9 @@ public class TableTag extends HtmlTagBase {
 	}
 
 	/**
-	 * Ïò±í¸ñÖĞÌí¼ÓÎÄ±¾Êı¾İ<br>
-	 * Ã¿´Îµ÷ÓÃ¶¼»áÔÚ±í¸ñÖĞ´´½¨Ò»¸öĞÂµÄÁĞ£¬
-	 * Ö±µ½Ã¿ĞĞµÄÁĞµ½´ïÖ¸¶¨Öµ£¬´ËÊ±ĞÂ½¨Ò»¸öĞĞ
+	 * å‘è¡¨æ ¼ä¸­æ·»åŠ æ–‡æœ¬æ•°æ®<br>
+	 * æ¯æ¬¡è°ƒç”¨éƒ½ä¼šåœ¨è¡¨æ ¼ä¸­åˆ›å»ºä¸€ä¸ªæ–°çš„åˆ—ï¼Œ
+	 * ç›´åˆ°æ¯è¡Œçš„åˆ—åˆ°è¾¾æŒ‡å®šå€¼ï¼Œæ­¤æ—¶æ–°å»ºä¸€ä¸ªè¡Œ
 	 */
 	public boolean append(String text) {
 		ITag td = getColumeOfRow();
@@ -62,7 +62,7 @@ public class TableTag extends HtmlTagBase {
 	}
 	
 	/**
-	 * Ïò±í¸ñÍ·ÖĞÌí¼ÓÊı¾İ
+	 * å‘è¡¨æ ¼å¤´ä¸­æ·»åŠ æ•°æ®
 	 * @param text
 	 */
 	public void appendHead(String text) {
@@ -71,7 +71,7 @@ public class TableTag extends HtmlTagBase {
 	}
 	
 	/**
-	 * Ïò±í¸ñÍ·ÖĞÌí¼ÓÊı¾İ
+	 * å‘è¡¨æ ¼å¤´ä¸­æ·»åŠ æ•°æ®
 	 * @param text
 	 */
 	public void appendHead(ITag tag) {
@@ -80,9 +80,9 @@ public class TableTag extends HtmlTagBase {
 	}
 
 	/**
-	 * ÔÚ±í¸ñÖĞ¼ÓÈëÒ»¸ö×Ó±ê¼Ç<br>
-	 * Ã¿´Îµ÷ÓÃ¶¼»áÔÚ±í¸ñÖĞ´´½¨Ò»¸öĞÂµÄÁĞ£¬
-	 * Ö±µ½Ã¿ĞĞµÄÁĞµ½´ïÖ¸¶¨Öµ£¬´ËÊ±ĞÂ½¨Ò»¸öĞĞ
+	 * åœ¨è¡¨æ ¼ä¸­åŠ å…¥ä¸€ä¸ªå­æ ‡è®°<br>
+	 * æ¯æ¬¡è°ƒç”¨éƒ½ä¼šåœ¨è¡¨æ ¼ä¸­åˆ›å»ºä¸€ä¸ªæ–°çš„åˆ—ï¼Œ
+	 * ç›´åˆ°æ¯è¡Œçš„åˆ—åˆ°è¾¾æŒ‡å®šå€¼ï¼Œæ­¤æ—¶æ–°å»ºä¸€ä¸ªè¡Œ
 	 */
 	public boolean append(ITag tag) {
 		ITag td = getColumeOfRow();
@@ -90,9 +90,9 @@ public class TableTag extends HtmlTagBase {
 	}
 
 	/**
-	 * ÔÚ±í¸ñÖĞ½¨Á¢Ò»¸öĞÂµÄ±ê¼Ç£¬²¢·µ»ØËû<br>
-	 * Ã¿´Îµ÷ÓÃ¶¼»áÔÚ±í¸ñÖĞ´´½¨Ò»¸öĞÂµÄÁĞ£¬
-	 * Ö±µ½Ã¿ĞĞµÄÁĞµ½´ïÖ¸¶¨Öµ£¬´ËÊ±ĞÂ½¨Ò»¸öĞĞ
+	 * åœ¨è¡¨æ ¼ä¸­å»ºç«‹ä¸€ä¸ªæ–°çš„æ ‡è®°ï¼Œå¹¶è¿”å›ä»–<br>
+	 * æ¯æ¬¡è°ƒç”¨éƒ½ä¼šåœ¨è¡¨æ ¼ä¸­åˆ›å»ºä¸€ä¸ªæ–°çš„åˆ—ï¼Œ
+	 * ç›´åˆ°æ¯è¡Œçš„åˆ—åˆ°è¾¾æŒ‡å®šå€¼ï¼Œæ­¤æ—¶æ–°å»ºä¸€ä¸ªè¡Œ
 	 */
 	public ITag create(String newtagname) {
 		ITag td = getColumeOfRow();

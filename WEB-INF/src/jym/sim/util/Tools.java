@@ -1,4 +1,4 @@
-// CatfoOD 2009-10-26 ÏÂÎç09:15:11
+// CatfoOD 2009-10-26 ä¸‹åˆ09:15:11
 
 package jym.sim.util;
 
@@ -23,7 +23,7 @@ public class Tools {
 	
 	
 	/**
-	 * ÖØĞÂ¶¨Î»Êä³öÁ÷,Ä¬ÈÏSystem.out;
+	 * é‡æ–°å®šä½è¾“å‡ºæµ,é»˜è®¤System.out;
 	 */
 	public static void setOut(PrintStream newout) {
 		out = newout;
@@ -51,7 +51,7 @@ public class Tools {
 	}
 
 	/**
-	 * ·µ»ØnameµÄµÚÒ»¸ö×Ö·û
+	 * è¿”å›nameçš„ç¬¬ä¸€ä¸ªå­—ç¬¦
 	 */
 	public static String getFirstName(String name) {
 		if (name.length()>0) {
@@ -80,18 +80,18 @@ public class Tools {
 	}
 	
 	/**
-	 * ´òÓ¡´íÎó,²»¹ıÂËÊä³ö
-	 * @param t - Òª´òÓ¡µÄÒì³£
+	 * æ‰“å°é”™è¯¯,ä¸è¿‡æ»¤è¾“å‡º
+	 * @param t - è¦æ‰“å°çš„å¼‚å¸¸
 	 */
 	public static void plerr(Throwable t) {
 		plerr(t, null);
 	}
 	
 	/**
-	 * ´òÓ¡´íÎó²¢¹ıÂËÊä³ö
-	 * @param t - Òª´òÓ¡µÄ´íÎó
-	 * @param filterExp - ÕıÔò±í´ïÊ½,ÓÃ±í´ïÊ½¹ıÂËÀàÃû,
-	 * 			·ûºÏÔò´òÓ¡,·ñÔòºöÂÔ Èç¹û±í´ïÊ½´íÎóÔòÆ¥ÅäÈ«²¿
+	 * æ‰“å°é”™è¯¯å¹¶è¿‡æ»¤è¾“å‡º
+	 * @param t - è¦æ‰“å°çš„é”™è¯¯
+	 * @param filterExp - æ­£åˆ™è¡¨è¾¾å¼,ç”¨è¡¨è¾¾å¼è¿‡æ»¤ç±»å,
+	 * 			ç¬¦åˆåˆ™æ‰“å°,å¦åˆ™å¿½ç•¥ å¦‚æœè¡¨è¾¾å¼é”™è¯¯åˆ™åŒ¹é…å…¨éƒ¨
 	 */
 	public static void plerr(Throwable t, String filterExp) {
 		StringBuilder ps = new StringBuilder();
@@ -134,14 +134,14 @@ public class Tools {
 	}
 	
 	/**
-	 * ´òÓ¡µ±Ç°¹ı³ÌµÄµ÷ÓÃ¶ÑÕ»
+	 * æ‰“å°å½“å‰è¿‡ç¨‹çš„è°ƒç”¨å †æ ˆ
 	 */
 	public static void plStackTrace() {
-		Tools.plerr(new Throwable("µ÷ÓÃ¶ÑÕ»"));
+		Tools.plerr(new Throwable("è°ƒç”¨å †æ ˆ"));
 	}
 	
 	/**
-	 * Èç¹ûo==null, ÔòÅ×³öÒì³£,Òì³£ĞÅÏ¢ÔÚmsgÖĞ¶¨Òå
+	 * å¦‚æœo==null, åˆ™æŠ›å‡ºå¼‚å¸¸,å¼‚å¸¸ä¿¡æ¯åœ¨msgä¸­å®šä¹‰
 	 * 
 	 * @throws RuntimeException
 	 */
@@ -152,8 +152,8 @@ public class Tools {
 	}
 	
 	/**
-	 * ¸´ÖÆHttpServletRequestÖĞµÄÇëÇó²ÎÊıµ½ÊôĞÔÁĞ±í
-	 * ÒÔ±ãjspµÄELµ÷ÓÃ
+	 * å¤åˆ¶HttpServletRequestä¸­çš„è¯·æ±‚å‚æ•°åˆ°å±æ€§åˆ—è¡¨
+	 * ä»¥ä¾¿jspçš„ELè°ƒç”¨
 	 */
 	public static void copyParam2Attrib(HttpServletRequest req) {
 		Enumeration<?> e = req.getParameterNames();
@@ -173,19 +173,19 @@ public class Tools {
 	}
 	
 	/**
-	 * ·¢³öÒ»¸öÒôÆµà½à½Éù
+	 * å‘å‡ºä¸€ä¸ªéŸ³é¢‘å˜Ÿå˜Ÿå£°
 	 */
 	public static void beep() {
 		Toolkit.getDefaultToolkit().beep();
 	}
 	
 	/**
-	 * ¸´ÖÆÖ¸¶¨µÄÊı×é£¬½ØÈ¡»òÓÃ 0 Ìî³ä£¨ÈçÓĞ±ØÒª£©£¬ÒÔÊ¹¸±±¾¾ßÓĞÖ¸¶¨µÄ³¤¶È¡£
-	 * ¶ÔÓÚÔÚÔ­Êı×éºÍ¸±±¾ÖĞ¶¼ÓĞĞ§µÄËùÓĞË÷Òı£¬ÕâÁ½¸öÊı×é½«°üº¬ÏàÍ¬µÄÖµ¡£
-	 * ¶ÔÓÚÔÚ¸±±¾ÖĞÓĞĞ§¶øÔÚÔ­Êı×éÎŞĞ§µÄËùÓĞË÷Òı£¬¸±±¾½«°üº¬ (byte)0¡£
-	 * µ±ÇÒ½öµ±Ö¸¶¨³¤¶È´óÓÚÔ­Êı×éµÄ³¤¶ÈÊ±£¬ÕâĞ©Ë÷Òı´æÔÚ¡£<br>
+	 * å¤åˆ¶æŒ‡å®šçš„æ•°ç»„ï¼Œæˆªå–æˆ–ç”¨ 0 å¡«å……ï¼ˆå¦‚æœ‰å¿…è¦ï¼‰ï¼Œä»¥ä½¿å‰¯æœ¬å…·æœ‰æŒ‡å®šçš„é•¿åº¦ã€‚
+	 * å¯¹äºåœ¨åŸæ•°ç»„å’Œå‰¯æœ¬ä¸­éƒ½æœ‰æ•ˆçš„æ‰€æœ‰ç´¢å¼•ï¼Œè¿™ä¸¤ä¸ªæ•°ç»„å°†åŒ…å«ç›¸åŒçš„å€¼ã€‚
+	 * å¯¹äºåœ¨å‰¯æœ¬ä¸­æœ‰æ•ˆè€Œåœ¨åŸæ•°ç»„æ— æ•ˆçš„æ‰€æœ‰ç´¢å¼•ï¼Œå‰¯æœ¬å°†åŒ…å« (byte)0ã€‚
+	 * å½“ä¸”ä»…å½“æŒ‡å®šé•¿åº¦å¤§äºåŸæ•°ç»„çš„é•¿åº¦æ—¶ï¼Œè¿™äº›ç´¢å¼•å­˜åœ¨ã€‚<br>
 	 * <br>
-	 * ´Ë·½·¨Îªjava1.5Ìá¹©±ã½İµÄÊı×é¸´ÖÆ
+	 * æ­¤æ–¹æ³•ä¸ºjava1.5æä¾›ä¾¿æ·çš„æ•°ç»„å¤åˆ¶
 	 */
 	public static byte[] copyOf(byte[] original, int newLength) {
 		byte[] newarr = new byte[newLength];
@@ -195,7 +195,7 @@ public class Tools {
 	}
 	
 	/**
-	 * Ìæ»»chÊı×éÖĞËùÓĞµÄs×Ö·ûÎªr×Ö·û
+	 * æ›¿æ¢chæ•°ç»„ä¸­æ‰€æœ‰çš„så­—ç¬¦ä¸ºrå­—ç¬¦
 	 */
 	public static void replaceAll(char[] ch, char s, char r) {
 		for (int i=0; i<ch.length; ++i) {
@@ -206,17 +206,17 @@ public class Tools {
 	}
 	
 	/**
-	 * ·µ»Øµ±Ç°´úÂëĞĞµÄĞÅÏ¢
+	 * è¿”å›å½“å‰ä»£ç è¡Œçš„ä¿¡æ¯
 	 */
 	public static String source() {
 		return source(0);
 	}
 	
 	/**
-	 * ·µ»Ø´úÂëËùÔÚĞĞµÄĞÅÏ¢,ÓÃÓÚµ÷ÊÔ
-	 * @param functionCount - º¯ÊıµÄµ÷ÓÃÉî¶È,Í¨³£:
-	 * 		Èç¹ûÖ±½ÓÏÔÊ¾µ±Ç°µÄĞĞ,ÔòÎª0,·ñÔòÈç¹ûÒªÏÔÊ¾
-	 * 		µ÷ÓÃµ±Ç°º¯ÊıµÄÈë¿Ú´úÂëÔòÎª1
+	 * è¿”å›ä»£ç æ‰€åœ¨è¡Œçš„ä¿¡æ¯,ç”¨äºè°ƒè¯•
+	 * @param functionCount - å‡½æ•°çš„è°ƒç”¨æ·±åº¦,é€šå¸¸:
+	 * 		å¦‚æœç›´æ¥æ˜¾ç¤ºå½“å‰çš„è¡Œ,åˆ™ä¸º0,å¦åˆ™å¦‚æœè¦æ˜¾ç¤º
+	 * 		è°ƒç”¨å½“å‰å‡½æ•°çš„å…¥å£ä»£ç åˆ™ä¸º1
 	 */
 	public static String source(int functionCount) {
 		Exception e = new Exception();

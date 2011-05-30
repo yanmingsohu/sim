@@ -1,4 +1,4 @@
-// CatfoOD 2010-4-21 ÉÏÎç09:43:58 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-4-21 ä¸Šåˆ09:43:58 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.validator;
 
@@ -18,7 +18,7 @@ import jym.sim.validator.verify.RegexVerify;
 import jym.sim.validator.verify.StringLenVerify;
 
 /**
- * Á¬½ÓÑéÖ¤×¢½âÓëÑéÖ¤·½·¨µÄÇÅÁº
+ * è¿æ¥éªŒè¯æ³¨è§£ä¸éªŒè¯æ–¹æ³•çš„æ¡¥æ¢
  */
 public final class Verifys {
 	
@@ -26,7 +26,7 @@ public final class Verifys {
 			verifys = new HashMap<Object, IVerify>();
 	
 	
-	// ÑéÖ¤Æ÷±ØĞë×¢²á²ÅÄÜÊ¹ÓÃ
+	// éªŒè¯å™¨å¿…é¡»æ³¨å†Œæ‰èƒ½ä½¿ç”¨
 	static {
 		reg( new NotNullVerify()	);
 		reg( new StringLenVerify()	);
@@ -51,7 +51,7 @@ public final class Verifys {
 			if (iv!=null) {
 				ivs.add(iv);
 			} else {
-				Tools.pl("VerifysÎ´ÕÒµ½ÑéÖ¤¹æÔò: " + annos[i]);
+				Tools.pl("Verifysæœªæ‰¾åˆ°éªŒè¯è§„åˆ™: " + annos[i]);
 			}
 		}
 		

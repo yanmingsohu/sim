@@ -1,4 +1,4 @@
-// CatfoOD 2009-12-14 œ¬ŒÁ09:33:05
+// CatfoOD 2009-12-14 ‰∏ãÂçà09:33:05
 
 package jym.sim.tags;
 
@@ -6,7 +6,7 @@ import java.io.PrintWriter;
 
 public class PaginationTag extends HtmlTagBase {
 	
-	/** tag‘™Àÿclass Ù–‘µƒ«∞◊∫ */
+	/** tagÂÖÉÁ¥†classÂ±ûÊÄßÁöÑÂâçÁºÄ */
 	public final static String CSS_CLASS_NAME = "sim_pagination";
 	public final static String CSS_CLASS_FIRSTPAGE = "sim_pagination_firstpage";
 	public final static String CSS_CLASS_LASTPAGE = "sim_pagination_lastpage";
@@ -25,7 +25,7 @@ public class PaginationTag extends HtmlTagBase {
 	
 	
 	/**
-	 * …˙≥…∑÷“≥html
+	 * ÁîüÊàêÂàÜÈ°µhtml
 	 */
 	public PaginationTag() {
 		super("div");
@@ -34,28 +34,28 @@ public class PaginationTag extends HtmlTagBase {
 	}
 
 	/**
-	 * µ±«∞Õ£¡Ùµƒ“≥¬Î,“≥¬Î”––ß÷µ1~*
+	 * ÂΩìÂâçÂÅúÁïôÁöÑÈ°µÁ†Å,È°µÁ†ÅÊúâÊïàÂÄº1~*
 	 */
 	public void setCurrentPage(int p) {
 		current = p;
 	}
 	
 	/**
-	 * ◊‹“≥¬Î
+	 * ÊÄªÈ°µÁ†Å
 	 */
 	public void setTotalPage(int t) {
 		total = t;
 	}
 	
 	/**
-	 * ∑÷“≥Ã· æµƒ ˝¡ø
+	 * ÂàÜÈ°µÊèêÁ§∫ÁöÑÊï∞Èáè
 	 */
 	public void setDisplaySize(int s) {
 		dispsize = s/2;
 	}
 	
 	/**
-	 * …Ë÷√≥¨¡¥Ω”◊÷∑˚¥Æ£¨◊÷∑˚¥Æ÷–µƒ%page◊™ªªŒ™“≥¬Î÷µ
+	 * ËÆæÁΩÆË∂ÖÈìæÊé•Â≠óÁ¨¶‰∏≤ÔºåÂ≠óÁ¨¶‰∏≤‰∏≠ÁöÑ%pageËΩ¨Êç¢‰∏∫È°µÁ†ÅÂÄº
 	 */
 	public void setUrlPattern(String _url) {
 		url = _url;
@@ -75,9 +75,9 @@ public class PaginationTag extends HtmlTagBase {
 		
 	if (start+1>end) return;
 	
-		createLink(getUrl(1), CSS_CLASS_FIRSTPAGE, " ◊“≥");
+		createLink(getUrl(1), CSS_CLASS_FIRSTPAGE, "È¶ñÈ°µ");
 	if (current-1>0) {
-		createLink(getUrl(current-1), CSS_CLASS_PREVPAGE, "…œ“ª“≥");
+		createLink(getUrl(current-1), CSS_CLASS_PREVPAGE, "‰∏ä‰∏ÄÈ°µ");
 		}
 		
 		for (int i=start; i<=end; ++i) {
@@ -94,9 +94,9 @@ public class PaginationTag extends HtmlTagBase {
 		}
 		
 	if (current+1<=total) {
-		createLink(getUrl(current+1), CSS_CLASS_NEXTPAGE, "œ¬“ª“≥");
+		createLink(getUrl(current+1), CSS_CLASS_NEXTPAGE, "‰∏ã‰∏ÄÈ°µ");
 		}
-		createLink(getUrl(total), CSS_CLASS_LASTPAGE, "ƒ©“≥");
+		createLink(getUrl(total), CSS_CLASS_LASTPAGE, "Êú´È°µ");
 	}
 	
 	private void createLink(String href, String clazzName, String text) {

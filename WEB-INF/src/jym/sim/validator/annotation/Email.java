@@ -1,4 +1,4 @@
-// CatfoOD 2010-4-21 ÏÂÎç02:35:57 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-4-21 ä¸‹åˆ02:35:57 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.validator.annotation;
 
@@ -9,13 +9,13 @@ import java.lang.annotation.Target;
 
 
 /**
- * µç×ÓÓÊ¼şµØÖ·Ğ§ÑéÆ÷
+ * ç”µå­é‚®ä»¶åœ°å€æ•ˆéªŒå™¨
  */
 @Retention(value=RetentionPolicy.RUNTIME)
 @Target(value=ElementType.FIELD)
 public @interface Email {
 	/**
-	 * Ğ§Ñé´íÎóÊ±µÄĞÅÏ¢
+	 * æ•ˆéªŒé”™è¯¯æ—¶çš„ä¿¡æ¯
 	 */
 	String msg();
 }

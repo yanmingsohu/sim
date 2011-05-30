@@ -1,4 +1,4 @@
-// CatfoOD 2010-7-28 ÏÂÎç02:20:32 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-7-28 ä¸‹åˆ02:20:32 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.json;
 
@@ -8,43 +8,43 @@ import java.util.Map;
 
 
 /**
- * json¶ÔÏó
+ * jsonå¯¹è±¡
  */
 public interface IjSon extends IGo {
 
 	/**
-	 * ÉèÖÃÒ»¸ö±äÁ¿µÄÃû×Ö-Öµ¶Ô,Èç¹ûvalue==nullÔòÊä³öÖµÊÇ"null"º¬ÓĞÒıºÅ
+	 * è®¾ç½®ä¸€ä¸ªå˜é‡çš„åå­—-å€¼å¯¹,å¦‚æœvalue==nullåˆ™è¾“å‡ºå€¼æ˜¯"null"å«æœ‰å¼•å·
 	 * 
-	 * @param name - ±äÁ¿µÄÃû×Ö
-	 * @param value - ±äÁ¿µÄÖµ,¿ÉÒÔÊÇÁíÒ»¸öIjSon×÷ÎªÊı×é
+	 * @param name - å˜é‡çš„åå­—
+	 * @param value - å˜é‡çš„å€¼,å¯ä»¥æ˜¯å¦ä¸€ä¸ªIjSonä½œä¸ºæ•°ç»„
 	 */
 	public void set(Object name, Object value);
 	
 	/**
-	 * ´´½¨Ò»¸önameÃû×ÖµÄÊı×é±äÁ¿,Èç¹û¸ÃÊı×éÒÑ¾­´æÔÚÔò·µ»ØËü
-	 * Èç¹ûÃû×ÖÖ¸¶¨µÄ¶ÔÏó²»ÊÇIjSon·µ»Ønull
+	 * åˆ›å»ºä¸€ä¸ªnameåå­—çš„æ•°ç»„å˜é‡,å¦‚æœè¯¥æ•°ç»„å·²ç»å­˜åœ¨åˆ™è¿”å›å®ƒ
+	 * å¦‚æœåå­—æŒ‡å®šçš„å¯¹è±¡ä¸æ˜¯IjSonè¿”å›null
 	 * 
-	 * @return - json¶ÔÏó
+	 * @return - jsonå¯¹è±¡
 	 */
 	public IjSon createSub(Object name);
 	
 	/**
-	 * ÉèÖÃÒ»¸ö±äÁ¿µÄÃû×Ö-Öµ¶Ô,Ô­ÉúÀàĞÍÖ±½Ó¶ÔÓ¦jsµÄÀàĞÍ
+	 * è®¾ç½®ä¸€ä¸ªå˜é‡çš„åå­—-å€¼å¯¹,åŸç”Ÿç±»å‹ç›´æ¥å¯¹åº”jsçš„ç±»å‹
 	 */
 	public void set(Object name, boolean b);
 	
 	/**
-	 * ÉèÖÃÒ»¸ö±äÁ¿µÄÃû×Ö-Öµ¶Ô,Ô­ÉúÀàĞÍÖ±½Ó¶ÔÓ¦jsµÄÀàĞÍ
+	 * è®¾ç½®ä¸€ä¸ªå˜é‡çš„åå­—-å€¼å¯¹,åŸç”Ÿç±»å‹ç›´æ¥å¯¹åº”jsçš„ç±»å‹
 	 */
 	public void set(Object name, long i);
 	
 	/**
-	 * ÉèÖÃÒ»¸ö±äÁ¿µÄÃû×Ö-Öµ¶Ô,Ô­ÉúÀàĞÍÖ±½Ó¶ÔÓ¦jsµÄÀàĞÍ
+	 * è®¾ç½®ä¸€ä¸ªå˜é‡çš„åå­—-å€¼å¯¹,åŸç”Ÿç±»å‹ç›´æ¥å¯¹åº”jsçš„ç±»å‹
 	 */
 	public void set(Object name, double d);
 	
 	/**
-	 * ÉèÖÃnameÖ¸¶¨µÄÖµÀ´×ÔÓÚÒ»¸ö¼¯ºÏ<br>
+	 * è®¾ç½®nameæŒ‡å®šçš„å€¼æ¥è‡ªäºä¸€ä¸ªé›†åˆ<br>
 	 * name : {<br>
 	 * 	1 : c[1],<br>
 	 * 	n : c[n]<br>
@@ -53,7 +53,7 @@ public interface IjSon extends IGo {
 	public void set(Object name, Collection<?> c);
 	
 	/**
-	 * ÉèÖÃnameÖÆ¶¨µÄÖµÀ´×ÔÓÚÒ»¸öMap<br>
+	 * è®¾ç½®nameåˆ¶å®šçš„å€¼æ¥è‡ªäºä¸€ä¸ªMap<br>
 	 * name : {<br>
 	 * 	key : value,<br>
 	 * 	key2: value2<br>
@@ -62,9 +62,9 @@ public interface IjSon extends IGo {
 	public void set(Object name, Map<?,?> map);
 	
 	/**
-	 * ÉèÖÃÒ»¸ö±äÁ¿£¬Ãû×ÖÊÇname£¬ËûµÄÖµÀ´×ÔÓÚbeanÖĞµÄÊôĞÔ
-	 * Ö»ÓĞÓĞget·½·¨µÄÊôĞÔ²ÅÄÜÊä³öµÄjson¶ÔÏóÖĞ,
-	 * beanÖĞ¼Ì³ĞµÄÊôĞÔ<b>²»ÄÜ</b>Êä³öµ½jsonÖĞ
+	 * è®¾ç½®ä¸€ä¸ªå˜é‡ï¼Œåå­—æ˜¯nameï¼Œä»–çš„å€¼æ¥è‡ªäºbeanä¸­çš„å±æ€§
+	 * åªæœ‰æœ‰getæ–¹æ³•çš„å±æ€§æ‰èƒ½è¾“å‡ºçš„jsonå¯¹è±¡ä¸­,
+	 * beanä¸­ç»§æ‰¿çš„å±æ€§<b>ä¸èƒ½</b>è¾“å‡ºåˆ°jsonä¸­
 	 */
 	public void setBean(Object name, Object bean); 
 	

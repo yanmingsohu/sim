@@ -1,4 +1,4 @@
-// CatfoOD 2009-12-20 ÏÂÎç10:41:46
+// CatfoOD 2009-12-20 ä¸‹åˆ10:41:46
 
 package jym.sim.tags.template;
 
@@ -8,16 +8,16 @@ import jym.sim.tags.ITag;
 
 public interface ICalendarData {
 	/**
-	 * ·µ»ØÒª´¦ÀíµÄÈÕÆÚ(Äê/ÔÂ)
+	 * è¿”å›è¦å¤„ç†çš„æ—¥æœŸ(å¹´/æœˆ)
 	 */
 	Calendar getCalendar();
 	
 	/**
-	 * È¡µÃdataµÄÈÕÆÚµÄÊÂ¼ş£¬ÓÃÀ´ÏÔÊ¾ÔÚ¸ñÊ½ÖĞ
+	 * å–å¾—dataçš„æ—¥æœŸçš„äº‹ä»¶ï¼Œç”¨æ¥æ˜¾ç¤ºåœ¨æ ¼å¼ä¸­
 	 * 
-	 * @param data - ÈÕÀúÖĞµÄÈÕÆÚ
-	 * @param disp - Èç¹ûdataµÄÈÕÆÚÖĞº¬ÓĞÊÂ¼ş£¬<br>
-	 * 				ÔòÓÃdisp.append()°ÑÒªÏÔÊ¾µÄÊı¾İÌí¼Óµ½ÈÕÀúÖĞ
+	 * @param data - æ—¥å†ä¸­çš„æ—¥æœŸ
+	 * @param disp - å¦‚æœdataçš„æ—¥æœŸä¸­å«æœ‰äº‹ä»¶ï¼Œ<br>
+	 * 				åˆ™ç”¨disp.append()æŠŠè¦æ˜¾ç¤ºçš„æ•°æ®æ·»åŠ åˆ°æ—¥å†ä¸­
 	 */
 	void event(Calendar data, ITag disp);
 }

@@ -1,4 +1,4 @@
-// CatfoOD 2009-10-29 ÉÏÎç02:47:34
+// CatfoOD 2009-10-29 ä¸Šåˆ02:47:34
 
 package jym.sim.util;
 

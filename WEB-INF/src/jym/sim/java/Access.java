@@ -1,7 +1,7 @@
 package jym.sim.java;
 
 /**
- * Java的访问权限修饰符
+ * Java鐨勮闂潈闄愪慨楗扮
  */
 public final class Access extends Key {
 

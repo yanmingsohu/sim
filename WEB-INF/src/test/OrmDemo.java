@@ -1,4 +1,4 @@
-// CatfoOD 2010-4-16 ÏÂÎç01:42:14 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-4-16 ä¸‹åˆ01:42:14 yanming-sohu@sohu.com/@qq.com
 
 package test;
 
@@ -89,9 +89,9 @@ public class OrmDemo {
 	}
 
 	/**
-	 * odbcÇı¶¯:<br>
-	 * 10000ÌõÊı¾İ,3¸ö×Ö·û´®×Ö¶Î,<b>²»±éÀú</b>½á¹û¼¯,¶¯Ì¬·½·¨¿ì´óÔ¼100±¶;<br>
-	 * <b>±éÀú</b>½á¹û¼¯,¶¯Ì¬·½·¨Âı´óÔ¼5±¶;ĞÔÄÜ²î±ğµÄÖ÷ÒªÔ­ÒòÔòÊÇÊ¹ÓÃ¿É¹ö¶¯µÄ½á¹û¼¯:<br>
+	 * odbcé©±åŠ¨:<br>
+	 * 10000æ¡æ•°æ®,3ä¸ªå­—ç¬¦ä¸²å­—æ®µ,<b>ä¸éå†</b>ç»“æœé›†,åŠ¨æ€æ–¹æ³•å¿«å¤§çº¦100å€;<br>
+	 * <b>éå†</b>ç»“æœé›†,åŠ¨æ€æ–¹æ³•æ…¢å¤§çº¦5å€;æ€§èƒ½å·®åˆ«çš„ä¸»è¦åŸå› åˆ™æ˜¯ä½¿ç”¨å¯æ»šåŠ¨çš„ç»“æœé›†:<br>
 	 * <code>
 	 * statement = conn.createStatement(
 	 *			ResultSet.TYPE_SCROLL_INSENSITIVE, 
@@ -108,7 +108,7 @@ public class OrmDemo {
 		
 		for (int i=0; i<count; ++i)
 		{
-			UsedTime.start("¶¯Ì¬²éÑ¯");
+			UsedTime.start("åŠ¨æ€æŸ¥è¯¢");
 			List<?> list = orm.select(user, "or");
 			
 			if (iteratorResult) {
@@ -124,7 +124,7 @@ public class OrmDemo {
 		
 		for (int i=0; i<count; ++i)
 		{
-			UsedTime.start("Ò»´ÎĞÔ²éÑ¯");
+			UsedTime.start("ä¸€æ¬¡æ€§æŸ¥è¯¢");
 			List<?> list = orm.select(user, "or", page);
 		
 			if (iteratorResult) {

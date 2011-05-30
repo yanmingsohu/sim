@@ -14,38 +14,38 @@
     <tag-class>jym.sim.jsptag.IteratorTag</tag-class>
     <body-content>JSP</body-content>
     <description>
-		循环遍历集合中的对象
+		寰幆閬嶅巻闆嗗悎涓殑瀵硅薄
     </description>
     <attribute>
         <name>prefix</name>
         <required>true</required>
         <rtexprvalue>false</rtexprvalue>
-        <description>在循环体中取出数据时使用的前缀</description>
+        <description>鍦ㄥ惊鐜綋涓彇鍑烘暟鎹椂浣跨敤鐨勫墠缂�</description>
     </attribute>
     <attribute>
     	<name>list</name>
     	<required>false</required>
     	<rtexprvalue>true</rtexprvalue>
-    	<description>list对象名,从request对象中取出</description>
+    	<description>list瀵硅薄鍚�,浠巖equest瀵硅薄涓彇鍑�</description>
     </attribute>
     <attribute>
     	<name>listobj</name>
     	<required>false</required>
     	<rtexprvalue>true</rtexprvalue>
     	<type>java.util.Collection</type>
-    	<description>list对象,直接从EL表达式的值中取出</description>
+    	<description>list瀵硅薄,鐩存帴浠嶦L琛ㄨ揪寮忕殑鍊间腑鍙栧嚭</description>
     </attribute>
     <attribute>
     	<name>nomsg</name>
     	<required>false</required>
     	<type>java.lang.Boolean</type>
-    	<description>如果集合为空是否打印错误消息,默认打印==false</description>
+    	<description>濡傛灉闆嗗悎涓虹┖鏄惁鎵撳嵃閿欒娑堟伅,榛樿鎵撳嵃==false</description>
     </attribute>
     <attribute>
     	<name>skip</name>
     	<required>false</required>
     	<type>java.lang.Integer</type>
-    	<description>设置从跳过几个元素后开始迭代,默认使用0,既从集合的第一个元素开始</description>
+    	<description>璁剧疆浠庤烦杩囧嚑涓厓绱犲悗寮�濮嬭凯浠�,榛樿浣跨敤0,鏃粠闆嗗悎鐨勭涓�涓厓绱犲紑濮�</description>
     </attribute>
   </tag>
   
@@ -54,20 +54,20 @@
   	<tag-class>jym.sim.jsptag.NotnullTag</tag-class>
     <body-content>JSP</body-content>
     <description>
-       	 测试对象是否为空(null),如果不加参数则默认执行标签体
+       	 娴嬭瘯瀵硅薄鏄惁涓虹┖(null),濡傛灉涓嶅姞鍙傛暟鍒欓粯璁ゆ墽琛屾爣绛句綋
     </description>
     <attribute>
         <name>obj</name>
         <required>false</required>
         <rtexprvalue>true</rtexprvalue>
-        <description>如果从request对象中取出obj不为null,则进入标签体</description>
+        <description>濡傛灉浠巖equest瀵硅薄涓彇鍑簅bj涓嶄负null,鍒欒繘鍏ユ爣绛句綋</description>
     </attribute>
     <attribute>
     	<name>ref</name>
     	<required>false</required>
     	<rtexprvalue>true</rtexprvalue>
     	<type>java.lang.Object</type>
-    	<description>引用对象,直接从EL表达式的值中取出</description>
+    	<description>寮曠敤瀵硅薄,鐩存帴浠嶦L琛ㄨ揪寮忕殑鍊间腑鍙栧嚭</description>
     </attribute>
   </tag>
   
@@ -76,20 +76,20 @@
   	<tag-class>jym.sim.jsptag.IsNullTag</tag-class>
     <body-content>JSP</body-content>
     <description>
-       	 测试对象是否为空(null),null则执行标签体,如果不加参数则默认执行标签体
+       	 娴嬭瘯瀵硅薄鏄惁涓虹┖(null),null鍒欐墽琛屾爣绛句綋,濡傛灉涓嶅姞鍙傛暟鍒欓粯璁ゆ墽琛屾爣绛句綋
     </description>
     <attribute>
         <name>obj</name>
         <required>false</required>
         <rtexprvalue>true</rtexprvalue>
-        <description>如果从request对象中取出obj为null,则进入标签体</description>
+        <description>濡傛灉浠巖equest瀵硅薄涓彇鍑簅bj涓簄ull,鍒欒繘鍏ユ爣绛句綋</description>
     </attribute>
     <attribute>
     	<name>ref</name>
     	<required>false</required>
     	<rtexprvalue>true</rtexprvalue>
     	<type>java.lang.Object</type>
-    	<description>引用对象,直接从EL表达式的值中取出</description>
+    	<description>寮曠敤瀵硅薄,鐩存帴浠嶦L琛ㄨ揪寮忕殑鍊间腑鍙栧嚭</description>
     </attribute>
   </tag>
   
@@ -98,43 +98,43 @@
   	<tag-class>jym.sim.jsptag.SelectTag</tag-class>
   	<body-content>empty</body-content>
   	<description>
-  		遍历一个对象的静态集合属性作为枚举,类型:String[]或Map,
-  		枚举的值作为select的option选项
-  		以枚举的索引作为option.value
+  		閬嶅巻涓�涓璞＄殑闈欐�侀泦鍚堝睘鎬т綔涓烘灇涓�,绫诲瀷:String[]鎴朚ap,
+  		鏋氫妇鐨勫�间綔涓簊elect鐨刼ption閫夐」
+  		浠ユ灇涓剧殑绱㈠紩浣滀负option.value
   	</description>
   	<attribute>
   		<name>name</name>
   		<required>true</required>
   		<rtexprvalue>true</rtexprvalue>
-  		<description>同select.name</description>
+  		<description>鍚宻elect.name</description>
   	</attribute>
   	<attribute>
   		<name>clazz</name>
   		<required>true</required>
-  		<description>指定类的完整名字</description>
+  		<description>鎸囧畾绫荤殑瀹屾暣鍚嶅瓧</description>
   	</attribute>
   	<attribute>
   		<name>field</name>
   		<required>true</required>
   		<rtexprvalue>true</rtexprvalue>
-  		<description>指定共有静态String数组属性的名字</description>
+  		<description>鎸囧畾鍏辨湁闈欐�丼tring鏁扮粍灞炴�х殑鍚嶅瓧</description>
   	</attribute>
   	<attribute>
   		<name>value</name>
   		<required>false</required>
   		<rtexprvalue>true</rtexprvalue>
-  		<description>指定select的默认选项</description>
+  		<description>鎸囧畾select鐨勯粯璁ら�夐」</description>
   	</attribute>
   	<attribute>
   		<name>empty</name>
   		<required>false</required>
   		<type>java.lang.Boolean</type>
-  		<description>如果为true,则不会有'请选择'这个元素,默认为false</description>
+  		<description>濡傛灉涓簍rue,鍒欎笉浼氭湁'璇烽�夋嫨'杩欎釜鍏冪礌,榛樿涓篺alse</description>
   	</attribute>
   	<attribute>
   		<name>def</name>
   		<required>false</required>
-  		<description>给select标签的附加html属性,默认为null</description>
+  		<description>缁檚elect鏍囩鐨勯檮鍔爃tml灞炴��,榛樿涓簄ull</description>
   	</attribute>
   </tag>
   
@@ -143,24 +143,24 @@
   	<tag-class>jym.sim.jsptag.EnumTag</tag-class>
   	<body-content>empty</body-content>
   	<description>
-  		取得集合中指定索引的值
+  		鍙栧緱闆嗗悎涓寚瀹氱储寮曠殑鍊�
   	</description>
   	<attribute>
   		<name>clazz</name>
   		<required>true</required>
-  		<description>指定类的完整名字</description>
+  		<description>鎸囧畾绫荤殑瀹屾暣鍚嶅瓧</description>
   	</attribute>
   	<attribute>
   		<name>field</name>
   		<required>true</required>
   		<rtexprvalue>true</rtexprvalue>
-  		<description>指定共有静态String数组属性的名字</description>
+  		<description>鎸囧畾鍏辨湁闈欐�丼tring鏁扮粍灞炴�х殑鍚嶅瓧</description>
   	</attribute>
   	<attribute>
   		<name>key</name>
   		<required>true</required>
   		<rtexprvalue>true</rtexprvalue>
-  		<description>集合的索引</description>
+  		<description>闆嗗悎鐨勭储寮�</description>
   	</attribute>
   </tag>
   
@@ -169,7 +169,7 @@
   	<tag-class>jym.sim.jsptag.ErrorTag</tag-class>
   	<body-content>empty</body-content>
   	<description>
-  		打印错误堆栈,打印出的错误数据使用如下css类(class):
+  		鎵撳嵃閿欒鍫嗘爤,鎵撳嵃鍑虹殑閿欒鏁版嵁浣跨敤濡備笅css绫�(class):
   		er_classname, er_methodname, er_filename, er_line
   	</description>
   	<attribute>
@@ -177,16 +177,16 @@
   		<required>true</required>
   		<rtexprvalue>true</rtexprvalue>
   		<type>java.lang.Throwable</type>
-  		<description>Throwable对象</description>
+  		<description>Throwable瀵硅薄</description>
   	</attribute>
   	<attribute>
   		<name>exp</name>
   		<required>false</required>
   		<rtexprvalue>true</rtexprvalue>
   		<description>
-  			正则表达式,用表达式过滤类名,
-  			符合则打印,否则忽略
-  			如果表达式错误则匹配全部
+  			姝ｅ垯琛ㄨ揪寮�,鐢ㄨ〃杈惧紡杩囨护绫诲悕,
+  			绗﹀悎鍒欐墦鍗�,鍚﹀垯蹇界暐
+  			濡傛灉琛ㄨ揪寮忛敊璇垯鍖归厤鍏ㄩ儴
   		</description>
   	</attribute>
   </tag>

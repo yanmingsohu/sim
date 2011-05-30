@@ -1,4 +1,4 @@
-// CatfoOD 2010-9-9 ÉÏÎç09:23:15 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-9-9 ä¸Šåˆ09:23:15 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.js;
 
@@ -18,7 +18,7 @@ import jym.sim.util.Tools;
 
 
 /**
- * ½Å±¾×ª·¢
+ * è„šæœ¬è½¬å‘
  */
 public class ScriptServlet extends HttpServlet {
 
@@ -58,10 +58,10 @@ public class ScriptServlet extends HttpServlet {
 				urimapping.load(in);
 				in.close();
 			} catch (IOException e) {
-				Tools.pl("¶ÁÈ¡½Å±¾Ó³ÉäÅäÖÃÎÄ¼şÊ±³ö´í? [" + file + "] " + e);
+				Tools.pl("è¯»å–è„šæœ¬æ˜ å°„é…ç½®æ–‡ä»¶æ—¶å‡ºé”™? [" + file + "] " + e);
 			}
 		} else {
-			Tools.pl("½Å±¾Ó³ÉäÅäÖÃÎÄ¼ş²»´æÔÚ? " + file);
+			Tools.pl("è„šæœ¬æ˜ å°„é…ç½®æ–‡ä»¶ä¸å­˜åœ¨? " + file);
 		}
 	}
 	
@@ -72,7 +72,7 @@ public class ScriptServlet extends HttpServlet {
 		String path = req.getServletPath();
 		
 		if (path.indexOf(SYS_PATH)>=0) {
-			Tools.pl("½ûÖ¹ÇëÇóÏµÍ³×ÊÔ´: " + req.getRequestURL() 
+			Tools.pl("ç¦æ­¢è¯·æ±‚ç³»ç»Ÿèµ„æº: " + req.getRequestURL() 
 					+ " - IP: " + req.getLocalAddr());
 			
 			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -89,7 +89,7 @@ public class ScriptServlet extends HttpServlet {
 		ServletOutputStream out = resp.getOutputStream();
 		
 		try {
-			//XXX JSMin»áµ¼ÖÂ²¿·Ö´úÂëÎŞĞ§?..²âÊÔÖĞ?
+			//XXX JSMinä¼šå¯¼è‡´éƒ¨åˆ†ä»£ç æ— æ•ˆ?..æµ‹è¯•ä¸­?
 			boolean compress = !debug;
 			if (compress) {
 				compress = JSMin.compress(in, out);

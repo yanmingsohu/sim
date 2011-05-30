@@ -11,15 +11,15 @@ import java.net.URL;
 import java.nio.CharBuffer;
 
 /**
- * È¡µÃ×ÊÔ´µÄURL, Ò»Ö±±éÀúClassLoaderµÄClassLoader
- * Ö±µ½´ïµ½javaºËĞÄClassLoader
+ * å–å¾—èµ„æºçš„URL, ä¸€ç›´éå†ClassLoaderçš„ClassLoader
+ * ç›´åˆ°è¾¾åˆ°javaæ ¸å¿ƒClassLoader
  */
 public class ResourceLoader {
 
 	private static int BUFF_SIZE = 2048;
 	
 	/**
-	 * È¡µÃ×ÊÔ´µÄURL
+	 * å–å¾—èµ„æºçš„URL
 	 */
 	public static URL getUrl(String fromfile) {
 		URL url = null;
@@ -40,7 +40,7 @@ public class ResourceLoader {
 	}
 	
 	/**
-	 * È¡µÃ×ÊÔ´µÄÊäÈëÁ÷
+	 * å–å¾—èµ„æºçš„è¾“å…¥æµ
 	 */
 	public static InputStream getInputStream(String fromfile) {
 		InputStream ins = null;
@@ -57,7 +57,7 @@ public class ResourceLoader {
 	}
 	
 	/**
-	 * ´ÓURLÖĞ¼ÓÔØÎÄ±¾£¬²¢Êä³öµ½outÖĞ
+	 * ä»URLä¸­åŠ è½½æ–‡æœ¬ï¼Œå¹¶è¾“å‡ºåˆ°outä¸­
 	 * @param url
 	 */
 	public static void urlWriteOut(URL url, PrintWriter out) {
@@ -78,7 +78,7 @@ public class ResourceLoader {
 	}
 	
 	/**
-	 * ¶ÁÈ¡ÊäÈëÁ÷ÖĞµÄÊı¾İµ½Êä³öÁ÷
+	 * è¯»å–è¾“å…¥æµä¸­çš„æ•°æ®åˆ°è¾“å‡ºæµ
 	 */
 	public static void writeOut(InputStream in, OutputStream out) throws IOException {
 		byte[] buff = new byte[256];

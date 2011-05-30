@@ -1,4 +1,4 @@
-// CatfoOD 2010-6-13 ÏÂÎç02:33:03 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-6-13 ä¸‹åˆ02:33:03 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.sql;
 
@@ -7,25 +7,25 @@ import java.sql.CallableStatement;
 public interface ICallData {
 	
 	/**
-	 * ·µ»Ø´æ´¢¹ı³ÌµÄÃû×Ö
+	 * è¿”å›å­˜å‚¨è¿‡ç¨‹çš„åå­—
 	 */
 	public String getProcedureName();
 	
 	/**
-	 * ·µ»Ø´æ´¢¹ı³Ì²ÎÊıµÄ¸öÊı<br>
-	 * ²»°üº¬·µ»Ø²ÎÊı: {?= call...
+	 * è¿”å›å­˜å‚¨è¿‡ç¨‹å‚æ•°çš„ä¸ªæ•°<br>
+	 * ä¸åŒ…å«è¿”å›å‚æ•°: {?= call...
 	 */
 	public int getParameterCount();
 	
 	/**
-	 * ÊÇ·ñÊ¹ÓÃ´æ´¢¹ı³ÌµÄ·µ»ØÖµ,true²úÉúÈçÏÂ´úÂë:
+	 * æ˜¯å¦ä½¿ç”¨å­˜å‚¨è¿‡ç¨‹çš„è¿”å›å€¼,trueäº§ç”Ÿå¦‚ä¸‹ä»£ç :
 	 * {?= call <procedure-name>[(<arg1>,<arg2>, ...)]}
 	 */
 	public boolean hasReturnValue();
 	
 	/**
-	 * ÏòCallableStatementÑ¹Èë²ÎÊı,Ö´ĞĞ¹ı³Ìµ÷ÓÃ,·µ»Ø²ÎÊı<br/>
-	 * CallableStatementÅ×³öµÄÒì³£Èç¹û²»¹ØĞÄ¿ÉÒÔ²»ÓÃcatch
+	 * å‘CallableStatementå‹å…¥å‚æ•°,æ‰§è¡Œè¿‡ç¨‹è°ƒç”¨,è¿”å›å‚æ•°<br/>
+	 * CallableStatementæŠ›å‡ºçš„å¼‚å¸¸å¦‚æœä¸å…³å¿ƒå¯ä»¥ä¸ç”¨catch
 	 */
 	public void exe(CallableStatement cs) throws Exception;
 }

@@ -1,4 +1,4 @@
-// CatfoOD 2010-6-17 ÉÏÎç08:43:30 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-6-17 ä¸Šåˆ08:43:30 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.sql.logic;
 
@@ -87,10 +87,10 @@ public class DateRange implements IWhere, ISkipValueCheck {
 			value = BeanUtil.invoke(model, methodName, new Object[0]);
 			
 		} catch (NoSuchMethodException e) {
-			error("ÕÒ²»µ½ "+fieldname+" µÄget·½·¨: " + e.getMessage());
+			error("æ‰¾ä¸åˆ° "+fieldname+" çš„getæ–¹æ³•: " + e.getMessage());
 			
 		} catch (Exception e) {
-			error("´íÎó: " + e.getMessage());
+			error("é”™è¯¯: " + e.getMessage());
 		}
 		
 		return value;

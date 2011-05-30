@@ -1,4 +1,4 @@
-// CatfoOD 2011-2-22 ионГ09:29:49
+// CatfoOD 2011-2-22 Д╦┼Е█┬09:29:49
 
 package jym.sim.exception;
 

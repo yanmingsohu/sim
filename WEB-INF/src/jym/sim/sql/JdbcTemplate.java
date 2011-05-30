@@ -1,4 +1,4 @@
-// CatfoOD 2010-4-16 ÉÏÎç08:03:19 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-4-16 ä¸Šåˆ08:03:19 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.sql;
 
@@ -40,14 +40,14 @@ public class JdbcTemplate implements IQuery, ICall {
 	
 	
 	/**
-	 * ÓÃÊı¾İÔ´³õÊ¼»¯Ä£°å
+	 * ç”¨æ•°æ®æºåˆå§‹åŒ–æ¨¡æ¿
 	 */
 	public JdbcTemplate(DataSource ds) {
 		init(ds);
 	}
 	
 	/**
-	 * ³õÊ¼»¯session,Ä¬ÈÏµÄÊÂÎñÊÇ»ùÓÚÏß³ÌµÄ
+	 * åˆå§‹åŒ–session,é»˜è®¤çš„äº‹åŠ¡æ˜¯åŸºäºçº¿ç¨‹çš„
 	 */
 	private JdbcSession initSession() throws SQLException {
 		JdbcSession js = db_connect.get();
@@ -68,8 +68,8 @@ public class JdbcTemplate implements IQuery, ICall {
 	}
 	
 	/**
-	 * ÊÇ·ñ»ØÏÔsqlÓï¾ä,Ä¬ÈÏ²»ÏÔÊ¾
-	 * @param show - trueÏÔÊ¾
+	 * æ˜¯å¦å›æ˜¾sqlè¯­å¥,é»˜è®¤ä¸æ˜¾ç¤º
+	 * @param show - trueæ˜¾ç¤º
 	 */
 	public void showSql(boolean show) {
 		showsql = show;
@@ -80,16 +80,16 @@ public class JdbcTemplate implements IQuery, ICall {
 	}
 	
 	/**
-	 * ÉèÖÃ¹Ø±ÕÊı¾İ¿âÁ¬½ÓµÄÄ£Ê½<br>
+	 * è®¾ç½®å…³é—­æ•°æ®åº“è¿æ¥çš„æ¨¡å¼<br>
 	 * 
-	 * false - (Ä¬ÈÏµÄ) ÔÚÖ´ĞĞÍêÇëÇóºóÁ¢¼´¹Ø±ÕÊı¾İ¿âÁ¬½Ó<br>
+	 * false - (é»˜è®¤çš„) åœ¨æ‰§è¡Œå®Œè¯·æ±‚åç«‹å³å…³é—­æ•°æ®åº“è¿æ¥<br>
 	 * 
-	 * true - ÇëÇó½áÊøºó»áÊÍ·Å¶ÔÊı¾İ¿âµÄÒıÓÃ,µ«ÊÇÖ±µ½ĞéÄâ
-	 * »úµÄÀ¬»ø»ØÊÕ½ø³ÌÆô¶¯²Å»á¹Ø±ÕÊı¾İ¿âÁ¬½Ó,<b>¸Ã·½·¨»áÕ¼ÓÃ
-	 * ½Ï¶àµÄÊı¾İ¿âÁ¬½Ó</b><br>
+	 * true - è¯·æ±‚ç»“æŸåä¼šé‡Šæ”¾å¯¹æ•°æ®åº“çš„å¼•ç”¨,ä½†æ˜¯ç›´åˆ°è™šæ‹Ÿ
+	 * æœºçš„åƒåœ¾å›æ”¶è¿›ç¨‹å¯åŠ¨æ‰ä¼šå…³é—­æ•°æ®åº“è¿æ¥,<b>è¯¥æ–¹æ³•ä¼šå ç”¨
+	 * è¾ƒå¤šçš„æ•°æ®åº“è¿æ¥</b><br>
 	 * 
-	 * ×¢ÒâÈç¹ûµ±Ç°µÄÁ¬½Ó´¦ÓÚÊÖ¶¯µİ½»×´Ì¬,ÔòÊı¾İ¿â¾ø²»»á¹Ø±ÕÁ¬½Ó<br>
-	 * ĞŞ¸Ä¸ÃÉèÖÃ,ĞèÒª²âÊÔÓëÊı¾İ¿âµÄ¼æÈİĞÔ
+	 * æ³¨æ„å¦‚æœå½“å‰çš„è¿æ¥å¤„äºæ‰‹åŠ¨é€’äº¤çŠ¶æ€,åˆ™æ•°æ®åº“ç»ä¸ä¼šå…³é—­è¿æ¥<br>
+	 * ä¿®æ”¹è¯¥è®¾ç½®,éœ€è¦æµ‹è¯•ä¸æ•°æ®åº“çš„å…¼å®¹æ€§
 	 */
 	public void setConnectMode(boolean lazy) {
 		lazyMode = lazy;
@@ -100,19 +100,19 @@ public class JdbcTemplate implements IQuery, ICall {
 	}
 	
 	/**
-	 * ÓÃÉÏÏÂÎÄÖĞµÄÊı¾İÔ´³õÊ¼»¯Ä£°å
+	 * ç”¨ä¸Šä¸‹æ–‡ä¸­çš„æ•°æ®æºåˆå§‹åŒ–æ¨¡æ¿
 	 * 
-	 * @param name - Òª²éÑ¯µÄÊı¾İÔ´Ãû³Æ,Èç:<br>
+	 * @param name - è¦æŸ¥è¯¢çš„æ•°æ®æºåç§°,å¦‚:<br>
 	 * 				<code> "java:/comp/env/jdbc/ora_rmcsh" <code>
 	 */
 	public JdbcTemplate(String name) throws NamingException {
 		InitialContext cxt = new InitialContext();
-		Tools.check(cxt, "JdbcTemplate:ÉÏÏÂÎÄÎ´¶¨Òå");
+		Tools.check(cxt, "JdbcTemplate:ä¸Šä¸‹æ–‡æœªå®šä¹‰");
 		init( (DataSource) cxt.lookup( name ) );
 	}
 	
 	private void init(DataSource ds) {
-		Tools.check(ds, "Êı¾İÔ´ÎŞĞ§");
+		Tools.check(ds, "æ•°æ®æºæ— æ•ˆ");
 		src = ds;
 	}
 
@@ -133,7 +133,7 @@ public class JdbcTemplate implements IQuery, ICall {
 		Object result = null;
 		
 		try {
-			UsedTime.start("Ö´ĞĞsql");
+			UsedTime.start("æ‰§è¡Œsql");
 			js = initSession();
 			Connection conn = js.getConnection();
 			st = conn.createStatement();
@@ -149,7 +149,7 @@ public class JdbcTemplate implements IQuery, ICall {
 		} catch (SQLException e) {
 			String msg = e.getMessage();
 			if (msg==null) {
-				msg = "Î´ÖªµÄsqlÒì³£";
+				msg = "æœªçŸ¥çš„sqlå¼‚å¸¸";
 			}
 			Tools.p(msg.trim() + ": ");
 			
@@ -184,7 +184,7 @@ public class JdbcTemplate implements IQuery, ICall {
 		JdbcSession js = null;
 		
 		try {
-			UsedTime.start("Ö´ĞĞsql");
+			UsedTime.start("æ‰§è¡Œsql");
 			js = initSession();
 			Connection conn = js.getConnection();
 			st = conn.prepareStatement(sql.getSql());
@@ -194,7 +194,7 @@ public class JdbcTemplate implements IQuery, ICall {
 		} catch (SQLException e) {
 			String msg = e.getMessage();
 			if (msg==null) {
-				msg = "Î´ÖªµÄsqlÒì³£";
+				msg = "æœªçŸ¥çš„sqlå¼‚å¸¸";
 			}
 			Tools.p(msg.trim() + ": ");
 			
@@ -251,7 +251,7 @@ public class JdbcTemplate implements IQuery, ICall {
 			cd.exe(cs);
 			
 		} catch (Throwable t) {
-			Tools.pl("´æ´¢¹ı³Ì´íÎó:" + buff.toString());
+			Tools.pl("å­˜å‚¨è¿‡ç¨‹é”™è¯¯:" + buff.toString());
 			handleException(t);
 			t.printStackTrace();
 			
@@ -272,7 +272,7 @@ public class JdbcTemplate implements IQuery, ICall {
 	}
 	
 	/**
-	 * Êı¾İ¿âÅ×³öµÄÒì³£×¢ÈëÕâ¸ö·½·¨ÖĞ£¬È»ºóÓÉ×¢²á¹ıµÄÒì³£´¦ÀíÆ÷´¦Àí
+	 * æ•°æ®åº“æŠ›å‡ºçš„å¼‚å¸¸æ³¨å…¥è¿™ä¸ªæ–¹æ³•ä¸­ï¼Œç„¶åç”±æ³¨å†Œè¿‡çš„å¼‚å¸¸å¤„ç†å™¨å¤„ç†
 	 */
 	protected void handleException(Throwable t) {
 		IExceptionHandle ie = handle.get();
@@ -282,7 +282,7 @@ public class JdbcTemplate implements IQuery, ICall {
 	}
 	
 	/**
-	 * È¡µÃÒ»¸öConnection¶ÔÏó,·µ»ØµÄConnection±ØĞë×ÔĞĞ¹ÜÀí
+	 * å–å¾—ä¸€ä¸ªConnectionå¯¹è±¡,è¿”å›çš„Connectionå¿…é¡»è‡ªè¡Œç®¡ç†
 	 * @throws SQLException
 	 */
 	protected Connection getConnection() throws SQLException {
@@ -297,7 +297,7 @@ public class JdbcTemplate implements IQuery, ICall {
 	}
 	
 	/**
-	 * Statement´úÀí,ÓÃÓÚ½ØÈ¡Sql
+	 * Statementä»£ç†,ç”¨äºæˆªå–Sql
 	 */
 	public class StatementHandler implements InvocationHandler {
 		private Statement statement;
@@ -344,7 +344,7 @@ public class JdbcTemplate implements IQuery, ICall {
 
 
 	/**
-	 * Ä¬ÈÏ×Ô¶¯µİ½»µÄÊÂÎñ
+	 * é»˜è®¤è‡ªåŠ¨é€’äº¤çš„äº‹åŠ¡
 	 */
 	public class JdbcSession implements IJdbcSession {
 		private Connection conn;
@@ -353,7 +353,7 @@ public class JdbcTemplate implements IQuery, ICall {
 			getConnection();
 			
 			if (connectCount%maxSessCount==0 && connectCount>0) {
-				Tools.pl(new Date() + " JdbcÊ¹ÓÃµÄÊı¾İ¿âÁ¬½Ó: " + connectCount);
+				Tools.pl(new Date() + " Jdbcä½¿ç”¨çš„æ•°æ®åº“è¿æ¥: " + connectCount);
 				maxSessCount += ADD_BASE;
 			}
 		}
@@ -446,8 +446,8 @@ public class JdbcTemplate implements IQuery, ICall {
 		
 		public void close() {
 			if (conn!=null && isAutoCommit()) {
-				// °ÑJdbcSession´ÓÏß³Ì±äÁ¿ÖĞÒÆ³ı,
-				// Ö±µ½Ã»ÓĞÆäËûÒıÓÃÊ±ÔÙÊÍ·ÅÁ¬½Ó
+				// æŠŠJdbcSessionä»çº¿ç¨‹å˜é‡ä¸­ç§»é™¤,
+				// ç›´åˆ°æ²¡æœ‰å…¶ä»–å¼•ç”¨æ—¶å†é‡Šæ”¾è¿æ¥
 				db_connect.set(null);
 				
 				if (!lazyMode) {

@@ -1,14 +1,14 @@
-// CatfoOD 2010-6-12 ÏÂÎç04:14:42 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-6-12 ä¸‹åˆ04:14:42 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.sql;
 
 /**
- * ´æ´¢¹ı³Ìµ÷ÓÃ½Ó¿Ú
+ * å­˜å‚¨è¿‡ç¨‹è°ƒç”¨æ¥å£
  */
 public interface ICall {
 
 	/**
-	 * ºô½ĞÊı¾İ¿â´æ´¢¹ı³Ì
+	 * å‘¼å«æ•°æ®åº“å­˜å‚¨è¿‡ç¨‹
 	 */
 	public void call(ICallData cd);
 	

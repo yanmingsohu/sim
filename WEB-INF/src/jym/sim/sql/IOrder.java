@@ -1,25 +1,25 @@
-// CatfoOD 2010-6-3 ÉÏÎç10:39:01 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-6-3 ä¸Šåˆ10:39:01 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.sql;
 
 /**
- * ²éÑ¯½á¹ûÅÅĞò½Ó¿Ú,¿ÉÉèÖÃÅÅĞòµÄ·½·¨
+ * æŸ¥è¯¢ç»“æœæ’åºæ¥å£,å¯è®¾ç½®æ’åºçš„æ–¹æ³•
  */
 public interface IOrder {
 	
 	/**
-	 * ·´ÏòÅÅĞò,´Ó´óµ½Ğ¡
+	 * åå‘æ’åº,ä»å¤§åˆ°å°
 	 * 
-	 * @param columnName - ÁĞµÄÃû×Ö
-	 * @return ·µ»ØµÄIOrder¿ÉÒÔÉèÖÃÏÂÒ»¸öÅÅĞò¹æÔò
+	 * @param columnName - åˆ—çš„åå­—
+	 * @return è¿”å›çš„IOrderå¯ä»¥è®¾ç½®ä¸‹ä¸€ä¸ªæ’åºè§„åˆ™
 	 */
 	public IOrder desc(String columnName);
 	
 	/**
-	 * ÕıÏòÅÅĞò,´ÓĞ¡µ½´ó
+	 * æ­£å‘æ’åº,ä»å°åˆ°å¤§
 	 * 
-	 * @param columnName - ÁĞµÄÃû×Ö
-	 * @return ·µ»ØµÄIOrder¿ÉÒÔÉèÖÃÏÂÒ»¸öÅÅĞò¹æÔò
+	 * @param columnName - åˆ—çš„åå­—
+	 * @return è¿”å›çš„IOrderå¯ä»¥è®¾ç½®ä¸‹ä¸€ä¸ªæ’åºè§„åˆ™
 	 */
 	public IOrder asc(String columnName);
 	

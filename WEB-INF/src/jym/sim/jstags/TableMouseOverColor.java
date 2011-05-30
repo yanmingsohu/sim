@@ -1,11 +1,11 @@
-// CatfoOD 2009-11-10 ÏÂÎç01:39:13
+// CatfoOD 2009-11-10 ä¸‹åˆ01:39:13
 
 package jym.sim.jstags;
 
 import jym.sim.tags.ITag;
 
 /**
- * ¸ø±í¸ñ±êÇ©¸½¼ÓÑÕÉ«Ğ§¹û
+ * ç»™è¡¨æ ¼æ ‡ç­¾é™„åŠ é¢œè‰²æ•ˆæœ
  */
 public class TableMouseOverColor extends InnerScript {
 	private String fc;
@@ -13,18 +13,18 @@ public class TableMouseOverColor extends InnerScript {
 	private String mc;
 	
 	/**
-	 * Ê¹ÓÃÄ¬ÈÏÑÕÉ«³õÊ¼»¯
+	 * ä½¿ç”¨é»˜è®¤é¢œè‰²åˆå§‹åŒ–
 	 */
 	public TableMouseOverColor() {
 		this("#ddd", "#f0f0f0", "#faa");
 	}
 	
 	/**
-	 * ±í¸ñÑÕÉ«³õÊ¼»¯,ÑÕÉ«×Ö·û´®ÊÇÓĞĞ§µÄcssÑÕÉ«
+	 * è¡¨æ ¼é¢œè‰²åˆå§‹åŒ–,é¢œè‰²å­—ç¬¦ä¸²æ˜¯æœ‰æ•ˆçš„cssé¢œè‰²
 	 * 
-	 * @param fcolor - ÆæÊıĞĞµÄÑÕÉ«
-	 * @param scolor - Å¼ÊıĞĞµÄÑÕÉ«
-	 * @param mcolor - Êó±êĞüÍ£µÄÑÕÉ«
+	 * @param fcolor - å¥‡æ•°è¡Œçš„é¢œè‰²
+	 * @param scolor - å¶æ•°è¡Œçš„é¢œè‰²
+	 * @param mcolor - é¼ æ ‡æ‚¬åœçš„é¢œè‰²
 	 */
 	public TableMouseOverColor(String fcolor, String scolor, String mcolor) {
 		super("/jym/javascript/tablecolor.js");
@@ -34,7 +34,7 @@ public class TableMouseOverColor extends InnerScript {
 	}
 
 	/**
-	 * ×¢ÒâË³Ğò£¬Õâ¸ö·½·¨±ØĞëÔÚ±í¸ñµÄÊı¾İÒÑ¾­¼ÓÔØ½áÊøµÄÊ±ºòµ÷ÓÃ
+	 * æ³¨æ„é¡ºåºï¼Œè¿™ä¸ªæ–¹æ³•å¿…é¡»åœ¨è¡¨æ ¼çš„æ•°æ®å·²ç»åŠ è½½ç»“æŸçš„æ—¶å€™è°ƒç”¨
 	 */
 	@Override
 	public void setTarget(ITag tag) {

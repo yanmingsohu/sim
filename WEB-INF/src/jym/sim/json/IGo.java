@@ -1,4 +1,4 @@
-// CatfoOD 2010-10-16 ÏÂÎç08:14:02
+// CatfoOD 2010-10-16 ä¸‹åˆ08:14:02
 
 package jym.sim.json;
 
@@ -6,10 +6,10 @@ import java.io.IOException;
 
 public interface IGo {
 	/**
-	 * Á¢¼´°Ñjson×Ö·û´®Êä³öµ½Appendable(StringBuilder, PrintWriter)ÖĞ,
-	 * Ö»°üº¬×Ó±äÁ¿,ÎŞ¸¸±äÁ¿
+	 * ç«‹å³æŠŠjsonå­—ç¬¦ä¸²è¾“å‡ºåˆ°Appendable(StringBuilder, PrintWriter)ä¸­,
+	 * åªåŒ…å«å­å˜é‡,æ— çˆ¶å˜é‡
 	 * 
-	 * @param json - ÒªÊä³öµÄStringBuilder¶ÔÏó
+	 * @param json - è¦è¾“å‡ºçš„StringBuilderå¯¹è±¡
 	 */
 	public void go(Appendable json) throws IOException;
 }

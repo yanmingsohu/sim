@@ -1,4 +1,4 @@
-// CatfoOD 2010-7-6 ÉÏÎç10:53:24 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-7-6 ä¸Šåˆ10:53:24 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.sql.logic;
 

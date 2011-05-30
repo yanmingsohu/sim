@@ -1,4 +1,4 @@
-// CatfoOD 2009-11-10 ÉÏÎç09:31:24
+// CatfoOD 2009-11-10 ä¸Šåˆ09:31:24
 
 package jym.sim.jstags;
 
@@ -12,13 +12,13 @@ import jym.sim.tags.ITag;
 import jym.sim.util.ResourceLoader;
 
 /**
- * Ç¶ÈëhtmlµÄ½Å±¾
+ * åµŒå…¥htmlçš„è„šæœ¬
  */
 public class InnerScript extends HtmlTagBase implements IJavaScript {
 	private Map<Object, URL> jss;
 	
 	/**
-	 * ´´½¨Ò»¸ö¿ÕµÄÄÚ²¿½Å±¾
+	 * åˆ›å»ºä¸€ä¸ªç©ºçš„å†…éƒ¨è„šæœ¬
 	 */
 	public InnerScript() {
 		super("script");
@@ -27,9 +27,9 @@ public class InnerScript extends HtmlTagBase implements IJavaScript {
 	}
 	
 	/**
-	 * ´´½¨Ò»¸öÄÚ²¿½Å±¾£¬²¢¼ÓÔØfromfileÖÆ¶¨µÄjsÎÄ¼şµ½±ê¼ÇÖĞ
+	 * åˆ›å»ºä¸€ä¸ªå†…éƒ¨è„šæœ¬ï¼Œå¹¶åŠ è½½fromfileåˆ¶å®šçš„jsæ–‡ä»¶åˆ°æ ‡è®°ä¸­
 	 * 
-	 * @param fromfile - jsÎÄ¼şÂ·¾¶£¬´ÓClass.getResource()ÖĞ¼ÓÔØÎÄ¼ş
+	 * @param fromfile - jsæ–‡ä»¶è·¯å¾„ï¼Œä»Class.getResource()ä¸­åŠ è½½æ–‡ä»¶
 	 */
 	public InnerScript(String fromfile) {
 		this();
@@ -54,11 +54,11 @@ public class InnerScript extends HtmlTagBase implements IJavaScript {
 	}
 	
 	/**
-	 * µ÷ÓÃjsº¯Êı,È«²¿²ÎÊı¶¼ÊÇ×Ö·û´®£¬×Ô¶¯ÓÃÒıºÅ°üÎ§<br/>
-	 * ÆäÊµÖÊ°Ñ¸ñÊ½»¯ºÃµÄº¯Êı¸½¼Óµ½±ê¼ÇÌåÖĞ
+	 * è°ƒç”¨jså‡½æ•°,å…¨éƒ¨å‚æ•°éƒ½æ˜¯å­—ç¬¦ä¸²ï¼Œè‡ªåŠ¨ç”¨å¼•å·åŒ…å›´<br/>
+	 * å…¶å®è´¨æŠŠæ ¼å¼åŒ–å¥½çš„å‡½æ•°é™„åŠ åˆ°æ ‡è®°ä½“ä¸­
 	 * 
-	 * @param method - jsº¯ÊıÃû£¬²»´øÀ¨ºÅ
-	 * @param args - ²ÎÊıÁĞ±í£¬×Ô¶¯ÓÃÒıºÅ°üÎ§
+	 * @param method - jså‡½æ•°åï¼Œä¸å¸¦æ‹¬å·
+	 * @param args - å‚æ•°åˆ—è¡¨ï¼Œè‡ªåŠ¨ç”¨å¼•å·åŒ…å›´
 	 */
 	public void callMethodString(String method, Object ...args) {
 		JSFunction jsf = new JSFunction(method);
@@ -69,7 +69,7 @@ public class InnerScript extends HtmlTagBase implements IJavaScript {
 	}
 	
 	/**
-	 * µ÷ÓÃjsº¯Êı
+	 * è°ƒç”¨jså‡½æ•°
 	 * 
 	 * @param func
 	 */
@@ -78,11 +78,11 @@ public class InnerScript extends HtmlTagBase implements IJavaScript {
 	}
 	
 	/**
-	 * µ÷ÓÃjsº¯Êı,×¢Òâ×Ö·û´®²ÎÊıÓ¦¸ÃÓÃÒıºÅ°üÎ§<br/>
-	 * ÆäÊµÖÊ°Ñ¸ñÊ½»¯ºÃµÄº¯Êı¸½¼Óµ½±ê¼ÇÌåÖĞ
+	 * è°ƒç”¨jså‡½æ•°,æ³¨æ„å­—ç¬¦ä¸²å‚æ•°åº”è¯¥ç”¨å¼•å·åŒ…å›´<br/>
+	 * å…¶å®è´¨æŠŠæ ¼å¼åŒ–å¥½çš„å‡½æ•°é™„åŠ åˆ°æ ‡è®°ä½“ä¸­
 	 * 
-	 * @param method - jsº¯ÊıÃû£¬²»´øÀ¨ºÅ
-	 * @param args - ²ÎÊıÁĞ±í
+	 * @param method - jså‡½æ•°åï¼Œä¸å¸¦æ‹¬å·
+	 * @param args - å‚æ•°åˆ—è¡¨
 	 */
 	public void callMethod(String method, Object ...args) {
 		JSFunction jsf = new JSFunction(method);
@@ -93,7 +93,7 @@ public class InnerScript extends HtmlTagBase implements IJavaScript {
 	}
 
 	/**
-	 * Ìí¼Ó½Å±¾×Ö·û´®
+	 * æ·»åŠ è„šæœ¬å­—ç¬¦ä¸²
 	 */
 	@Override
 	public boolean append(String text) {
@@ -101,7 +101,7 @@ public class InnerScript extends HtmlTagBase implements IJavaScript {
 	}
 	
 	/**
-	 * Ïò½Å±¾ÖĞĞ´´úÂë
+	 * å‘è„šæœ¬ä¸­å†™ä»£ç 
 	 */
 	@Override
 	public PrintWriter createText() {
@@ -109,7 +109,7 @@ public class InnerScript extends HtmlTagBase implements IJavaScript {
 	}
 
 	/**
-	 * ²»Ö§³ÖµÄ·½·¨
+	 * ä¸æ”¯æŒçš„æ–¹æ³•
 	 */
 	@Override
 	public ITag create(String newtagname) {
@@ -117,7 +117,7 @@ public class InnerScript extends HtmlTagBase implements IJavaScript {
 	}
 	
 	/**
-	 * ²»Ö§³ÖµÄ·½·¨
+	 * ä¸æ”¯æŒçš„æ–¹æ³•
 	 */
 	@Override
 	public boolean append(ITag tag) {

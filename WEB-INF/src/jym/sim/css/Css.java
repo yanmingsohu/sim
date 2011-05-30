@@ -1,4 +1,4 @@
-// CatfoOD 2009-12-21 ÏÂÎç08:45:13
+// CatfoOD 2009-12-21 ä¸‹åˆ08:45:13
 
 package jym.sim.css;
 
@@ -10,7 +10,7 @@ import java.util.Map;
 import jym.sim.tags.IPrinter;
 
 /**
- * ÑùÊ½±íÖĞµÄÒ»¸öÑùÊ½
+ * æ ·å¼è¡¨ä¸­çš„ä¸€ä¸ªæ ·å¼
  */
 public class Css implements IPrinter {
 	
@@ -23,8 +23,8 @@ public class Css implements IPrinter {
 	private Map<String, String> smap;
 	
 	/**
-	 * ĞÂ½¨Ò»¸öcssÑùÊ½
-	 * @param selecterName - cssÑ¡ÔñÆ÷
+	 * æ–°å»ºä¸€ä¸ªcssæ ·å¼
+	 * @param selecterName - cssé€‰æ‹©å™¨
 	 */
 	public Css(String selecterName) {
 		sename = selecterName;
@@ -32,10 +32,10 @@ public class Css implements IPrinter {
 	}
 	
 	/**
-	 * ÏòÑùÊ½±íÖĞÌí¼ÓÒ»¸öÑùÊ½ÊôĞÔ
+	 * å‘æ ·å¼è¡¨ä¸­æ·»åŠ ä¸€ä¸ªæ ·å¼å±æ€§
 	 * 
-	 * @param name - ÊôĞÔÃû×Ö
-	 * @param value - ÊôĞÔÖµ£¨ÎŞĞè;½áÊø£©
+	 * @param name - å±æ€§åå­—
+	 * @param value - å±æ€§å€¼ï¼ˆæ— éœ€;ç»“æŸï¼‰
 	 * @return
 	 */
 	public Css addStyle(String name, String value) {

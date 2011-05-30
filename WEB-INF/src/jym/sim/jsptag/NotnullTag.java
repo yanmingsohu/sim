@@ -16,7 +16,7 @@ public class NotnullTag extends TagSupport {
 	public void setObj(String v) {
 		Object o = super.pageContext.getRequest().getAttribute(v);
 		setRef(o);
-//		if (notnull) { // 测试集合是否为空的方�?
+//		if (notnull) { // 娴嬭瘯闆嗗悎鏄惁涓虹┖鐨勬柟娉?
 //			if (o instanceof Collection<?>) {
 //				Collection<?> col = (Collection<?>) o;
 //				notnull = col.size()>0;

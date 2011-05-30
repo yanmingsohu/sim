@@ -1,4 +1,4 @@
-// CatfoOD 2010-9-10 ����01:43:22 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-9-10 下午01:43:22 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.sql.compile;
 
@@ -12,16 +12,16 @@ import jym.sim.util.Tools;
 
 
 /**
- *  <b>�����ظ�����ͬһ���࣬���봴����������ʵ��</b><br>
+ *  <b>若想重复加载同一个类，必须创建多个该类的实例</b><br>
  *  <br>
- *  �ɲ�ͬ�������ʵ���ظ�ǿ�Ƽ���(���ж�������defineClass����)<br>
- *  ͬһ���Ͳ�������java.lang.LinkageError����<br>
- *  ���Ǽ��ؽ����Ӧ��Class����ʵ���ǲ�ͬ�ģ���ʵ�����ǲ�ͬ������(��Ȼ����+������ͬ).<br> 
- *  ���ǿ��ת��ʹ�ã�������ClassCastException.<br>
+ *  由不同类加载器实例重复强制加载(含有定义类型defineClass动作)<br>
+ *  同一类型不会引起java.lang.LinkageError错误，<br>
+ *  但是加载结果对应的Class类型实例是不同的，即实际上是不同的类型(虽然包名+类名相同).<br> 
+ *  如果强制转化使用，会引起ClassCastException.<br>
  *  <br>
- *  <b>��ͬ</b>�����������<b>ͬ��</b>���ͣ�ʵ�ʵõ��Ľ����ʵ�ǲ�ͬ���ͣ�<br> 
- *  ��JVM��һ��������ȫ����һ��������ClassLoader��ʵ����ΪΨһ��ʶ��<br>
- *  <b>��ͬ����������ص��ཫ�����ڲ�ͬ�������ռ�.</b><br>
+ *  <b>不同</b>类加载器加载<b>同名</b>类型，实际得到的结果其实是不同类型，<br> 
+ *  在JVM中一个类用其全名和一个加载类ClassLoader的实例作为唯一标识，<br>
+ *  <b>不同类加载器加载的类将被置于不同的命名空间.</b><br>
  *  <br>
  */
 public class DynClassLoader extends ClassLoader {
@@ -31,12 +31,12 @@ public class DynClassLoader extends ClassLoader {
 
 	 
 	/**
-	 * ����Ŀ¼���ڵ�.class�ļ�����������һ����<br>
-	 * ������ǰһ����������ͬ�����ǲ�ͬ���࣬����<br>
-	 * ʹ����ͬ�ĸ������ã���ӿڣ�
+	 * 从类目录所在的.class文件中重新生成一个类<br>
+	 * 该类与前一个类内容相同，但是不同的类，可以<br>
+	 * 使用相同的父类引用（或接口）
 	 * 
-	 * @param classname - �����������
-	 * @return ���¶������
+	 * @param classname - 类的完整名字
+	 * @return 重新定义的类
 	 * @throws ClassNotFoundException
 	 */
 	public Class<?> reLoadClass(String classname) throws ClassNotFoundException {
@@ -66,8 +66,8 @@ public class DynClassLoader extends ClassLoader {
 	}
 	
 	/**
-	 * ���������class���޸�ʱ�����ֽ����ļ����޸�ʱ�䲻ͬ������Ϊ
-	 * ��class�Ķ����Ѿ����޸ģ���ʱ����null
+	 * 如果缓存中class的修改时间与字节码文件的修改时间不同，则认为
+	 * 该class的定义已经被修改，此时返回null
 	 */
 	private Cache getCache(String classname, long lastModify) {
 		Cache cc = cache.get(classname);

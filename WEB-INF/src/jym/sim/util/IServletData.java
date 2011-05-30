@@ -1,4 +1,4 @@
-// CatfoOD 2010-1-4 ÉÏÎç09:36:50
+// CatfoOD 2010-1-4 ä¸Šåˆ09:36:50
 
 package jym.sim.util;
 
@@ -12,22 +12,22 @@ public interface IServletData extends ISessionData {
 	HttpServletResponse getHttpServletResponse();
 	
 	/**
-	 * HttpServletRequestµÄ±ã½İ·½·¨
+	 * HttpServletRequestçš„ä¾¿æ·æ–¹æ³•
 	 */
 	String getParameter(String name);
 	
 	/**
-	 * HttpServletRequestµÄ±ã½İ·½·¨
+	 * HttpServletRequestçš„ä¾¿æ·æ–¹æ³•
 	 */
 	void setAttribute(String name, Object obj);
 	
 	/**
-	 * HttpServletRequestµÄ±ã½İ·½·¨
+	 * HttpServletRequestçš„ä¾¿æ·æ–¹æ³•
 	 */
 	Object getAttribute(String name);
 	
 	/**
-	 * response.getWriter()µÄ±ã½İ·½·¨
+	 * response.getWriter()çš„ä¾¿æ·æ–¹æ³•
 	 */
 	void print(Object data);
 }

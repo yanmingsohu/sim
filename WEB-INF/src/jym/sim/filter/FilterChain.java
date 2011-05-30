@@ -1,11 +1,11 @@
-// CatfoOD 2010-8-19 ÉÏÎç09:44:30 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-8-19 ä¸Šåˆ09:44:30 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.filter;
 
 import jym.sim.util.Tools;
 
 /**
- * ¶à¸ö»¥ÏàÇ¶Ì×ĞÎ³É¹ıÂËÆ÷Á´
+ * å¤šä¸ªäº’ç›¸åµŒå¥—å½¢æˆè¿‡æ»¤å™¨é“¾
  */
 public class FilterChain<T> implements IFilter<T> {
 	
@@ -13,11 +13,11 @@ public class FilterChain<T> implements IFilter<T> {
 	private IFilter<T> f2;
 	
 	/**
-	 * ¹ıÂËÆ÷oneÏÈ¹ıÂË,È»ºóÊÇtwo
+	 * è¿‡æ»¤å™¨oneå…ˆè¿‡æ»¤,ç„¶åæ˜¯two
 	 */
 	public FilterChain(IFilter<T> one, IFilter<T> two) {
-		Tools.check(one, "one¹ıÂËÆ÷²»ÄÜÎªnull");
-		Tools.check(two, "two¹ıÂËÆ÷²»ÄÜÎªnull");
+		Tools.check(one, "oneè¿‡æ»¤å™¨ä¸èƒ½ä¸ºnull");
+		Tools.check(two, "twoè¿‡æ»¤å™¨ä¸èƒ½ä¸ºnull");
 		
 		f1 = one;
 		f2 = two;

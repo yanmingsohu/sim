@@ -1,4 +1,4 @@
-// CatfoOD 2009-11-10 ÏÂÎç07:53:09
+// CatfoOD 2009-11-10 ä¸‹åˆ07:53:09
 
 package jym.sim.tags;
 
@@ -13,7 +13,7 @@ import jym.sim.jstags.IJavaScript;
 import jym.sim.util.ResourceLoader;
 
 /**
- * html±ê¼Ç
+ * htmlæ ‡è®°
  */
 public class HtmlTagBase extends TagBase {
 	
@@ -29,8 +29,8 @@ public class HtmlTagBase extends TagBase {
 	}
 
 	/**
-	 * Ìí¼ÓÒ»¸öIJavaScriptµÄĞĞÎªÓëxml±ê¼Ç²»Í¬<br/>
-	 * Èç¹ûtagÊÇÒ»¸öIJavaScript½Å±¾»á±»Ìí¼ÓÔÚ±ê¼Ç½áÎ²µÄºóÃæ
+	 * æ·»åŠ ä¸€ä¸ªIJavaScriptçš„è¡Œä¸ºä¸xmlæ ‡è®°ä¸åŒ<br/>
+	 * å¦‚æœtagæ˜¯ä¸€ä¸ªIJavaScriptè„šæœ¬ä¼šè¢«æ·»åŠ åœ¨æ ‡è®°ç»“å°¾çš„åé¢
 	 */
 	@Override
 	public boolean append(ITag tag) {
@@ -72,7 +72,7 @@ public class HtmlTagBase extends TagBase {
 	}
 
 	/**
-	 * °ÑÍâ²¿½Å±¾·¢ËÍµ½¸ùÔªËØ
+	 * æŠŠå¤–éƒ¨è„šæœ¬å‘é€åˆ°æ ¹å…ƒç´ 
 	 * @param ijs
 	 */
 	private void send2Root(IJavaScript ijs) {
@@ -90,9 +90,9 @@ public class HtmlTagBase extends TagBase {
 	}
 	
 	/**
-	 * ´òÓ¡½Å±¾
-	 * @param target - Êä³öÄ¿±ê
-	 * @param jsmap - ½Å±¾ÈİÆ÷
+	 * æ‰“å°è„šæœ¬
+	 * @param target - è¾“å‡ºç›®æ ‡
+	 * @param jsmap - è„šæœ¬å®¹å™¨
 	 */
 	private void printAmassJs() {		
 		insertText.append("<script language='JavaScript'>");
@@ -106,15 +106,15 @@ public class HtmlTagBase extends TagBase {
 	}
 	
 	/**
-	 * Çå³ıÊÕ¼¯µ½µÃ½Å±¾£¬ÒòÎª½Å±¾ÒÑ¾­±»Ğ´³ö
+	 * æ¸…é™¤æ”¶é›†åˆ°å¾—è„šæœ¬ï¼Œå› ä¸ºè„šæœ¬å·²ç»è¢«å†™å‡º
 	 */
 	private void clearAmassJs() {
 		amassjs = null;
 	}
 	
 	/** 
-	 * ÊÕ¼¯ijsÖĞµÄËùÓĞ½Å±¾ <br/>
-	 * Í¬Ê±Õâ¸ö·½·¨±»µ÷ÓÃ¹ı£¬ËµÃ÷µ±Ç°ÔªËØÊÇ¸ùÔªËØ
+	 * æ”¶é›†ijsä¸­çš„æ‰€æœ‰è„šæœ¬ <br/>
+	 * åŒæ—¶è¿™ä¸ªæ–¹æ³•è¢«è°ƒç”¨è¿‡ï¼Œè¯´æ˜å½“å‰å…ƒç´ æ˜¯æ ¹å…ƒç´ 
 	 */
 	private void amass(IJavaScript ijs) {
 		if (amassjs==null) {

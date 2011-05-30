@@ -1,4 +1,4 @@
-// CatfoOD 2010-8-19 ÏÂÎç12:40:34 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-8-19 ä¸‹åˆ12:40:34 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.filter.sql;
 

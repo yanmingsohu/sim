@@ -1,14 +1,14 @@
-// CatfoOD 2010-8-13 ÏÂÎç02:09:49 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-8-13 ä¸‹åˆ02:09:49 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.sql;
 
 /**
- * ´¦ÀíÊÂÎñµÄ¶ÔÏó£¨¾ä±ú£©
+ * å¤„ç†äº‹åŠ¡çš„å¯¹è±¡ï¼ˆå¥æŸ„ï¼‰
  */
 public interface ITransactionHanle {
 	
 	/**
-	 * ÊÂÎñµÄ´¦ÀíÔÚ¸Ã·½·¨ÖĞ½øĞĞ,Èç¹ûÅ×³öÒì³£ÔòÕû¸öÊÂÎñ»á»Ø¹ö
+	 * äº‹åŠ¡çš„å¤„ç†åœ¨è¯¥æ–¹æ³•ä¸­è¿›è¡Œ,å¦‚æœæŠ›å‡ºå¼‚å¸¸åˆ™æ•´ä¸ªäº‹åŠ¡ä¼šå›æ»š
 	 */
 	void start() throws Exception;
 

@@ -1,4 +1,4 @@
-// CatfoOD 2010-7-12 上午10:06:36 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-7-12 涓婂崍10:06:36 yanming-sohu@sohu.com/@qq.com
 
 package test;
 
@@ -9,7 +9,7 @@ public class TestDefLogic {
 	
 	public static void main(String[] ss) {
 		UserBean user = new UserBean();
-		user.setName("开发区");
+		user.setName("寮�鍙戝尯");
 		user.setId("x3000");
 		
 		String s = "fdsaf=fdsaf";//"((bname = '${brongthname}') and (id = '${brongthid}'))";

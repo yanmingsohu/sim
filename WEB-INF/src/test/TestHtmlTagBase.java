@@ -26,7 +26,7 @@ public class TestHtmlTagBase {
 		table1.addAttribute("width", "100%");
 		
 		HtmlTagBase tag = new HtmlTagBase("p");
-		tag.append("精确查询结果");
+		tag.append("绮剧‘鏌ヨ缁撴灉");
 		tag.append(table);
 		tag.append(table1);
 		

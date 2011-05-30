@@ -1,10 +1,10 @@
-// CatfoOD 2010-5-24 上午09:30:24 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-5-24 涓婂崍09:30:24 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.orm.page;
 
 
 /**
- * oracle数据库的分页方法
+ * oracle鏁版嵁搴撶殑鍒嗛〉鏂规硶
  */
 public class OraclePagination implements IPage {
 
@@ -41,7 +41,7 @@ public class OraclePagination implements IPage {
 		buff.append( "where sim__row__num >= "									);
 		buff.append(  s															);
 		
-//	Tools.pl("oracle 分页sql: " + buff.toString());
+//	Tools.pl("oracle 鍒嗛〉sql: " + buff.toString());
 		
 		return buff.toString();
 	}

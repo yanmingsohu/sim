@@ -1,11 +1,11 @@
-// CatfoOD 2010-8-19 ÉÏÎç08:42:12 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-8-19 ä¸Šåˆ08:42:12 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.filter;
 
 import jym.sim.exception.SimException;
 
 /**
- * ¹ıÂËÆ÷¹ıÂËÊ±Å×³öµÄÒì³£
+ * è¿‡æ»¤å™¨è¿‡æ»¤æ—¶æŠ›å‡ºçš„å¼‚å¸¸
  */
 public class SimFilterException extends SimException {
 

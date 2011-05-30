@@ -1,4 +1,4 @@
-// CatfoOD 2010-4-21 ÏÂÎç01:48:18 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-4-21 ä¸‹åˆ01:48:18 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.validator.annotation;
 
@@ -9,22 +9,22 @@ import java.lang.annotation.Target;
 
 
 /**
- * ÈÕÆÚĞ£ÑéÆ÷,ÆäÖĞminÓëmaxµÄ¸ñÊ½: 'Äê-ÔÂ-ÈÕ'<br>
- * Èç¹ûĞ£ÑéÆ÷¸ñÊ½´íÎó,ÔòÈÏÎªĞ£ÑéÍ¨¹ı
+ * æ—¥æœŸæ ¡éªŒå™¨,å…¶ä¸­minä¸maxçš„æ ¼å¼: 'å¹´-æœˆ-æ—¥'<br>
+ * å¦‚æœæ ¡éªŒå™¨æ ¼å¼é”™è¯¯,åˆ™è®¤ä¸ºæ ¡éªŒé€šè¿‡
  */
 @Retention(value=RetentionPolicy.RUNTIME)
 @Target(value=ElementType.FIELD)
 public @interface Daterange {
 	/**
-	 * Ğ£Ñé´íÎóºóµÄĞÅÏ¢
+	 * æ ¡éªŒé”™è¯¯åçš„ä¿¡æ¯
 	 */
 	String msg();
 	/**
-	 * ×îĞ¡µÄÈÕÆÚÖµ
+	 * æœ€å°çš„æ—¥æœŸå€¼
 	 */
 	String min();
 	/**
-	 * ×î´óµÄÈÕÆÚÖµ
+	 * æœ€å¤§çš„æ—¥æœŸå€¼
 	 */
 	String max();
 }

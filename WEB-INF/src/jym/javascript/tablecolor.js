@@ -1,11 +1,11 @@
 /**
- * ĞŞ¸ÄtableidÖ¸¶¨µÄ±íµÄÑÕÉ«£¬ÆäÑÕÉ«Îª¸ôĞĞÏÔÊ¾
+ * ä¿®æ”¹tableidæŒ‡å®šçš„è¡¨çš„é¢œè‰²ï¼Œå…¶é¢œè‰²ä¸ºéš”è¡Œæ˜¾ç¤º
  * 
- * @param tableid - ±í¸ñµÄid
- * @param fcolor - ÆæÊıĞĞµÄÑÕÉ«
- * @param scolor - Å¼ÊıĞĞµÄÑÕÉ«
- * @param mousecolor - Êó±êĞüÍ£µÄÑÕÉ«
- * @return ·µ»ØtableidµÄ¶ÔÏó
+ * @param tableid - è¡¨æ ¼çš„id
+ * @param fcolor - å¥‡æ•°è¡Œçš„é¢œè‰²
+ * @param scolor - å¶æ•°è¡Œçš„é¢œè‰²
+ * @param mousecolor - é¼ æ ‡æ‚¬åœçš„é¢œè‰²
+ * @return è¿”å›tableidçš„å¯¹è±¡
  */
 function changeTableColor(tableid, fcolor, scolor, mousecolor) {
 	var table = getByid(tableid);
@@ -41,10 +41,10 @@ function changeTableColor(tableid, fcolor, scolor, mousecolor) {
 }
 
 /**
- * µ±Êó±êĞüÍ£ÔÚobj±ê¼ÇÉÏÊ±£¬ÑÕÉ«±äÎªcolor
+ * å½“é¼ æ ‡æ‚¬åœåœ¨objæ ‡è®°ä¸Šæ—¶ï¼Œé¢œè‰²å˜ä¸ºcolor
  * 
- * @param obj - html±ê¼Ç¶ÔÏó
- * @param color - ÓĞĞ§µÄcssÑÕÉ«Öµ
+ * @param obj - htmlæ ‡è®°å¯¹è±¡
+ * @param color - æœ‰æ•ˆçš„cssé¢œè‰²å€¼
  * @return null
  */
 function onMouseOverChangeColor(obj, color) {
@@ -61,10 +61,10 @@ function onMouseOverChangeColor(obj, color) {
 }
 
 /**
- * ĞŞ¸ÄobjµÄÑÕÉ«Îªcolor
+ * ä¿®æ”¹objçš„é¢œè‰²ä¸ºcolor
  * 
- * @param obj - html±ê¼Ç¶ÔÏó
- * @param color - ÓĞĞ§µÄcssÑÕÉ«Öµ
+ * @param obj - htmlæ ‡è®°å¯¹è±¡
+ * @param color - æœ‰æ•ˆçš„cssé¢œè‰²å€¼
  * @return null
  */
 function changeColor(obj, color) {

@@ -1,11 +1,11 @@
-// CatfoOD 2010-7-29 ÉÏÎç08:47:54 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-7-29 ä¸Šåˆ08:47:54 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.util;
 
 import java.util.Stack;
 
 /**
- * ²âÊÔÒ»¶Î¹ı³ÌÏûºÄµÄÊ±¼ä, Ïß³Ì°²È«µÄÀà, ÎŞĞèÊµÀı
+ * æµ‹è¯•ä¸€æ®µè¿‡ç¨‹æ¶ˆè€—çš„æ—¶é—´, çº¿ç¨‹å®‰å…¨çš„ç±», æ— éœ€å®ä¾‹
  */
 public final class UsedTime {
 	
@@ -14,15 +14,15 @@ public final class UsedTime {
 	
 	
 	/**
-	 * ¿ªÊ¼¼ÆÊ±
+	 * å¼€å§‹è®¡æ—¶
 	 */
 	public static void start() {
 		start(NULL_STR);
 	}
 	
 	/**
-	 * ¿ªÊ¼¼ÆÊ±,²¢¸³ÓèÒ»¸öÃèÊö 
-	 * @param desc - ¶Ô´Ë´Î¼ÆÊ±µÄÃèÊö
+	 * å¼€å§‹è®¡æ—¶,å¹¶èµ‹äºˆä¸€ä¸ªæè¿° 
+	 * @param desc - å¯¹æ­¤æ¬¡è®¡æ—¶çš„æè¿°
 	 */
 	public static void start(String desc) {
 		Stack<Time> q = times.get();
@@ -40,39 +40,39 @@ public final class UsedTime {
 	}
 	
 	/**
-	 * ½áÊø¼ÆÊ±,²¢·µ»ØstartÓëendµ÷ÓÃÖ®¼ä,¾­¹ıµÄÊ±¼ä<br>
-	 * µ÷ÓÃ´Ë·½·¨»áÓ°Ïì½á¹û,ËùÒÔÈç¹ûĞèÒª¶à´ÎÈ¡µÃ½á¹û,Ó¦Ê¹ÓÃgetUsedTime
+	 * ç»“æŸè®¡æ—¶,å¹¶è¿”å›startä¸endè°ƒç”¨ä¹‹é—´,ç»è¿‡çš„æ—¶é—´<br>
+	 * è°ƒç”¨æ­¤æ–¹æ³•ä¼šå½±å“ç»“æœ,æ‰€ä»¥å¦‚æœéœ€è¦å¤šæ¬¡å–å¾—ç»“æœ,åº”ä½¿ç”¨getUsedTime
 	 */
 	public static long end() {
 		Stack<Time> q = times.get();
 		Time t = q.pop();
-		Tools.check(t, "´íÎó: ÉĞÎ´µ÷ÓÃstart()");
+		Tools.check(t, "é”™è¯¯: å°šæœªè°ƒç”¨start()");
 		t.end();
 		
 		return t.usedTime();
 	}
 	
 	/**
-	 * ·µ»ØÉÏ´Îstart()Óëend()µ÷ÓÃÖ®¼ä,¾­¹ıµÄÊ±¼ä
-	 * ¸Ã·½·¨±ØĞëÔÚend(),endAndPrint()Ö®Ç°µ÷ÓÃÓĞĞ§
+	 * è¿”å›ä¸Šæ¬¡start()ä¸end()è°ƒç”¨ä¹‹é—´,ç»è¿‡çš„æ—¶é—´
+	 * è¯¥æ–¹æ³•å¿…é¡»åœ¨end(),endAndPrint()ä¹‹å‰è°ƒç”¨æœ‰æ•ˆ
 	 */
 	public static long getUsedTime() {
 		Stack<Time> q = times.get();
 		Time t = q.peek();
-		Tools.check(t, "´íÎó: ÉĞÎ´µ÷ÓÃstart()");
+		Tools.check(t, "é”™è¯¯: å°šæœªè°ƒç”¨start()");
 		return t.usedTime();
 	}
 	
 	/**
-	 * Í£Ö¹¼ÆÊ±,²¢ÇÒÔÚ¿ØÖÆÌ¨Êä³öÊ¹ÓÃµÄÊ±¼ä
+	 * åœæ­¢è®¡æ—¶,å¹¶ä¸”åœ¨æ§åˆ¶å°è¾“å‡ºä½¿ç”¨çš„æ—¶é—´
 	 */
 	public static void endAndPrint() {
 		Stack<Time> q = times.get();
 		Time t = q.pop();
-		Tools.check(t, "´íÎó: ÉĞÎ´µ÷ÓÃstart()");
+		Tools.check(t, "é”™è¯¯: å°šæœªè°ƒç”¨start()");
 		t.end();
 		
-		Tools.pl(t.getName() + "Ê¹ÓÃÁË: " + t.usedTime() + " ms");
+		Tools.pl(t.getName() + "ä½¿ç”¨äº†: " + t.usedTime() + " ms");
 	}
 	
 	public static void printAll() {
@@ -80,7 +80,7 @@ public final class UsedTime {
 		Time t = q.pop();
 		while (t!=null) {
 			t.end();
-			Tools.pl(t.getName() + "Ê¹ÓÃÁË: " + t.usedTime() + " ms");
+			Tools.pl(t.getName() + "ä½¿ç”¨äº†: " + t.usedTime() + " ms");
 			t = q.pop();
 		}
 	}

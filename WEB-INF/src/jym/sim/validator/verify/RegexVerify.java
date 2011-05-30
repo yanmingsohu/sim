@@ -1,4 +1,4 @@
-// CatfoOD 2010-4-21 ÏÂÎç02:23:03 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-4-21 ä¸‹åˆ02:23:03 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.validator.verify;
 
@@ -28,7 +28,7 @@ public class RegexVerify implements IVerify {
 				return SUCCESS;
 			}
 		} catch (PatternSyntaxException e) {
-			Tools.pl("ÑéÖ¤ÊôĞÔ(" + field + ")Ê±ÕıÔò±í´ïÊ½´íÎó:" + e.getMessage() );
+			Tools.pl("éªŒè¯å±æ€§(" + field + ")æ—¶æ­£åˆ™è¡¨è¾¾å¼é”™è¯¯:" + e.getMessage() );
 			return ERROR;
 		}
 		

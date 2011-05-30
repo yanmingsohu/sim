@@ -1,4 +1,4 @@
-// CatfoOD 2010-9-9 ÏÂÎç03:40:05 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-9-9 ä¸‹åˆ03:40:05 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.sql.compile;
 
@@ -19,7 +19,7 @@ import jym.sim.util.Tools;
 
 
 /**
- * ¸ÃÀàµÄ¶ÔÏó<b>Ó¦¸Ã±»»º´æ</b>,ÒÔ±ãÌá¸ßĞ§ÂÊ
+ * è¯¥ç±»çš„å¯¹è±¡<b>åº”è¯¥è¢«ç¼“å­˜</b>,ä»¥ä¾¿æé«˜æ•ˆç‡
  */
 public class SqlReader implements ResultSetList.IGetBean<Object[]> {
 	
@@ -30,14 +30,14 @@ public class SqlReader implements ResultSetList.IGetBean<Object[]> {
 	
 	
 	/**
-	 * ³õÊ¼»¯sql¶ÁÈ¡Æ÷<br>
+	 * åˆå§‹åŒ–sqlè¯»å–å™¨<br>
 	 * <br>
-	 * Ö÷ÎÄ¼şÃû±ØĞë·ûºÏÀàÃûµÄÃüÃû¹æ·¶,ÎÄ¼şÖĞµÄ${..}½«±»²ÎÊı»¯<br>
-	 * ²ÎÊı»¯µÄ±äÁ¿Í¨¹ı·½·¨set()À´ÉèÖÃÖµ,±äÁ¿Ãû±ØĞë·ûºÏJavaÊôĞÔÃûÃüÃû¹æ·¶<br>
-	 * sqlÎÄ¼ş±ØĞëÊ¹ÓÃ<b>UTF-8</b>±àÂë<br>,²¢ÇÒÊÇµ¥ÌõÓï¾ä
+	 * ä¸»æ–‡ä»¶åå¿…é¡»ç¬¦åˆç±»åçš„å‘½åè§„èŒƒ,æ–‡ä»¶ä¸­çš„${..}å°†è¢«å‚æ•°åŒ–<br>
+	 * å‚æ•°åŒ–çš„å˜é‡é€šè¿‡æ–¹æ³•set()æ¥è®¾ç½®å€¼,å˜é‡åå¿…é¡»ç¬¦åˆJavaå±æ€§åå‘½åè§„èŒƒ<br>
+	 * sqlæ–‡ä»¶å¿…é¡»ä½¿ç”¨<b>UTF-8</b>ç¼–ç <br>,å¹¶ä¸”æ˜¯å•æ¡è¯­å¥
 	 * 
-	 * @param filename - ´ÓclasspathÖĞ¶ÁÈ¡sqlÎÄ¼şµÄÍêÕûÂ·¾¶,<br>
-	 * Èç<code>/jym/sim/sql/complie/x.sql</code>
+	 * @param filename - ä»classpathä¸­è¯»å–sqlæ–‡ä»¶çš„å®Œæ•´è·¯å¾„,<br>
+	 * å¦‚<code>/jym/sim/sql/complie/x.sql</code>
 	 */
 	public SqlReader(String filename) throws IOException {
 		inf = new Info(filename);
@@ -48,17 +48,17 @@ public class SqlReader implements ResultSetList.IGetBean<Object[]> {
 				inf.setUrl(sqlfile);
 				checkLastModify();
 			}
-			// else {¼ÓÔØÀà³É¹¦£¬µ«sqlÎÄ¼ş²»´æÔÚ£¬ÔòÈÏÎª²»ĞèÒª¸üĞÂ}
+			// else {åŠ è½½ç±»æˆåŠŸï¼Œä½†sqlæ–‡ä»¶ä¸å­˜åœ¨ï¼Œåˆ™è®¤ä¸ºä¸éœ€è¦æ›´æ–°}
 		} else {
 			if (sqlfile==null) {
-				throw new IOException("ÕÒ²»µ½ÎÄ¼ş: " + filename);
+				throw new IOException("æ‰¾ä¸åˆ°æ–‡ä»¶: " + filename);
 			}
 			inf.setUrl(sqlfile);
 			
 			compileSql();
 
 			if (!loadClass()) {
-				throw new IOException("³õÊ¼»¯ÀàÎÄ¼ş[" + inf.getFullClassName() + "]Ê§°Ü" + lastErr);
+				throw new IOException("åˆå§‹åŒ–ç±»æ–‡ä»¶[" + inf.getFullClassName() + "]å¤±è´¥" + lastErr);
 			}
 		}
 	}
@@ -71,13 +71,13 @@ public class SqlReader implements ResultSetList.IGetBean<Object[]> {
 			if (inf.lastModified()!=lm) {
 				compileSql();
 				if (!loadClass()) {
-					Tools.pl(inf.getSqlFileName() + " ÒÑ¾­ĞŞ¸Ä²¢ÖØĞÂ±àÒë,µ«ÖØĞÂ¼ÓÔØÊ±Ê§°Ü: " + lastErr);
+					Tools.pl(inf.getSqlFileName() + " å·²ç»ä¿®æ”¹å¹¶é‡æ–°ç¼–è¯‘,ä½†é‡æ–°åŠ è½½æ—¶å¤±è´¥: " + lastErr);
 				}
 			} else {
 				inf.clear();
 			}
 		} catch (Exception e) {
-			throw new IOException("¶ÁÈ¡×îºóĞŞ¸ÄÈÕÆÚÊ§°Ü: " + e);
+			throw new IOException("è¯»å–æœ€åä¿®æ”¹æ—¥æœŸå¤±è´¥: " + e);
 		}
 	}
 	
@@ -87,16 +87,16 @@ public class SqlReader implements ResultSetList.IGetBean<Object[]> {
 		if (c.start()) {
 			inf.clear();
 		} else {
-			throw new IOException(inf.getSqlFileName() + "×ª»»ÎªjavaÎÄ¼şºó±àÒëÊ§°Ü" + lastErr);
+			throw new IOException(inf.getSqlFileName() + "è½¬æ¢ä¸ºjavaæ–‡ä»¶åç¼–è¯‘å¤±è´¥" + lastErr);
 		}
 	}
 	
 	/**
-	 * ÉèÖÃsqlÎÄ¼şÖĞµÄ${..}±äÁ¿µÄÖµ,±äÁ¿Ãû±ØĞë·ûºÏJavaÊôĞÔÃüÃû¹æ·¶
+	 * è®¾ç½®sqlæ–‡ä»¶ä¸­çš„${..}å˜é‡çš„å€¼,å˜é‡åå¿…é¡»ç¬¦åˆJavaå±æ€§å‘½åè§„èŒƒ
 	 * 
-	 * @param name - ±»Ìæ»»µÄ±äÁ¿Ãû
-	 * @param value - Ìæ»»ºóµÄÖµ
-	 * @throws NoSuchFieldException - ÕÒ²»µ½nameÖ¸¶¨µÄ±äÁ¿
+	 * @param name - è¢«æ›¿æ¢çš„å˜é‡å
+	 * @param value - æ›¿æ¢åçš„å€¼
+	 * @throws NoSuchFieldException - æ‰¾ä¸åˆ°nameæŒ‡å®šçš„å˜é‡
 	 */
 	public void set(String name, Object value) throws 
 			NoSuchFieldException {
@@ -115,10 +115,10 @@ public class SqlReader implements ResultSetList.IGetBean<Object[]> {
 	}
 	
 	/**
-	 * Ö´ĞĞÖ¸¶¨ÎÄ¼şÖĞµÄsqlÓï¾ä,¸ÃÎÄ¼şÖĞµÄ±äÁ¿Ó¦¸ÃÒÑ¾­ÓÃset()Ìæ»»
-	 * ·µ»ØµÄStatementĞèÒª×ÔĞĞ¹Ø±Õ
+	 * æ‰§è¡ŒæŒ‡å®šæ–‡ä»¶ä¸­çš„sqlè¯­å¥,è¯¥æ–‡ä»¶ä¸­çš„å˜é‡åº”è¯¥å·²ç»ç”¨set()æ›¿æ¢
+	 * è¿”å›çš„Statementéœ€è¦è‡ªè¡Œå…³é—­
 	 * 
-	 * @param conn - ÓëÊı¾İ¿âµÄÁ¬½Ó,·µ»ØÖ®ºóĞè×ÔĞĞ¹Ø±Õ
+	 * @param conn - ä¸æ•°æ®åº“çš„è¿æ¥,è¿”å›ä¹‹åéœ€è‡ªè¡Œå…³é—­
 	 * @return java.sql.Statement
 	 * @throws SQLException
 	 */
@@ -129,9 +129,9 @@ public class SqlReader implements ResultSetList.IGetBean<Object[]> {
 	}
 	
 	/**
-	 * ÔÚIQueryÖĞÖ´ĞĞsqlÎÄ¼şÖĞµÄsqlÓï¾ä,Óï¾äµÄÀàĞÍÖ»ÄÜÎªDDL,DML
-	 * @param iq - Ò»°ã´«µİJdbcTemplate
-	 * @return ·µ»ØÓï¾äÓ°ÏìµÄĞĞÊı£¬Èç¹û·µ»Ø-1ÔòËµÃ÷sqlÓï¾ä²»·ûºÏ¹æ¶¨
+	 * åœ¨IQueryä¸­æ‰§è¡Œsqlæ–‡ä»¶ä¸­çš„sqlè¯­å¥,è¯­å¥çš„ç±»å‹åªèƒ½ä¸ºDDL,DML
+	 * @param iq - ä¸€èˆ¬ä¼ é€’JdbcTemplate
+	 * @return è¿”å›è¯­å¥å½±å“çš„è¡Œæ•°ï¼Œå¦‚æœè¿”å›-1åˆ™è¯´æ˜sqlè¯­å¥ä¸ç¬¦åˆè§„å®š
 	 */
 	public int executeUpdate(IQuery iq) {
 		Object r = iq.query(new IResultSql() {
@@ -148,12 +148,12 @@ public class SqlReader implements ResultSetList.IGetBean<Object[]> {
 	}
 	
 	/**
-	 * ÔÚIQueryÖĞÖ´ĞĞsqlÎÄ¼şÖĞµÄsqlÓï¾ä,¸ÃÓï¾äÖ»ÄÜÊÇµ¥Ìõ²éÑ¯Óï¾ä<br><br>
-	 * ·µ»ØµÄListÖĞÃ¿ĞĞÔªËØÊÇÒ»¸öÊı×é,Êı×éµÄ³¤¶ÈµÈÓÚ½á¹û¼¯µÄÁĞ³¤,<br>
-	 * List<b>¸ºÖµË÷Òı</b>´æ·Å±íÍ·Ãû×ÖÔÚÊı×éÖĞµÄÎ»ÖÃ,Ö®ºóµÄÔªËØÊÇ½á¹û¼¯µÄĞĞÊı¾İ<br>
+	 * åœ¨IQueryä¸­æ‰§è¡Œsqlæ–‡ä»¶ä¸­çš„sqlè¯­å¥,è¯¥è¯­å¥åªèƒ½æ˜¯å•æ¡æŸ¥è¯¢è¯­å¥<br><br>
+	 * è¿”å›çš„Listä¸­æ¯è¡Œå…ƒç´ æ˜¯ä¸€ä¸ªæ•°ç»„,æ•°ç»„çš„é•¿åº¦ç­‰äºç»“æœé›†çš„åˆ—é•¿,<br>
+	 * List<b>è´Ÿå€¼ç´¢å¼•</b>å­˜æ”¾è¡¨å¤´åå­—åœ¨æ•°ç»„ä¸­çš„ä½ç½®,ä¹‹åçš„å…ƒç´ æ˜¯ç»“æœé›†çš„è¡Œæ•°æ®<br>
 	 * 
 	 * @param jdbc
-	 * @return List<Object[]> ·µ»Ø²éÑ¯µÄ½á¹û¼¯,Èç¹û³öÏÖ´íÎóÔò·µ»Ønull
+	 * @return List<Object[]> è¿”å›æŸ¥è¯¢çš„ç»“æœé›†,å¦‚æœå‡ºç°é”™è¯¯åˆ™è¿”å›null
 	 */
 	public List<Object[]> executeQuery(JdbcTemplate jdbc) {
 		List<Object[]> list = null;
@@ -166,14 +166,14 @@ public class SqlReader implements ResultSetList.IGetBean<Object[]> {
 	}
 	
 	/**
-	 * ·µ»ØÆ´×°ºÃµÄsql,ÆäÖĞµÄ±äÁ¿Ê¹ÓÃset()ÌáÇ°ÉèÖÃºÃ
+	 * è¿”å›æ‹¼è£…å¥½çš„sql,å…¶ä¸­çš„å˜é‡ä½¿ç”¨set()æå‰è®¾ç½®å¥½
 	 */
 	public String getResultSql() {
 		return instance.toString();
 	}
 	
 	/**
-	 * °Ñsql´òÓ¡µ½¿ØÖÆÌ¨
+	 * æŠŠsqlæ‰“å°åˆ°æ§åˆ¶å°
 	 */
 	public void showSql() {
 		Tools.pl(instance);
@@ -196,7 +196,7 @@ public class SqlReader implements ResultSetList.IGetBean<Object[]> {
 		Object[] r = new Object[columnNames.length];
 		if (rowNum>=0) {
 			for (int i=1; i<=columnNames.length; ++i) {
-				//XXX ²»Í¬µÄÊµÏÖÏÂ£¬²»Í¬µÄgetXxx()·½·¨Ğ§ÂÊ²îÒìºÜ´ó
+				//XXX ä¸åŒçš„å®ç°ä¸‹ï¼Œä¸åŒçš„getXxx()æ–¹æ³•æ•ˆç‡å·®å¼‚å¾ˆå¤§
 				r[i-1] = rs.getObject(i);
 			}
 		} else {

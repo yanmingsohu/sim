@@ -1,4 +1,4 @@
-// CatfoOD 2009-10-20 ÉÏÎç03:10:47
+// CatfoOD 2009-10-20 ä¸Šåˆ03:10:47
 
 package jym.sim.base;
 
@@ -19,11 +19,11 @@ import jym.sim.util.ServletData;
 import jym.sim.util.Tools;
 
 /**
- * Ä¬ÈÏÊ¹ÓÃÖĞÎÄ±àÂë<br>
- * µ±Ç°Ö§³Öget/post<br>
+ * é»˜è®¤ä½¿ç”¨ä¸­æ–‡ç¼–ç <br>
+ * å½“å‰æ”¯æŒget/post<br>
  * 
- * ÇëÇóµÄURL¸ñÊ½: <servlet>?[do=<method>]<br>
- * 		Èç¹ûÓĞdo²ÎÊı£¬ÔòÖ´ĞĞÏà¶ÔµÄ·½·¨
+ * è¯·æ±‚çš„URLæ ¼å¼: <servlet>?[do=<method>]<br>
+ * 		å¦‚æœæœ‰doå‚æ•°ï¼Œåˆ™æ‰§è¡Œç›¸å¯¹çš„æ–¹æ³•
  */
 public abstract class HttpBase<BEAN> extends HttpServlet {
 	
@@ -36,8 +36,8 @@ public abstract class HttpBase<BEAN> extends HttpServlet {
 	
 	
 	/**
-	 * ´ÓInitParameterÖĞ¶ÁÈ¡beanclassµÄÖµ
-	 * ÓÃpostÀ´µÄÊı¾İ³õÊ¼»¯Õâ¸öbean
+	 * ä»InitParameterä¸­è¯»å–beanclassçš„å€¼
+	 * ç”¨postæ¥çš„æ•°æ®åˆå§‹åŒ–è¿™ä¸ªbean
 	 */
 	@Override
 	public final void init(ServletConfig config) throws ServletException {
@@ -66,7 +66,7 @@ public abstract class HttpBase<BEAN> extends HttpServlet {
 	}
 	
 	/**
-	 * ×ÓÀàÖØĞ´ÔÚinit·½·¨Ö®ºó±»µ÷ÓÃ
+	 * å­ç±»é‡å†™åœ¨initæ–¹æ³•ä¹‹åè¢«è°ƒç”¨
 	 * @param config
 	 * @throws ServletException
 	 */
@@ -74,23 +74,23 @@ public abstract class HttpBase<BEAN> extends HttpServlet {
 	}
 	
 	/**
-	 * ·µ»ØÊµÌåÀàµÄÀàĞÍ, Ä¬ÈÏ·µ»Ønull, ´ËÊ±ĞèÒªÔÚweb.xmlÖĞÅäÖÃÊµÌåÀàĞÍ<br>
-	 * ÍÆ¼öÊ¹ÓÃ¸Ã·½·¨ÅäÖÃÀàĞÍ, ²¢ÇÒ¸Ã·½·¨µÄÓÅÏÈ¼¶¸ü¸ß
+	 * è¿”å›å®ä½“ç±»çš„ç±»å‹, é»˜è®¤è¿”å›null, æ­¤æ—¶éœ€è¦åœ¨web.xmlä¸­é…ç½®å®ä½“ç±»å‹<br>
+	 * æ¨èä½¿ç”¨è¯¥æ–¹æ³•é…ç½®ç±»å‹, å¹¶ä¸”è¯¥æ–¹æ³•çš„ä¼˜å…ˆçº§æ›´é«˜
 	 */
 	protected Class<BEAN> getBeanClass() {
 		return null;
 	}
 	
 	/**
-	 * ±»doGet/doPost..°ü×°,ÆäÖĞdata¶ÔÏó°üº¬µÄformbean
-	 * ÒÑ¾­±»±£´æÔÚHttpServletRequest,ÓÃĞ¡Ğ´ÀàÃû£¨²»º¬°üÃû£©ÒıÓÃ,<br>
-	 * Èç¹ûÇëÇóuriÃ»ÓĞÖ¸¶¨·½·¨,Ôò¸Ã·½·¨±»µ÷ÓÃ,¸Ã·½·¨Ä¬ÈÏ²»Ö´ĞĞ²Ù×÷
+	 * è¢«doGet/doPost..åŒ…è£…,å…¶ä¸­dataå¯¹è±¡åŒ…å«çš„formbean
+	 * å·²ç»è¢«ä¿å­˜åœ¨HttpServletRequest,ç”¨å°å†™ç±»åï¼ˆä¸å«åŒ…åï¼‰å¼•ç”¨,<br>
+	 * å¦‚æœè¯·æ±‚uriæ²¡æœ‰æŒ‡å®šæ–¹æ³•,åˆ™è¯¥æ–¹æ³•è¢«è°ƒç”¨,è¯¥æ–¹æ³•é»˜è®¤ä¸æ‰§è¡Œæ“ä½œ
 	 * 
-	 * @param data - HttpServletÊı¾İ¶ÔÏó
-	 * @return	Èç¹û·µ»ØStringÀàĞÍ£¬ÔòStringÎªÓĞĞ§µÄmappingÂ·¾¶<br>
-	 * 			Èç¹û·µ»ØIPrinterÀàĞÍ£¬Ôò´òÓ¡Ëû£¬²¢·µ»ØnullÂ·¾¶<br>
-	 * 			Èç¹û·µ»ØÆäËûÀàĞÍ£¬ÔòÖ±½Ó°ÑtoStringµÄ½á¹ûÊä³öµ½¿Í»§¶Ë£¬
-	 * 			²¢·µ»ØnullÂ·¾¶<br>
+	 * @param data - HttpServletæ•°æ®å¯¹è±¡
+	 * @return	å¦‚æœè¿”å›Stringç±»å‹ï¼Œåˆ™Stringä¸ºæœ‰æ•ˆçš„mappingè·¯å¾„<br>
+	 * 			å¦‚æœè¿”å›IPrinterç±»å‹ï¼Œåˆ™æ‰“å°ä»–ï¼Œå¹¶è¿”å›nullè·¯å¾„<br>
+	 * 			å¦‚æœè¿”å›å…¶ä»–ç±»å‹ï¼Œåˆ™ç›´æ¥æŠŠtoStringçš„ç»“æœè¾“å‡ºåˆ°å®¢æˆ·ç«¯ï¼Œ
+	 * 			å¹¶è¿”å›nullè·¯å¾„<br>
 	 * @throws Exception
 	 */
 	public Object execute(IHttpData<BEAN> data) throws Exception {
@@ -100,22 +100,22 @@ public abstract class HttpBase<BEAN> extends HttpServlet {
 	}
 	
 	/**
-	 * ÔÚ·½·¨±»µ÷ÓÃÇ°²åÈë²Ù×÷,Èç¹ûÅ×³öÒì³£»ò·µ»ØfalseÔò²»ÔÙÖ´ĞĞºó¼Ì·½·¨<br>
-	 * Ä¬ÈÏ×ÜÊÇ·µ»Øtrue
-	 * @param methodName - ÇëÇóµÄ·½·¨,²»»áÎªnull
+	 * åœ¨æ–¹æ³•è¢«è°ƒç”¨å‰æ’å…¥æ“ä½œ,å¦‚æœæŠ›å‡ºå¼‚å¸¸æˆ–è¿”å›falseåˆ™ä¸å†æ‰§è¡Œåç»§æ–¹æ³•<br>
+	 * é»˜è®¤æ€»æ˜¯è¿”å›true
+	 * @param methodName - è¯·æ±‚çš„æ–¹æ³•,ä¸ä¼šä¸ºnull
 	 */
 	public boolean before(IHttpData<BEAN> data, String methodName) throws Exception {
 		return true;
 	}
 	
 	
-	/** ²»ÒªÖ±½Ó¸²¸ÇÕâ¸ö·½·¨ */
+	/** ä¸è¦ç›´æ¥è¦†ç›–è¿™ä¸ªæ–¹æ³• */
 	protected final void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		doPost(req, resp);
 	}
 
-	/** ²»ÒªÖ±½Ó¸²¸ÇÕâ¸ö·½·¨ */
+	/** ä¸è¦ç›´æ¥è¦†ç›–è¿™ä¸ªæ–¹æ³• */
 	protected final void doPost(final HttpServletRequest req, 
 			final HttpServletResponse resp)
 			throws ServletException, IOException {

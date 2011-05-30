@@ -1,4 +1,4 @@
-// CatfoOD 2009-11-10 ÏÂÎç02:10:56
+// CatfoOD 2009-11-10 ä¸‹åˆ02:10:56
 
 package jym.sim.jstags;
 
@@ -6,16 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * ·â×°javaScript·½·¨
+ * å°è£…javaScriptæ–¹æ³•
  */
 public class JSFunction {
 	private String fname;
 	private List<String> args;
 	
 	/**
-	 * ·â×°Ò»¸öjsº¯Êıµ÷ÓÃ
+	 * å°è£…ä¸€ä¸ªjså‡½æ•°è°ƒç”¨
 	 * 
-	 * @param funcname - jsº¯ÊıÃû
+	 * @param funcname - jså‡½æ•°å
 	 */
 	public JSFunction(String funcname) {
 		fname = funcname;
@@ -23,11 +23,11 @@ public class JSFunction {
 	}
 	
 	/**
-	 * °Ñarg×÷Îª²ÎÊıÌí¼Óµ½jsº¯Êı²ÎÊıÁĞ±íµÄÄ©Î²<br/>
-	 * Èç¹ûarg²»Îªnull,argµÄÈ¡ÖµÎªObject.toString(),·ñÔòÎªnull<br/>
-	 * ²ÎÊı×÷Îª±äÁ¿±»´«µİ£¨²»ÒÔÒıºÅ°üÎ§£©
+	 * æŠŠargä½œä¸ºå‚æ•°æ·»åŠ åˆ°jså‡½æ•°å‚æ•°åˆ—è¡¨çš„æœ«å°¾<br/>
+	 * å¦‚æœargä¸ä¸ºnull,argçš„å–å€¼ä¸ºObject.toString(),å¦åˆ™ä¸ºnull<br/>
+	 * å‚æ•°ä½œä¸ºå˜é‡è¢«ä¼ é€’ï¼ˆä¸ä»¥å¼•å·åŒ…å›´ï¼‰
 	 * 
-	 * @param arg - ²ÎÊı
+	 * @param arg - å‚æ•°
 	 */
 	public void add(Object arg) {
 		String s = "null";
@@ -38,11 +38,11 @@ public class JSFunction {
 	}
 	
 	/**
-	 * °Ñarg×÷Îª²ÎÊıÌí¼Óµ½jsº¯Êı²ÎÊıÁĞ±íµÄÄ©Î²<br/>
-	 * Èç¹ûarg²»Îªnull,argµÄÈ¡ÖµÎªObject.toString(),·ñÔòÎª"null"<br/>
-	 * ²ÎÊı×÷Îª×Ö·û´®±»´«µİ£¨ÓÃÒıºÅ°üÎ§£©
+	 * æŠŠargä½œä¸ºå‚æ•°æ·»åŠ åˆ°jså‡½æ•°å‚æ•°åˆ—è¡¨çš„æœ«å°¾<br/>
+	 * å¦‚æœargä¸ä¸ºnull,argçš„å–å€¼ä¸ºObject.toString(),å¦åˆ™ä¸º"null"<br/>
+	 * å‚æ•°ä½œä¸ºå­—ç¬¦ä¸²è¢«ä¼ é€’ï¼ˆç”¨å¼•å·åŒ…å›´ï¼‰
 	 * 
-	 * @param arg - ²ÎÊı
+	 * @param arg - å‚æ•°
 	 */
 	public void addString(Object arg) {
 		add("\"" + arg + "\"");
@@ -53,7 +53,7 @@ public class JSFunction {
 	}
 	
 	/**
-	 * ·µ»Øµ÷ÓÃjsº¯ÊıµÄ±í´ïÊ½×Ö·û´®
+	 * è¿”å›è°ƒç”¨jså‡½æ•°çš„è¡¨è¾¾å¼å­—ç¬¦ä¸²
 	 */
 	public String getCallString() {
 		StringBuilder buff = new StringBuilder();

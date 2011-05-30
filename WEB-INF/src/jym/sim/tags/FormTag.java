@@ -1,4 +1,4 @@
-// CatfoOD 2010-9-7 ÏÂÎç03:44:48 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-9-7 ä¸‹åˆ03:44:48 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.tags;
 
@@ -9,18 +9,18 @@ public class FormTag extends HtmlTagBase {
 	}
 
 	/**
-	 * ±íµ¥µİ½»µÄuri
+	 * è¡¨å•é€’äº¤çš„uri
 	 */
 	public void setAction(String uri) {
 		super.addAttribute("action", uri);
 	}
 	
 	/**
-	 * Ìí¼ÓÒ»¸ö±íµ¥Óò
+	 * æ·»åŠ ä¸€ä¸ªè¡¨å•åŸŸ
 	 * 
-	 * @param type - ±íµ¥µÄÀàĞÍ
-	 * @param name - ±íµ¥µÄÃû×Ö
-	 * @return ·µ»ØÕâ¸ö±íµ¥¶ÔÏó
+	 * @param type - è¡¨å•çš„ç±»å‹
+	 * @param name - è¡¨å•çš„åå­—
+	 * @return è¿”å›è¿™ä¸ªè¡¨å•å¯¹è±¡
 	 */
 	public ITag addInput(String type, String name) {
 		ITag div = super.create("div");
@@ -36,19 +36,19 @@ public class FormTag extends HtmlTagBase {
 	}
 	
 	/**
-	 * Ìí¼ÓÒ»¸öµ¥ĞĞÎÄ±¾±íµ¥
+	 * æ·»åŠ ä¸€ä¸ªå•è¡Œæ–‡æœ¬è¡¨å•
 	 * 
-	 * @param name - ±íµ¥µÄÃû×Ö
-	 * @return ·µ»ØÕâ¸ö±íµ¥¶ÔÏó
+	 * @param name - è¡¨å•çš„åå­—
+	 * @return è¿”å›è¿™ä¸ªè¡¨å•å¯¹è±¡
 	 */
 	public ITag addInput(String name) {
 		return addInput("text", name);
 	}
 	
 	/**
-	 * ´´½¨µİ½»°´Å¥
-	 * @param label - µİ½»°´Å¥µÄ×ÖÃæÖµ
-	 * @return ·µ»ØÕâ¸ö°´Å¥
+	 * åˆ›å»ºé€’äº¤æŒ‰é’®
+	 * @param label - é€’äº¤æŒ‰é’®çš„å­—é¢å€¼
+	 * @return è¿”å›è¿™ä¸ªæŒ‰é’®
 	 */
 	public ITag addSubmit(String label) {
 		ITag submit = addInput("submit", "");

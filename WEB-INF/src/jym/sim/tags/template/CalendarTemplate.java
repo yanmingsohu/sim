@@ -1,4 +1,4 @@
-// CatfoOD 2009-12-20 ÏÂÎç10:35:28
+// CatfoOD 2009-12-20 ä¸‹åˆ10:35:28
 
 package jym.sim.tags.template;
 
@@ -12,7 +12,7 @@ import jym.sim.tags.ITag;
 import jym.sim.tags.TableTag;
 
 /**
- * ÈÕÀúÏÔÊ¾×é¼ş
+ * æ—¥å†æ˜¾ç¤ºç»„ä»¶
  */
 public class CalendarTemplate extends HtmlTagBase {
 	
@@ -20,7 +20,7 @@ public class CalendarTemplate extends HtmlTagBase {
 		{-1, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
 	private static String[] wk = 
-		{"ĞÇÆÚÈÕ", "ĞÇÆÚÒ»", "ĞÇÆÚ¶ş", "ĞÇÆÚÈı", "ĞÇÆÚËÄ", "ĞÇÆÚÎå", "ĞÇÆÚÁù" };
+		{"æ˜ŸæœŸæ—¥", "æ˜ŸæœŸä¸€", "æ˜ŸæœŸäºŒ", "æ˜ŸæœŸä¸‰", "æ˜ŸæœŸå››", "æ˜ŸæœŸäº”", "æ˜ŸæœŸå…­" };
 	
 	private static String CALE_TITAL_CLASS = "caletitlediv";
 	private static String QUICK_DIV_ID = "quickdiv";
@@ -29,9 +29,9 @@ public class CalendarTemplate extends HtmlTagBase {
 	private ICalendarData data;
 
 	/**
-	 * ´Ó»Øµ÷½Ó¿ÚÖĞÈ¡µÃÊı¾İ£¬Éú³ÉÈÕÀú
+	 * ä»å›è°ƒæ¥å£ä¸­å–å¾—æ•°æ®ï¼Œç”Ÿæˆæ—¥å†
 	 * 
-	 * @param cdata - »Øµ÷½Ó¿Ú
+	 * @param cdata - å›è°ƒæ¥å£
 	 */
 	public CalendarTemplate(ICalendarData cdata) {
 		super("div");
@@ -84,7 +84,7 @@ public class CalendarTemplate extends HtmlTagBase {
 		for (int m=0; m<12; ++m) {
 			ITag mlink = tdiv.create("a");
 			mlink.addAttribute("href", "?month="+m+"&year="+year);
-			mlink.append((m+1)+"ÔÂ");
+			mlink.append((m+1)+"æœˆ");
 			tdiv.append(ITag.SP);
 		}
 		
@@ -94,7 +94,7 @@ public class CalendarTemplate extends HtmlTagBase {
 		for (int y=year-ylen; y<year+ylen; ++y) {
 			ITag ylink = ydiv.create("a");
 			ylink.addAttribute("href", "?year="+y+"&month="+month);
-			ylink.append(y+"Äê");
+			ylink.append(y+"å¹´");
 			ydiv.append(ITag.SP);
 		}
 		
@@ -107,7 +107,7 @@ public class CalendarTemplate extends HtmlTagBase {
 	private ITag createTitleDiv(int year, int month) {
 		ITag tdiv = new HtmlTagBase("div");
 		tdiv.addAttribute("class", CALE_TITAL_CLASS);
-		tdiv.append(year+"Äê"+month+"ÔÂ");
+		tdiv.append(year+"å¹´"+month+"æœˆ");
 		return tdiv;
 	}
 

@@ -1,4 +1,4 @@
-// CatfoOD 2009-10-28 ÏÂÎç09:16:22
+// CatfoOD 2009-10-28 ä¸‹åˆ09:16:22
 
 package jym.sim.util;
 
@@ -18,14 +18,14 @@ public class BeanUtil<TYPE> {
 	}
 	
 	/**
-	 * Èç¹ûfieldnameÎªnull, Å×³öÒì³£
+	 * å¦‚æœfieldnameä¸ºnull, æŠ›å‡ºå¼‚å¸¸
 	 */
 	public static String getSetterName(String fieldname) {
 		return getXetName(fieldname, "set");
 	}
 	
 	/**
-	 * Èç¹ûfieldnameÎªnull, Å×³öÒì³£
+	 * å¦‚æœfieldnameä¸ºnull, æŠ›å‡ºå¼‚å¸¸
 	 */
 	public static String getGetterName(String fieldname) {
 		return getXetName(fieldname, "get");
@@ -53,7 +53,7 @@ public class BeanUtil<TYPE> {
 	}
 	
 	/**
-	 * ´´½¨clazzÀàµÄ¶ÔÏó,paramsÊÇ¹¹Ôìº¯ÊıµÄ²ÎÊı
+	 * åˆ›å»ºclazzç±»çš„å¯¹è±¡,paramsæ˜¯æ„é€ å‡½æ•°çš„å‚æ•°
 	 * @throws NoSuchMethodException 
 	 * @throws SecurityException 
 	 * @throws InvocationTargetException 
@@ -75,7 +75,7 @@ public class BeanUtil<TYPE> {
 	}
 	
 	/**
-	 * Ö´ĞĞtarger¶ÔÏóµÄmethod·½·¨, ²ÎÊıÊÇparams
+	 * æ‰§è¡Œtargerå¯¹è±¡çš„methodæ–¹æ³•, å‚æ•°æ˜¯params
 	 */
 	public static Object invoke(Object target, String method, Object...params) 
 	throws Exception, NoSuchMethodException {
@@ -85,7 +85,7 @@ public class BeanUtil<TYPE> {
 	}
 	
 	/**
-	 * È¡µÃtarger¶ÔÏóµÄmethod·½·¨, ²ÎÊıÊÇparams
+	 * å–å¾—targerå¯¹è±¡çš„methodæ–¹æ³•, å‚æ•°æ˜¯params
 	 */
 	public static Method getMethod(Object target, String method, Object...params) 
 	throws SecurityException, NoSuchMethodException {
@@ -104,11 +104,11 @@ public class BeanUtil<TYPE> {
 	}
 	
 	/**
-	 * ²âÊÔobjÊÇ·ñÓĞĞ§
+	 * æµ‹è¯•objæ˜¯å¦æœ‰æ•ˆ
 	 * 
 	 * @param obj 
-	 * @return Èç¹ûobj²»Îªnull, ²¢ÇÒÈç¹ûobjÊÇNumberÀàĞÍÔò>=0, 
-	 * 			²¢ÇÒobjÊÇStringÀàĞÍ³¤¶È>0 Ôò·µ»Øtrue, ·ñÔò·µ»Øfalse;
+	 * @return å¦‚æœobjä¸ä¸ºnull, å¹¶ä¸”å¦‚æœobjæ˜¯Numberç±»å‹åˆ™>=0, 
+	 * 			å¹¶ä¸”objæ˜¯Stringç±»å‹é•¿åº¦>0 åˆ™è¿”å›true, å¦åˆ™è¿”å›false;
 	 */
 	public static boolean isValid(Object obj) {
 		boolean r = false;
@@ -128,10 +128,10 @@ public class BeanUtil<TYPE> {
 	}
 	
 	/**
-	 * È¡µÃget/set·½·¨¶ÔÓ¦µÄÊôĞÔ,ÊôĞÔµÄÀàĞÍºÍ´ø²ÎÊı·½·¨µÄ²ÎÊıÀàĞÍ¿ÉÄÜ²»Í¬
+	 * å–å¾—get/setæ–¹æ³•å¯¹åº”çš„å±æ€§,å±æ€§çš„ç±»å‹å’Œå¸¦å‚æ•°æ–¹æ³•çš„å‚æ•°ç±»å‹å¯èƒ½ä¸åŒ
 	 * 
-	 * @param m - ·½·¨
-	 * @return ÊôĞÔ,Ã»ÓĞ·µ»Ønull
+	 * @param m - æ–¹æ³•
+	 * @return å±æ€§,æ²¡æœ‰è¿”å›null
 	 */
 	public static Field getMethodTargetField(Method m) {
 		String name = m.getName();
@@ -150,14 +150,14 @@ public class BeanUtil<TYPE> {
 	}
 	
 	/**
-	 * Í¨¹ıbean¶ÔÏófieldnameÊôĞÔ¶ÔÓ¦µÄgetter·½·¨È¡µÃ¸ÃÊôĞÔµÄÖµ
+	 * é€šè¿‡beanå¯¹è±¡fieldnameå±æ€§å¯¹åº”çš„getteræ–¹æ³•å–å¾—è¯¥å±æ€§çš„å€¼
 	 * 
-	 * @param bean - Êı¾İ¶ÔÏó, Èç¹ûÎªnull, »áÅ×³öÒì³£
-	 * @param fieldname - ÊôĞÔÃû, Èç¹ûÎªnull, Ôò·µ»Ønull
-	 * @return ÊôĞÔµÄÖµ
+	 * @param bean - æ•°æ®å¯¹è±¡, å¦‚æœä¸ºnull, ä¼šæŠ›å‡ºå¼‚å¸¸
+	 * @param fieldname - å±æ€§å, å¦‚æœä¸ºnull, åˆ™è¿”å›null
+	 * @return å±æ€§çš„å€¼
 	 * 
-	 * @throws Exception - ³öÏÖÁËÆäËûµÄ´íÎó
-	 * @throws NoSuchMethodException - ÕÒ²»µ½ÊôĞÔ¶ÔÓ¦µÄgetter·½·¨
+	 * @throws Exception - å‡ºç°äº†å…¶ä»–çš„é”™è¯¯
+	 * @throws NoSuchMethodException - æ‰¾ä¸åˆ°å±æ€§å¯¹åº”çš„getteræ–¹æ³•
 	 */
 	public static Object getFieldValue(Object bean, String fieldname) 
 	throws Exception, NoSuchMethodException {

@@ -1,11 +1,11 @@
-// CatfoOD 2010-8-19 ÉÏÎç11:18:29 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-8-19 ä¸Šåˆ11:18:29 yanming-sohu@sohu.com/@qq.com
 
 package jym.sim.filter.sql;
 
 import jym.sim.filter.SimFilterException;
 
 /**
- * °Ñ×Ö·û´®×ª»»Îª²»»áÔÚsqlÖĞ²ú³ÉÆäËûÓïÒåµÄ×Ö·û´®
+ * æŠŠå­—ç¬¦ä¸²è½¬æ¢ä¸ºä¸ä¼šåœ¨sqlä¸­äº§æˆå…¶ä»–è¯­ä¹‰çš„å­—ç¬¦ä¸²
  */
 public class SafeSqlStringFilter implements ISqlInputParamFilter<String> {
 	
@@ -13,8 +13,8 @@ public class SafeSqlStringFilter implements ISqlInputParamFilter<String> {
 	
 	public String see(String s) throws SimFilterException {
 		if (s!=null) {
-			// String.indexOf·½·¨Ê¹ÓÃÄÚ²¿Êı×éĞ§ÂÊ¸ß
-			// ¶øtoCharArray·½·¨ĞèÒª¸´ÖÆ
+			// String.indexOfæ–¹æ³•ä½¿ç”¨å†…éƒ¨æ•°ç»„æ•ˆç‡é«˜
+			// è€ŒtoCharArrayæ–¹æ³•éœ€è¦å¤åˆ¶
 			if (s.indexOf(TAG)>=0) {
 				s = to(s);
 			}

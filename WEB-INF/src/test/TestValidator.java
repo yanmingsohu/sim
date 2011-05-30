@@ -1,4 +1,4 @@
-// CatfoOD 2010-4-21 ÉÏÎç08:06:24 yanming-sohu@sohu.com/@qq.com
+// CatfoOD 2010-4-21 ä¸Šåˆ08:06:24 yanming-sohu@sohu.com/@qq.com
 
 package test;
 
@@ -18,7 +18,7 @@ import jym.sim.validator.annotation.Stringlen;
 
 
 /**
- * ²âÊÔ×Ö¶ÎÑéÖ¤Æ÷µÄĞ§ÂÊ
+ * æµ‹è¯•å­—æ®µéªŒè¯å™¨çš„æ•ˆç‡
  */
 @SuppressWarnings("unused")
 public class TestValidator {
@@ -34,11 +34,11 @@ public class TestValidator {
 		
 		Validator v = new Validator();
 		
-		UsedTime.start("Ïàµ±50000¸ö×Ö¶ÎµÄÑéÖ¤");
+		UsedTime.start("ç›¸å½“50000ä¸ªå­—æ®µçš„éªŒè¯");
 		
 		for (int i=0; i<10000; ++i) {
 			VerifyMessage vm = v.validate(u);
-			// showMsg( vm ); // ÏÔÊ¾»áÕ¼ÓÃÊ±¼ä
+			// showMsg( vm ); // æ˜¾ç¤ºä¼šå ç”¨æ—¶é—´
 		}
 		UsedTime.endAndPrint();
 	}
@@ -63,7 +63,7 @@ public class TestValidator {
 	
 	private static void showMsg(VerifyMessage msg) {
 		if (msg.isSuccess()) {
-			p("Ã»ÓĞ´íÎó");
+			p("æ²¡æœ‰é”™è¯¯");
 		}
 		else {
 			Iterator<Msg> itr = msg.getMessages();
@@ -81,19 +81,19 @@ public class TestValidator {
 
 class User {
 	
-	@Notnull(msg="ÓÃ»§Ãû²»ÄÜÎª¿Õ")
-	@Stringlen(max=10, min=3, msg="ÓÃ»§Ãû³¤¶È3-10Î»")
+	@Notnull(msg="ç”¨æˆ·åä¸èƒ½ä¸ºç©º")
+	@Stringlen(max=10, min=3, msg="ç”¨æˆ·åé•¿åº¦3-10ä½")
 	private String username;
 
-	@Stringlen(max=10, min=3, msg="ÃÜÂë³¤¶È3-10Î»")
-	@Notnull(msg="ÃÜÂë²»ÄÜÎª¿Õ")
+	@Stringlen(max=10, min=3, msg="å¯†ç é•¿åº¦3-10ä½")
+	@Notnull(msg="å¯†ç ä¸èƒ½ä¸ºç©º")
 	private String password;
 	
-	@Num(msg="IDÓĞĞ§ÖµÔÚ10~2000", min=10, max=2000)
+	@Num(msg="IDæœ‰æ•ˆå€¼åœ¨10~2000", min=10, max=2000)
 	private int id;
 	
-	@Notnull(msg="ÈÕÆÚ²»ÄÜÎª¿Õ")
-	@Daterange(msg="ÈÕÆÚ³¬³ö·¶Î§", min="1980-1-1", max="2100-12-30")
+	@Notnull(msg="æ—¥æœŸä¸èƒ½ä¸ºç©º")
+	@Daterange(msg="æ—¥æœŸè¶…å‡ºèŒƒå›´", min="1980-1-1", max="2100-12-30")
 	private Date start;
 	
 	
@@ -125,8 +125,8 @@ class User {
 
 class User2 extends User {
 	
-	//@Notnull(msg="ÓÊÏä²»ÄÜÎª¿Õ")
-	@Email(msg="ÓÊÏä¸ñÊ½ÎŞĞ§")
+	//@Notnull(msg="é‚®ç®±ä¸èƒ½ä¸ºç©º")
+	@Email(msg="é‚®ç®±æ ¼å¼æ— æ•ˆ")
 	private String email;
 
 	public String getEmail() {

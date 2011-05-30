@@ -23,7 +23,7 @@ import jym.sim.sql.ResultSetList;
 import jym.sim.util.Tools;
 
 /**
- * Êı¾İ¿âÊµÌå¼ìË÷Ä£°å
+ * æ•°æ®åº“å®ä½“æ£€ç´¢æ¨¡æ¿
  */
 public class SelectTemplate<T> extends JdbcTemplate 
 implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
@@ -40,12 +40,12 @@ implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 	
 	
 	/**
-	 * jdbcÄ£°å¹¹Ôìº¯Êı, È«²¿Ê¹ÓÃ±í¸ñÃûÓ³ÉäÊµÌåÊôĞÔ
+	 * jdbcæ¨¡æ¿æ„é€ å‡½æ•°, å…¨éƒ¨ä½¿ç”¨è¡¨æ ¼åæ˜ å°„å®ä½“å±æ€§
 	 * 
-	 * @param ds - Êı¾İÔ´
-	 * @param modelclass - Êı¾İÄ£ĞÍµÄclassÀà
-	 * @param tablename - Êı¾İ¿â±íÃû
-	 * @param priKey - Ö÷¼üÃû
+	 * @param ds - æ•°æ®æº
+	 * @param modelclass - æ•°æ®æ¨¡å‹çš„classç±»
+	 * @param tablename - æ•°æ®åº“è¡¨å
+	 * @param priKey - ä¸»é”®å
 	 */
 	public SelectTemplate(DataSource ds, final Class<T> modelclass, 
 			final String tablename, final String priKey) {
@@ -70,10 +70,10 @@ implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 	}
 	
 	/**
-	 * jdbcÄ£°å¹¹Ôìº¯Êı,Ä¬ÈÏÃ¿´ÎÁ¬½Ó²»»á×Ô¶¯¹Ø±ÕÁ¬½Ó
+	 * jdbcæ¨¡æ¿æ„é€ å‡½æ•°,é»˜è®¤æ¯æ¬¡è¿æ¥ä¸ä¼šè‡ªåŠ¨å…³é—­è¿æ¥
 	 * 
-	 * @param orm - Êı¾İ¿âÁĞÊı¾İÓëbeanÊµÌåÊôĞÔÓ³Éä²ßÂÔ
-	 * @throws SQLException - Êı¾İ¿â´íÎóÅ×³öÒì³£
+	 * @param orm - æ•°æ®åº“åˆ—æ•°æ®ä¸beanå®ä½“å±æ€§æ˜ å°„ç­–ç•¥
+	 * @throws SQLException - æ•°æ®åº“é”™è¯¯æŠ›å‡ºå¼‚å¸¸
 	 */
 	public SelectTemplate(DataSource ds, IOrm<T> orm) {
 		super(ds);
@@ -93,53 +93,53 @@ implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 	}
 	
 	private void check() {
-	//	Tools.check(orm.getKey(), 			"getKey()²»ÄÜ·µ»Ønull"			);
-		Tools.check(orm.getModelClass(),	"getModelClass()²»ÄÜ·µ»Ønull"	);
-		Tools.check(orm.getTableName(),		"getTableName()²»ÄÜ·µ»Ønull"		);
+	//	Tools.check(orm.getKey(), 			"getKey()ä¸èƒ½è¿”å›null"			);
+		Tools.check(orm.getModelClass(),	"getModelClass()ä¸èƒ½è¿”å›null"	);
+		Tools.check(orm.getTableName(),		"getTableName()ä¸èƒ½è¿”å›null"		);
 	}
 	
 	/**
-	 * È¡µÃÊäÈëÊı¾İ¹ıÂËÆ÷ÉèÖÃÆ÷£¬Í¨¹ıFilterBaseµÄÊµÀı¿ÉÒÔ²åÈëĞÂµÄ¹ıÂËÆ÷<br>
-	 * ¹ıÂËÆ÷µÄ×÷ÓÃÊÇÔÚÊµÌåÊôĞÔÆ´×°ÎªsqlÖ®Ç°ÏÈ×ª»»ÊôĞÔµÄÖµ
+	 * å–å¾—è¾“å…¥æ•°æ®è¿‡æ»¤å™¨è®¾ç½®å™¨ï¼Œé€šè¿‡FilterBaseçš„å®ä¾‹å¯ä»¥æ’å…¥æ–°çš„è¿‡æ»¤å™¨<br>
+	 * è¿‡æ»¤å™¨çš„ä½œç”¨æ˜¯åœ¨å®ä½“å±æ€§æ‹¼è£…ä¸ºsqlä¹‹å‰å…ˆè½¬æ¢å±æ€§çš„å€¼
 	 */
 	public FilterPocket getInputParamPocket() {
 		return infilter;
 	}
 	
 	/**
-	 * È¡µÃÊı¾İ¿â·µ»ØÊı¾İ¹ıÂËÆ÷ÉèÖÃÆ÷£¬Í¨¹ıÔÚFilterBaseµÄÊµÀı¿ÉÒÔ²åÈëĞÂµÄ¹ıÂËÆ÷<br>
-	 * ¹ıÂËÆ÷µÄ×÷ÓÃÊÇ°Ñ´ÓÊı¾İ¿â·µ»ØµÄÊı¾İ£¬ÔÚ´«¸øÊµÌåÊôĞÔÇ°½øĞĞ¹ıÂË
+	 * å–å¾—æ•°æ®åº“è¿”å›æ•°æ®è¿‡æ»¤å™¨è®¾ç½®å™¨ï¼Œé€šè¿‡åœ¨FilterBaseçš„å®ä¾‹å¯ä»¥æ’å…¥æ–°çš„è¿‡æ»¤å™¨<br>
+	 * è¿‡æ»¤å™¨çš„ä½œç”¨æ˜¯æŠŠä»æ•°æ®åº“è¿”å›çš„æ•°æ®ï¼Œåœ¨ä¼ ç»™å®ä½“å±æ€§å‰è¿›è¡Œè¿‡æ»¤
 	 */
 	public FilterPocket getOutputParamPocket() {
 		return outfilter;
 	}
 	
 	/**
-	 * ÎªÆ´×°sqlÊ±µÄÊµÌåÊôĞÔÓĞĞ§¼ì²éÅäÖÃ²ßÂÔ,<br>
-	 * ¹ıÂËÆ÷Ö»Òª·µ»Ø·Çnull,ÔòÈÏÎªÖµÓĞĞ§<br>
-	 * ÓĞĞ§µÄÊôĞÔÖµ½«±»ÓÃÀ´Æ´×°sql(ÔöÉ¾¸Ä²é),ÎŞĞ§µÄÖµÔò»á±»ºöÂÔ<br>
-	 * Ä¬ÈÏnullÖµ×ÜÊÇÈÏÎªÊÇÎŞĞ§µÄ(³ı·ÇÅäÖÃÏà¹ØÀàĞÍµÄ¹ıÂËÆ÷)
+	 * ä¸ºæ‹¼è£…sqlæ—¶çš„å®ä½“å±æ€§æœ‰æ•ˆæ£€æŸ¥é…ç½®ç­–ç•¥,<br>
+	 * è¿‡æ»¤å™¨åªè¦è¿”å›énull,åˆ™è®¤ä¸ºå€¼æœ‰æ•ˆ<br>
+	 * æœ‰æ•ˆçš„å±æ€§å€¼å°†è¢«ç”¨æ¥æ‹¼è£…sql(å¢åˆ æ”¹æŸ¥),æ— æ•ˆçš„å€¼åˆ™ä¼šè¢«å¿½ç•¥<br>
+	 * é»˜è®¤nullå€¼æ€»æ˜¯è®¤ä¸ºæ˜¯æ— æ•ˆçš„(é™¤éé…ç½®ç›¸å…³ç±»å‹çš„è¿‡æ»¤å™¨)
 	 */
 	public FilterPocket getCheckVaildValue() {
 		return vaildChecker;
 	}
 	
 	/**
-	 * ´ÓÆÕÍ¨¶ÔÏó×ª»»ÎªsqlÓï¾ä×Ö·û´®
+	 * ä»æ™®é€šå¯¹è±¡è½¬æ¢ä¸ºsqlè¯­å¥å­—ç¬¦ä¸²
 	 */
 	protected final Object transformValue(Object o) {
 		try {
 			return infilter.filter(o);
 		} catch (SimFilterException e) {
-			warnning("ÊäÈë²ÎÊı¹ıÂËÆ÷×ª»»Ê§°Ü:" + e);
+			warnning("è¾“å…¥å‚æ•°è¿‡æ»¤å™¨è½¬æ¢å¤±è´¥:" + e);
 			handleException(e);
 		}
 		return o;
 	}
 	
 	/**
-	 * ²âÊÔvalueÖµÊÇ·ñÓĞĞ§,ÓĞĞ§ĞÔ²âÊÔÔÚgetCheckVaildValue·µ»ØµÄ¶ÔÏóÖĞÉèÖÃ<br>
-	 * nullÖµ×ÜÊÇÈÏÎªÊÇÎŞĞ§µÄ
+	 * æµ‹è¯•valueå€¼æ˜¯å¦æœ‰æ•ˆ,æœ‰æ•ˆæ€§æµ‹è¯•åœ¨getCheckVaildValueè¿”å›çš„å¯¹è±¡ä¸­è®¾ç½®<br>
+	 * nullå€¼æ€»æ˜¯è®¤ä¸ºæ˜¯æ— æ•ˆçš„
 	 */
 	protected final boolean isValid(Object value, Class<?> valueType) {
 		return vaildChecker.isValid(value, valueType);
@@ -153,12 +153,12 @@ implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 		
 			if (colname!=null) {
 				try {
-					Tools.check(model, "bean²ÎÊı²»ÄÜÎªnull.");
+					Tools.check(model, "beanå‚æ•°ä¸èƒ½ä¸ºnull.");
 					Object value = ms[i].invoke(model, new Object[0]);
 					cv.set(colname, value, ms[i].getReturnType());
 					
 				} catch (Exception e) {
-					warnning("invoke´íÎó: "+ e);
+					warnning("invokeé”™è¯¯: "+ e);
 					Tools.plerr(e, "jym.*");
 				}
 			}
@@ -210,7 +210,7 @@ implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 				IWhere logic = plot.getLogicPackage(column).getWhereLogic();
 				
 				if (logic instanceof ISkipValueCheck || isValid(value, valueType) ) {
-					//XXX transformValue ¸ºÔğ°´ÕÕ²ßÂÔ×ª»»ÊäÈëÖµ
+					//XXX transformValue è´Ÿè´£æŒ‰ç…§ç­–ç•¥è½¬æ¢è¾“å…¥å€¼
 					value = logic.w(column, transformValue( value ), model);
 
 					if (value!=null) {
@@ -230,8 +230,8 @@ implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 	}
 	
 	/**
-	 * ´Ë·½·¨»á°ÑrsÖĞËùÓĞµÄÊı¾İÑ¹ÈëbrsÖĞ²¢·µ»Ø,ÔÚÊı¾İĞĞºÜ¶àÊ±,ÄÚ´æÒç³ö<br>
-	 * µ«¸Ã·½·¨±È¶¯Ì¬È¡Êı¾İµÄ·½·¨¿ì
+	 * æ­¤æ–¹æ³•ä¼šæŠŠrsä¸­æ‰€æœ‰çš„æ•°æ®å‹å…¥brsä¸­å¹¶è¿”å›,åœ¨æ•°æ®è¡Œå¾ˆå¤šæ—¶,å†…å­˜æº¢å‡º<br>
+	 * ä½†è¯¥æ–¹æ³•æ¯”åŠ¨æ€å–æ•°æ®çš„æ–¹æ³•å¿«
 	 */
 	private void assembleBeanList(ResultSet rs, List<T> brs, PageBean pagedata) throws Exception {
 		if (rs==null) return;
@@ -242,7 +242,7 @@ implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 			if (rs.next()) {
 				int total = 1;
 			try { 
-				// Ã»ÓĞTOTAL_COLUMN_NAMEÖ¸¶¨µÄÁĞ²¢²»ÊÇ´íÎó
+				// æ²¡æœ‰TOTAL_COLUMN_NAMEæŒ‡å®šçš„åˆ—å¹¶ä¸æ˜¯é”™è¯¯
 				total = rs.getInt(IPage.TOTAL_COLUMN_NAME);
 				}
 			catch(Exception e) {}
@@ -269,7 +269,7 @@ implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 	throws Exception {
 		
 	if (rowNum<0) 
-		throw new IndexOutOfBoundsException("²»ÄÜÓĞ¸ºÖµË÷Òı: " + rowNum);
+		throw new IndexOutOfBoundsException("ä¸èƒ½æœ‰è´Ÿå€¼ç´¢å¼•: " + rowNum);
 		
 		T model = clazz.newInstance();
 		for (int i=1; i<=columnNames.length; ++i) {
@@ -279,7 +279,7 @@ implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 	}
 	
 	private void warnning(String msg) {
-		System.out.println("¾¯¸æ:(SelectTemplate): " + msg);
+		System.out.println("è­¦å‘Š:(SelectTemplate): " + msg);
 	}
 	
 	public void setPaginationPlot(IPage plot) {
@@ -301,7 +301,7 @@ implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 	}
 	
 	/**
-	 * ·µ»Ø½á¹û¼¯Êı¾İÖĞ£¬ÁĞÃûµÄÊı×é
+	 * è¿”å›ç»“æœé›†æ•°æ®ä¸­ï¼Œåˆ—åçš„æ•°ç»„
 	 * @throws SQLException 
 	 */
 	public static final String[] getColumnNames(ResultSetMetaData rsmd) 
