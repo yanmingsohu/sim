@@ -9,7 +9,7 @@ import jym.sim.sql.ISql;
 import jym.sim.sql.JdbcTemplate;
 import jym.sim.util.Tools;
 
-public class TestJdbcTemplate {
+public class testJdbcTemplate {
 	
 	public static void main(String[] s) throws Exception {
 		JdbcTemplate jt = createJdbc();

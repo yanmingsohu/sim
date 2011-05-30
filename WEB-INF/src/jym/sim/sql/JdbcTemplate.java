@@ -8,7 +8,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Savepoint;
 import java.sql.Statement;
@@ -177,44 +176,6 @@ public class JdbcTemplate implements IQuery, ICall {
 		}
 		
 		return result;
-	}
-	
-	public void query(IPrepSql sql) {
-		PreparedStatement st = null;
-		JdbcSession js = null;
-		
-		try {
-			UsedTime.start("执行sql");
-			js = initSession();
-			Connection conn = js.getConnection();
-			st = conn.prepareStatement(sql.getSql());
-			
-			sql.exe(st);
-		
-		} catch (SQLException e) {
-			String msg = e.getMessage();
-			if (msg==null) {
-				msg = "未知的sql异常";
-			}
-			Tools.p(msg.trim() + ": ");
-			
-			handleException(e);
-			
-		} catch (Throwable t) {
-			t.printStackTrace();
-			handleException(t);
-			
-		} finally {
-			if (st!=null) {
-				try {
-					st.close();
-				} catch (SQLException e) 
-				{}
-			}
-			if (js!=null) {
-				js.close();
-			}
-		}
 	}
 	
 	public void call(ICallData cd) {

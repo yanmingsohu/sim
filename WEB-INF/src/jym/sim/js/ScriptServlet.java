@@ -23,7 +23,7 @@ import jym.sim.util.Tools;
 public class ScriptServlet extends HttpServlet {
 
 	private static final long serialVersionUID	= -1969856037757165065L;
-	private static final long CURRENT_TIME		= System.currentTimeMillis();
+	private static final long UNKNOW_TIME		= -1;
 	private static final String CONF_DEBUG		= "debug";
 	private static final String CONF_NAME 		= "mappingConfigs";
 	private static final String SYS_PATH			= "WEB-INF";
@@ -135,7 +135,7 @@ public class ScriptServlet extends HttpServlet {
 			return file.lastModified();
 		}
 		
-		return CURRENT_TIME;
+		return UNKNOW_TIME;
 	}
 
 }

@@ -9,7 +9,7 @@ import jym.sim.sql.ITransactionHanle;
 import jym.sim.sql.Transaction;
 import jym.sim.util.Tools;
 
-public class TestTransaction {
+public class testTransaction {
 
 	
 	public static void main(String[] args) {
