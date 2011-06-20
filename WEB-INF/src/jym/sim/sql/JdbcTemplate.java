@@ -9,10 +9,14 @@ import java.lang.reflect.Proxy;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Savepoint;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -247,6 +251,7 @@ public class JdbcTemplate implements IQuery, ICall {
 			buff.append('}');
 			
 			cs = conn.prepareCall(buff.toString());
+			cs = getProxy(cs);
 			
 			cd.exe(cs);
 			
@@ -296,6 +301,59 @@ public class JdbcTemplate implements IQuery, ICall {
 						new StatementHandler(st) );
 	}
 	
+	private CallableStatement getProxy(CallableStatement cst) {
+		return (CallableStatement) Proxy.newProxyInstance(
+				this.getClass().getClassLoader(), 
+					new Class[]{ CallableStatement.class },
+						new CallStatementHandler(cst) );
+	}
+	
+	
+	/**
+	 * CallableStatement代理, 用于获取ResultSet并在CallableStatement关闭时关闭
+	 */
+	public class CallStatementHandler implements InvocationHandler {
+		CallableStatement original;
+		List<ResultSet> rslist;
+
+		public CallStatementHandler(CallableStatement cs) {
+			original = cs;
+			rslist = new ArrayList<ResultSet>();
+		}
+		
+		public Object invoke(Object proxy, Method method, Object[] args) 
+				throws Throwable 
+		{
+			String name = method.getName();
+			
+			if ( "close".equals(name) ) {
+				closeResultSet();
+			}
+			
+			Object result = method.invoke(original, args);
+			
+			if ( "getObject".equals(name) ) {
+				if (result instanceof ResultSet) {
+					rslist.add((ResultSet) result);
+				}
+			}
+			
+			return result;
+		}
+		
+		private void closeResultSet() {
+			Iterator<ResultSet> itr = rslist.iterator();
+			while (itr.hasNext()) {
+				try {
+					itr.next().close();
+				} catch (SQLException e) {
+					Tools.pl("JdbcTemplate close resultSet: " + e);
+				}
+			}
+			rslist.clear();
+		}
+	}
+	
 	/**
 	 * Statement代理,用于截取Sql
 	 */
@@ -308,7 +366,7 @@ public class JdbcTemplate implements IQuery, ICall {
 		}
 
 		public Object invoke(Object st, Method m, Object[] ps) 
-		throws Throwable, SQLException
+				throws Throwable, SQLException
 		{
 			String mname = m.getName();
 

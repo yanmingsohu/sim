@@ -6,7 +6,7 @@
 	<!--jar输出路径													-->
 	<property name="outdir" 		value="${basedir}"/>
 	
-	<property name="utf8_srcdir" 	value="${basedir}/utf8-src"/>
+	<!-- <property name="utf8_srcdir" 	value="${basedir}/utf8-src"/> --> 
 	<property name="src_dir" 		value="${basedir}/WEB-INF/src"/>
 	<property name="class_dir" 		value="${basedir}/WEB-INF/classes"/>
 	
@@ -15,11 +15,11 @@
 		<copy todir="${basedir}/WEB-INF/classes/jym/" overwrite="true">
 			<fileset file="${basedir}/readme.txt"/>
 		</copy>
-
+		<!-- 编码转换
 		<copy todir="${utf8_srcdir}" overwrite="true" outputencoding='UTF-8' encoding="GBK">
 			<fileset dir="${src_dir}"/>
 		</copy>
-
+		-->
 		<jar destfile="${outdir}/sim.jar" filesetmanifest="mergewithoutmain">
 			<manifest>
 				<attribute name="Main-Class" value="test.Main"/>
@@ -28,7 +28,7 @@
 
 			<fileset dir="${class_dir}"/>
 		<!-- jar是否包含源代码 -->
-		<!--<fileset dir="${utf8_srcdir}"/>-->
+		<!--<fileset dir="${src_dir}"/>-->
 		</jar>
 		
 	</target>
