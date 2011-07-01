@@ -65,4 +65,9 @@ public interface IJdbcSession {
 	 * @return 递交成功返回true
 	 */
 	public boolean commit();
+	/**
+	 * 如有可以释放资源(自动递交),则立即释放,否则该方法什么都不做<br>
+	 * 可以在数据库操作完成时调用该方法立即释放资源而不是等待垃圾回收
+	 */
+	public void close();
 }

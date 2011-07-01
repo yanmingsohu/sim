@@ -8,7 +8,8 @@ package jym.sim.sql;
 public interface ITransactionHanle {
 	
 	/**
-	 * 事务的处理在该方法中进行,如果抛出异常则整个事务会回滚
+	 * 事务的处理在该方法中进行,如果抛出异常则整个事务会回滚<br>
+	 * 事务中不能启动线程, 否则会逃逸事务
 	 */
 	void start() throws Exception;
 

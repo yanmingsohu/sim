@@ -2,12 +2,12 @@
 
 package test;
 
+import java.sql.SQLException;
 import java.sql.Savepoint;
 
 import jym.sim.sql.IJdbcSession;
 import jym.sim.sql.ITransactionHanle;
 import jym.sim.sql.Transaction;
-import jym.sim.util.Tools;
 
 public class TestTransaction {
 
@@ -15,54 +15,64 @@ public class TestTransaction {
 	public static void main(String[] args) {
 		
 		final Point p = new Point(0);
-		Transaction t = new Transaction(p);
+		final Transaction t = new Transaction(p);
 		
 		p.set(10);
-		System.out.println(p);
+		pl(p);
 		
 		Exception e = t.start(new ITransactionHanle() {
 			public void start() throws Exception {
 				p.set(1);
-				System.out.println(p);
-				throw new Exception("测试事务错误");
+				
+				t.start(new ITransactionHanle() {
+					public void start() throws Exception {
+						pl("嵌套");
+						p.set(2);
+					}
+				});
+				p.set(3);
+				
+				throw new Exception("测试");
 			}
 		});
 		
 		if (e!=null) {
-			e.printStackTrace();
+			pl("\n回滚原因: " + e);
 		}
 		
-		System.out.println(p);
+		pl("当前值:" + p);
 	}
 
 	
 	public static class Point implements Transaction.IJsGeter {
 		
-		private Object tv = null;
-		private Object no = null;
+		private Object true_value = null;
+		private Object cache_value = null;
 		private boolean auto = true;
 		
 		private Point(Object o) {
-			tv = o;
+			cache_value = true_value = o;
 		}
 		
 		public void set(Object o) {
-			no = o;
+			cache_value = o;
 			if (auto) {
-				tv = no;
+				true_value = cache_value;
+			} else {
+				pl("事务中设置: " + o);
 			}
 		}
 		
 		public String toString() {
-			return String.valueOf(tv);
+			return "Point value: " + ( auto ? true_value : cache_value );
 		}
 
 		public IJdbcSession get() throws Exception {
 			return new IJdbcSession() {
 				
 				public boolean commit() {
-					Tools.pl("事务已递交");
-					tv = no;
+					pl("事务已递交");
+					true_value = cache_value;
 					return true;
 				}
 
@@ -75,28 +85,66 @@ public class TestTransaction {
 				}
 
 				public boolean rollback() {
-					Tools.pl("出错,事务回滚");
+					pl("出错,事务回滚");
 					return true;
 				}
 
 				public boolean rollback(Savepoint savepoint) {
+					pl("出错,事务回滚," + savepoint);
 					return false;
 				}
 
 				public void setCommit(boolean isAuto) {
-					Tools.pl("set " + (isAuto?"auto":"manual") + " commit.");
+					pl("set " + (isAuto?"auto":"manual") + " commit.");
 					auto = isAuto;
 				}
 
 				public Savepoint setSavepoint() {
-					return null;
+					return new SavepointImpl();
 				}
 
 				public Savepoint setSavepoint(String name) {
-					return null;
+					return new SavepointImpl(name);
 				}
-				
+
+				public void close() {
+				}
 			};
 		}
+	}
+	
+	private static class SavepointImpl implements Savepoint {
+		int id;
+		String name = null;
+		
+		SavepointImpl() {
+			id = _id++;
+		}
+		SavepointImpl(String n) {
+			this();
+			name = n;
+		}
+		
+		public int getSavepointId() throws SQLException {
+			return id;
+		}
+
+		public String getSavepointName() throws SQLException {
+			return "savepoint:[" + id + ", " + name + "]";
+		}
+		
+		public String toString() {
+			try {
+				return getSavepointName();
+			} catch (SQLException e) {
+				return e.getLocalizedMessage();
+			}
+		}
+	}
+	
+	private static int _id = 0;
+	
+	private static void pl(Object o) {
+		System.out.println(o);
 	}
 }

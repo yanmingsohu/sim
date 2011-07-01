@@ -56,6 +56,7 @@ public class JdbcTemplate implements IQuery, ICall {
 	private JdbcSession initSession() throws SQLException {
 		JdbcSession js = db_connect.get();
 		if (js==null) {
+			/* 已经在构造函数中操作db_connect */
 			js = new JdbcSession();
 		}
 		return js;
@@ -421,8 +422,8 @@ public class JdbcTemplate implements IQuery, ICall {
 				conn = src.getConnection();
 				++connectCount;
 				
-				if (debug) Tools.pl("create conn@" 
-						+ conn.hashCode() + " sess@" + this.hashCode());
+				if (debug) Tools.pl("create conn@" + conn.hashCode() 
+						+ " sess@" + this.hashCode() + " C^" + connectCount);
 			}
 			return conn;
 		}

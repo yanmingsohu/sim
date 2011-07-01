@@ -21,6 +21,13 @@ public interface IQuery {
 	public Object query(IResultSql rsql);
 	
 	/**
+	 * 执行查询, 内部使用PreparedStatement优化一些数据库的效率
+	 * 
+	 * @param sql - sql语句的执行对象
+	 */
+	public void query(IPrepSql sql);
+	
+	/**
 	 * 注册错误处理器,eh是基于线程安全的,所以每个线程都需要分别注册<br>
 	 * 每个线程只能注册唯一一个处理器,否则前一个处理器会被覆盖
 	 */
