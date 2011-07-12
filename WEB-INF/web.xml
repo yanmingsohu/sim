@@ -19,11 +19,15 @@
 		<filter-name>CharsetFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	
+
 
 	<servlet>
+		<description>
+			继承自jym.sim.base.HttpBase的servlet
+		</description>
+		
 		<servlet-name>demo</servlet-name>
-		<servlet-class>继承自jym.sim.base.HttpBase的servlet</servlet-class>
+		<servlet-class>test.ServletDemo</servlet-class>
 		
 		<init-param>
 			<description>
@@ -34,6 +38,11 @@
 			<param-value></param-value>
 		</init-param>
 	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>demo</servlet-name>
+		<url-pattern>/demo</url-pattern>
+	</servlet-mapping>
 	
 	
 	<servlet>

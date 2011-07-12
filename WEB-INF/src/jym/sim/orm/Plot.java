@@ -6,6 +6,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import jym.sim.exception.OrmException;
@@ -19,14 +20,15 @@ import jym.sim.util.Tools;
  * 实体属性与数据库列映射策略实现
  *
  * @param <T> - 实体类型
+ * @see jym.sim.orm.IOrm
  */
 class Plot<T> implements IPlot {
 	
 	private final static String PASS_COLM_NAME = "sim__";
 	
-	/** 使用小写比较String <表列名, 方法封装>*/
+	/** 使用小写比较String <表列名, 方法封装> */
 	private Map<String, MethodMapping> ormmap;
-	/** 使用小写比较String <方法小写名, 方法>*/
+	/** 使用小写比较String <方法小写名, 方法> */
 	private Map<String, Method> classMethodmap;
 	/** 大小写敏感, <方法, 列名> */
 	private Map<Method, String> reverse;
@@ -138,6 +140,12 @@ class Plot<T> implements IPlot {
 			ormmap.put(colname.toLowerCase(), mm);
 			reverse.put(getm, colname);
 			
+			ISelectJoin join = mm.getLogicPackage().getJoinLogic();
+			if (join!=null) {
+				join.setMainColumn(colname);
+				join.setMainTable(orm.getTableName());
+			}
+			
 		} catch (OrmException e) {
 			warnning(orm.getModelClass(), "映射属性("
 					+ fieldname + ")时错误: " + e.getMessage());
@@ -167,6 +175,22 @@ class Plot<T> implements IPlot {
 			log = LogicPackage.DEFAULT;
 		}
 		return log;
+	}
+	
+	/**XXX 如果多个ISelectJoin连接相同的表会出现问题!! */
+	protected String getJoinSql() {
+		StringBuilder sql = new StringBuilder();
+		
+		Iterator<MethodMapping> itr = ormmap.values().iterator();
+		while (itr.hasNext()) {
+			MethodMapping mm = itr.next();
+			ISelectJoin sjoin = mm.getLogicPackage().getJoinLogic();
+			if (sjoin!=null) {
+				sql.append(sjoin.getJoin());
+			}
+		}
+		
+		return sql.toString();
 	}
 	
 	protected void stopColnameMapping() {

@@ -15,6 +15,7 @@ import jym.sim.filter.SimFilterException;
 import jym.sim.orm.page.IPage;
 import jym.sim.orm.page.NotPagination;
 import jym.sim.orm.page.PageBean;
+import jym.sim.orm.page.PaginationParam;
 import jym.sim.sql.IQuery;
 import jym.sim.sql.ISql;
 import jym.sim.sql.IWhere;
@@ -167,9 +168,13 @@ implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 	
 	public List<T> select(T model, String join) {
 		
-		String where = getWhereSub(model, join);
-		String sql = NOPAGE_PLOT.select(orm.getTableName(), 
-				where, plot.order().toString(), null);
+		PaginationParam param = new PaginationParam(
+				  orm.getTableName()
+				, getWhereSub(model, join)
+				, plot.order()
+				, plot.getJoinSql() );
+		
+		String sql = NOPAGE_PLOT.select(param);
 		
 		try {
 			if (super.isShowSql()) Tools.plsql(sql);
@@ -181,13 +186,17 @@ implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 	}
 	
 	public List<T> select(T model, String join, final PageBean pagedata) {
-		
+		/** 如果pagedata==null 此时会抛出异常... */
 		pagedata.getCurrent();
 		
-		String where = getWhereSub(model, join);
-		final String sql = pagePlot.select(orm.getTableName(), 
-					where, plot.order().toString(), pagedata);
+		PaginationParam param = new PaginationParam(
+				  orm.getTableName()
+				, getWhereSub(model, join)
+				, plot.order()
+				, pagedata
+				, plot.getJoinSql() );
 		
+		final String sql = pagePlot.select(param);
 		final List<T> brs = new ArrayList<T>();
 		
 		query(new ISql() {
@@ -203,24 +212,41 @@ implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 		
 		final StringBuilder where = new StringBuilder();
 		
+		/* 在方法中迭代每个列并映射到bean中 */
 		loopMethod2Colume(model, new IColumnValue() {
 			boolean first = true;
 
+			/** 每个where逻辑之间的连接关键字 */
+			void linkWhereLogic() {
+				if (first) {
+					where.append("where");
+					first = false;
+				} else {
+					where.append(join);
+				}
+			}
+			
 			public void set(String column, Object value, Class<?> valueType) {
 				IWhere logic = plot.getLogicPackage(column).getWhereLogic();
 				
 				if (logic instanceof ISkipValueCheck || isValid(value, valueType) ) {
 					//XXX transformValue 负责按照策略转换输入值
-					value = logic.w(column, transformValue( value ), model);
+					value = logic.w(orm.getTableName() + '.' + column, 
+									transformValue( value ), model);
 
 					if (value!=null) {
-						if (first) {
-							where.append("where");
-							first = false;
-						} else {
-							where.append(join);
-						}
-						where.append(" (" ).append( value ).append( ") " );
+						linkWhereLogic();
+						where.append( " (" ).append( value ).append( ") " );
+					}
+				}
+				
+				ISelectJoin sjoin = plot.getLogicPackage(column).getJoinLogic();
+				
+				if (sjoin!=null) {
+					String swhere = sjoin.getWhere(model);
+					if (swhere!=null) {
+						linkWhereLogic();
+						where.append( " (" ).append( swhere ).append( ") " );
 					}
 				}
 			}

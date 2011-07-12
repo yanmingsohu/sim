@@ -125,10 +125,10 @@ public class LoopBeanField<Bean, TARGET_TYPE> {
 	}
 	
 	/**
-	 * 从saver中读取数据并推入到bean中
+	 * 从loader中读取数据并推入到bean中
 	 * 
 	 * @param bean
-	 * @param saver
+	 * @param loader
 	 * @throws BeanException 
 	 */
 	public void save(Bean bean, ILoader<TARGET_TYPE> loader) throws BeanException {

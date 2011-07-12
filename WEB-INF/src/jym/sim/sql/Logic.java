@@ -2,11 +2,13 @@
 
 package jym.sim.sql;
 
+import jym.sim.orm.ISelectJoin;
 import jym.sim.orm.ISqlLogic;
 import jym.sim.orm.IUpdateLogic;
 import jym.sim.sql.logic.DateRange;
 import jym.sim.sql.logic.DefinitionLogic;
 import jym.sim.sql.logic.FixedLogic;
+import jym.sim.sql.logic.JoinTable;
 import jym.sim.sql.logic.OperatorIN;
 import jym.sim.sql.logic.OperatorOR;
 
@@ -14,6 +16,24 @@ import jym.sim.sql.logic.OperatorOR;
  * 数据库查询where字句中逻辑判断策略,IWhere.w()方法返回null,则忽略这个条件
  */
 public class Logic implements ISqlLogic {
+	
+////////////////////// -----------级联查询-------------------------------- ////
+	
+	/**
+	 * 用tableName的joinColumn列与在IPlot.fieldPlot方法中参数colname列进行left join操作<br>
+	 * joinColumn不能用于查询结果, 但可以装入条件中, on的条件使用相等逻辑, 
+	 * 
+	 * @param tableName - 进行leftjoin的表格名字
+	 * @param joinColumn - tableName指定的表格的列, 
+	 * 		该列会出现在on语法中, 为空会抛出NULL异常
+	 * @param where - 整个查询中的where附加条件, 该参数可以为空, 
+	 * 		或者指定的属性值也为空则生成的sql中也不会附加该条件
+	 * */
+		public static final ISelectJoin JOIN(String tableName, 
+				String joinColumn, DefinitionLogic where) {
+			
+			return new JoinTable(tableName, joinColumn, where);
+		}
 	
 ////////////////////// -----------更新判断-------------------------------- ////
 	
@@ -127,7 +147,7 @@ public class Logic implements ISqlLogic {
 	 * 
 	 * @param defstr - 生成where子句的模式字符串
 	 * */
-		public static final IWhere DEF(String defstr) {
+		public static final DefinitionLogic DEF(String defstr) {
 			return new DefinitionLogic(defstr);
 		};
 		

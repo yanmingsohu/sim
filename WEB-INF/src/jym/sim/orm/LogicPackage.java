@@ -10,8 +10,9 @@ public class LogicPackage {
 	
 	public static final LogicPackage DEFAULT = new LogicPackage();
 	
-	private IWhere whereLogic = Logic.EQ;
+	private IWhere whereLogic;
 	private IUpdateLogic updateLogic;
+	private ISelectJoin joinLogic;
 	
 	
 	protected LogicPackage(ISqlLogic[] log) {
@@ -19,11 +20,18 @@ public class LogicPackage {
 			for (int i=0; i<log.length; ++i) {
 				if (log[i] instanceof IWhere) {
 					whereLogic = (IWhere) log[i];
-				}
+				} else
 				if (log[i] instanceof IUpdateLogic) {
 					updateLogic = (IUpdateLogic) log[i];
+				} else
+				if (log[i] instanceof ISelectJoin) {
+					joinLogic = (ISelectJoin) log[i];
 				}
 			}
+		}
+		
+		if (whereLogic==null) {
+			whereLogic = Logic.EQ;
 		}
 	}
 	
@@ -41,5 +49,12 @@ public class LogicPackage {
 	 */
 	protected IUpdateLogic getUpdateLogic() {
 		return updateLogic;
+	}
+	
+	/**
+	 * 如果没有指定策略,则返回null
+	 */
+	protected ISelectJoin getJoinLogic() {
+		return joinLogic;
 	}
 }

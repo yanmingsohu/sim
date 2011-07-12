@@ -6,16 +6,18 @@ package jym.sim.orm.page;
  * 此实现类不分页数据,select方法的page参数可以为null
  */
 public class NotPagination implements IPage {
-	
-	private final static String SELECT = "select * from ";
 
-	public String select(String tableName, String whereSub, String order, PageBean page) {
-		StringBuilder buff = new StringBuilder(SELECT);
-		buff.append(tableName);
+	
+	public String select(PaginationParam parm) {
+		StringBuilder buff = new StringBuilder("select ");
+		buff.append(parm.getTableName()).append(".* from ");
+		buff.append(parm.getTableName());
 		buff.append(BLANK);
-		buff.append(whereSub);
+		buff.append(parm.getJoin());
 		buff.append(BLANK);
-		buff.append(order);
+		buff.append(parm.getWhereSub());
+		buff.append(BLANK);
+		buff.append(parm.getOrder());
 		
 		return buff.toString();
 	}

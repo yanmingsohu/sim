@@ -12,16 +12,25 @@ public interface IPlot {
 	 * 未映射的实体属性使用表格名匹配<br>
 	 * <br>
 	 * <b>如果fieldName不是简单变量类型:</b>则必须调用三个参数的fieldPlot方法<br>
-	 * <br>
-	 * logics参数的说明:<br>
+	 * <br><br>
+	 * 
+	 * logics参数的说明:(如果参数中类型重复则靠后的参数会覆盖之前的参数)<br><br>
+	 * 
 	 * <b>select语句使用IWhere接口:</b><br>
 	 * 	当使用实体做参数执行select时, colname列的逻辑方法<br>
 	 *  如果fieldName=='value', log==Logic.EQ, 则where语句为<br>
 	 * 	<code>where colname = 'value'</code>
-	 * <br>
+	 * <br><br>
+	 * 
 	 * <b>update语句使用IUpdateLogic接口:</b><br>
 	 *  当实体做参数执行updata时, colname列如何拼装为sql, 该接口为更新为null值提供支持<br>
 	 *  如果未指定行为,默认使用全局有效检查策略,否则全局策略会被覆盖
+	 * <br><br>
+	 * 
+	 * <b>select语句使用ISelectJoin接口:(当前只支持一个外表)</b><br>
+	 *  当使用实体做参数执行select时, 使用colname列与另一个表进行级联查询<br>
+	 *  fieldName属性的值不影响也不参与生成的join语句
+	 * <br>
 	 * 
 	 * @param fieldName -- 属性名,必须有相应的setter方法,不区分大小写
 	 * @param colname -- 列名,不区分大小写

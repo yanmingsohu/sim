@@ -20,6 +20,7 @@ public class DefinitionLogic implements IWhere, ISkipValueCheck {
 
 	private List<String> deflist;
 	
+	
 	public DefinitionLogic(String str) {
 		deflist = new ArrayList<String>();
 		Matcher m = exp.matcher(str);

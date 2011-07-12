@@ -27,7 +27,7 @@ class MethodMapping {
 	
 	/**
 	 * 抛出异常,说明方法不符合要求<br>
-	 * if log==null log=Logic.EQ
+	 * if (log==null) log=Logic.EQ
 	 */
 	MethodMapping(Method md, ISelecter<?> is, String pk, ISqlLogic[] log, FilterPocket _outfilter)	{
 		
@@ -38,6 +38,7 @@ class MethodMapping {
 		outfilter	= _outfilter;
 		
 		Class<?>[] pt0 = md.getParameterTypes();
+		
 		if (pt0.length==1) {
 			trans = getTransitionType(pt0[0]);
 		} else {
@@ -57,11 +58,11 @@ class MethodMapping {
 		} catch (Exception e) {
 			e.printStackTrace();
 			warnning(method + "与数据库类型不匹配(原因:"
-					+ e.getMessage()
-					+ "),已经设置为null");
+							+ e.getMessage()
+							+ "),已经设置为null");
 		}
 		
-		//XXX outfilter 按策略转换数据库中的值到实体属性中
+		/*XXX outfilter 按策略转换数据库中的值到实体属性中 */
 		method.invoke(model, outfilter.filter(data) );
 	}
 	
