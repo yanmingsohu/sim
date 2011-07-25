@@ -22,6 +22,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import jym.sim.util.SqlFormat;
 import jym.sim.util.Tools;
 import jym.sim.util.UsedTime;
 
@@ -37,6 +38,7 @@ public class JdbcTemplate implements IQuery, ICall {
 	private static int maxSessCount = 20;
 	private static int connectCount = 1;
 	
+	private boolean needformat = false;
 	private boolean showsql = false;
 	private boolean lazyMode = false;
 	private boolean debug = false;
@@ -78,6 +80,14 @@ public class JdbcTemplate implements IQuery, ICall {
 	 */
 	public void showSql(boolean show) {
 		showsql = show;
+	}
+	
+	/**
+	 * 格式化sql的输出,默认不格式化
+	 * @param need - true格式化
+	 */
+	public void needFormat(boolean need) {
+		needformat = need;
 	}
 	
 	public boolean isShowSql() {
@@ -147,7 +157,11 @@ public class JdbcTemplate implements IQuery, ICall {
 			result = sql.exe(proxy);
 			
 			if (showsql) {
-				Tools.plsql(proxy.getSql());
+				String sqls = proxy.getSql();
+				if (needformat) {
+					sqls = SqlFormat.format(sqls);
+				}
+				Tools.plsql(sqls);
 				UsedTime.endAndPrint();
 			}
 		

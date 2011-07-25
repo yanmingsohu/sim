@@ -3,11 +3,12 @@
 package jym.sim.sql.logic;
 
 import jym.sim.orm.ISelectJoin;
+import jym.sim.sql.IWhere;
 
 
 public class JoinTable implements ISelectJoin {
 
-	private DefinitionLogic where;
+	private IWhere where;
 	private String joinColumn;
 	private String tableName;
 	
@@ -17,7 +18,7 @@ public class JoinTable implements ISelectJoin {
 	private String cache_join;
 	
 
-	public JoinTable(String tableName, String joinColumn, DefinitionLogic where) {
+	public JoinTable(String tableName, String joinColumn, IWhere where) {
 		if (tableName  ==null) throw new NullPointerException();
 		if (joinColumn ==null) throw new NullPointerException();
 		if (where      ==null) throw new NullPointerException();

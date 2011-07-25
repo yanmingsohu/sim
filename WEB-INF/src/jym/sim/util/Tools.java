@@ -69,7 +69,7 @@ public class Tools {
 	}
 	
 	public static void plsql(String sql) {
-		out.println( String.format("sql(%1$#06x): %2$s", sqlid++, sql) );
+		out.println( String.format("sql(%1$#06x): \n%2$s", sqlid++, sql) );
 	}
 	
 	public static void pl(Object ...o) {

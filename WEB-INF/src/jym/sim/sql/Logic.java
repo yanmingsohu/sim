@@ -21,16 +21,21 @@ public class Logic implements ISqlLogic {
 	
 	/**
 	 * 用tableName的joinColumn列与在IPlot.fieldPlot方法中参数colname列进行left join操作<br>
-	 * joinColumn不能用于查询结果, 但可以装入条件中, on的条件使用相等逻辑, 
+	 * joinColumn不能用于查询结果, 但可以装入条件中, on的条件使用相等逻辑 
+	 * 
+	 * <br><br><b>传给IWhere.w()的value参数总是为null, 所以不是所有的IWhere都适合作为参数
+	 * <br>最好是同时实现了ISkipValueCheck接口</b>
 	 * 
 	 * @param tableName - 进行leftjoin的表格名字
 	 * @param joinColumn - tableName指定的表格的列, 
 	 * 		该列会出现在on语法中, 为空会抛出NULL异常
 	 * @param where - 整个查询中的where附加条件, 该参数可以为空, 
 	 * 		或者指定的属性值也为空则生成的sql中也不会附加该条件
+	 * 
+	 * @see jym.sim.orm.ISkipValueCheck
 	 * */
 		public static final ISelectJoin JOIN(String tableName, 
-				String joinColumn, DefinitionLogic where) {
+				String joinColumn, IWhere where) {
 			
 			return new JoinTable(tableName, joinColumn, where);
 		}
