@@ -519,8 +519,8 @@ public class JdbcTemplate implements IQuery, ICall {
 		
 		public void close() {
 			if (conn!=null && isAutoCommit()) {
-				// 把JdbcSession从线程变量中移除,
-				// 直到没有其他引用时再释放连接
+				/* 把JdbcSession从线程变量中移除,
+				   直到没有其他引用时再释放连接 */
 				db_connect.set(null);
 				
 				if (!lazyMode) {

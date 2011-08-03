@@ -21,34 +21,47 @@ import jym.sim.util.Tools;
  */
 public class PoolFactory {
 	
+	private static final long RETRY_TIME = 8000;
+	private static final char BEEP = 7;
+	
+	private boolean waitSuccess;
 	private DataSource _ds;
 	
+	
+	/**
+	 * 不管数据库是否能连接,立即返回
+	 * @param fromfile
+	 * @throws IOException
+	 */
+	public PoolFactory(String fromfile) throws IOException {
+		this(fromfile, false);
+	}
 	
 	/**
 	 * 创建连接池工厂,配置从文件classpath/[fromfile]中读取
 	 * 
 	 * @param fromfile 配置文件的路径,配置文件的格式参考 test/datasource.conf
+	 * @param waitSuccess 是否阻塞操作直到数据库正常使用才返回, 默认false
 	 * @throws IOException - 配置文件读取错误,连接数据库错误
 	 */
-	public PoolFactory(String fromfile) throws IOException {
+	public PoolFactory(String fromfile, boolean waitSuccess) throws IOException {
+		this.waitSuccess = waitSuccess;
+		
 		Properties prop = new Properties();
 		readFromFile(prop, fromfile);
 		PoolConf pc = createConfig(prop);
 		
-		
-		if (!Tools.isNull(pc.getJndiName())) {
-			try {
-				_ds = createFromJndi(pc);
-				success("使用服务器在jndi中提供的数据源");
-			} catch (Exception e) {
-				Tools.pl(e);
-			}
-		}
-		
-		if (_ds==null) {
+		try {
+			_ds = createFromJndi(pc);
+			success("使用服务器在jndi中提供的数据源, jndi: [" + pc.getJndiName() + "]");
+		} catch (Exception e) {
 			_ds = createFromLocal(pc);
-			success("创建了独立的数据源");
+			success("创建了独立的数据源, url: [" + pc.getUrl() + "]");	
 		}
+	}
+	
+	public DataSource getDataSource() {
+		return _ds;
 	}
 	
 	private PoolConf createConfig(Properties prop) {
@@ -90,23 +103,24 @@ public class PoolFactory {
 			
 		} catch (IllegalAccessException e) {
 			error("指定的类的构造方法不可访问", conf);
+		} catch (Exception e) {
+			error("错误", conf);
 		}
 		
 		return null;
 	}
 	
-	private void error(String msg, PoolConf conf) throws IOException {
-		throw new IOException("创建连接池失败(" + conf.getPoolClassName() + ")");
-	}
-	
 	private DataSource createFromJndi(PoolConf conf) throws IOException, NamingException {
 		String name = conf.getJndiName();
+		if (Tools.isNull(name)) {
+			throw new NamingException("null的jndi name");
+		}
         
 		InitialContext cxt = new InitialContext();
 
 		DataSource ds = (DataSource) cxt.lookup(name);
 		if (ds == null) {
-			throw new NamingException("DataSource为空,poolname指定的name无效:" + name);
+			throw new NamingException("DataSource为空, poolname指定的name无效: " + name);
 		}
 
 		return ds;
@@ -120,24 +134,35 @@ public class PoolFactory {
 			if (in!=null) in.close();
 		}
 	}
-
-	public DataSource getDataSource() {
-		return _ds;
+	
+	private void success(String msg) {
+		
+		while (waitSuccess) {
+			try {
+				_ds.setLogWriter(new LogStream().getOut());
+				Tools.pl("PoolFactory : 数据源连接池创建完成," + msg);
+				break;
+				
+			} catch (SQLException e) {
+				Tools.pl("PoolFactory : 数据源连接错误, 始化失败:" + e.getMessage());
+				
+				if (waitSuccess) {
+					Tools.pl("PoolFactory : 重试..." + BEEP + BEEP);
+					
+					try {
+						Thread.sleep(RETRY_TIME);
+					} catch (InterruptedException e1) {}
+				}
+			}
+		}
 	}
 	
 	private int toInt(String i) {
 		return Integer.parseInt(i);
 	}
 	
-	private void success(String msg) {
-		Tools.pl("PoolFactory : 数据源连接池创建完成," + msg);
-		
-		try {
-			_ds.setLogWriter(new LogStream().getOut());
-		} catch (SQLException e) {
-			Tools.pl("数据源连接日志初始化失败");
-			Tools.plerr(e);
-		}
+	private void error(String msg, PoolConf conf) throws IOException {
+		throw new IOException("创建连接池失败(" + conf.getPoolClassName() + ")");
 	}
 	
 	

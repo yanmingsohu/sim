@@ -7,7 +7,18 @@ import jym.sim.sql.IWhere;
 
 
 public class JoinTable implements ISelectJoin {
+	
+	public final static class JoinType {
+		public static final JoinType JOIN 		= new JoinType(" join ");
+		public static final JoinType LEFT_JOIN 	= new JoinType(" left join ");
+		public static final JoinType RIGHT_JOIN	= new JoinType(" right join ");
+		
+		private String type;
+		
+		private JoinType(String tname) {type=tname;}
+	}
 
+	
 	private IWhere where;
 	private String joinColumn;
 	private String tableName;
@@ -16,9 +27,15 @@ public class JoinTable implements ISelectJoin {
 	private String mainColumn;
 	
 	private String cache_join;
+	private String joinType;
 	
 
+	/** 默认为LEFT_JOIN */
 	public JoinTable(String tableName, String joinColumn, IWhere where) {
+		this(JoinType.LEFT_JOIN, tableName, joinColumn, where);
+	}
+	
+	public JoinTable(JoinType joinType, String tableName, String joinColumn, IWhere where) {
 		if (tableName  ==null) throw new NullPointerException();
 		if (joinColumn ==null) throw new NullPointerException();
 		if (where      ==null) throw new NullPointerException();
@@ -26,6 +43,7 @@ public class JoinTable implements ISelectJoin {
 		this.tableName  = tableName;
 		this.joinColumn = joinColumn;
 		this.where      = where;
+		this.joinType	= joinType.type;
 	}
 
 	public String getJoin() {
@@ -34,7 +52,7 @@ public class JoinTable implements ISelectJoin {
 			if (mainColumn==null) throw new NullPointerException();
 			
 			StringBuilder sql = new StringBuilder();
-			sql.append( " left join "	);
+			sql.append(  joinType		);
 			sql.append(  tableName		);
 			sql.append( " on "			);
 			sql.append(  mainTable ).append('.').append(mainColumn);

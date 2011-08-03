@@ -10,11 +10,8 @@ import java.util.Map;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.tagext.TagSupport;
 
-import jym.sim.util.Tools;
-
-public class SelectTag extends TagSupport {
+public class SelectTag extends TagBase {
 
 	private static final long serialVersionUID = 1535321924476706984L;
 	
@@ -157,8 +154,8 @@ public class SelectTag extends TagSupport {
 		value = v;
 	}
 	
-	private void error(String s) {
-		Tools.pl("SelectTag: " + s);
+	protected void error(String s) {
+		super.error(s);
 		errorMsg = s;
 	}
 

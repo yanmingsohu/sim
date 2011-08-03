@@ -7,6 +7,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.List;
 
 public class BeanUtil<TYPE> {
 	
@@ -72,6 +73,24 @@ public class BeanUtil<TYPE> {
 		}
 		Constructor<?> cons = clazz.getConstructor(cls);
 		return cons.newInstance(params);
+	}
+	
+	/**
+	 * 返回该对象继承到的所有的接口(包括继承到的接口)
+	 */
+	public static Class<?>[] allInterfaces(Object bean) {
+		List<Class<?>> inters = new ArrayList<Class<?>>();
+		Class<?> clazz = bean.getClass();
+		
+		do {
+			Class<?>[] cls = clazz.getInterfaces();
+			for (int i=0; i<cls.length; ++i) {
+				inters.add(cls[i]);
+			}
+			clazz = clazz.getSuperclass();
+		} while (clazz!=null);
+		
+		return inters.toArray(new Class<?>[0]);
 	}
 	
 	/**

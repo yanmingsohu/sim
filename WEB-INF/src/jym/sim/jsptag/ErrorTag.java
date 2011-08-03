@@ -8,9 +8,8 @@ import java.util.regex.PatternSyntaxException;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.tagext.TagSupport;
 
-public class ErrorTag extends TagSupport {
+public class ErrorTag extends TagBase {
 	
 	private static final long serialVersionUID = -2671398119225540784L;
 	private Throwable error;

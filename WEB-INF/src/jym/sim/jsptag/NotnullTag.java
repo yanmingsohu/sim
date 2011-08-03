@@ -8,6 +8,7 @@ public class NotnullTag extends TagSupport {
 	private static final long serialVersionUID = 3149365591295559804L;
 	private boolean notnull = true;
 
+	
 	@Override
 	public int doStartTag() throws JspException {
 		return notnull? EVAL_BODY_INCLUDE: SKIP_BODY;

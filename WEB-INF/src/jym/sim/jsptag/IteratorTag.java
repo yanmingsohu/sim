@@ -6,11 +6,8 @@ import java.util.Iterator;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.tagext.TagSupport;
 
-import jym.sim.util.Tools;
-
-public class IteratorTag extends TagSupport {
+public class IteratorTag extends TagBase {
 	
 	private static final long serialVersionUID = -6643507593386688055L;
 	/**
@@ -103,10 +100,6 @@ public class IteratorTag extends TagSupport {
 		} catch (IOException e) {
 			error(e.getMessage());
 		}
-	}
-	
-	private void error(String s) {
-		Tools.pl("IteratorTag warn : " + s);
 	}
 
 	public void setSkip(Integer skip) {

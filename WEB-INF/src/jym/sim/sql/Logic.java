@@ -34,10 +34,28 @@ public class Logic implements ISqlLogic {
 	 * 
 	 * @see jym.sim.orm.ISkipValueCheck
 	 * */
+		public static final ISelectJoin LEFT_JOIN(String tableName, 
+				String joinColumn, IWhere where) {
+			
+			return new JoinTable(JoinTable.JoinType.LEFT_JOIN, tableName, joinColumn, where);
+		}
+		
+	/**
+	 * @see jym.sim.sql.Logic.LEFT_JOIN
+	 * */
+		public static final ISelectJoin RIGHT_JOIN(String tableName, 
+				String joinColumn, IWhere where) {
+			
+			return new JoinTable(JoinTable.JoinType.RIGHT_JOIN, tableName, joinColumn, where);
+		}
+		
+	/**
+	 * @see jym.sim.sql.Logic.LEFT_JOIN
+	 * */	
 		public static final ISelectJoin JOIN(String tableName, 
 				String joinColumn, IWhere where) {
 			
-			return new JoinTable(tableName, joinColumn, where);
+			return new JoinTable(JoinTable.JoinType.JOIN, tableName, joinColumn, where);
 		}
 	
 ////////////////////// -----------更新判断-------------------------------- ////
