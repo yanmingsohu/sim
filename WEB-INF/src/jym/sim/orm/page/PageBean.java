@@ -11,12 +11,14 @@ public class PageBean {
 	public final static int DEFAULT_TOTAL_PAGE = 1;
 	public final static int DEFAULT_ONE_SIZE = 20;
 	
-	// 当前页,从1开始
+	/** 当前页,从1开始 */
 	private int current;
-	// 页码总数
+	/** 页码总数 */
 	private int total;
-	// 一页显示的数量
+	/** 一页显示的数量 */
 	private int onesize;
+	/** 不分页重数据的数量 */
+	private long totalItem;
 	
 	/**
 	 * 默认值: current = 1, total = 1, onesize = 20
@@ -88,6 +90,7 @@ public class PageBean {
 		int tc = rownum % getOnesize();
 		if (tc>0) tp++;
 		setTotal(tp);
+		totalItem = rownum;
 	}
 	
 	/**
@@ -97,5 +100,10 @@ public class PageBean {
 	 */
 	public int getEndPosition() {
 		return getStartPosition() + getOnesize() - 1;
+	}
+
+	/** 未分页时的总数据量 */
+	public long getTotalItem() {
+		return totalItem;
 	}
 }
