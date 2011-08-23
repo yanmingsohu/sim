@@ -9,6 +9,7 @@ import jym.sim.sql.logic.DateRange;
 import jym.sim.sql.logic.DefinitionLogic;
 import jym.sim.sql.logic.FixedLogic;
 import jym.sim.sql.logic.JoinTable;
+import jym.sim.sql.logic.LogicRange;
 import jym.sim.sql.logic.OperatorIN;
 import jym.sim.sql.logic.OperatorOR;
 
@@ -129,6 +130,21 @@ public class Logic implements ISqlLogic {
 	 * */
 		public static final IWhere DATE_RANGE(String beginFieldName, String endFieldName) {
 			return new DateRange(beginFieldName, endFieldName);
+		};
+		
+	/**
+	 * 范围查询适合能进行大于,小于比较的字段(含等于)<br>
+	 *  生成类似于:<br>
+	 *  <code>[relatedSql] <= [maxField] and [relatedSql] >= [minField]<code><br/>
+	 *  <br/>
+	 *  查询结果首先基于最大最小值的区间,如果一个为空(如最小值),则只使用另一个作为条件(如最大值)
+	 *  如果都为空,则使用默认字段的相等比较(如果hasEq==true)<br/>
+	 *  <br/>
+	 *  minField,maxField通常使用动态表达式(${...})从另一个属性中取值<br/>
+	 *  relatedSql通常和字段名相同,如果需要类型转换等操作,则需要一个复杂的sql表达式(如TO_CHAR(OPEN_DATE,'yyyy-MM-dd'))
+	 * */
+		public static final IWhere RANGE(String relatedSql, String minField, String maxField, boolean hasEq) {
+			return new LogicRange(relatedSql, minField, maxField, hasEq);
 		};
 		
 	/**
