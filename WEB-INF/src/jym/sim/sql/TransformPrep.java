@@ -14,11 +14,13 @@ import jym.sim.util.Tools;
 /**
  * 把普通语句转换为绑定变量,并用PreparedStatement调用<br>
  * 不能检查语法错误, 当该方法被JdbcTemplate.quary调用后会设置绑定变量的值
- * 并且会执行execute方法,通常需要包装之后调用quary
+ * 并且会执行execute方法,通常需要包装之后调用quary<br>
+ * <br>
+ * 当前支持的变量转换类型,简单的>=,<=,<>,>,<,like,values中的变量集
  */
 public class TransformPrep implements IPrepSql {
 	
-	private final static char[][] W_KEY = {
+	private final static char[][] W_KEY =	{
 		 {'>', '='							} 
 		,{'<', '='							}
 		,{'<', '>'							}
@@ -191,7 +193,7 @@ public class TransformPrep implements IPrepSql {
 					c==',' || c==')') {
 					break;
 				}
-				if (c<'0' || c>'9') {
+				if (c!='.' && c!='-' && (c<'0' || c>'9')) {
 					right = false;
 					break;
 				}
@@ -224,10 +226,11 @@ public class TransformPrep implements IPrepSql {
 	 * 在控制台显示分析后的参数情况
 	 */
 	public void debug() {
+		Tools.plsql(getSql());
 		for (int i=0; i<params.size(); ++i) {
 			Param p = params.get(i);
-			Tools.pl("index:", i+1, ", value:", p.value, 
-					'\t', p.getClass().getSimpleName());
+			Tools.pl("index:", i+1, ",\ttype:[", p.getClass().getSimpleName(), 
+					"], value::", p.value);
 		}
 	}
 	

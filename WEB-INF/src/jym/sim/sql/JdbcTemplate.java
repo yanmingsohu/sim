@@ -34,14 +34,15 @@ public class JdbcTemplate implements IQuery, ICall {
 	private final ThreadLocal<IExceptionHandle> 
 				handle = new ThreadLocal<IExceptionHandle>();
 	
-	private final static int ADD_BASE = 5;
-	private static int maxSessCount = 20;
-	private static int connectCount = 1;
+	private final static int ADD_BASE 	= 5;
+	private static int maxSessCount 	= 20;
+	private static int connectCount 	= 1;
 	
-	private boolean needformat = false;
-	private boolean showsql = false;
-	private boolean lazyMode = false;
-	private boolean debug = false;
+	private boolean needformat 	= false;
+	private boolean showsql 	= false;
+	private boolean lazyMode 	= false;
+	private boolean debug 		= false;
+	private boolean convertSql	= false;
 	private DataSource src;
 	
 	
@@ -80,6 +81,17 @@ public class JdbcTemplate implements IQuery, ICall {
 	 */
 	public void showSql(boolean show) {
 		showsql = show;
+	}
+	
+	/**
+	 * 如果设置为true,则所有的sql语句都会被转换为PreparedStatement
+	 * 的方式调用,此时需要把sql语句进行转换,并且设置给语句中的参数绑定变量<br>
+	 * 默认为false
+	 * 
+	 * @param use - true则使用PreparedStatement方式调用sql
+	 */
+	public void convertPreparedSql(boolean use) {
+		convertSql = use;
 	}
 	
 	/**
@@ -141,6 +153,16 @@ public class JdbcTemplate implements IQuery, ICall {
 	}
 		
 	public Object query(IResultSql sql) {
+		if (convertSql) {
+			try {
+				return convertQuary(sql);
+			} catch (SQLException e) {
+				/* 是否应该再次用普通模式调用sql呢,如果抛出的异常属于业务上的错误
+				 * 则不应该调用,但是暂时没有方法能有效的判断这种情况 */
+				// Tools.pl("<<转换为预编译模式失败,转用普通模式调用SQL>>");
+				return null;
+			}
+		}
 		
 		ProxyStatement proxy  = null;
 		Statement st = null;
@@ -156,14 +178,7 @@ public class JdbcTemplate implements IQuery, ICall {
 			
 			result = sql.exe(proxy);
 			
-			if (showsql) {
-				String sqls = proxy.getSql();
-				if (needformat) {
-					sqls = SqlFormat.format(sqls);
-				}
-				Tools.plsql(sqls);
-				UsedTime.endAndPrint();
-			}
+			showSql(proxy);
 		
 		} catch (SQLException e) {
 			String msg = e.getMessage();
@@ -286,6 +301,68 @@ public class JdbcTemplate implements IQuery, ICall {
 			}
 		}
 	}
+	
+	private Object convertQuary(IResultSql sql) throws SQLException {
+		
+		PreparedStatementHandler handler = new PreparedStatementHandler();
+		
+		ProxyStatement proxy = (ProxyStatement) Proxy.newProxyInstance(
+								this.getClass().getClassLoader(), 
+								new Class[]{ ProxyStatement.class },
+								handler );
+		
+		Object result = null;
+		boolean showTrandSql = showsql;
+		
+		try {
+			UsedTime.start("执行sql");
+			result = sql.exe(proxy);
+			showSql(handler);
+			
+		} catch (SQLException e) {
+			String msg = e.getMessage();
+			if (msg==null) {
+				msg = "未知的sql异常";
+			}
+			
+			Tools.p(msg.trim() + ": ");
+			Tools.plsql(handler.getSql());
+			showTrandSql = true;
+			
+			handleException(e);
+			throw e;
+			
+		} catch (Throwable t) {
+			t.printStackTrace();
+			handleException(t);
+			
+		} finally {
+			if (showTrandSql) {
+				Tools.p("[转换后的SQL]: ");
+				handler.tp.debug();
+			}
+			try {
+				handler.close();
+			} catch (SQLException e) {
+			}
+		}
+		
+		return result;
+	}
+	
+	private void showSql(IShowSql proxy) {
+		if (showsql) {
+			String sqls = proxy.getSql();
+			if (needformat) {
+				sqls = SqlFormat.format(sqls);
+			}
+			if (convertSql) {
+				Tools.p("[--[转换为预编译模式]--]::");
+			}
+			Tools.plsql(sqls);
+			UsedTime.endAndPrint();
+		}
+	}
 
 	public void regExceptionHandle(IExceptionHandle eh) {
 		handle.set(eh);
@@ -323,6 +400,74 @@ public class JdbcTemplate implements IQuery, ICall {
 						new CallStatementHandler(cst) );
 	}
 	
+	
+	/**
+	 * 实际是一个Statement接口<br>
+	 * 包装PreparedStatement以便能传给query<br>
+	 */
+	public class PreparedStatementHandler implements InvocationHandler, IShowSql {
+		private PreparedStatement ps;
+		private JdbcSession js;
+		private TransformPrep tp = new TransformPrep();
+		private String sql;
+
+		public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+			String mname = method.getName();
+
+			if (mname.equals("executeQuery")) {
+				doSql( (String) args[0] );
+				return ps.getResultSet();
+			}
+			else if (mname.equals("executeUpdate")) {
+				doSql( (String) args[0] );
+				return ps.getUpdateCount();
+			}
+			else if (mname.equals("execute")) {
+				doSql( (String) args[0] );
+				return ps.getUpdateCount()<=0;
+			}
+			else if (mname.equals("getSql")) {
+				return sql;
+			}
+			else if (mname.equals("close")) {
+				/* 不执行关闭操作,必须等到外层调用结束才能关闭 */
+				return null;
+			}
+			
+			try {
+				return method.invoke(ps, args);
+				
+			} catch (InvocationTargetException e) {
+				throw e.getTargetException();
+			}
+		}
+		
+		/* 关闭PreparedStatement */
+		public void close() throws SQLException {
+			if (ps!=null) {
+				ps.close();
+			}
+			if (js!=null) {
+				js.close();
+			}
+		}
+		
+		private void doSql(String _sql) throws SQLException, Throwable {
+			sql = _sql;
+			tp.clear();
+			tp.setSql(_sql);
+
+			js = initSession();
+			Connection conn = js.getConnection();
+			ps = conn.prepareStatement(tp.getSql());
+			tp.exe(ps);
+		}
+		
+		/** 返回原始sql */
+		public String getSql() {
+			return sql;
+		}
+	}
 	
 	/**
 	 * CallableStatement代理, 用于获取ResultSet并在CallableStatement关闭时关闭
@@ -395,7 +540,7 @@ public class JdbcTemplate implements IQuery, ICall {
 				sql = (String) ps[0];
 			}
 			else if (mname.equals("getSql")) {
-				return getSql();
+				return sql;
 			}
 			
 			try {
@@ -405,15 +550,15 @@ public class JdbcTemplate implements IQuery, ICall {
 				throw e.getTargetException();
 			}
 		}
-		
-		private String getSql() {
-			return sql;
-		}
 	}
 	
-	private interface ProxyStatement extends Statement {
-		public String getSql();
+/*-------------------------------------------- 用来显示sql的接口 ----*/
+	private interface IShowSql {
+		String getSql();
 	}
+	private interface ProxyStatement extends Statement, IShowSql {
+	}
+/*-----------------------------------------------------------------*/
 
 
 	/**
