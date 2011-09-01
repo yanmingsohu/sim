@@ -25,7 +25,7 @@ public class TestPrepTrans {
 		Tools.pl();
 		tp.debug();
 		
-		pressure(sr.getResultSql());
+		//pressure(sr.getResultSql());
 	}
 	
 	public static void excute(final TransformPrep tp) throws IOException {

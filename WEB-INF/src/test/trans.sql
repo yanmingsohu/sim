@@ -38,7 +38,7 @@ from (
   where (
     V_OPER_TO_CUST.OPERATOR_SN = 61
   ) and (
-    bp_customer_info.cust_state = '0'
+    bp_customer_info.cust_state = '0'||34
   )
 );
 
@@ -47,4 +47,7 @@ INSERT INTO bm_meter_factory(
   fac_name,fac_address,fac_id
 )VALUES(
   'a',   'b'   ,1,2,
-)
+);
+
+
+select SEQ_AREA_SN.nextval from dual;

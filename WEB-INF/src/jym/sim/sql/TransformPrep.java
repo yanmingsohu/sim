@@ -17,6 +17,7 @@ import jym.sim.util.Tools;
  * 并且会执行execute方法,通常需要包装之后调用quary<br>
  * <br>
  * 当前支持的变量转换类型,简单的>=,<=,<>,>,<,like,values中的变量集
+ * <b>变量必须是操作符的右值才能正确转换</b>
  */
 public class TransformPrep implements IPrepSql {
 	
@@ -29,7 +30,9 @@ public class TransformPrep implements IPrepSql {
 		,{'<'								}
 		,{'l', 'i', 'k', 'e'				}
 		,{'v', 'a', 'l', 'u', 'e', 's'		} // 7
+		,{'|', '|'							} // 暂时不支持这个运算
 //		,{'b', 'e', 't', 'w', 'e', 'e', 'n'	} // 涉及第二个参数?
+//		,{'a', 'n', 'd'						} // 第二个参数表达式
 	};
 	
 	private List<Param> params;
@@ -104,14 +107,16 @@ public class TransformPrep implements IPrepSql {
 				if (!inSubstr) {
 					for (int s = 0; s<W_KEY.length; ++s) {
 						int wki = 0;
+						int _chi = chi+wki;
 						key_len = W_KEY[s].length;
 						
-						while ( Character.toLowerCase(ch[chi+wki]) == W_KEY[s][wki] ) {
+						while ( _chi<ch.length && (Character.toLowerCase(ch[_chi]) == W_KEY[s][wki]) ) {
 							if (++wki>=key_len) {
 								find = true;
 								isValues = ( s==7 ); /* 第7个是values关键字 */
 								break;
 							}
+							 _chi = chi+wki;
 						}
 						
 						if ( find )

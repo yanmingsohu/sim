@@ -490,7 +490,12 @@ public class JdbcTemplate implements IQuery, ICall {
 				closeResultSet();
 			}
 			
-			Object result = method.invoke(original, args);
+			Object result = null;
+			try {
+				result = method.invoke(original, args);
+			} catch(InvocationTargetException e) {
+				throw e.getCause();
+			}
 			
 			if ( "getObject".equals(name) ) {
 				if (result instanceof ResultSet) {

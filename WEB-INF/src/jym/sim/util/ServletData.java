@@ -11,17 +11,19 @@ import javax.servlet.http.HttpSession;
 
 
 public class ServletData implements IServletData {
+	
 	private HttpServletRequest req;
 	private HttpServletResponse resp;
 	private HttpSession ses;
 	private PrintWriter out;
 	
+	
 	public ServletData(HttpServletRequest request, HttpServletResponse response) 
-	 throws IOException {
+			throws IOException {
 		req = request;
 		resp= response;
 		ses = req.getSession();
-		out =resp.getWriter();
+		out = resp.getWriter();
 	}
 	
 	public HttpServletRequest getHttpServletRequest() {
