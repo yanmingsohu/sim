@@ -227,14 +227,18 @@ public class Logic implements ISqlLogic {
 		}
 		
 		public String w(String columnName, Object value, Object model) {
+			boolean isNum = (value instanceof Number);
 			StringBuilder buff = new StringBuilder();
+			
 			buff.append(columnName);
 			buff.append(' ');
 			buff.append(op);
 			buff.append(' ');
-			buff.append('\'');
+			
+			if (!isNum) buff.append('\'');
 			buff.append(value);
-			buff.append('\'');
+			if (!isNum) buff.append('\'');
+			
 			return buff.toString();
 		}
 	}
