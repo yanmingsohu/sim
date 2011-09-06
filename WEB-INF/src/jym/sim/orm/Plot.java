@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import jym.sim.exception.OrmException;
 import jym.sim.filter.FilterPocket;
 import jym.sim.sql.IOrder;
 import jym.sim.util.BeanUtil;
@@ -102,7 +101,6 @@ class Plot<T> implements IPlot {
 		// 自动使用表格列名进行映射
 		if (usecolnamemap && !ormmap.containsKey(colname)) {
 			md = setMappingPlot(colname, colname, null, null);
-			
 		} else {
 			md = ormmap.get(colname);
 		}
@@ -116,7 +114,7 @@ class Plot<T> implements IPlot {
 						+ md.getName() + ") 时错误: " + e.getMessage());
 			}
 		} else {
-			warnning(model.getClass(), colname + " 指定的数据列名没有映射");
+			// warnning(model.getClass(), colname + " 指定的数据列名没有映射");
 		}
 	}
 	
@@ -129,28 +127,23 @@ class Plot<T> implements IPlot {
 
 		Method setm = getMethod( BeanUtil.getSetterName(fieldname) );
 		Method getm = getMethod( BeanUtil.getGetterName(fieldname) );
-		MethodMapping mm = null;
 		
-		try {
-			if (setm==null) {
-				throw new OrmException("没有setter方法");
-			}
-			mm = new MethodMapping(setm, is, pk, logics, outfilter);
-			// ormmap.set 的参数变为小写
-			ormmap.put(colname.toLowerCase(), mm);
-			reverse.put(getm, colname);
-			
-			ISelectJoin join = mm.getLogicPackage().getJoinLogic();
-			if (join!=null) {
-				join.setMainColumn(colname);
-				join.setMainTable(orm.getTableName());
-			}
-			
-		} catch (OrmException e) {
-			warnning(orm.getModelClass(), "映射属性("
-					+ fieldname + ")时错误: " + e.getMessage());
+		if (setm==null) {
+			warnning(orm.getModelClass(), "映射属性(" + fieldname + ")时错误: 没有setter方法");
+			return null;
 		}
+
+		MethodMapping mm = new MethodMapping(setm, is, pk, logics, outfilter);
+		// ormmap.set 的参数变为小写
+		ormmap.put(colname.toLowerCase(), mm);
+		reverse.put(getm, colname);
 		
+		ISelectJoin join = mm.getLogicPackage().getJoinLogic();
+		if (join!=null) {
+			join.setMainColumn(colname);
+			join.setMainTable(orm.getTableName());
+		}
+			
 		return mm;
 	}
 	

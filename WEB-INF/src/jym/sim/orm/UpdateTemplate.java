@@ -173,7 +173,7 @@ public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
 		public static final int ERROR = -1;
 		
 		private boolean b = false;
-		private int i = ERROR;
-		private Object value = null;
+		private int 	i = ERROR;
+		private Object	value = null;
 	}
 }
