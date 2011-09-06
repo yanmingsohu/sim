@@ -44,7 +44,7 @@ public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
 						values.append(',');
 					}
 					columns.append(column);
-					values.append('\'').append(transformValue(value)).append('\'');
+					appValue(values, transformValue(value));
 				}
 			}			
 		});
@@ -80,7 +80,7 @@ public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
 						sql.append(" AND ");
 					}
 					sql.append(column).append('=');
-					sql.append('\'').append(transformValue(value)).append('\'');
+					appValue(sql, transformValue(value));
 				}
 			}			
 		});
@@ -133,7 +133,7 @@ public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
 						if (value==IUpdateLogic.NULL) {
 							sql.append("null");
 						} else {
-							sql.append('\'').append(transformValue(value)).append('\'');
+							appValue(sql, transformValue(value));
 						}
 						
 					} else {
@@ -146,8 +146,8 @@ public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
 		Tools.check(result.value, "请检查IOrm.getKey()方法是否返回正确的列名:" + pk
 				+ " 或主键属性是否返回null值:" + model.getClass() );
 		
-		sql.append(" WHERE ").append( pk )
-				.append("= '").append( result.value ).append("'");
+		sql.append(" WHERE ").append( pk ).append('=');
+		appValue(sql, result.value);
 		
 		query(new ISql() {
 			public void exe(Statement stm) throws Throwable {
@@ -156,6 +156,13 @@ public class UpdateTemplate<T> extends SelectTemplate<T> implements IUpdate<T> {
 		});
 		
 		return result.i;
+	}
+	
+	private static void appValue(StringBuilder buff, Object value) {
+		boolean isStr = !(value instanceof Number);
+		if (isStr) buff.append('\'');
+		buff.append(value);
+		if (isStr) buff.append('\'');
 	}
 	
 //	private void warnning(String msg) {
