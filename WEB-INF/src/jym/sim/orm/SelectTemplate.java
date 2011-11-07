@@ -274,20 +274,23 @@ implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 			catch(Exception e) {}
 				
 				pagedata.setTotalRow(total);
-				
-				do {
-					T model = fromRowData(cols, rs, 0);
-					brs.add(model);
-				} while ( rs.next() );
-			}
 			
+				T model = fromRowData(cols, rs, 0);
+				brs.add(model);
+				/* 第一行结束需要通知Plot停止自动映射 */
+				plot.stopColnameMapping();
+				
+				while (rs.next()) {
+					model = fromRowData(cols, rs, 0);
+					brs.add(model);
+				}
+			}
 		} finally {
 			if (rs!=null)
 				try {
 					rs.close();
 				} catch (SQLException e) {
 				}
-			plot.stopColnameMapping();
 		}
 	}
 	
@@ -312,6 +315,13 @@ implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 		if (plot!=null) {
 			pagePlot = plot;
 		}
+	}
+	
+	/**
+	 * @see jym.sim.orm.Plot#noMappingWarnning
+	 */
+	public void noMappingWarnning(boolean not) {
+		plot.noMappingWarnning(not);
 	}
 
 	public Class<T> getModelClass() {

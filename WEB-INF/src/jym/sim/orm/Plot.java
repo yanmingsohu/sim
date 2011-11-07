@@ -35,6 +35,7 @@ class Plot<T> implements IPlot {
 	private Method[] ms;
 	private IOrm<T> orm;
 	private boolean usecolnamemap = true;
+	private boolean noMappingWarnning = false;
 	private Order order_sub = new Order();
 	private FilterPocket outfilter;
 	
@@ -108,7 +109,7 @@ class Plot<T> implements IPlot {
 		if (md!=null) {
 			try {
 				md.invoke(rs, colc, model);
-			} 
+			}
 			catch(Exception e) {
 				warnning(model.getClass(), "执行方法 (" 
 						+ md.getName() + ") 时错误: " + e.getMessage());
@@ -129,7 +130,9 @@ class Plot<T> implements IPlot {
 		Method getm = getMethod( BeanUtil.getGetterName(fieldname) );
 		
 		if (setm==null) {
-			warnning(orm.getModelClass(), "映射属性(" + fieldname + ")时错误: 没有setter方法");
+			if (!noMappingWarnning) {
+				warnning(orm.getModelClass(), "映射属性(" + fieldname + ")时错误: 没有setter方法");
+			}
 			return null;
 		}
 
@@ -188,6 +191,14 @@ class Plot<T> implements IPlot {
 	
 	protected void stopColnameMapping() {
 		usecolnamemap = false;
+	}
+	
+	/** 
+	 * 不显示映射错误警告, 明确的不提取全部数据列, 该警告用于提示编程时出现的错误<br> 
+	 * 此时由于不提取全部数据列, 反而可以提升效率 
+	 */
+	protected void noMappingWarnning(boolean not) {
+		noMappingWarnning = not;
 	}
 	
 	/**

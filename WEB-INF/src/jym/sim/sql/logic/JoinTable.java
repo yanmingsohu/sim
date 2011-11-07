@@ -38,7 +38,7 @@ public class JoinTable implements ISelectJoin {
 	public JoinTable(JoinType joinType, String tableName, String joinColumn, IWhere where) {
 		if (tableName  ==null) throw new NullPointerException();
 		if (joinColumn ==null) throw new NullPointerException();
-		if (where      ==null) throw new NullPointerException();
+	//	if (where      ==null) throw new NullPointerException();
 		
 		this.tableName  = tableName;
 		this.joinColumn = joinColumn;
