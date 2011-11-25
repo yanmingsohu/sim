@@ -26,9 +26,9 @@ public class ScriptServlet extends HttpServlet {
 	private static final long CURRENT_TIME		= System.currentTimeMillis();
 	private static final String CONF_DEBUG		= "debug";
 	private static final String CONF_NAME 		= "mappingConfigs";
-	private static final String SYS_PATH			= "WEB-INF";
+	private static final String SYS_PATH		= "WEB-INF";
 	private static final String FROM_CLASSPATH	= "classpath:";
-	private static final String DEFAULT_CONF		= "/jym/javascript/js_mapping.conf";
+	private static final String DEFAULT_CONF	= "/jym/javascript/js_mapping.conf";
 	
 	private Properties urimapping = new Properties();
 	private boolean debug = false;
@@ -123,9 +123,7 @@ public class ScriptServlet extends HttpServlet {
 		String map  = urimapping.getProperty(path);
 		
 		if (map!=null) {
-			if (map.startsWith(FROM_CLASSPATH)) {
-				return this.hashCode();
-			} else {
+			if (!map.startsWith(FROM_CLASSPATH)) {
 				path = map;
 			}
 		}
