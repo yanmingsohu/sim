@@ -6,7 +6,11 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/dbpool"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/J2EE 1.4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/struts2"/>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/java tools"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/java tool"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/mysql"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/bcard_all"/>
+	<classpathentry kind="var" path="TOMCAT_HOME/common/lib/servlet-api.jar"/>
+	<classpathentry kind="var" path="TOMCAT_HOME/common/lib/jasper-runtime.jar"/>
+	<classpathentry kind="var" path="TOMCAT_HOME/common/lib/jsp-api.jar"/>
 	<classpathentry kind="output" path="WEB-INF/classes"/>
 </classpath>

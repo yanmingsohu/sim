@@ -4,9 +4,9 @@
 	<!--ANT 1.7 is required											-->
 
 	<!--jar输出路径													-->
-	<property name="outdir" 		value="F:/RDF/rdfFrame/webroot/WEB-INF/lib"/>
-	
-	<property name="src_dir" 		value="${basedir}/WEB-INF/src"/>
+	<property name="outdir" 		value="${basedir}/../bcard/webroot/WEB-INF/lib"/>
+	<!--
+	<property name="src_dir" 		value="${basedir}/WEB-INF/src"/> -->
 	<property name="class_dir" 		value="${basedir}/WEB-INF/classes"/>
 	
 	

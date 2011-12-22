@@ -23,4 +23,11 @@ public interface IPage {
 	 * @see jym.sim.orm.page.PaginationParam
 	 */
 	public String select(PaginationParam parm);
+	
+	/**
+	 * 生成select语句, 查询该查询的总条数, 可以返回null
+	 * @param parm
+	 * @return
+	 */
+	public String selectTotalPage(PaginationParam parm);
 }

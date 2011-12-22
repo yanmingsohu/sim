@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="trans_code" name="Create Runnable Jar for Project sim">
+	<!--this file was created by Eclipse Runnable JAR Export Wizard	-->
+	<!--ANT 1.7 is required											-->
+
+	<!--jar输出路径													-->
+	<property name="outdir" 		value="${basedir}"/>
+	
+	<property name="src_dir" 	value="E:\bcard\[libs]\alipaydualfun\标准双接口(trade_create_by_buyer)\trade_create_by_buyer_jsp_utf8\src"/>
+	<property name="utf8_srcdir" 		value="E:\bcard\bcard\src"/>
+	
+	
+	<target name="trans_code">
+		<!-- 编码转换 -->
+		<copy todir="${utf8_srcdir}" overwrite="true" outputencoding='UTF-8' encoding="GBK">
+			<fileset dir="${src_dir}"/>
+		</copy>
+	</target>
+
+</project>
