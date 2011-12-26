@@ -16,7 +16,7 @@ import jym.sim.exception.BeanException;
 
 
 /**
- * XXX 未完成,不能使用
+ * XXX Beta Version
  * 
  * @param <Bean> - 要操作的类型
  * @param <TARGET_TYPE> - 在读取时是要转换成的目标类型,

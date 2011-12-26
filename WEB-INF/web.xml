@@ -60,8 +60,8 @@
 			<param-value>/jym/javascript/js_mapping.conf</param-value>
 		</init-param>
 		<init-param>
-			<description>如果为true,则不压缩输出的js脚本;默认为false,压缩脚本</description>
-			<param-name>debug</param-name>
+			<description>压缩脚本开关,默认false</description>
+			<param-name>compress</param-name>
 			<param-value>true</param-value>
 		</init-param>
 	</servlet>

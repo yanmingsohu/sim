@@ -65,7 +65,8 @@ class BeanBuilder<TYPE> {
 		return new ITransForSet<String>() {
 
 			public Boolean from0(String value) {
-				return Boolean.parseBoolean(value);
+				try { return Boolean.parseBoolean(value);
+				} catch (Exception e) { return null; }
 			}
 
 			public String fromS(String value) {
@@ -73,47 +74,47 @@ class BeanBuilder<TYPE> {
 			}
 
 			public Short fromH(String value) {
-				return Short.parseShort(value);
+				try { return Short.parseShort(value);
+				} catch (Exception e) { return null; }
 			}
 
 			public Integer fromI(String value) {
-				return Integer.parseInt(value);
+				try { return Integer.parseInt(value);
+				} catch (Exception e) { return null; }
 			}
 
 			public Double fromD(String value) {
-				return Double.parseDouble(value);
+				try { return Double.parseDouble(value);
+				} catch (Exception e) { return null; }
 			}
 
 			public Float fromF(String value) {
-				return Float.parseFloat(value);
+				try { return Float.parseFloat(value);
+				} catch (Exception e) { return null; }
 			}
 
 			public Long fromL(String value) {
-				return Long.parseLong(value);
+				try { return Long.parseLong(value);
+				} catch (Exception e) { return null; }
 			}
 
 			public Timestamp fromT(String value) {
 				SimpleDateFormat sdf = new SimpleDateFormat(DATE_FMT_TIME);
 				try {
 					return new Timestamp( sdf.parse(value).getTime() );
-				} catch (ParseException e) {
-					e.printStackTrace();
-				}
-				return null;
+				} catch (ParseException e) { return null; }
 			}
 
 			public Date fromA(String value) {
 				SimpleDateFormat sdf = new SimpleDateFormat(DATE_FMT_TIME);
 				try {
 					return sdf.parse(value);
-				} catch (ParseException e) {
-					e.printStackTrace();
-				}
-				return null;
+				} catch (ParseException e) { return null; }
 			}
 
 			public BigDecimal fromB(String value) {
-				return new BigDecimal(value);
+				try {return new BigDecimal(value);
+				} catch (Exception e) { return null; }
 			}
 
 			public Object last(String value, Class<?> type) {
@@ -121,10 +122,7 @@ class BeanBuilder<TYPE> {
 				try {
 					cons = type.getConstructor(String.class);
 					return cons.newInstance(value);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				return null;
+				} catch (Exception e) { return null; }
 			}
 
 			public Character fromC(String value) {
