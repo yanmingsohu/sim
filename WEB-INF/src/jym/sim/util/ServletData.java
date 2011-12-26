@@ -23,7 +23,6 @@ public class ServletData implements IServletData {
 		req = request;
 		resp= response;
 		ses = req.getSession();
-		out = resp.getWriter();
 	}
 	
 	public HttpServletRequest getHttpServletRequest() {
@@ -54,7 +53,10 @@ public class ServletData implements IServletData {
 		return ses.getAttribute(name);
 	}
 	
-	public void print(Object data) {
+	public void print(Object data) throws IOException {
+		if (out == null) {
+			out = resp.getWriter();
+		}
 		out.print(data);
 	}
 }

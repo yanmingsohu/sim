@@ -2,6 +2,8 @@
 
 package jym.sim.util;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -29,5 +31,5 @@ public interface IServletData extends ISessionData {
 	/**
 	 * response.getWriter()的便捷方法
 	 */
-	void print(Object data);
+	void print(Object data) throws IOException;
 }

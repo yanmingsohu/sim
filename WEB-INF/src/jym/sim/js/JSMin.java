@@ -358,16 +358,17 @@ public class JSMin {
 	}
 
 	/**
-	 * 鍘嬬缉娴佷腑鐨刯s鑴氭湰, 鎴愬姛杩斿洖true
+	 * 压缩流中的js脚本, 成功返回true
 	 */
-	public static boolean compress(InputStream in, OutputStream out) {
+	public static boolean compress(InputStream in, OutputStream out, String fname) {
 		try {
 			new JSMin(in, out).jsmin();
 			return true;
 		} catch (Exception e) {
-			Tools.pl("鍘嬬缉js閿欒: " + e);
+			Tools.pl("压缩js错误: (" + fname + ") " + e.getMessage());
 		}
 		return false;
 	}
 
 }
+

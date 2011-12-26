@@ -24,14 +24,15 @@ public class ScriptServlet extends HttpServlet {
 
 	private static final long serialVersionUID	= -1969856037757165065L;
 	private static final long CURRENT_TIME		= System.currentTimeMillis();
-	private static final String CONF_DEBUG		= "debug";
+	private static final String STR_TRUE		= "true";
+	private static final String CONF_COMP		= "compress";
 	private static final String CONF_NAME 		= "mappingConfigs";
 	private static final String SYS_PATH		= "WEB-INF";
 	private static final String FROM_CLASSPATH	= "classpath:";
 	private static final String DEFAULT_CONF	= "/jym/javascript/js_mapping.conf";
 	
 	private Properties urimapping = new Properties();
-	private boolean debug = false;
+	private boolean compress = false;
 	
 	
 	@Override
@@ -47,7 +48,7 @@ public class ScriptServlet extends HttpServlet {
 			}
 		}
 		
-		debug = "true".equalsIgnoreCase(getInitParameter(CONF_DEBUG));
+		compress = STR_TRUE.equalsIgnoreCase(getInitParameter(CONF_COMP));
 	}
 	
 	private void loadConfFrom(String file) {
@@ -89,12 +90,12 @@ public class ScriptServlet extends HttpServlet {
 		ServletOutputStream out = resp.getOutputStream();
 		
 		try {
-			//XXX JSMin会导致部分代码无效?..测试中?
-			boolean compress = !debug;
+			//XXX JSMin会导致部分代码无效...测试中
+			boolean successComp = false;
 			if (compress) {
-				compress = JSMin.compress(in, out);
+				successComp = JSMin.compress(in, out, path);
 			}
-			if (!compress) {
+			if (!successComp) {
 				ResourceLoader.writeOut(in, out);
 			}
 		} finally {
