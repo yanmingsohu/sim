@@ -103,9 +103,9 @@ public class FileParse {
 	}
 	
 	private void addItem(Collection<String> point, StringBuilder str) throws IOException {
-		String s = str.toString();
+		String s = str.toString().trim();
 		
-		if (s.trim().length()>0) {
+		if (s.length()>0) {
 			if (point==texts) {
 				str.insert(0, '"').append('"');
 				s = str.toString();

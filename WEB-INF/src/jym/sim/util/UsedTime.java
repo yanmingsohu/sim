@@ -67,21 +67,34 @@ public final class UsedTime {
 	 * 停止计时,并且在控制台输出使用的时间
 	 */
 	public static void endAndPrint() {
+		endAndPrint(System.out);
+	}
+	
+	/**
+	 * 停止计时,并且out输出使用的时间
+	 */
+	public static void endAndPrint(Appendable out) {
 		Stack<Time> q = times.get();
 		Time t = q.pop();
 		Tools.check(t, "错误: 尚未调用start()");
 		t.end();
 		
-		Tools.pl(t.getName() + "使用了: " + t.usedTime() + " ms");
+		try {
+			out.append(	t.getName()					);
+			out.append(	"使用了: "					);
+			out.append(	Long.toString(t.usedTime())	);
+			out.append(	" ms"						);
+		} catch(Exception e) {
+		}
 	}
 	
 	public static void printAll() {
 		Stack<Time> q = times.get();
-		Time t = q.pop();
-		while (t!=null) {
+		
+		while (!q.empty()) {
+			Time t = q.pop();
 			t.end();
 			Tools.pl(t.getName() + "使用了: " + t.usedTime() + " ms");
-			t = q.pop();
 		}
 	}
 	

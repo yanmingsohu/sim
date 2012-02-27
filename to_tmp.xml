@@ -4,7 +4,7 @@
 	<!--ANT 1.7 is required											-->
 
 	<!--jar输出路径													-->
-	<property name="outdir" 		value="F:/workspace/serverPicDemo/webroot/WEB-INF/lib"/>
+	<property name="outdir" 		value="F:/workspace/xdemo/webroot/WEB-INF/lib"/>
 	
 	<property name="src_dir" 		value="${basedir}/WEB-INF/src"/>
 	<property name="class_dir" 		value="${basedir}/WEB-INF/classes"/>
@@ -21,7 +21,10 @@
 				<attribute name="Class-Path" value="."/>
 			</manifest>
 
-			<fileset dir="${class_dir}"/>
+			<fileset dir="${class_dir}">
+				<include name="**"/>
+				<exclude name="**/*!secure*"/>
+			</fileset>
 		</jar>
 	</target>
 

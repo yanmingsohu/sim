@@ -5,6 +5,7 @@ to_rmcs.xml
 /WEB-INF/classes/**
 utf8-src/**
 doc/
+*!secure*
 
 *.class
 *.exe

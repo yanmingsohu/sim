@@ -15,8 +15,9 @@ public class TestDBPool {
 	
 	private static PoolFactory pool;
 	
-	public static String MDB = "/test/access_source.conf";
-	public static String MYSQL = "/test/mysql_source.conf";
+	public static String MDB	= "/test/access_source.conf";
+	public static String MYSQL	= "/test/mysql_source.conf";
+	public static String ORL	= "/test/oracle_source_!secure.conf";
 	
 	public static void main(String s[]) throws IOException {
 		getDataSource();
@@ -24,7 +25,7 @@ public class TestDBPool {
 	
 	public static DataSource getDataSource() throws IOException {
 		if (pool==null) {
-			pool = new PoolFactory(MYSQL);
+			pool = new PoolFactory(ORL);
 		}
 		return pool.getDataSource();
 	}

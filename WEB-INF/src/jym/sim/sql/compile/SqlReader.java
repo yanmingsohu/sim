@@ -19,7 +19,8 @@ import jym.sim.util.Tools;
 
 
 /**
- * 该类的对象<b>应该被缓存</b>,以便提高效率
+ * 该类的对象<b>应该被缓存</b>,以便提高效率<br/>
+ * 线程不安全, 不要缓存该对象
  */
 public class SqlReader implements ResultSetList.IGetBean<Object[]> {
 	
@@ -66,16 +67,21 @@ public class SqlReader implements ResultSetList.IGetBean<Object[]> {
 	private void checkLastModify() throws IOException {
 		try {
 			Field f = sqlclz.getField(Compiler.MODIFY_FIELD);
-			long lm = (Long) f.get(instance);
+			final long lm = (Long) f.get(instance);
+			final long m = inf.lastModified();
 			
-			if (inf.lastModified()!=lm) {
-				compileSql();
-				if (!loadClass()) {
-					Tools.pl(inf.getSqlFileName() + " 已经修改并重新编译,但重新加载时失败: " + lastErr);
+			if (m > 0) {
+				if (m != lm) {
+					compileSql();
+					if (!loadClass()) {
+						Tools.pl(inf.getSqlFileName() + " 已经修改并重新编译,但重新加载时失败: " + lastErr);
+					}
+				} else {
+					//inf.clear();
 				}
-			} else {
-				inf.clear();
 			}
+		} catch (IOException e) {
+			throw e;
 		} catch (Exception e) {
 			throw new IOException("读取最后修改日期失败: " + e);
 		}
@@ -85,7 +91,7 @@ public class SqlReader implements ResultSetList.IGetBean<Object[]> {
 		Compiler c = new Compiler(inf);
 		
 		if (c.start()) {
-			inf.clear();
+			//inf.clear();
 		} else {
 			throw new IOException(inf.getSqlFileName() + "转换为java文件后编译失败" + lastErr);
 		}

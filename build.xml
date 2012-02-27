@@ -26,7 +26,10 @@
 				<attribute name="Class-Path" value="."/>
 			</manifest>
 
-			<fileset dir="${class_dir}"/>
+			<fileset dir="${class_dir}">
+				<include name="**"/>
+				<exclude name="**/*!secure*"/>
+			</fileset>
 		<!-- jar是否包含源代码 -->
 		<!--<fileset dir="${src_dir}"/>-->
 		</jar>
