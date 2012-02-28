@@ -5,42 +5,34 @@ package jym.sim.sql.compile;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
-import jym.sim.sql.IQuery;
-import jym.sim.sql.IResultSql;
 import jym.sim.sql.JdbcTemplate;
 import jym.sim.sql.ResultSetList;
+import jym.sim.sql.SqlReader;
+import jym.sim.sql.reader.ISqlReader;
 import jym.sim.util.Tools;
 
 
 /**
- * 该类的对象<b>应该被缓存</b>,以便提高效率<br/>
- * 线程不安全, 不要缓存该对象
+ * 读取sql并编译为class文件<br/>
+ * 该类的对象<b>可以被缓存(单线程)</b>,以便提高效率<br/>
+ * 线程不安全
  */
-public class SqlReader implements ResultSetList.IGetBean<Object[]> {
+public class ReadAndComplie implements ISqlReader, ResultSetList.IGetBean<Object[]> {
 	
 	private Exception lastErr;
-	private Info inf;
 	private Class<?> sqlclz;
 	private Object instance;
+	private Info inf;
 	
 	
 	/**
-	 * 初始化sql读取器<br>
-	 * <br>
-	 * 主文件名必须符合类名的命名规范,文件中的${..}将被参数化<br>
-	 * 参数化的变量通过方法set()来设置值,变量名必须符合Java属性名命名规范<br>
-	 * sql文件必须使用<b>UTF-8</b>编码<br>,并且是单条语句
-	 * 
-	 * @param filename - 从classpath中读取sql文件的完整路径,<br>
-	 * 如<code>/jym/sim/sql/complie/x.sql</code>
+	 * @see SqlReader#get(String)
 	 */
-	public SqlReader(String filename) throws IOException {
+	public ReadAndComplie(String filename) throws IOException {
 		inf = new Info(filename);
 		URL sqlfile = getClass().getResource(filename);
 
@@ -77,7 +69,7 @@ public class SqlReader implements ResultSetList.IGetBean<Object[]> {
 						Tools.pl(inf.getSqlFileName() + " 已经修改并重新编译,但重新加载时失败: " + lastErr);
 					}
 				} else {
-					//inf.clear();
+					inf.clear();
 				}
 			}
 		} catch (IOException e) {
@@ -91,7 +83,7 @@ public class SqlReader implements ResultSetList.IGetBean<Object[]> {
 		Compiler c = new Compiler(inf);
 		
 		if (c.start()) {
-			//inf.clear();
+			inf.clear();
 		} else {
 			throw new IOException(inf.getSqlFileName() + "转换为java文件后编译失败" + lastErr);
 		}
@@ -108,7 +100,7 @@ public class SqlReader implements ResultSetList.IGetBean<Object[]> {
 			NoSuchFieldException {
 		
 		try {
-			Field f = sqlclz.getField(FileParse.VAR_PREFIX + name);
+			Field f = sqlclz.getField(ComplieFactory.VAR_PREFIX + name);
 			f.set(instance, value);
 			
 		} catch(SecurityException se) {
@@ -117,39 +109,6 @@ public class SqlReader implements ResultSetList.IGetBean<Object[]> {
 			lastErr = ae;
 		} catch(IllegalArgumentException ae) {
 			lastErr = ae;
-		}
-	}
-	
-	/**
-	 * 执行指定文件中的sql语句,该文件中的变量应该已经用set()替换
-	 * 返回的Statement需要自行关闭
-	 * 
-	 * @param conn - 与数据库的连接,返回之后需自行关闭
-	 * @return java.sql.Statement
-	 * @throws SQLException
-	 */
-	public Statement execute(Connection conn) throws SQLException {
-		Statement s = conn.createStatement();
-		s.execute(instance.toString());
-		return s;
-	}
-	
-	/**
-	 * 在IQuery中执行sql文件中的sql语句,语句的类型只能为DDL,DML
-	 * @param iq - 一般传递JdbcTemplate
-	 * @return 返回语句影响的行数，如果返回-1则说明sql语句不符合规定
-	 */
-	public int executeUpdate(IQuery iq) {
-		Object r = iq.query(new IResultSql() {
-			public Object exe(Statement stm) throws Throwable {
-				return stm.executeUpdate(instance.toString());
-			}
-		});
-		
-		if (r!=null) {
-			return (Integer)r;
-		} else {
-			return -1;
 		}
 	}
 	
@@ -199,6 +158,7 @@ public class SqlReader implements ResultSetList.IGetBean<Object[]> {
 
 	public Object[] fromRowData(String[] columnNames, ResultSet rs, int rowNum)
 			throws Exception {
+		
 		Object[] r = new Object[columnNames.length];
 		if (rowNum>=0) {
 			for (int i=1; i<=columnNames.length; ++i) {

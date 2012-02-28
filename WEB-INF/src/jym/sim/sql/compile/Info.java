@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.URL;
 
+import jym.sim.sql.reader.ISqlReader;
 import jym.sim.util.Tools;
 
 
@@ -18,7 +19,6 @@ class Info {
 
 	public static final String DEFAULT_PACKAGE = "";
 	public static final String JAVA = ".java";
-	public static final String CODE = "UTF-8";
 	
 	private String packageName;
 	private String javaFileName;
@@ -109,10 +109,10 @@ class Info {
 	}
 	
 	public InputStreamReader openSqlInputStream() throws IOException {
-		return new InputStreamReader(srcFile.openStream(), CODE);
+		return new InputStreamReader(srcFile.openStream(), ISqlReader.SQL_FILE_CODE);
 	}
 	
 	public PrintWriter openJavaOutputStream() throws IOException {
-		return new PrintWriter(javaFileName, CODE);
+		return new PrintWriter(javaFileName, ISqlReader.SQL_FILE_CODE);
 	}
 }

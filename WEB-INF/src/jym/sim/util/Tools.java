@@ -5,6 +5,7 @@ package jym.sim.util;
 import java.awt.Toolkit;
 import java.io.PrintStream;
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
@@ -77,6 +78,14 @@ public class Tools {
 			out.print(o[i]+" ");
 		}
 		out.println();
+	}
+	
+	public static void pl(Iterator<?> item) {
+		while (item.hasNext()) {
+			p(item.next());
+			p(',');
+		}
+		pl();
 	}
 	
 	/**

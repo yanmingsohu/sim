@@ -2,6 +2,7 @@
 
 package test;
 
+import jym.sim.util.SqlFormat;
 import jym.sim.util.Tools;
 
 
@@ -21,7 +22,7 @@ public class TestSqlFormat {
 	
 	
 	public static void main(String[] args) {
-//		System.out.println(SqlFormat.format(sql));
+		System.out.println(SqlFormat.format(sql));
 		Tools.plsql(sql);
 	}
 

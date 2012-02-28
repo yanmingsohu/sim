@@ -5,7 +5,7 @@ SELECT MDATA_VAL 数据, GDAY 日期, GDATE 时间 FROM   --注释可用
 		partition BY GDATE order by GDATE
 	) mdata_count, MDATA_VAL, GDAY, GDATE   
 	FROM     
-	(
+	( 
 		SELECT aa.MDATA_VAL, aa.GDAY,       
 			DECODE(aa.GDATE, NULL, bb.GDATE, aa.GDATE) GDATE     
 		FROM       
@@ -14,11 +14,11 @@ SELECT MDATA_VAL 数据, GDAY 日期, GDATE 时间 FROM   --注释可用
 				|| '00' GDATE, VI.MDATA_VAL, TO_CHAR(VI.GETDATE, 'yyyy-mm-dd') GDAY        
 			FROM  V_H_DATA_DETAIL VI        
 			JOIN  CS_AREA_USER TI        
-			ON    VI.AREA_USER_SN = TI.AREA_USER_SN   	   
-			WHERE TI.AREA_USER_SN = ${areaSn}  	   
+			ON    VI.AREA_USER_SN = TI.AREA_USER_SN
+			WHERE TI.AREA_USER_SN = ${areaSn}	   
 			AND   DATA_KIND_ID    = '${kindId}'
 			AND 
-			(   
+			(  
 				${limit_datas}  
 			)
 		) aa partition BY(aa.gday)     
@@ -27,9 +27,9 @@ SELECT MDATA_VAL 数据, GDAY 日期, GDATE 时间 FROM   --注释可用
 			SELECT GDATE       
 			FROM         
 			(
-				SELECT TO_CHAR(TRUNC(sysdate, 'dd') 
+				SELECT TO_CHAR(TRUNC(sysdate, 'dd')
 					+ ((level - 1) / (24 * 60)), 'hh24:mi:ss') GDATE          
-				FROM dual CONNECT BY level <= 60 * 24         
+				FROM dual CONNECT BY level <= 60 * 24
 			)       
 		) bb     
 		ON aa.GDATE = bb.GDATE     

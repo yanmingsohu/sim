@@ -1,17 +1,20 @@
 // CatfoOD 2010-9-10 上午08:35:22 yanming-sohu@sohu.com/@qq.com
 
-package jym.sim.sql.compile;
+package jym.sim.parser.el;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 import java.util.regex.Pattern;
+
+import jym.sim.parser.IItem;
+import jym.sim.parser.IItemFactory;
+import jym.sim.parser.Type;
 
 /**
  * 文件解析器，读取文件中的${varname}表达式
@@ -20,18 +23,14 @@ import java.util.regex.Pattern;
 public class FileParse {
 	
 	private static final Pattern exp = Pattern.compile("^[_A-Za-z][\\$_A-Za-z0-9]*");
-	public static final String VAR_PREFIX = "__";
 	
-	private Set<String> variables;
-	private List<String> texts;
-	private List<String> items;
-	private int line = 1;
+	private IItemFactory factory;
+	private Map<String, IItem> variables;
+	private List<IItem> texts;
+	private List<IItem> items;
 	private String filename;
+	private int line = 1;
 	
-	
-	public FileParse(Info inf) throws IOException {
-		this(inf.getSqlFileName(), inf.openSqlInputStream());
-	}
 	
 	/**
 	 * 开始解析sql文件，并生成相关的信息
@@ -40,7 +39,10 @@ public class FileParse {
 	 * @param reader - 从reader中读取目标文件
 	 * @throws IOException - 如果解析失败，抛出异常
 	 */
-	public FileParse(String _filename, Reader reader) throws IOException {
+	public FileParse(String _filename, Reader reader, IItemFactory fact) throws IOException {
+		if (fact == null) throw new NullPointerException();
+		
+		factory = fact; 
 		Reader in = new BufferedReader(reader);
 		filename = _filename;
 		init();
@@ -56,8 +58,9 @@ public class FileParse {
 			if (ch=='\r') continue;
 			
 			if (ch=='\n') {	
-				line++;	
-				buff.append('\\').append('n');
+				line++;
+				addText(buff);
+				items.add(factory.create(Type.ENT));
 				continue;
 			}
 			
@@ -68,7 +71,7 @@ public class FileParse {
 			
 			if (isVar) {
 				if (ch=='}') {
-					addItem(variables, buff);
+					addVar(buff);
 					isVar = false;
 					continue;
 				}
@@ -80,7 +83,7 @@ public class FileParse {
 				if (ch=='$') continue;
 				
 				if (ch=='{') {
-					addItem(texts, buff);
+					addText(buff);
 					isVar = true;
 					continue;
 				} else {
@@ -94,7 +97,7 @@ public class FileParse {
 				break;
 			}
 		}
-		addItem(texts, buff);
+		addText(buff);
 		
 	}
 	finally {
@@ -102,20 +105,25 @@ public class FileParse {
 		}
 	}
 	
-	private void addItem(Collection<String> point, StringBuilder str) throws IOException {
-		String s = str.toString().trim();
+	private void addText(StringBuilder str) throws IOException {
+		if (str.length() > 0) {
+			IItem item = factory.create(Type.STR);
+			item.init(str.toString());
+			texts.add(item);
+			items.add(item);
+			str.setLength(0);
+		}
+	}
+	
+	private void addVar(StringBuilder str) throws IOException {
+		String varname = str.toString().trim();
 		
-		if (s.length()>0) {
-			if (point==texts) {
-				str.insert(0, '"').append('"');
-				s = str.toString();
-			} else {
-				checkVarName(s);
-				s = VAR_PREFIX + s;
-			}
-			
-			items.add(s);
-			point.add(s);
+		if (varname.length() > 0) {
+			checkVarName(varname);
+			IItem item = factory.create(Type.VAR);
+			item.init(varname);
+			variables.put(varname, item);
+			items.add(item);
 			str.setLength(0);
 		}
 	}
@@ -133,23 +141,27 @@ public class FileParse {
 	}
 	
 	private void init() {
-		variables	= new HashSet<String>();
-		texts		= new ArrayList<String>();
-		items		= new ArrayList<String>();
+		variables	= new HashMap<String, IItem>();
+		texts		= new ArrayList<IItem>();
+		items		= new ArrayList<IItem>();
+	}
+
+	public Map<String, IItem> getVariables() {
+		return variables;
 	}
 	
 	/**
-	 * 返回变量名的迭代器
+	 * 如果文件中有该变量返回true
 	 */
-	public Iterator<String> getVariableNames() {
-		return variables.iterator();
+	public boolean hasVariable(String vname) {
+		return variables.containsKey(vname);
 	}
 	
 	/**
 	 * 返回解析后的sql文件中元素的迭代器
 	 * 其中，文本已经用双引号包围，而变量则直接返回
 	 */
-	public Iterator<String> getItems() {
+	public Iterator<IItem> getItems() {
 		return items.iterator();
 	}
 	
@@ -157,7 +169,7 @@ public class FileParse {
 	 * 返回文件中的文本元素的迭代器，元素被分开的原因
 	 * 可能是中间的变量
 	 */
-	public Iterator<String> getTexts() {
+	public Iterator<IItem> getTexts() {
 		return texts.iterator();
 	}
 }

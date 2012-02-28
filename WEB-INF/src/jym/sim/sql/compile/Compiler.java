@@ -6,8 +6,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Iterator;
 
+import jym.sim.parser.IItem;
+import jym.sim.parser.el.FileParse;
+
 public class Compiler {
-	
+
 	public static final String MODIFY_FIELD = "_lastModify";
 	public static final String END = ";\n";
 	public static final String JOIN_STR = "+\t\n";
@@ -25,7 +28,7 @@ public class Compiler {
 	public Compiler(Info inf) throws IOException {
 		
 		info = inf;
-		FileParse parse = new FileParse(inf);
+		FileParse parse = new FileParse(inf.getSqlFileName(), inf.openSqlInputStream(), new ComplieFactory());
 		
 		PrintWriter javaout = inf.openJavaOutputStream();
 		
@@ -72,10 +75,10 @@ public class Compiler {
 	}
 	
 	private void writeVars(PrintWriter out, FileParse parse) {
-		Iterator<String> vars = parse.getVariableNames();
+		Iterator<IItem> vars = parse.getVariables().values().iterator();
 		while (vars.hasNext()) {
 			out.append("\tpublic Object ");
-			out.append(vars.next());
+			out.append(vars.next().filter());
 			out.append(END);
 		}
 	}
@@ -88,17 +91,15 @@ public class Compiler {
 	
 	private void writeStringFunc(PrintWriter out, FileParse parse) {
 		out.append("\n\tpublic String toString() {\n\t\treturn "); 
-		Iterator<String> items = parse.getItems();
+		Iterator<IItem> items = parse.getItems();
 		
 		if (items.hasNext()) {
-			out.append(items.next());
+			out.append(items.next().filter());
 			
-			if (items.hasNext()) {
-				do {
-					out.append(JOIN_STR);
-					out.append("\t\t\t");
-					out.append(items.next());
-				} while (items.hasNext());
+			while (items.hasNext()) {
+				out.append(JOIN_STR);
+				out.append("\t\t\t");
+				out.append(items.next().filter());
 			}
 		} else {
 			out.append("\"\"");

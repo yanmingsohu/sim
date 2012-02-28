@@ -9,7 +9,7 @@ import java.sql.ResultSetMetaData;
 import jym.sim.sql.IPrepSql;
 import jym.sim.sql.JdbcTemplate;
 import jym.sim.sql.TransformPrep;
-import jym.sim.sql.compile.SqlReader;
+import jym.sim.sql.compile.ReadAndComplie;
 import jym.sim.util.Tools;
 import jym.sim.util.UsedTime;
 
@@ -17,7 +17,7 @@ import jym.sim.util.UsedTime;
 public class TestPrepTrans {
 
 	public static final void main(String[] s) throws IOException {
-		SqlReader sr = new SqlReader("/test/trans.sql");
+		ReadAndComplie sr = new ReadAndComplie("/test/trans.sql");
 		TransformPrep tp = new TransformPrep();
 		
 		tp.setSql(sr.getResultSql());

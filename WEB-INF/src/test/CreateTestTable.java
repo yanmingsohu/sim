@@ -3,10 +3,12 @@
 package test;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 
-import jym.sim.sql.compile.SqlReader;
+import jym.sim.sql.ISql;
+import jym.sim.sql.JdbcTemplate;
+import jym.sim.sql.compile.ReadAndComplie;
 import jym.sim.util.Tools;
 
 
@@ -14,11 +16,15 @@ public class CreateTestTable {
 	
 	public static void main(String[] s) throws SQLException, IOException {
 		
-		Connection con = TestDBPool.getDataSource().getConnection();
-		SqlReader sr = new SqlReader("/test/create_test_data.sql");
-		sr.execute(con);
+		final ReadAndComplie sr = new ReadAndComplie("/test/create_test_data.sql");
+		JdbcTemplate jdbc = TestJdbcTemplate.createJdbc();
 		
-		Tools.pl("数据库未出现异常");
+		jdbc.query(new ISql() {
+			public void exe(Statement stm) throws Throwable {
+				stm.execute(sr.getResultSql());
+				Tools.pl("数据库未出现异常");
+			}
+		});
 	}
 	
 }
