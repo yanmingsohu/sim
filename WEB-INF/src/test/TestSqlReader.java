@@ -32,6 +32,7 @@ public class TestSqlReader {
 //		final ISqlReader sr2  = genSql( new ReadAndComplie("/test/complier.sql") );
 		final ISqlReader sr = genSql( new SqlLink("/test/complier.sql") );
 		UsedTime.endAndPrint(out);
+		sr.showSql();
 		
 		// 判断两种方法生成的字符串是否相同
 //		boolean yy = sr.getResultSql().equals( sr2.getResultSql() );
@@ -88,10 +89,19 @@ public class TestSqlReader {
 			}
 		}
 		
-		sr.set("areaSn", "1");
-		sr.set("kindId", "IA_F_RG");
-		sr.set("limit_datas", SQL);
+		Data data = new Data();
+		data.areaSn = 1;
+		data.kindId = "IA_F_RG";
+		data.dates = SQL.toString();
+		
+		sr.set("data", data);
 
 		return sr;
+	}
+	
+	static class Data {
+		int areaSn;
+		String kindId;
+		String dates;
 	}
 }

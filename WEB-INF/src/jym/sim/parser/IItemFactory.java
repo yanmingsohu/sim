@@ -6,12 +6,12 @@ package jym.sim.parser;
 public abstract class IItemFactory {
 	
 	/**
-	 * 客户通过该方法创建 IItem, 可以抛出null异常
+	 * 客户通过该方法创建 IItem, 可以抛出异常
 	 */
-	public final IItem create(Type type) throws NullPointerException {
+	public final IItem create(Type type) throws UnsupportedOperationException {
 		IItem item = _create(type);
 		if (item == null) {
-			throw new NullPointerException("无法创建指定的类型: " + type);
+			throw new UnsupportedOperationException ("无法创建指定的类型: " + type);
 		}
 		return item;
 	}

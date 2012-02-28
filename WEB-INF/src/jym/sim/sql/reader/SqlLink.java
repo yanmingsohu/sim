@@ -10,7 +10,6 @@ import java.util.Map;
 
 import jym.sim.parser.IItem;
 import jym.sim.parser.el.FileParse;
-import jym.sim.sql.SqlReader;
 import jym.sim.util.Tools;
 
 
@@ -25,10 +24,6 @@ public class SqlLink implements ISqlReader {
 	private URL url;
 	
 	
-	/**
-	 * @throws IOException 
-	 * @see SqlReader#get(String)
-	 */
 	public SqlLink(String filename) throws IOException {
 		url = getClass().getResource(filename);
 		if (url == null) {

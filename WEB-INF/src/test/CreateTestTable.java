@@ -12,6 +12,7 @@ import jym.sim.sql.compile.ReadAndComplie;
 import jym.sim.util.Tools;
 
 
+@SuppressWarnings("deprecation")
 public class CreateTestTable {
 	
 	public static void main(String[] s) throws SQLException, IOException {

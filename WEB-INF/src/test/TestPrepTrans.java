@@ -14,6 +14,7 @@ import jym.sim.util.Tools;
 import jym.sim.util.UsedTime;
 
 
+@SuppressWarnings("deprecation")
 public class TestPrepTrans {
 
 	public static final void main(String[] s) throws IOException {

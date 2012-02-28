@@ -12,6 +12,8 @@ import jym.sim.sql.reader.SqlLink;
 /**
  * 尝试把.sql文件编译为.class,
  * 如果失败则使用通常拼接字符串的方式
+ * 
+ * @deprecated 因为依赖JDK所以不推荐使用; ReadAndComplie 与 SqlLink 实现不一致
  */
 public final class SqlReader {
 	

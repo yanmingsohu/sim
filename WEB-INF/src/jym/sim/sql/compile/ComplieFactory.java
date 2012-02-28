@@ -65,6 +65,10 @@ public class ComplieFactory extends IItemFactory {
 
 		public void init(Object... datas) {
 			var = ((String)datas[0]).trim();
+			
+			if (var.indexOf('.') >= 0) {
+				throw new UnsupportedOperationException("不支持'.'运算符");
+			}
 		}
 		public String filter() {
 			return VAR_PREFIX + var;

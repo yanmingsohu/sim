@@ -20,6 +20,7 @@ import jym.sim.util.Tools;
  * 读取sql并编译为class文件<br/>
  * 该类的对象<b>可以被缓存(单线程)</b>,以便提高效率<br/>
  * 线程不安全
+ * @deprecated 因为依赖JDK所以不推荐使用, 该类将不对新的功能提供支持, 用jym.sim.reader.SqlLink替换
  */
 public class ReadAndComplie implements ISqlReader, ResultSetList.IGetBean<Object[]> {
 	
