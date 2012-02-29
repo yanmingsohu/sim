@@ -19,14 +19,15 @@ SELECT MDATA_VAL 数据, GDAY 日期, GDATE 时间 FROM   --注释可用
 			AND   DATA_KIND_ID    = '${data.kindId }'
 			AND 
 			(  
-		--	#for (	d	,		data.dates	) 
+			${data.dates}
+			#rem
 		--	^命令 ^参数表开始  ^参数列表		^参数表结尾	^命令体
 		
-		--  #之后紧接着一个命令字符串, 逗号, 命令参数1, 逗号, 命令参数n
-		--  命令以'#'开始, 以参数列表')'结尾
-		
-				${data.dates}
-		--	##end -- 所有命令都使用end结束
+		--  ##之后紧接着一个命令字符串, 逗号, 命令参数1, 逗号, 命令参数n
+		--  命令以'##'开始, 以参数列表')'结尾
+				
+		--  所有命令都使用end结束
+			#end 
 			)
 		) aa partition BY(aa.gday)     
 		RIGHT JOIN       

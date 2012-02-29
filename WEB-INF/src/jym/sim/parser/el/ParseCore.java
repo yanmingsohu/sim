@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import jym.sim.parser.IComponent;
 import jym.sim.parser.IItem;
@@ -25,8 +26,9 @@ import jym.sim.parser.cmd.ICommand;
 public class ParseCore {
 	
 	private Map<String, IItem> variables;
-	private IItemFactory factory;
 	private List<IComponent> m_items;
+	private IItemFactory factory;
+	private CommandFactory cfact;
 	private ILineCounter lc;
 	private Reader reader;
 
@@ -38,6 +40,7 @@ public class ParseCore {
 		factory 	= fact; 
 		variables	= new HashMap<String, IItem>();
 		m_items		= new ArrayList<IComponent>();
+		cfact		= CommandFactory.instance;
 		this.lc		= lc;
 		this.reader	= reader;
 		
@@ -56,8 +59,6 @@ public class ParseCore {
 			if (ch=='\r') continue;
 			
 			if (ch=='\n') {
-				lc.add();
-				
 				if (isCmd) {
 					/* 碰到换行则一行命令读取完成 */
 					addCmd(buff, items);
@@ -65,6 +66,7 @@ public class ParseCore {
 					continue;
 				}
 				
+				lc.add();
 				addText(buff, items);
 				items.add(factory.create(Type.ENT));
 				continue;
@@ -73,9 +75,6 @@ public class ParseCore {
 			if (isCmd) {
 				/* 什么都不做, 用于跳过下面的判断, 
 				 * 并把字符直接加入buff中 */
-			}
-			else if (ch=='"') {
-				throw new IOException("不能有双引号");
 			}
 			else if (isVar) {
 				if (ch=='}') {
@@ -123,7 +122,7 @@ public class ParseCore {
 				}
 			}
 
-			if (ch>=0) {
+			if (ch >= 0) {
 				buff.append((char)ch);
 			} else {
 				break;
@@ -141,7 +140,7 @@ public class ParseCore {
 	 * 文件中碰到'#end'该方法会返回
 	 */
 	private void addCmd(StringBuilder str, List<IComponent> items) throws IOException {
-		ICommand cmd = CommandFactory.create(str.toString());
+		ICommand cmd = cfact.create(str.toString());
 		cmd.setVariableBag(variables);
 		
 		items.add(cmd);
@@ -261,40 +260,63 @@ public class ParseCore {
 		return new ItemIterator();
 	}
 
-	/**
+	/**XXX 有错误
 	 * 遇到ICommand元素会解开该迭代器
 	 */
 	private class ItemIterator implements Iterator<IItem> {
-		/**XXX 未完成 */
+
 		private LinkedList<Iterator<IComponent>> stack;
 		private Iterator<IComponent> itr;
+		private IItem next;
+		private boolean check;
 		
 		ItemIterator() {
-			stack = new LinkedList<Iterator<IComponent>>();
-			itr = m_items.iterator();
+			stack	= new LinkedList<Iterator<IComponent>>();
+			itr		= m_items.iterator();
+			check	= true;
+		}
+		
+		private void _next() {
+			if (!check) return;
+			check = false;
+			
+			while (itr != null) {
+				if (itr.hasNext()) {
+					IComponent comp = itr.next();
+					
+					if (comp instanceof ICommand) {
+						stack.addFirst(itr); // push()
+						ICommand cmd = (ICommand) comp;
+						itr = cmd.getItem();
+					}
+					else if(comp instanceof IItem) {
+						next = (IItem) comp;
+						break;
+					}
+					else {
+						throw new IllegalStateException("不支持的类型: " + comp.getClass());
+					}
+				} else {
+					itr = stack.poll(); // pop()
+					if (itr == null) {
+						itr = null;
+						next = null;
+						break;
+					}
+				}
+			}
 		}
 		
 		public boolean hasNext() {
-			boolean has = itr.hasNext();
-			while (!has) {
-				if (!stack.isEmpty()) {
-					itr = stack.removeFirst(); // pop()
-				} else {
-					break;
-				}
-			}
-			return has;
+			_next();
+			return next != null;
 		}
 
 		public IItem next() {
-			/**XXX 有问题!!! */
-			IComponent comp = itr.next();
-			if (comp instanceof ICommand) {
-				stack.addFirst(itr);
-				ICommand cmd = (ICommand) comp;
-				itr = cmd;
-			}
-			return null;
+			_next();
+			if (next == null) throw new NoSuchElementException();
+			check = true;
+			return next;
 		}
 
 		public void remove() {
