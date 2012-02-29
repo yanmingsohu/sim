@@ -26,7 +26,7 @@ SELECT MDATA_VAL 数据, GDAY 日期, GDATE 时间 FROM   --注释可用
 		--  命令以'#'开始, 以参数列表')'结尾
 		
 				${data.dates}
-		--	#end -- 所有命令都使用end结束
+		--	##end -- 所有命令都使用end结束
 			)
 		) aa partition BY(aa.gday)     
 		RIGHT JOIN       

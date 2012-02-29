@@ -60,7 +60,7 @@ public class LinkFactory extends IItemFactory {
 	
 	private class TVariable extends ItemBase {
 		private String[] var;
-		private REF ref = new REF();;
+		private REF ref = new REF();
 
 		/**
 		 * 此三个参数统一时刻只有一个有效<br>

@@ -49,10 +49,10 @@ public class SqlLink implements ISqlReader {
 	}
 	
 	public SqlLink(URL file) throws IOException {
-		fname = file.getFile();
 		if (file == null) {
-			throw new IOException("找不到文件: " + fname);
+			throw new IOException("找不到文件");
 		}
+		fname = file.getFile();
 		url = file;
 		checkAndRead();
 	}

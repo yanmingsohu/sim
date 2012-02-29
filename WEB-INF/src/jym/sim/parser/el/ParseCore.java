@@ -7,20 +7,28 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import jym.sim.parser.IComponent;
 import jym.sim.parser.IItem;
 import jym.sim.parser.IItemFactory;
 import jym.sim.parser.ILineCounter;
 import jym.sim.parser.Type;
+import jym.sim.parser.cmd.CommandFactory;
+import jym.sim.parser.cmd.ICommand;
 
-
+/**
+ * 该类, 线程不安全
+ */
 public class ParseCore {
 	
 	private Map<String, IItem> variables;
 	private IItemFactory factory;
-	private List<IItem> items;
+	private List<IComponent> m_items;
+	private ILineCounter lc;
+	private Reader reader;
 
 	/**
 	 * reader 可能已经读取过, 当函数返回, reader 不会被关闭
@@ -29,11 +37,18 @@ public class ParseCore {
 	public ParseCore(Reader reader, IItemFactory fact, ILineCounter lc) throws IOException {
 		factory 	= fact; 
 		variables	= new HashMap<String, IItem>();
-		items		= new ArrayList<IItem>();
+		m_items		= new ArrayList<IComponent>();
+		this.lc		= lc;
+		this.reader	= reader;
 		
+		process(m_items);
+	}
+	
+	private void process(List<IComponent> items) throws IOException {
 		StringBuilder buff = new StringBuilder();
-		int ch = ' ';
 		boolean isVar = false;
+		boolean isCmd = false;
+		int ch = 0;
 		
 		while (true) {
 			ch = reader.read();
@@ -42,18 +57,29 @@ public class ParseCore {
 			
 			if (ch=='\n') {
 				lc.add();
-				addText(buff);
+				
+				if (isCmd) {
+					/* 碰到换行则一行命令读取完成 */
+					addCmd(buff, items);
+					isCmd = false;
+					continue;
+				}
+				
+				addText(buff, items);
 				items.add(factory.create(Type.ENT));
 				continue;
 			}
 			
-			if (ch=='"') {
+			if (isCmd) {
+				/* 什么都不做, 用于跳过下面的判断, 
+				 * 并把字符直接加入buff中 */
+			}
+			else if (ch=='"') {
 				throw new IOException("不能有双引号");
 			}
-			
-			if (isVar) {
+			else if (isVar) {
 				if (ch=='}') {
-					addVar(buff);
+					addVar(buff, items);
 					isVar = false;
 					continue;
 				}
@@ -63,14 +89,37 @@ public class ParseCore {
 				reader.mark(3);
 				ch = (char) reader.read();
 				
-				if (ch=='$') continue;
+				if (ch!='$') {
+					if (ch=='{') {
+						addText(buff, items);
+						isVar = true;
+						continue;
+					} else {
+						reader.reset();
+					}
+				}
+			}
+			/* 命令语法 #xxx, 要输出'#'字符使用'##' */
+			else if (ch == '#') {
+				reader.mark(3);
+				ch = (char) reader.read();
 				
-				if (ch=='{') {
-					addText(buff);
-					isVar = true;
-					continue;
-				} else {
+				if (ch != '#') {
+					addText(buff, items);
+					
+					if (ch == 'e') {
+						ch = (char) reader.read();
+						if (ch == 'n') {
+							ch = (char) reader.read();
+							if (ch == 'd') {
+								// 命令结束
+								return;
+							}
+						}
+					}
 					reader.reset();
+					isCmd = true;
+					continue;
 				}
 			}
 
@@ -80,10 +129,28 @@ public class ParseCore {
 				break;
 			}
 		}
-		addText(buff);
+		
+		if (isVar) throw new IOException("引用变量未正确结束");
+		if (isCmd) throw new IOException("命令未正确结束");
+		
+		addText(buff, items);
 	}
 	
-	private void addText(StringBuilder str) throws IOException {
+	/**
+	 * 创建命令, 并把接下来的内容作为命令控制的内容
+	 * 文件中碰到'#end'该方法会返回
+	 */
+	private void addCmd(StringBuilder str, List<IComponent> items) throws IOException {
+		ICommand cmd = CommandFactory.create(str.toString());
+		cmd.setVariableBag(variables);
+		
+		items.add(cmd);
+		str.setLength(0);
+
+		process(cmd.getBag());
+	}
+	
+	private void addText(StringBuilder str, List<IComponent> items) throws IOException {
 		if (str.length() > 0) {
 			IItem item = factory.create(Type.STR);
 			item.init(str.toString());
@@ -96,7 +163,7 @@ public class ParseCore {
 	 * 变量元素约定: 第一个参数为变量名, 第二个为变量值, 第三个为变量引用(引用另一个item中的变量值)
 	 * <b>创建变量的字符串参数一定不含有空格</b>
 	 */
-	private void addVar(StringBuilder str) throws IOException {
+	private void addVar(StringBuilder str, List<IComponent> items) throws IOException {
 		String varname = str.toString().trim();
 		
 		if (varname.length() > 0) {
@@ -116,7 +183,12 @@ public class ParseCore {
 		}
 	}
 	
-	private void checkVarName(String name) throws IOException {
+	/**
+	 * 检查变量名是否符合java命名规范如:'x.y.z'
+	 * @param name
+	 * @throws IOException
+	 */
+	public static void checkVarName(String name) throws IOException {
 		char[] ch = name.toCharArray();
 		int i = -1;
 		int word_len = 0;
@@ -186,7 +258,47 @@ public class ParseCore {
 	 * 如果文件中有变量, 可以影响返回的结果集
 	 */
 	public Iterator<IItem> getItems() {
-		return items.iterator();
+		return new ItemIterator();
 	}
 
+	/**
+	 * 遇到ICommand元素会解开该迭代器
+	 */
+	private class ItemIterator implements Iterator<IItem> {
+		/**XXX 未完成 */
+		private LinkedList<Iterator<IComponent>> stack;
+		private Iterator<IComponent> itr;
+		
+		ItemIterator() {
+			stack = new LinkedList<Iterator<IComponent>>();
+			itr = m_items.iterator();
+		}
+		
+		public boolean hasNext() {
+			boolean has = itr.hasNext();
+			while (!has) {
+				if (!stack.isEmpty()) {
+					itr = stack.removeFirst(); // pop()
+				} else {
+					break;
+				}
+			}
+			return has;
+		}
+
+		public IItem next() {
+			/**XXX 有问题!!! */
+			IComponent comp = itr.next();
+			if (comp instanceof ICommand) {
+				stack.addFirst(itr);
+				ICommand cmd = (ICommand) comp;
+				itr = cmd;
+			}
+			return null;
+		}
+
+		public void remove() {
+			throw new UnsupportedOperationException();
+		}
+	}
 }

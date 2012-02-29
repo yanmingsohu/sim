@@ -19,7 +19,7 @@ import jym.sim.util.UsedTime;
 public class TestSqlReader {
 	
 	public static void main(String[] sa) throws Exception {
-		//loopcreate();
+//		loopcreate();
 		
 		UsedTime.start("总共");
 		final StringBuilder out = new StringBuilder();
@@ -34,7 +34,7 @@ public class TestSqlReader {
 		final ISqlReader sr = genSql( new SqlLink(TestSqlReader.class, "TestSqlReader.sql") );
 		UsedTime.endAndPrint(out);
 		sr.showSql();
-		
+
 		// 判断两种方法生成的字符串是否相同
 //		boolean yy = sr.getResultSql().equals( sr2.getResultSql() );
 //		Tools.pl("无二义性: " + yy);
@@ -59,8 +59,9 @@ public class TestSqlReader {
 		for (int i=0; i<1000; i++) {
 			//UsedTime.start("\n生成sql " + i);
 			try {
-				SqlLink sl = new SqlLink("/test/complier.sql");
+				SqlLink sl = new SqlLink("/test/TestSqlReader.sql");
 				sl.set("data", new Data());
+				sl.getResultSql();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

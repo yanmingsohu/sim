@@ -5,7 +5,7 @@ package jym.sim.parser;
 /**
  * 解析器执行分析后, 取出的元素, 必须有默认构造函数
  */
-public interface IItem {
+public interface IItem extends IComponent {
 	
 	/**
 	 * 初始化对象使用的数据
