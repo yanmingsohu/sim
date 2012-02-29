@@ -24,13 +24,36 @@ public class SqlLink implements ISqlReader {
 	private URL url;
 	
 	
+	/**
+	 * filename 指定的文件与 Object 类处于同一个目录(或包)
+	 * @throws IOException 
+	 */
+	public SqlLink(Object usePackage, String filename) throws IOException {
+		this( usePackage.getClass().getResource(filename) );
+	}
+	
+	/**
+	 * filename 指定的文件与 cl 的类处于同一个目录(或包)
+	 * @throws IOException 
+	 */
+	public SqlLink(Class<?> cl, String filename) throws IOException {
+		this( cl.getResource(filename) );
+	}
+	
+	/**
+	 * filename 必须是绝对路径使用 '/../../...' 格式
+	 * @throws IOException 
+	 */
 	public SqlLink(String filename) throws IOException {
-		url = getClass().getResource(filename);
-		if (url == null) {
-			throw new IOException("找不到文件: " + filename);
+		this( SqlLink.class.getResource(filename) );
+	}
+	
+	public SqlLink(URL file) throws IOException {
+		fname = file.getFile();
+		if (file == null) {
+			throw new IOException("找不到文件: " + fname);
 		}
-		
-		fname = filename;
+		url = file;
 		checkAndRead();
 	}
 	

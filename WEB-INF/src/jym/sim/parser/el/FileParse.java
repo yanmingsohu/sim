@@ -20,7 +20,7 @@ public class FileParse implements ILineCounter {
 	
 	private ParseCore core;
 	private String filename;
-	private int line;
+	private int line = 1;
 	
 	
 	/**

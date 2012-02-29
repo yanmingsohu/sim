@@ -13,7 +13,7 @@ public class TestAttributeParse {
 	 */
 	public static void main(String[] args) {
 		A a = new A();
-		Object o = ObjectAttribute.get(a, new String[] {"b", "c", "str"});
+		Object o = ObjectAttribute.get(a, new String[] {"b", "c", "test()", "hashCode()"});
 		
 		Tools.pl(o);
 	}
@@ -29,7 +29,13 @@ public class TestAttributeParse {
 		C c = new C();
 	}
 	
-	static class C {
+	public static class sC {
+		public String test() {
+			return "ok";
+		}
+	}
+	
+	static class C extends sC {
 		String str = "hello";
 	}
 }

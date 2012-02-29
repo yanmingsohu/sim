@@ -70,7 +70,7 @@ public class LinkFactory extends IItemFactory {
 		 */
 		public void init(Object... datas) {
 			if (datas.length == 1) {
-				var = ((String)datas[0]).trim().split("\\.");
+				var = ((String)datas[0]).split("\\.");
 			} else
 			if (datas.length == 2) {
 				ref.value = datas[1];

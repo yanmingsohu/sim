@@ -4,7 +4,6 @@ package test;
 
 import java.io.IOException;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,6 +19,8 @@ import jym.sim.util.UsedTime;
 public class TestSqlReader {
 	
 	public static void main(String[] sa) throws Exception {
+		//loopcreate();
+		
 		UsedTime.start("总共");
 		final StringBuilder out = new StringBuilder();
 		final StringBuilder res = new StringBuilder();
@@ -30,7 +31,7 @@ public class TestSqlReader {
 
 		UsedTime.start("\n生成sql");
 //		final ISqlReader sr2  = genSql( new ReadAndComplie("/test/complier.sql") );
-		final ISqlReader sr = genSql( new SqlLink("/test/complier.sql") );
+		final ISqlReader sr = genSql( new SqlLink(TestSqlReader.class, "TestSqlReader.sql") );
 		UsedTime.endAndPrint(out);
 		sr.showSql();
 		
@@ -42,7 +43,7 @@ public class TestSqlReader {
 			public void exe(Statement stm) throws Throwable {
 				ResultSet rs = stm.executeQuery(sr.getResultSql());
 				UsedTime.start("\n打印");
-				print(rs, res);
+				Tools.pl(rs, res);
 				UsedTime.endAndPrint(out);
 			}
 		});
@@ -52,25 +53,21 @@ public class TestSqlReader {
 		UsedTime.printAll();
 	}
 	
-	public static void print(ResultSet rs, StringBuilder out) throws Exception {
-		out.append('\n');
-		
-		ResultSetMetaData rsmd = rs.getMetaData();
-		final int cc = rsmd.getColumnCount();
-		
-		for (int i=1; i<=cc; ++i) {
-			out.append(rsmd.getColumnName(i));
-			out.append('\t');
-		}
-		out.append('\n');
-		
-		while (rs.next()) {
-			for (int i=1; i<=cc; ++i) {
-				out.append(rs.getObject(i));
-				out.append('\t');
+	public static void loopcreate() {
+		StringBuilder out = new StringBuilder();
+		UsedTime.start("\n1000 次生成sql ");
+		for (int i=0; i<1000; i++) {
+			//UsedTime.start("\n生成sql " + i);
+			try {
+				SqlLink sl = new SqlLink("/test/complier.sql");
+				sl.set("data", new Data());
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			out.append('\n');
+			//UsedTime.endAndPrint(out);
 		}
+		UsedTime.endAndPrint(out);
+		Tools.pl(out);
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -99,9 +96,11 @@ public class TestSqlReader {
 		return sr;
 	}
 	
-	static class Data {
+	public static class Data {
 		int areaSn;
 		String kindId;
 		String dates;
+		
+		public int as() { return areaSn; }
 	}
 }

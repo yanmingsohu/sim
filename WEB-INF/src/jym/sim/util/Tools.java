@@ -4,6 +4,8 @@ package jym.sim.util;
 
 import java.awt.Toolkit;
 import java.io.PrintStream;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.regex.Pattern;
@@ -86,6 +88,43 @@ public class Tools {
 			p(',');
 		}
 		pl();
+	}
+	
+	/**
+	 * ResultSet 对象在函数返回后不会关闭
+	 */
+	public static void pl(ResultSet rs) {
+		StringBuilder out = new StringBuilder();
+		try {
+			pl(rs, out);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		Tools.pl(out);
+	}
+	
+	/**
+	 * ResultSet 对象在函数返回后不会关闭
+	 */
+	public static void pl(ResultSet rs, Appendable out) throws Exception {
+		out.append('\n');
+		
+		ResultSetMetaData rsmd = rs.getMetaData();
+		final int cc = rsmd.getColumnCount();
+		
+		for (int i=1; i<=cc; ++i) {
+			out.append(rsmd.getColumnName(i));
+			out.append('\t');
+		}
+		out.append('\n');
+		
+		while (rs.next()) {
+			for (int i=1; i<=cc; ++i) {
+				out.append( String.valueOf(rs.getObject(i)) );
+				out.append('\t');
+			}
+			out.append('\n');
+		}
 	}
 	
 	/**

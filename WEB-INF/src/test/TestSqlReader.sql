@@ -15,11 +15,11 @@ SELECT MDATA_VAL 数据, GDAY 日期, GDATE 时间 FROM   --注释可用
 			FROM  V_H_DATA_DETAIL VI        
 			JOIN  CS_AREA_USER TI        
 			ON    VI.AREA_USER_SN = TI.AREA_USER_SN
-			WHERE TI.AREA_USER_SN = ${data.areaSn }	   
+			WHERE TI.AREA_USER_SN = ${data.as() }	   
 			AND   DATA_KIND_ID    = '${data.kindId }'
 			AND 
 			(  
-		--	#for (	d	,		data.dates	)
+		--	#for (	d	,		data.dates	) 
 		--	^命令 ^参数表开始  ^参数列表		^参数表结尾	^命令体
 		
 		--  #之后紧接着一个命令字符串, 逗号, 命令参数1, 逗号, 命令参数n

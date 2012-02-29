@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import jym.sim.parser.IItem;
 import jym.sim.parser.IItemFactory;
@@ -19,10 +18,8 @@ import jym.sim.parser.Type;
 
 public class ParseCore {
 	
-	private static final Pattern exp = Pattern.compile("^[_A-Za-z][\\.\\$_A-Za-z0-9]*");
-	
-	private IItemFactory factory;
 	private Map<String, IItem> variables;
+	private IItemFactory factory;
 	private List<IItem> items;
 
 	/**
@@ -97,6 +94,7 @@ public class ParseCore {
 	
 	/**
 	 * 变量元素约定: 第一个参数为变量名, 第二个为变量值, 第三个为变量引用(引用另一个item中的变量值)
+	 * <b>创建变量的字符串参数一定不含有空格</b>
 	 */
 	private void addVar(StringBuilder str) throws IOException {
 		String varname = str.toString().trim();
@@ -119,11 +117,58 @@ public class ParseCore {
 	}
 	
 	private void checkVarName(String name) throws IOException {
-		if (!exp.matcher(name).matches()) {
-			throw new IOException("无效的变量名:[" + name + "]");
-		}
+		char[] ch = name.toCharArray();
+		int i = -1;
+		int word_len = 0;
+		int method = 0;
+		
+		while (++i < ch.length) {
+			if (ch[i] == ' ' || ch[i] == '\t') continue;
+			
+			if (word_len == 0) {
+				if ( !Character.isJavaIdentifierStart(ch[i]) ) {
+					throw new IOException("无效的变量名首字母:[" + name + "]");
+				}
+				
+				word_len = 1;
+				continue;
+			}
+			
+			if (ch[i] == '(') {
+				if (method > 0)
+					throw new IOException("不能使用连续的左括号:[" + name + "]");
+			
+				method = 1;
+				continue;
+			}
+
+			if (ch[i] == ')') {
+				if (method > 1)
+					throw new IOException("不能使用连续的右括号:[" + name + "]");
+				
+				method = 2;
+				continue;
+			}
+			
+			if (method == 1) {
+				throw new IOException("缺失右括号:[" + name + "]");
+			}
+			
+			if (ch[i] == '.') {
+				word_len = 0;
+				method = 0;
+				continue;
+			}
+
+			if (method > 0) {
+				throw new IOException("函数调用语法错误:[" + name + "]");
+			}
+			
+			if ( !Character.isJavaIdentifierPart(ch[i]) ) {
+				throw new IOException("含有无效的字符:[" + name + "]");
+			}
+		}	
 	}
-	
 
 	public Map<String, IItem> getVariables() {
 		return variables;

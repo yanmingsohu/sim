@@ -11,7 +11,7 @@ import java.util.List;
 
 import jym.sim.sql.JdbcTemplate;
 import jym.sim.sql.ResultSetList;
-import jym.sim.sql.SqlReader;
+import jym.sim.sql.SqlReaderFactory;
 import jym.sim.sql.reader.ISqlReader;
 import jym.sim.util.Tools;
 
@@ -31,7 +31,7 @@ public class ReadAndComplie implements ISqlReader, ResultSetList.IGetBean<Object
 	
 	
 	/**
-	 * @see SqlReader#get(String)
+	 * @see SqlReaderFactory#get(String)
 	 */
 	public ReadAndComplie(String filename) throws IOException {
 		inf = new Info(filename);

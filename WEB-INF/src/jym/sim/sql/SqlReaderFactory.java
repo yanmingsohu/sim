@@ -15,7 +15,7 @@ import jym.sim.sql.reader.SqlLink;
  * 
  * @deprecated 因为依赖JDK所以不推荐使用; ReadAndComplie 与 SqlLink 实现不一致
  */
-public final class SqlReader {
+public final class SqlReaderFactory {
 	
 	private static final boolean useComple;
 

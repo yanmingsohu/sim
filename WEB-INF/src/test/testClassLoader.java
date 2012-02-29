@@ -11,7 +11,7 @@ public class TestClassLoader {
 	public static void main(String s[]) {
 		TestClassLoader t = new TestClassLoader();
 		
-		String str = "/test/datasource.conf";
+		String str = "/test/mysql_source.conf";
 		
 		URL url = t.getUrlRes(str);
 		pl( url );
@@ -19,6 +19,7 @@ public class TestClassLoader {
 		URL url2 = t.getUrlFromRL(str);
 		pl( url2 );
 		
+		pl( t.getClass().getResource("mysql_source.conf") );
 		// 两个方法是用了相同的原理
 	}
 	
