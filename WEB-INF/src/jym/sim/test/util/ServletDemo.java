@@ -1,6 +1,6 @@
 // CatfoOD 2011-7-12 下午02:28:51 yanming-sohu@sohu.com/@qq.com
 
-package test;
+package jym.sim.test.util;
 
 import jym.sim.base.HttpBase;
 import jym.sim.base.IHttpData;

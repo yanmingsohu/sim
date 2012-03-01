@@ -1,6 +1,6 @@
 // CatfoOD 2011-8-22 下午01:41:38 yanming-sohu@sohu.com/@qq.com
 
-package test;
+package jym.sim.test.sql;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;

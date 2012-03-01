@@ -1,6 +1,6 @@
 // CatfoOD 2009-12-14 下午09:52:45
 
-package test;
+package jym.sim.test.sql;
 
 import jym.sim.tags.PaginationTag;
 

@@ -2,35 +2,57 @@
 
 package jym.sim.parser.expr;
 
+import java.math.BigDecimal;
+
 
 public class MathematicsOps {
 
 	/**  +  */
-	public final static Opt ADD = new Opt() {
-		public void compute() {
-			set( left().get().add(right().get()) );
-		}
-	};
+	public final static Opt ADD() {
+		return new Opt() {
+			public BigDecimal get() {
+				return left().get().add(right().get());
+			}
+			public int level() {
+				return 30;
+			}
+		};
+	}
 	
 	/**  -  */
-	public final static Opt SUB = new Opt() {
-		public void compute() {
-			set( left().get().subtract(right().get()) );
-		}
-	};
+	public final static Opt SUB() { 
+		return new Opt() {
+			public BigDecimal get() {
+				return left().get().subtract(right().get());
+			}
+			public int level() {
+				return 30;
+			}
+		};
+	}
 	
 	/**  *  */
-	public final static Opt MUL = new Opt() {
-		public void compute() {
-			set( left().get().multiply(right().get()) );
-		}
-	};
+	public final static Opt MUL() { 
+		return new Opt() {
+			public BigDecimal get() {
+				return left().get().multiply(right().get());
+			}
+			public int level() {
+				return 35;
+			}
+		};
+	}
 	
 	/**  /  */
-	public final static Opt DIV = new Opt() {
-		public void compute() {
-			set( left().get().divide(right().get()) );
-		}
-	};
+	public final static Opt DIV() { 
+		return new Opt() {
+			public BigDecimal get() {
+				return left().get().divide(right().get());
+			}
+			public int level() {
+				return 35;
+			}
+		};
+	}
 	
 }

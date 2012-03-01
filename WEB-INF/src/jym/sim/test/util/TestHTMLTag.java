@@ -1,6 +1,6 @@
 // CatfoOD 2009-11-1 下午11:11:52
 
-package test;
+package jym.sim.test.util;
 
 import jym.sim.base.HtmlPack;
 import jym.sim.tags.ExternalCSSTag;

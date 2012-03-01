@@ -2,18 +2,23 @@
 
 package jym.sim.parser.expr;
 
+import java.math.BigDecimal;
+
 /**
  * 一个表达式, 左值和右值
  * @see Val
  */
-public abstract class Opt extends ConstVal {
+public abstract class Opt extends AbsVal implements IVal {
 
 	private IVal left;
 	private IVal right;
 	
 	
-	public void set(IVal l, IVal r) {
+	public void left(IVal l) {
 		left = l;
+	}
+	
+	public void right(IVal r) {
 		right = r;
 	}
 	
@@ -26,8 +31,21 @@ public abstract class Opt extends ConstVal {
 	}
 	
 	/**
-	 * <code>val = left op right</code><br/>
+	 * 默认不支持该方法
 	 */
-	public abstract void compute();
+	public void set(BigDecimal v) {
+		throw new UnsupportedOperationException();
+	}
+	
+	/**
+	 * <code>return [left op right]</code><br/>
+	 */
+	public abstract BigDecimal get();
+	
+	/**
+	 * 运算符优先级, 值越大优先级越高
+	 */
+	public abstract int level();
+	
 	
 }

@@ -1,4 +1,4 @@
-package test;
+package jym.sim.test.util;
 
 import java.io.File;
 import java.io.FileOutputStream;

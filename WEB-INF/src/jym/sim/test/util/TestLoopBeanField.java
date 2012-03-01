@@ -1,6 +1,6 @@
 // CatfoOD 2011-2-22 上午09:34:03
 
-package test;
+package jym.sim.test.util;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;

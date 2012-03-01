@@ -1,6 +1,6 @@
 // CatfoOD 2010-8-13 下午02:15:21 yanming-sohu@sohu.com/@qq.com
 
-package test;
+package jym.sim.test.sql;
 
 import java.sql.SQLException;
 import java.sql.Savepoint;

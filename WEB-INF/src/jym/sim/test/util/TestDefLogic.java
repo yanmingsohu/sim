@@ -1,6 +1,6 @@
 // CatfoOD 2010-7-12 上午10:06:36 yanming-sohu@sohu.com/@qq.com
 
-package test;
+package jym.sim.test.util;
 
 import jym.sim.sql.logic.DefinitionLogic;
 import jym.sim.util.Tools;

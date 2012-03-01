@@ -27,7 +27,7 @@
 		</description>
 		
 		<servlet-name>demo</servlet-name>
-		<servlet-class>test.ServletDemo</servlet-class>
+		<servlet-class>jym.sim.test.util.ServletDemo</servlet-class>
 		
 		<init-param>
 			<description>

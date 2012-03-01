@@ -1,6 +1,6 @@
 // CatfoOD 2011-7-25 下午03:04:49 yanming-sohu@sohu.com/@qq.com
 
-package test;
+package jym.sim.test.sql;
 
 import jym.sim.util.SqlFormat;
 import jym.sim.util.Tools;

@@ -1,6 +1,6 @@
 // CatfoOD 2010-4-19 上午09:44:55 yanming-sohu@sohu.com/@qq.com
 
-package test;
+package jym.sim.test.util;
 
 
 public class UserBean {

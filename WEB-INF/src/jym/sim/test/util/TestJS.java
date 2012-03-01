@@ -1,6 +1,6 @@
 // CatfoOD 2009-11-10 上午09:47:12
 
-package test;
+package jym.sim.test.util;
 
 import java.io.PrintWriter;
 

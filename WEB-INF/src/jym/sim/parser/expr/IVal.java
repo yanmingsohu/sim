@@ -13,7 +13,7 @@ import java.math.BigDecimal;
  */
 public interface IVal {
 
-	/** 取得变量, 不会为null */
+	/** 取得变量, 不会为null, 或者返回计算的结果 */
 	BigDecimal get();
 	
 	/** 设置变量, 如果为null, 则设置为0 */

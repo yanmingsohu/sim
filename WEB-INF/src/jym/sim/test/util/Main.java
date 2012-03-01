@@ -1,6 +1,6 @@
 // CatfoOD 2010-4-16 下午01:47:40 yanming-sohu@sohu.com/@qq.com
 
-package test;
+package jym.sim.test.util;
 
 
 import java.awt.Dimension;

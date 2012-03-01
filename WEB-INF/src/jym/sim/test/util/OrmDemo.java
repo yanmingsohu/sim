@@ -1,6 +1,6 @@
 // CatfoOD 2010-4-16 下午01:42:14 yanming-sohu@sohu.com/@qq.com
 
-package test;
+package jym.sim.test.util;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -15,6 +15,7 @@ import jym.sim.orm.IUpdate;
 import jym.sim.orm.OrmTemplate;
 import jym.sim.orm.page.PageBean;
 import jym.sim.sql.Logic;
+import jym.sim.test.sql.TestDBPool;
 import jym.sim.util.Tools;
 import jym.sim.util.UsedTime;
 

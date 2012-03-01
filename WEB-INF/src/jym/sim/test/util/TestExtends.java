@@ -1,4 +1,4 @@
-package test;
+package jym.sim.test.util;
 
 
 /**

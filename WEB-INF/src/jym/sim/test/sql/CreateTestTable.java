@@ -1,6 +1,6 @@
 // CatfoOD 2010-8-20 上午08:44:23 yanming-sohu@sohu.com/@qq.com
 
-package test;
+package jym.sim.test.sql;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -17,7 +17,7 @@ public class CreateTestTable {
 	
 	public static void main(String[] s) throws SQLException, IOException {
 		
-		final ReadAndComplie sr = new ReadAndComplie("/test/create_test_data.sql");
+		final ReadAndComplie sr = new ReadAndComplie("/jym/sim/test/sql/create_test_data.sql");
 		JdbcTemplate jdbc = TestJdbcTemplate.createJdbc();
 		
 		jdbc.query(new ISql() {

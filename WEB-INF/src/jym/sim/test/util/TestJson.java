@@ -1,6 +1,6 @@
 // CatfoOD 2010-10-16 下午08:42:30
 
-package test;
+package jym.sim.test.util;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

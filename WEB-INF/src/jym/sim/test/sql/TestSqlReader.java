@@ -1,6 +1,6 @@
 // CatfoOD 2010-9-9 下午02:04:39 yanming-sohu@sohu.com/@qq.com
 
-package test;
+package jym.sim.test.sql;
 
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -59,7 +59,7 @@ public class TestSqlReader {
 		for (int i=0; i<1000; i++) {
 			//UsedTime.start("\n生成sql " + i);
 			try {
-				SqlLink sl = new SqlLink("/test/TestSqlReader.sql");
+				SqlLink sl = new SqlLink("/jym/sim/test/sql/TestSqlReader.sql");
 				sl.set("data", new Data());
 				sl.getResultSql();
 			} catch (Exception e) {

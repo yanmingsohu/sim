@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 /**
  * 常量
  */
-public class ConstVal implements IVal {
+public class ConstVal extends AbsVal implements IVal {
 	
 	private BigDecimal val;
 	
@@ -32,23 +32,4 @@ public class ConstVal implements IVal {
 		}
 	}
 	
-	public final void set(String v) {
-		try {
-			set( new BigDecimal(v) );
-		} catch(Exception e) {
-			set( BigDecimal.ZERO );
-		}
-	}
-	
-	public final void set(Object o) {
-		if (o == null) {
-			set(BigDecimal.ZERO);
-		} else {
-			set(o.toString());
-		}
-	}
-	
-	public final void set(boolean b) {
-		set( b ? BigDecimal.ONE : BigDecimal.ZERO );
-	}
 }

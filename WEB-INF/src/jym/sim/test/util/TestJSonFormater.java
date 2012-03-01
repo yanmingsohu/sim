@@ -1,6 +1,6 @@
 // CatfoOD 2010-7-29 上午09:48:27 yanming-sohu@sohu.com/@qq.com
 
-package test;
+package jym.sim.test.util;
 
 import jym.sim.json.JSonFormater;
 import jym.sim.util.Tools;

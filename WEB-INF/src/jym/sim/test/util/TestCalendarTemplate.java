@@ -1,6 +1,6 @@
 // CatfoOD 2010-8-27 下午03:03:30 yanming-sohu@sohu.com/@qq.com
 
-package test;
+package jym.sim.test.util;
 
 import java.util.Calendar;
 

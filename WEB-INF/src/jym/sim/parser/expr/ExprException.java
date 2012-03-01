@@ -9,4 +9,15 @@ public class ExprException extends SimException {
 
 	private static final long serialVersionUID = 1L;
 
+	public ExprException() {
+		super();
+	}
+
+	public ExprException(String s) {
+		super(s);
+	}
+
+	public ExprException(Throwable e) {
+		super(e);
+	}
 }

@@ -17,7 +17,7 @@
 
 		<jar destfile="${outdir}/sim.jar" filesetmanifest="mergewithoutmain">
 			<manifest>
-				<attribute name="Main-Class" value="test.Main"/>
+				<attribute name="Main-Class" value="jym.sim.test.util.Main"/>
 				<attribute name="Class-Path" value="."/>
 			</manifest>
 

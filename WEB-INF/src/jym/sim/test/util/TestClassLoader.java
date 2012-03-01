@@ -1,6 +1,6 @@
 // CatfoOD 2009-11-16 上午12:53:28
 
-package test;
+package jym.sim.test.util;
 
 import java.net.URL;
 
@@ -11,7 +11,7 @@ public class TestClassLoader {
 	public static void main(String s[]) {
 		TestClassLoader t = new TestClassLoader();
 		
-		String str = "/test/mysql_source.conf";
+		String str = "/jym/sim/test/sql/mysql_source.conf";
 		
 		URL url = t.getUrlRes(str);
 		pl( url );
