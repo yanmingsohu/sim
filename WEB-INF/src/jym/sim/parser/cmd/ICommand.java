@@ -42,6 +42,6 @@ public interface ICommand extends IComponent {
 	/**
 	 * 向命令传递参数, 之前的参数被丢弃
 	 */
-	void setParameter(List<String> param);
+	void setParameter(String param_str);
 	
 }

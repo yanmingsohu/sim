@@ -2,12 +2,8 @@
 Java Web Tools
 
 ----------------------------------------------------------------------------
-CatfoOD 2009-10-29 
 
-
-v0.34
-edit: CatfoOD 2011-11-7
-
+    v0.51 update 2012-3-1                           CatfoOD 2009-10-29 
 
 ----------------------------------------------------------------------------
 
@@ -26,6 +22,7 @@ edit: CatfoOD 2011-11-7
 
 ----------------------------------------------------------------------------
 
+2012-03-01	sql模板
 2011-08-23	可以把普通sql语句转换为使用PreparedStatement调用的方式.
 
 ----------------------------------------------------------------------------
@@ -51,15 +48,9 @@ package: jym.sim.base {
 		*注意：不要直接覆盖doXxx方法，否则将得不到这些功能。
 	]
 
+	HtmlPack: [ html文本包装器 ]
 
-	HtmlPack: [
-		html文本包装器
-	]
-
-
-	XmlPack: [
-		xml文本包装器
-	]
+	XmlPack: [ xml文本包装器 ]
 }
 
 
@@ -75,104 +66,86 @@ package: jym.sim.orm {
 
 package: jym.sim.orm.page {
 
-	*: [
-		数据库查询分页策略
-	]
+	*: [ 数据库查询分页策略, orm支持自动分页 ]
 	
-	PageBean: [
-		分页数据
-	]
+	PageBean: [ 分页数据 ]
 }
 
 
 package: jym.sim.sql {
 
-	Jdbctemplate: [
-		jdbc模板类
-	]
+	Jdbctemplate: 	jdbc模板类
+	Orm:		:	数据库与对象映射
+	complie		:	把sql编译为class(功能不全)
+	reader		:	读取sql模板,支持el表达式和控制命令
 }
 
 
 package: jym.sim.validator {
 
-	annotation.* (validatorAnno) : [
-		对象属性验证策略的注解类
-	]
+	annotation.* (validatorAnno) : [ 对象属性验证策略的注解类 ]
 	
-	verify.* (annoImpl) : [
-		validatorAnno的算法实现类,与validatorAnno一一对应
-	]
+	verify.* (annoImpl) : [ validatorAnno的算法实现类,与validatorAnno一一对应 ]
 	
-	Validator: [
-		对象验证器,要验证对象的属性需用validatorAnno注释
-	]
+	Validator: [ 对象验证器,要验证对象的属性需用validatorAnno注释 ]
 }
 
 
 package: jym.sim.util {
 	
-	SafeidMapping: [
-		在客户端显示安全的ID值
-	]
+	SafeidMapping	: [ 在客户端显示安全的ID值 ]
 	
-	Tools: [
-		一些经常使用的辅助函数
-	]
+	Tools			: [ 一些经常使用的辅助函数, 直接打印ResultSet等 ]
 	
-	ResourceLoader: [
-		本地资源读取类
+	ResourceLoader	: [ 本地资源读取类
 		在Servlet中本地资源不能使用File直接读取
 		需用Url引用,此类会遍历所有父类的ClassLoader
-		直到获取到指定的资源或者失败
-	]
+		直到获取到指定的资源或者失败 ]
+		
+	SqlFormat		: [ 格式化混乱的sql语句 ]
+	
+	UsedTime		:	[ 方便的计算运行时间 ]
 }
 
 
 package: jym.sim.jstags {
-	*: [
-		一些集成java script Tag的实现
-	]
+	*: [ 一些集成java script Tag的实现 ]
 }
 
 
 package: jym.sim.tags {
-	*: [
-		一些集成Tag的实现
-	]
+	*: [ 一些集成Tag的实现 ]
 }
 
 
 packae: jym.sim.json {
-	*: [
-		生成JSON的支持
-	]
+	*: [ 生成JSON的支持 ]
 }
 
 
 package: jym.sim.pool {
-	*: [
-		数据库连接池的通用封装
-		Demo: test.TestDBPool
-	]
+	*: [ 数据库连接池的通用封装
+		Demo: test.TestDBPool ]
 }
 
 
 package: jym.sim.filter {
-	*: [
-		过滤器，提供从页面到数据库过滤器
-		和从数据库到页面过滤器
-	]
+	*: [ 过滤器，提供从页面到数据库过滤器
+		和从数据库到页面过滤器 ]
 }
 
 package: jym.sim.sql.compile {
-	*: [
-		编译sql文件为class,并执行文件中的sql
-		Demo: test.TestSqlCompiler
-	]
+	*: [ 编译sql文件为class,并执行文件中的sql
+		Demo: test.TestSqlCompiler ]
 }
 
 package: jym.sim.java {
-	*: [
-		Java文件动态生成工具
-	]
+	*: [ Java文件动态生成工具 ]
+}
+
+package: jym.sim.parser {
+
+	expr:	表达式解析
+	cmd:	命令解析
+	el:		文件模板解析
 }

@@ -39,6 +39,9 @@ public class ComplieFactory extends IItemFactory {
 		}
 		public void init(Object... datas) {
 		}
+		public IItem newInstance() {
+			return new TEnter();
+		}
 	}
 	
 	
@@ -56,6 +59,9 @@ public class ComplieFactory extends IItemFactory {
 		}
 		public void init(Object... datas) {
 			str = (String)datas[0];
+		}
+		public IItem newInstance() {
+			return new TString();
 		}
 	}
 
@@ -78,6 +84,9 @@ public class ComplieFactory extends IItemFactory {
 		}
 		public Type getType() {
 			return Type.VAR;
+		}
+		public IItem newInstance() {
+			return new TVariable();
 		}
 	}
 

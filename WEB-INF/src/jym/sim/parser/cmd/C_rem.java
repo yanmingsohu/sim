@@ -3,10 +3,8 @@
 package jym.sim.parser.cmd;
 
 import java.util.Iterator;
-import java.util.List;
 
 import jym.sim.parser.IComponent;
-import jym.sim.util.Tools;
 
 /**
  * 参数: 无
@@ -28,12 +26,6 @@ public class C_rem extends AbsCommand {
 			public void remove() {
 			}
 		};
-	}
-
-	@Override
-	public void setParameter(List<String> p) {
-		super.setParameter(p);
-		Tools.pl("params: ", p);
 	}
 
 }

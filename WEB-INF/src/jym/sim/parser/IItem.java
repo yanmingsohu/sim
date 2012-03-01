@@ -8,7 +8,12 @@ package jym.sim.parser;
 public interface IItem extends IComponent {
 	
 	/**
-	 * 初始化对象使用的数据
+	 * 初始化对象使用的数据<br><br>
+	 * 
+	 * <b>变量的初始化约定:</b><br>
+	 * 参数1 : 变量名<br>
+	 * 参数2 : 变量值<br>
+	 * 参数3 : 引用另一个 IItem 的 value
 	 */
 	public void init(Object... datas);
 
@@ -33,4 +38,8 @@ public interface IItem extends IComponent {
 	 */
 	public String getText();
 	
+	/**
+	 * 创建一个与当前实现相同的对象
+	 */
+	public IItem newInstance();
 }

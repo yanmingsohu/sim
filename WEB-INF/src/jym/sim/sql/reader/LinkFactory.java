@@ -37,6 +37,9 @@ public class LinkFactory extends IItemFactory {
 		}
 		public void init(Object... datas) {
 		}
+		public IItem newInstance() {
+			return new TEnter();
+		}
 	}
 	
 	
@@ -55,6 +58,9 @@ public class LinkFactory extends IItemFactory {
 		public Type getType() {
 			return Type.STR;
 		}
+		public IItem newInstance() {
+			return new TString();
+		}
 	}
 
 	
@@ -63,10 +69,8 @@ public class LinkFactory extends IItemFactory {
 		private REF ref = new REF();
 
 		/**
-		 * 此三个参数统一时刻只有一个有效<br>
-		 * 参数1 : 变量名<br>
-		 * 参数2 : 变量值<br>
-		 * 参数3 : 引用另一个 TVariable 的 value
+		 * 此三个参数统一时刻只有一个有效
+		 * @see jym.sim.parser.IItem#init 变量的init()方法初始化约定
 		 */
 		public void init(Object... datas) {
 			if (datas.length == 1) {
@@ -89,6 +93,9 @@ public class LinkFactory extends IItemFactory {
 		}
 		public Type getType() {
 			return Type.VAR;
+		}
+		public IItem newInstance() {
+			return new TVariable();
 		}
 	}
 

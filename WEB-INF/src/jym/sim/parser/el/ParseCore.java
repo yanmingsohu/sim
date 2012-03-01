@@ -16,6 +16,7 @@ import jym.sim.parser.IComponent;
 import jym.sim.parser.IItem;
 import jym.sim.parser.IItemFactory;
 import jym.sim.parser.ILineCounter;
+import jym.sim.parser.ObjectAttribute;
 import jym.sim.parser.Type;
 import jym.sim.parser.cmd.CommandFactory;
 import jym.sim.parser.cmd.ICommand;
@@ -159,14 +160,18 @@ public class ParseCore {
 	}
 	
 	/**
-	 * 变量元素约定: 第一个参数为变量名, 第二个为变量值, 第三个为变量引用(引用另一个item中的变量值)
 	 * <b>创建变量的字符串参数一定不含有空格</b>
+	 * @see jym.sim.parser.IItem#init 变量的init()方法初始化约定
 	 */
 	private void addVar(StringBuilder str, List<IComponent> items) throws IOException {
 		String varname = str.toString().trim();
 		
 		if (varname.length() > 0) {
-			checkVarName(varname);
+			try {
+				ObjectAttribute.checkVarName(varname);
+			} catch(IllegalArgumentException e) {
+				throw new IOException(e.getMessage());
+			}
 			
 			IItem item = factory.create(Type.VAR);
 			item.init(varname);
@@ -180,65 +185,6 @@ public class ParseCore {
 			items.add(item);
 			str.setLength(0);
 		}
-	}
-	
-	/**
-	 * 检查变量名是否符合java命名规范如:'x.y.z'
-	 * @param name
-	 * @throws IOException
-	 */
-	public static void checkVarName(String name) throws IOException {
-		char[] ch = name.toCharArray();
-		int i = -1;
-		int word_len = 0;
-		int method = 0;
-		
-		while (++i < ch.length) {
-			if (ch[i] == ' ' || ch[i] == '\t') continue;
-			
-			if (word_len == 0) {
-				if ( !Character.isJavaIdentifierStart(ch[i]) ) {
-					throw new IOException("无效的变量名首字母:[" + name + "]");
-				}
-				
-				word_len = 1;
-				continue;
-			}
-			
-			if (ch[i] == '(') {
-				if (method > 0)
-					throw new IOException("不能使用连续的左括号:[" + name + "]");
-			
-				method = 1;
-				continue;
-			}
-
-			if (ch[i] == ')') {
-				if (method > 1)
-					throw new IOException("不能使用连续的右括号:[" + name + "]");
-				
-				method = 2;
-				continue;
-			}
-			
-			if (method == 1) {
-				throw new IOException("缺失右括号:[" + name + "]");
-			}
-			
-			if (ch[i] == '.') {
-				word_len = 0;
-				method = 0;
-				continue;
-			}
-
-			if (method > 0) {
-				throw new IOException("函数调用语法错误:[" + name + "]");
-			}
-			
-			if ( !Character.isJavaIdentifierPart(ch[i]) ) {
-				throw new IOException("含有无效的字符:[" + name + "]");
-			}
-		}	
 	}
 
 	public Map<String, IItem> getVariables() {

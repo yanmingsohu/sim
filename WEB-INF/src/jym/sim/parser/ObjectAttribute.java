@@ -2,6 +2,7 @@
 
 package jym.sim.parser;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -57,6 +58,66 @@ public final class ObjectAttribute {
 			}
 		}
 		return tar;
+	}
+	
+
+	/**
+	 * 检查变量名是否符合java命名规范如:'x.y.z'
+	 * @param name
+	 * @throws IOException
+	 */
+	public static void checkVarName(String name) throws IllegalArgumentException {
+		char[] ch = name.toCharArray();
+		int i = -1;
+		int word_len = 0;
+		int method = 0;
+		
+		while (++i < ch.length) {
+			if (ch[i] == ' ' || ch[i] == '\t') continue;
+			
+			if (word_len == 0) {
+				if ( !Character.isJavaIdentifierStart(ch[i]) ) {
+					throw new IllegalArgumentException("无效的变量名首字母:[" + name + "]");
+				}
+				
+				word_len = 1;
+				continue;
+			}
+			
+			if (ch[i] == '(') {
+				if (method > 0)
+					throw new IllegalArgumentException("不能使用连续的左括号:[" + name + "]");
+			
+				method = 1;
+				continue;
+			}
+
+			if (ch[i] == ')') {
+				if (method > 1)
+					throw new IllegalArgumentException("不能使用连续的右括号:[" + name + "]");
+				
+				method = 2;
+				continue;
+			}
+			
+			if (method == 1) {
+				throw new IllegalArgumentException("缺失右括号:[" + name + "]");
+			}
+			
+			if (ch[i] == '.') {
+				word_len = 0;
+				method = 0;
+				continue;
+			}
+
+			if (method > 0) {
+				throw new IllegalArgumentException("函数调用语法错误:[" + name + "]");
+			}
+			
+			if ( !Character.isJavaIdentifierPart(ch[i]) ) {
+				throw new IllegalArgumentException("含有无效的字符:[" + name + "]");
+			}
+		}	
 	}
 	
 	private static String getMethodName(String name) {

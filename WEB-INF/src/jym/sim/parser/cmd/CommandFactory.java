@@ -3,20 +3,21 @@
 package jym.sim.parser.cmd;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
 public final class CommandFactory {
 	
-	public final static CommandFactory instance;
+	public  final static CommandFactory instance;
 	private final Map<String, Class<?>> cmds;
 	
 	static { instance = new CommandFactory(); }
 	
 	
+	/**
+	 * 在构造函数中注册命令对象
+	 */
 	public CommandFactory() {
 		cmds = new HashMap<String, Class<?>>();
 		
@@ -73,21 +74,16 @@ public final class CommandFactory {
 		}
 		
 		/* 解析命令参数 */
-
 		if ( hp ) {
 			buff.setLength(0);
-			List<String> param = new ArrayList<String>();
 			boolean hp_end = false;
 			
 			while (++i < commandLine.length()) {
 				ch = commandLine.charAt(i);
 				
-				if (ch == ')') hp_end = true;
-				if (ch == ',' || hp_end) {
-					param.add(buff.toString());
-					buff.setLength(0);
-					if (hp_end) break;
-					continue;
+				if (ch == ')') {
+					hp_end = true;
+					break;
 				}
 				buff.append(ch);
 			}
@@ -95,7 +91,7 @@ public final class CommandFactory {
 			if (!hp_end) {
 				throw new IOException("缺少右括号 [" + commandLine + "]");
 			}
-			cmd.setParameter(param);
+			cmd.setParameter(buff.toString());
 		}
 		
 		return cmd;
