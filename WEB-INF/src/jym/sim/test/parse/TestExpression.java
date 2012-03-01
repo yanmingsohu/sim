@@ -22,9 +22,11 @@ public class TestExpression {
 //		test("1");
 //		test("1+2");
 //		test("1+2+3");
-		test("1+2*3");
-		test("1+2*3 ");
-		test(" 1 + 2 * 3 ");
+//		test("1+2*3");
+//		test("1+2*3 ");
+//		test(" 1 + 2 * 3 ");
+		
+		test("1*1");
 	}
 
 	public static void test(String str) throws ExprException {

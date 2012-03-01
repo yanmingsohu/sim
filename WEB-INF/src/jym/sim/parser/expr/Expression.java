@@ -18,10 +18,12 @@ public class Expression {
 	private Opt last	= null;
 	private Opt new_opt	= null;
 	private Opt root	= null;
+	private Map<String, IItem> vmap;
 	
 	
 	public Expression(String exp, Map<String, IItem> vmap) throws ExprException {
 		this.exp = exp;
+		this.vmap = vmap;
 		
 		StringBuilder buff = new StringBuilder();
 		int i		= -1;
@@ -44,15 +46,20 @@ public class Expression {
 				op = true;
 			}
 			else if (ch == '-') {
-				//...
+				new_opt = MathematicsOps.SUB();
+				op = true;
 			}
 			else if (ch == '*') {
 				new_opt = MathematicsOps.MUL();
 				op = true;
 			}
+			else if (ch == '/') {
+				new_opt = MathematicsOps.DIV();
+				op = true;
+			}
 			
 			if (op) {
-				createOp(buff, vmap);
+				createOp(buff);
 				continue;
 			}
 			else if (mode == 1) {
@@ -62,43 +69,46 @@ public class Expression {
 			else if (mode == 2) {
 				if (!Character.isJavaIdentifierPart(ch)) 
 					throw new ExprException("无效的变量名: " + exp);
-			}	
+			}
 			
 			buff.append(ch);
 		}
 		
 		if (buff.length() > 0) {
-			createOp(buff, vmap);
+			IVal nvel = createVal(buff);
+			last.right(nvel);
 		}
 	}
 	
-	private void createOp(StringBuilder buff, Map<String, IItem> vmap) throws ExprException {
-		IVal nvel;
+	private IVal createVal(StringBuilder buff) throws ExprException {
+		IVal nval = null;
 		
 		if (mode == 1) {
-			nvel = new ConstVal(buff.toString());
+			nval = new ConstVal(buff.toString());
 		} else if (mode == 2) {
-			nvel = new Variable(buff.toString(), vmap);
+			nval = new Variable(buff.toString(), vmap);
 		} else { 
 			throw new ExprException("操作符缺少左值: " + exp);
 		}
 		buff.setLength(0);
 		
-		if (new_opt != null) {
-			if (new_opt.level() > last.level()) {
-				new_opt.left(nvel);
-				last.left(new_opt);
-			} else {
-				new_opt.right(last);
-				last.right(nvel);
-				root = new_opt;
-			}
-			last = new_opt;
-			new_opt = null;
+		return nval; 
+	}
+	
+	private void createOp(StringBuilder buff) throws ExprException {
+		IVal nvel = createVal(buff);
+		
+		if (new_opt.level() > last.level()) {
+			new_opt.right(nvel);
+			last.left(new_opt);
 		} else {
+			new_opt.left(last);
 			last.right(nvel);
+			root = new_opt;
 		}
 		
+		last = new_opt;
+		new_opt = null;
 		op = false;
 		mode = 0;
 	}

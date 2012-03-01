@@ -1,6 +1,6 @@
 // CatfoOD 2012-2-28 上午10:17:41 yanming-sohu@sohu.com/@qq.com
 
-package jym.sim.test.util;
+package jym.sim.test.parse;
 
 import jym.sim.parser.ObjectAttribute;
 import jym.sim.util.Tools;
