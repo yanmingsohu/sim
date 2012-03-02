@@ -5,7 +5,7 @@ package jym.sim.parser;
 
 public abstract class ItemBase implements IItem {
 
-	public final String toString() {
+	public String toString() {
 		return getText();
 	}
 	

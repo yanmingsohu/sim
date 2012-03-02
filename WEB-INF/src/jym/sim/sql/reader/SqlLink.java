@@ -93,6 +93,6 @@ public class SqlLink implements ISqlReader {
 	}
 
 	public void showSql() {
-		Tools.plsql(getResultSql());
+		Tools.pl(getResultSql());
 	}
 }

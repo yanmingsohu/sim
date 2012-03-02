@@ -7,7 +7,7 @@ import java.util.Iterator;
 import jym.sim.parser.IComponent;
 
 /**
- * 参数: 无
+ * 参数: 无<br>
  * 功能: 注释命令, 内容体都会被忽略
  */
 public class C_rem extends AbsCommand {

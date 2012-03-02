@@ -88,8 +88,11 @@ public class LinkFactory extends IItemFactory {
 		public String filter() {
 			return String.valueOf( ObjectAttribute.get(ref.value, var, 1) );
 		}
+		public String toString() {
+			return var==null ? String.valueOf(ref.value) : var[0];
+		}
 		public String getText() {
-			return var[0];
+			return null;
 		}
 		public Object originalObj() {
 			return ref.value;

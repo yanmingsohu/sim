@@ -21,6 +21,7 @@ public final class CommandFactory {
 	public CommandFactory() {
 		cmds = new HashMap<String, Class<?>>();
 		
+		cmds.put("for", 	C_for.class		);
 		cmds.put("if",		C_if.class		);
 		cmds.put("rem", 	C_rem.class		);
 	}

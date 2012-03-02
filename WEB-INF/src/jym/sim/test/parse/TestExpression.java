@@ -33,7 +33,7 @@ public class TestExpression {
 		test("1+1+1");
 		test("1+2-4");
 		test("1+2-3+2");
-		test(" 1 + 2 * 3 ");
+		test("1 + 2 * 3 ");
 		test("2 + 2 - 3 + 6 / 3 *2.3+ 6 / 2 + 2"); 
 		test("1*2*3");
 		test("10/3");

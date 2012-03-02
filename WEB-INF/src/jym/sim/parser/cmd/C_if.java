@@ -10,7 +10,7 @@ import jym.sim.parser.expr.ExprException;
 import jym.sim.parser.expr.Expression;
 
 /**
- * 参数: 1个表达式, 表达式中的字符序列认为是变量, 从全局变量中取出
+ * 参数: 1个表达式, 表达式中的字符序列认为是变量, 从全局变量中取出<br>
  * 功能: 如果表达式结果为true, 则执行命令内容, 否则忽略内容
  */
 public class C_if extends AbsCommand {

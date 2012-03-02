@@ -7,3 +7,7 @@ select * from table
 #if (id+1 != 2)
 	如果id设置了别的值: ${id }
 #end
+
+#for(a : b)
+${a }
+#end

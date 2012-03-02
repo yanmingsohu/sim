@@ -103,6 +103,9 @@ public abstract class AbsCommand implements ICommand {
 		return compile(params.get(param_index));
 	}
 	
+	protected void error(String msg) throws ExprException {
+		throw new ExprException(this.getClass() + ": " + msg);
+	}
 	
 	/**
 	 * 空的迭代器
