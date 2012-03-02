@@ -12,6 +12,8 @@ public abstract class Opt extends AbsVal implements IVal {
 
 	private IVal left;
 	private IVal right;
+	/** 给运算符附加的优先级权值 */
+	private int proi;
 	
 	
 	public void left(IVal l) {
@@ -30,6 +32,14 @@ public abstract class Opt extends AbsVal implements IVal {
 		return right;
 	}
 	
+	public final int level() {
+		return proi + _level();
+	}
+	
+	public final void level(int l) {
+		proi = l;
+	}
+	
 	/**
 	 * 默认不支持该方法
 	 */
@@ -45,7 +55,7 @@ public abstract class Opt extends AbsVal implements IVal {
 	/**
 	 * 运算符优先级, 值越大优先级越高
 	 */
-	public abstract int level();
+	protected abstract int _level();
 	
 	
 }

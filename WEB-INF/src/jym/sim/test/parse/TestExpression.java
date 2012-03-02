@@ -27,18 +27,21 @@ public class TestExpression {
 		vmap = new HashMap<String, IItem>();
 		vmap.put("a", item);
 		vmap.put("b", item2);
+//		
+//		test("1");
+//		test("1*1");
+//		test("1+1+1");
+//		test("1+2-4");
+//		test("1+2-3+2");
+//		test("1 + 2 * 3 ");
+//		test("2 + 2 - 3 + 6 / 3 *2.3+ 6 / 2 + 2"); 
+//		test("1*2*3");
+//		test("10/3");
+//		
+//		test("a + b * 2");
 		
-		test("1");
-		test("1*1");
-		test("1+1+1");
-		test("1+2-4");
-		test("1+2-3+2");
-		test("1 + 2 * 3 ");
-		test("2 + 2 - 3 + 6 / 3 *2.3+ 6 / 2 + 2"); 
-		test("1*2*3");
-		test("10/3");
-		
-		test("a + b * 2");
+		test("1+(1+2)*3");
+		test("1+2*(3/(4 -1) +3)");
 	}
 
 	public static void test(String str) throws ExprException {
