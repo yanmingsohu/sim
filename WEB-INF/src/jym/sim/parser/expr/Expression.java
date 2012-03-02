@@ -13,8 +13,8 @@ import jym.sim.parser.IItem;
 public class Expression {
 
 	private String exp;
-	private int mode 	= 0; // 0:first, 1:number, 2:string
-	private boolean op	= false;
+	/** 0:first, 1:number, 2:string */
+	private int mode 	= 0;
 	private Opt last	= null;
 	private Opt new_opt	= null;
 	private Opt root	= null;
@@ -29,7 +29,7 @@ public class Expression {
 		int i		= -1;
 		char ch		= 0;
 		
-		last = root = MathematicsOps.ADD();
+		last = root = new MathematicsOps.ADD();
 		last.left(new ConstVal());
 		last.right(new ConstVal());
 		
@@ -42,35 +42,58 @@ public class Expression {
 			first_check(ch);
 			
 			if (ch == '+') {
-				new_opt = MathematicsOps.ADD();
-				op = true;
+				new_opt = new MathematicsOps.ADD();
 			}
 			else if (ch == '-') {
-				new_opt = MathematicsOps.SUB();
-				op = true;
+				new_opt = new MathematicsOps.SUB();
 			}
 			else if (ch == '*') {
-				new_opt = MathematicsOps.MUL();
-				op = true;
+				new_opt = new MathematicsOps.MUL();
 			}
 			else if (ch == '/') {
-				new_opt = MathematicsOps.DIV();
-				op = true;
+				new_opt = new MathematicsOps.DIV();
+			}
+			else if (ch == '=') {
+				if (exp.charAt(i+1) == '=') {
+					new_opt = new ComparisonOps.EQ(); i++;
+				}
+			}
+			else if (ch == '!') {
+				if (exp.charAt(i+1) == '=') {
+					new_opt = new ComparisonOps.UEQ(); i++;
+				}
+			}
+			else if (ch == '>') {
+				if (exp.charAt(i+1) == '=') {
+					new_opt = new ComparisonOps.GEQ(); i++;
+				} else {
+					new_opt = new ComparisonOps.GE();
+				}
+			}
+			else if (ch == '<') {
+				if (exp.charAt(i+1) == '=') {
+					new_opt = new ComparisonOps.LEQ(); i++;
+				} else {
+					new_opt = new ComparisonOps.LE();
+				}
+			}
+			else if (ch == '|') {
+				if (exp.charAt(i+1) == '|') {
+					new_opt = new LogicalOps.OR(); i++;
+				}
+			}
+			else if (ch == '&') {
+				if (exp.charAt(i+1) == '&') {
+					new_opt = new LogicalOps.AND(); i++;
+				}
 			}
 			
-			if (op) {
+			if (new_opt != null) {
 				createOp(buff);
 				continue;
 			}
-			else if (mode == 1) {
-				if (!Character.isDigit(ch))
-					throw new ExprException("无效的数字常量: " + exp);
-			}
-			else if (mode == 2) {
-				if (!Character.isJavaIdentifierPart(ch)) 
-					throw new ExprException("无效的变量名: " + exp);
-			}
 			
+			check_ch(ch);
 			buff.append(ch);
 		}
 		
@@ -98,21 +121,49 @@ public class Expression {
 	private void createOp(StringBuilder buff) throws ExprException {
 		IVal nvel = createVal(buff);
 		
+		/* 高优先级的运算符作为右值,低优先级作为根元素追加,
+		 * 优先级相同则插入元素 */
 		if (new_opt.level() > last.level()) {
-			new_opt.right(nvel);
-			last.left(new_opt);
-		} else {
-			new_opt.left(last);
+			last.right(new_opt);
+			new_opt.left(nvel);
+		} 
+		else if (new_opt.level() < last.level()) {
 			last.right(nvel);
+			new_opt.left(root);
 			root = new_opt;
 		}
+		else {
+			last.right(nvel);
+			new_opt.left(last);
+			if (last == root) {
+				root = new_opt;
+			} else {
+				root.right(new_opt);
+			}
+		}
 		
-		last = new_opt;
-		new_opt = null;
-		op = false;
-		mode = 0;
+		last	= new_opt;
+		new_opt	= null;
+		mode	= 0;
 	}
 	
+	private void check_ch(char ch) throws ExprException {
+		if (ch != '.') { /* .是有效符号 */;
+			if (mode == 1) {
+				if (!Character.isDigit(ch))
+					throw new ExprException("无效的数字常量: " + exp);
+			}
+			else if (mode == 2) {
+				if (ch == '(' || ch == ')') ;
+				else if (!Character.isJavaIdentifierPart(ch)) 
+					throw new ExprException("无效的变量名: " + exp);
+			}
+		}
+	}
+	
+	/**
+	 * 起始必须是一个常量或变量
+	 */
 	private void first_check(char ch) throws ExprException {
 		if (mode == 0) {
 			if (Character.isDigit(ch)) 
@@ -120,7 +171,7 @@ public class Expression {
 			else if (Character.isJavaIdentifierStart(ch)) 
 				mode = 2;
 			else
-				throw new ExprException("无效的常量或变量: '"+ ch +"' " + exp);
+				throw new ExprException("无效的字符: '"+ ch +"' 在表达式 " + exp);
 		}
 	}
 

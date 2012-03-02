@@ -9,12 +9,8 @@ public abstract class ItemBase implements IItem {
 		return getText();
 	}
 	
-	public void setFilterData(Object data) throws ParserException {
-		notSupport();
+	public Object originalObj() {
+		return filter();
 	}
 	
-	public final void notSupport() throws ParserException {
-		throw new ParserException("不支持该方法");
-	}
-
 }

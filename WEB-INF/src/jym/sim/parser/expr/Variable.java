@@ -7,6 +7,7 @@ import java.util.Map;
 
 import jym.sim.parser.IItem;
 import jym.sim.parser.ObjectAttribute;
+import jym.sim.util.Tools;
 
 
 /**
@@ -16,6 +17,7 @@ public class Variable implements IVal {
 
 	private final Map<String, IItem> var_map;
 	private final String var_name;
+	private final String var_full;
 	
 	/**
 	 * 创建变量, 引用全局变量表 
@@ -26,6 +28,7 @@ public class Variable implements IVal {
 	public Variable(String v_name, Map<String, IItem> vmap) throws IllegalArgumentException {
 		ObjectAttribute.checkVarName(v_name);
 		var_map = vmap;
+		var_full = v_name;
 		
 		int i = v_name.indexOf('.');
 		if (i >= 0) {
@@ -40,9 +43,17 @@ public class Variable implements IVal {
 	}
 
 	public BigDecimal get() {
+		String val = null;
 		try {
-			return new BigDecimal( var_map.get(var_name).filter() );
-		} catch(Exception e) {}
+			IItem item = var_map.get(var_name);
+			item.init(var_full);
+			val = item.filter();
+			
+			return new BigDecimal(val);
+			
+		} catch(Exception e) {
+			Tools.pl(Variable.class, "取变量 [" + var_full + "] 失败:", val);
+		}
 		
 		return BigDecimal.ZERO;
 	}

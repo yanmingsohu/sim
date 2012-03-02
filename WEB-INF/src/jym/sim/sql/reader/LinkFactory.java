@@ -91,6 +91,9 @@ public class LinkFactory extends IItemFactory {
 		public String getText() {
 			return var[0];
 		}
+		public Object originalObj() {
+			return ref.value;
+		}
 		public Type getType() {
 			return Type.VAR;
 		}

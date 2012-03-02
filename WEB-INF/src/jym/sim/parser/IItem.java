@@ -11,7 +11,7 @@ public interface IItem extends IComponent {
 	 * 初始化对象使用的数据<br><br>
 	 * 
 	 * <b>变量的初始化约定:</b><br>
-	 * 参数1 : 变量名<br>
+	 * 参数1 : 变量名,可以通过改变名字来引用该元素的子属性<br>
 	 * 参数2 : 变量值<br>
 	 * 参数3 : 引用另一个 IItem 的 value
 	 */
@@ -23,12 +23,6 @@ public interface IItem extends IComponent {
 	public Type getType();
 	
 	/**
-	 * 设置过滤方法使用的数据
-	 * @throws ParserException - 不支持该方法或数据不符合要求
-	 */
-	public void setFilterData(Object data) throws ParserException;
-	
-	/**
 	 * 不同的实现有不同的过滤方式
 	 */
 	public String filter();
@@ -37,6 +31,11 @@ public interface IItem extends IComponent {
 	 * 返回的文本是解析到的原始字符串
 	 */
 	public String getText();
+	
+	/**
+	 * 返回使用init(..)设置的原始对象
+	 */
+	public Object originalObj();
 	
 	/**
 	 * 创建一个与当前实现相同的对象

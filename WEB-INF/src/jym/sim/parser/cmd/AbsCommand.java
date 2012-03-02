@@ -3,11 +3,14 @@
 package jym.sim.parser.cmd;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import jym.sim.parser.IComponent;
 import jym.sim.parser.IItem;
+import jym.sim.parser.expr.ExprException;
+import jym.sim.parser.expr.Expression;
 
 /**
  * 框架实现
@@ -22,6 +25,8 @@ public abstract class AbsCommand implements ICommand {
 	protected Map<String, IItem> vars;
 	/** 传递给命令的参数初始为0长度数组, 不会为null */
 	protected final List<String> params;
+	/** 空迭代器, 用于忽略内容体 */
+	protected final NulIterator NULL_ITR = new NulIterator();
 	
 	
 	public AbsCommand() {
@@ -84,8 +89,27 @@ public abstract class AbsCommand implements ICommand {
 	/**
 	 * 执行表达式并返回结果, 表达式中的字符序列认为是变量, 
 	 * 并从全局变量列表中取值
+	 * @throws ExprException 
 	 */
-	protected Object eval(String exp) {
-		throw new UnsupportedOperationException();
+	protected Expression compile(String exp_s) throws ExprException {
+		return new Expression(exp_s, vars);
+	}
+	
+	/**
+	 * 从解析后的参数列表中取字符串参数并编译为表达式
+	 * @throws ExprException 
+	 */
+	protected Expression compile(int param_index) throws ExprException {
+		return compile(params.get(param_index));
+	}
+	
+	
+	/**
+	 * 空的迭代器
+	 */
+	protected static class NulIterator implements Iterator<IComponent> {
+		public boolean hasNext() { 	return false;	}
+		public IComponent next() {	return null;	}
+		public void remove() { }
 	}
 }

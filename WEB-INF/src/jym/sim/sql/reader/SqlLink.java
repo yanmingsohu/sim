@@ -9,6 +9,8 @@ import java.util.Iterator;
 import java.util.Map;
 
 import jym.sim.parser.IItem;
+import jym.sim.parser.IItemFactory;
+import jym.sim.parser.Type;
 import jym.sim.parser.el.FileParse;
 import jym.sim.util.Tools;
 
@@ -18,6 +20,7 @@ import jym.sim.util.Tools;
  */
 public class SqlLink implements ISqlReader {
 	
+	private IItemFactory itemFact;
 	private Map<String, IItem> vars;
 	private FileParse parse;
 	private String fname;
@@ -54,6 +57,7 @@ public class SqlLink implements ISqlReader {
 		}
 		fname = file.getFile();
 		url = file;
+		itemFact = new LinkFactory();
 		checkAndRead();
 	}
 	
@@ -63,7 +67,7 @@ public class SqlLink implements ISqlReader {
 		
 		parse = new FileParse(fname, 
 				new InputStreamReader(url.openStream(), SQL_FILE_CODE), 
-				new LinkFactory() );
+				itemFact );
 		
 		vars = parse.getVariables();
 	}
@@ -79,10 +83,11 @@ public class SqlLink implements ISqlReader {
 		return sql.toString();
 	}
 
-	public void set(String name, Object value) throws NoSuchFieldException {
+	public void set(String name, Object value) {
 		IItem item = vars.get(name);
 		if (item == null) {
-			throw new NoSuchFieldException("找不到变量: " + name);
+			item = itemFact.create(Type.VAR);
+			vars.put(name, item);
 		}
 		item.init(null, value);
 	}

@@ -24,6 +24,7 @@ public final class ObjectAttribute {
 	 * 	保存的对象的names[n + beginIndex]的属性(或方法)保存的对象<br>
 	 * 如果此过程中某个属性(或方法)为null则返回null, 如果o为null也返回null<br>
 	 * 如果names[n]为null则会跳过并解析names[n+1]
+	 * <b>如果发生异常, 则返回描述异常的字符串</b>
 	 * 
 	 * @param names 中的元素不可有空格
 	 */
