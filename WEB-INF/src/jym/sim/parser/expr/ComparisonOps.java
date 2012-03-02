@@ -16,7 +16,7 @@ public class ComparisonOps {
 		public BigDecimal get() {
 			return left().get().compareTo(right().get()) == 0 ? TRUE : FALSE;
 		}
-		public int _level() {
+		public int level() {
 			return 27;
 		}
 	}
@@ -26,7 +26,7 @@ public class ComparisonOps {
 		public BigDecimal get() {
 			return left().get().compareTo(right().get()) != 0 ? TRUE : FALSE;
 		}
-		public int _level() {
+		public int level() {
 			return 27;
 		}
 	}
@@ -36,7 +36,7 @@ public class ComparisonOps {
 		public BigDecimal get() {
 			return left().get().compareTo(right().get()) >= 0 ? TRUE : FALSE;
 		}
-		public int _level() {
+		public int level() {
 			return 28;
 		}
 	}
@@ -46,7 +46,7 @@ public class ComparisonOps {
 		public BigDecimal get() {
 			return left().get().compareTo(right().get()) <= 0 ? TRUE : FALSE;
 		}
-		public int _level() {
+		public int level() {
 			return 28;
 		}
 	}
@@ -56,7 +56,7 @@ public class ComparisonOps {
 		public BigDecimal get() {
 			return left().get().compareTo(right().get()) > 0 ? TRUE : FALSE;
 		}
-		public int _level() {
+		public int level() {
 			return 28;
 		}
 	}
@@ -66,7 +66,7 @@ public class ComparisonOps {
 		public BigDecimal get() {
 			return left().get().compareTo(right().get()) < 0 ? TRUE : FALSE;
 		}
-		public int _level() {
+		public int level() {
 			return 28;
 		}
 	}

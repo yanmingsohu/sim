@@ -12,10 +12,7 @@ import jym.sim.parser.IItem;
  */
 public class Expression {
 
-	public static final int PRIORITY_WEIGHTED = 1000;
-	
 	private String exp;
-	private int proiority;
 	/** 0:first, 1:number, 2:string */
 	private int mode 	= 0;
 	private Opt last	= null;
@@ -42,13 +39,8 @@ public class Expression {
 			if (ch == ' ' || ch == '\t') 
 				continue;
 			
-			if (ch =='(') {
-				proiority += PRIORITY_WEIGHTED;
-				continue;
-			}
-			else if (ch == ')') {
-				proiority -= PRIORITY_WEIGHTED;
-				continue;
+			if (ch =='(' || ch == ')') {
+				throw new ExprException("不支持括号: " + exp);
 			}
 			
 			first_check(ch);
@@ -113,9 +105,6 @@ public class Expression {
 			IVal nvel = createVal(buff);
 			last.right(nvel);
 		}
-		if (proiority != 0) {
-			throw new ExprException("括号不匹配: " + exp);
-		}
 	}
 	
 	private IVal createVal(StringBuilder buff) throws ExprException {
@@ -135,7 +124,6 @@ public class Expression {
 	
 	private void createOp(StringBuilder buff) throws ExprException {
 		IVal nvel = createVal(buff);
-		new_opt.level(proiority);
 		
 		/* 高优先级的运算符作为右值,低优先级作为根元素追加,
 		 * 优先级相同则插入元素 */

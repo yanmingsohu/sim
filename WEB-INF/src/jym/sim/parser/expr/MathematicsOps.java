@@ -17,7 +17,7 @@ public class MathematicsOps {
 		public BigDecimal get() {
 			return left().get().add(right().get());
 		}
-		public int _level() {
+		public int level() {
 			return 30;
 		}
 	}
@@ -27,7 +27,7 @@ public class MathematicsOps {
 		public BigDecimal get() {
 			return left().get().subtract(right().get());
 		}
-		public int _level() {
+		public int level() {
 			return 30;
 		}
 	}
@@ -37,7 +37,7 @@ public class MathematicsOps {
 		public BigDecimal get() {
 			return left().get().multiply(right().get());
 		}
-		public int _level() {
+		public int level() {
 			return 35;
 		}
 	}
@@ -47,7 +47,7 @@ public class MathematicsOps {
 		public BigDecimal get() {
 			return left().get().divide(right().get(), DIV_SCALE, RoundingMode.HALF_UP);
 		}
-		public int _level() {
+		public int level() {
 			return 35;
 		}
 	}

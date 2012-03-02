@@ -15,7 +15,7 @@ public class LogicalOps extends ComparisonOps {
 			}
 			return FALSE;
 		}
-		public int _level() {
+		public int level() {
 			return 25;
 		}
 	}
@@ -29,7 +29,7 @@ public class LogicalOps extends ComparisonOps {
 			}
 			return right().get();
 		}
-		public int _level() {
+		public int level() {
 			return 25;
 		}
 	}
