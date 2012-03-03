@@ -13,7 +13,7 @@ public class MathematicsOps {
 	
 	
 	/**  +  */
-	public final static class ADD extends Opt {
+	public static class ADD extends Opt {
 		public BigDecimal get() {
 			return left().get().add(right().get());
 		}
@@ -23,7 +23,7 @@ public class MathematicsOps {
 	}
 	
 	/**  -  */
-	public final static class SUB extends Opt { 
+	public static class SUB extends Opt { 
 		public BigDecimal get() {
 			return left().get().subtract(right().get());
 		}
@@ -33,7 +33,7 @@ public class MathematicsOps {
 	}
 	
 	/**  *  */
-	public final static class MUL extends Opt { 
+	public static class MUL extends Opt { 
 		public BigDecimal get() {
 			return left().get().multiply(right().get());
 		}
@@ -43,7 +43,7 @@ public class MathematicsOps {
 	}
 	
 	/**  /  */
-	public final static class DIV extends Opt { 
+	public static class DIV extends Opt { 
 		public BigDecimal get() {
 			return left().get().divide(right().get(), DIV_SCALE, RoundingMode.HALF_UP);
 		}

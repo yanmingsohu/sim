@@ -16,13 +16,7 @@ import jym.sim.util.Tools;
 
 
 /**
- * 读取sql, 使用拼接字符串的方式取得结果sql<br>
- * 文件中可以使用${..}表达式取变量<br>
- * 文件中可用的命令在See also中查找
- * 
- * @see jym.sim.parser.cmd.C_for for循环命令
- * @see jym.sim.parser.cmd.C_rem rem注释命令
- * @see jym.sim.parser.cmd.C_if if判断命令
+ * 读取sql, 使用拼接字符串的方式取得结果sql
  */
 public class SqlLink implements ISqlReader {
 	

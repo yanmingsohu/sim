@@ -112,6 +112,15 @@ public class ParseCore {
 						if (ch == 'n') {
 							ch = (char) reader.read();
 							if (ch == 'd') {
+								// 吃掉之后的换行符 
+								/*
+								int cc;
+								do {
+									reader.mark(1);
+									cc = reader.read();
+								} while (cc == '\n' || cc == '\r');
+								reader.reset();
+								*/
 								// 命令结束
 								return;
 							}
@@ -176,11 +185,19 @@ public class ParseCore {
 			IItem item = factory.create(Type.VAR);
 			item.init(varname);
 			
-			IItem old = variables.get(item.getText());
+			String rootname;
+			int ri = varname.indexOf('.');
+			if (ri > 0) {
+				rootname = varname.substring(0, ri);
+			} else {
+				rootname = varname;
+			}
+			
+			IItem old = variables.get(rootname);
 			if (old != null) {
 				item.init(null, null, old);
 			} else {
-				variables.put(item.getText(), item);
+				variables.put(rootname, item);
 			}
 			items.add(item);
 			str.setLength(0);
@@ -206,7 +223,7 @@ public class ParseCore {
 		return new ItemIterator();
 	}
 
-	/**XXX 有错误
+	/**
 	 * 遇到ICommand元素会解开该迭代器
 	 */
 	private class ItemIterator implements Iterator<IItem> {

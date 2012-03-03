@@ -56,11 +56,13 @@ public class TestSqlReader {
 	public static void loopcreate() {
 		StringBuilder out = new StringBuilder();
 		UsedTime.start("\n1000 次生成sql ");
+		Data d = new Data();
+		d.dates = new String[] {"a", "b", "c"};
 		for (int i=0; i<1000; i++) {
 			//UsedTime.start("\n生成sql " + i);
 			try {
 				SqlLink sl = new SqlLink("/jym/sim/test/sql/TestSqlReader.sql");
-				sl.set("data", new Data());
+				sl.set("data", d);
 				sl.getResultSql();
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -74,23 +76,17 @@ public class TestSqlReader {
 	@SuppressWarnings("deprecation")
 	private static ISqlReader genSql(ISqlReader sr) throws IOException, NoSuchFieldException {
 		
-		final SimpleDateFormat DEF_FMT = new SimpleDateFormat("yyyy-MM-dd");
-		final Date[] days = new Date[] { new Date(110, 9, 11), new Date() };
+		final SimpleDateFormat DF = new SimpleDateFormat("yyyy-MM-dd");
 		
-		StringBuilder SQL = new StringBuilder();
-		for (int i=0; i<days.length; ++i) {
-			final String day = DEF_FMT.format(days[i]);
-			SQL.append("     VI.GETDATE >= to_date('" + day + " 00:00:00', 'yyyy-mm-dd hh24:mi:ss') ");
-			SQL.append(" and VI.GETDATE <= to_date('" + day + " 23:59:59', 'yyyy-mm-dd hh24:mi:ss') ");
-			if (i+1 < days.length) {
-				SQL.append(" or ");
-			}
-		}
+		final String[] days = new String[] {
+				DF.format(new Date(110, 9, 11)),
+				DF.format(new Date())
+		};
 		
 		Data data = new Data();
 		data.areaSn = 1;
 		data.kindId = "IA_F_RG";
-		data.dates = SQL.toString();
+		data.dates = days;
 		
 		sr.set("data", data);
 
@@ -100,7 +96,7 @@ public class TestSqlReader {
 	public static class Data {
 		int areaSn;
 		String kindId;
-		String dates;
+		String[] dates;
 		
 		public int as() { return areaSn; }
 	}

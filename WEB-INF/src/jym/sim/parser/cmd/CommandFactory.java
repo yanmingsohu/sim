@@ -38,8 +38,8 @@ public final class CommandFactory {
 	public ICommand create(String commandLine) throws IOException {
 		
 		StringBuilder buff = new StringBuilder();
-		boolean hp	= false; // has parameter
 		boolean sp	= false;
+		int hp		= 0; // 括号数量
 		int i		= -1;
 		char ch		= 0;
 		
@@ -51,7 +51,7 @@ public final class CommandFactory {
 			ch = commandLine.charAt(i);
 			
 			if (ch == ' ') { sp = true; continue; }
-			if (ch == '(') { hp = true; break; }
+			if (ch == '(') { hp = 1; break; }
 			
 			if ( (!Character.isLetter(ch)) || sp ) {
 				throw new IOException("[" + commandLine + "] 中有无效字符 '" + ch + "'");
@@ -75,22 +75,25 @@ public final class CommandFactory {
 		}
 		
 		/* 解析命令参数 */
-		if ( hp ) {
+		if ( hp > 0 ) {
 			buff.setLength(0);
-			boolean hp_end = false;
 			
 			while (++i < commandLine.length()) {
 				ch = commandLine.charAt(i);
 				
-				if (ch == ')') {
-					hp_end = true;
-					break;
+				if (ch == '(') {
+					hp++;
 				}
-				buff.append(ch);
+				else if (ch == ')') {
+					--hp;
+				}
+				
+				if (hp > 0)
+					buff.append(ch);
 			}
 			
-			if (!hp_end) {
-				throw new IOException("缺少右括号 [" + commandLine + "]");
+			if (hp != 0) {
+				throw new IOException("括号不匹配 [" + commandLine + "]");
 			}
 			cmd.setParameter(buff.toString());
 		}

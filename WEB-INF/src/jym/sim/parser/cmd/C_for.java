@@ -14,24 +14,45 @@ import jym.sim.parser.IItem;
  */
 public class C_for extends AbsCommand {
 
+	
 	@SuppressWarnings("unchecked")
 	public Iterator<IComponent> getItem() {
 		try {
-			if (params.size() != 2) 
+			if (params.size() != 2) {
 				error("参数不正确");
-			
+			}
+
 			String var_name = params.get(0).trim();
-			String itr_name = params.get(1).trim();
-			
-			IItem item = vars.get(itr_name);
-			if (item == null)
-				error("迭代器无效 " + itr_name);
-	//XXX 集合未完成
 			IItem itr_var = vars.get(var_name);
-			if (itr_var == null)
-				error("迭代器使用的变量必须在文件或参数中存在: " + var_name);
+		
+			if (itr_var == null) {
+				itr_var = createVar(var_name);
+				if (itr_var == null) {
+					error("迭代器使用的变量必须在文件或参数中存在: " + var_name);
+				}
+			}
 			
-			return new ForEach((Iterator<IComponent>) item.originalObj(), itr_var);
+			String itr_name = params.get(1).trim();
+			Object obj = getVar(itr_name);
+			
+			if (obj == null) {
+				error("迭代器无效 " + itr_name);
+			}
+			
+			
+			Iterator itr = null;
+			
+			if (obj instanceof Iterator) {
+				itr = (Iterator) obj;
+			}
+			else if (obj instanceof Iterable) {
+				itr = ((Iterable)obj).iterator();
+			}
+			else if (obj instanceof Object[]) {
+				itr = new ArrayItr((Object[]) obj);
+			}
+			
+			return new ForEach(itr, itr_var);
 			
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -45,16 +66,37 @@ public class C_for extends AbsCommand {
 	}
 	
 	
+	private class ArrayItr implements Iterator<Object> {
+		
+		Object[] arr;
+		int idx;
+		
+		
+		ArrayItr(Object[] arr) {
+			this.arr = arr;
+			idx = 0;
+		}
+		public boolean hasNext() {
+			return idx < arr.length;
+		}
+		public Object next() {
+			return arr[idx++];
+		}
+		public void remove() {
+		}
+	}
+	
+	
 	private class ForEach implements Iterator<IComponent> {
 		
 		Iterator<IComponent> itr_content;
-		Iterator<IComponent> itr_each;
+		Iterator<?> itr_each;
 		IItem itr_var;
 		IComponent next;
 		boolean allOver;
 		
 		
-		ForEach(Iterator<IComponent> itr, IItem var) {
+		ForEach(Iterator<?> itr, IItem var) {
 			itr_each = itr;
 			itr_var = var;
 		}

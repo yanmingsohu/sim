@@ -12,26 +12,32 @@ import jym.sim.parser.IItem;
  */
 public class Expression {
 
-	private String exp;
-	/** 0:first, 1:number, 2:string */
-	private int mode 	= 0;
-	private Opt last	= null;
-	private Opt new_opt	= null;
-	private Opt root	= null;
 	private Map<String, IItem> vmap;
+	private String exp;
+	private Opt root;
+	private int brackets;
 	
 	
 	public Expression(String exp, Map<String, IItem> vmap) throws ExprException {
 		this.exp = exp;
 		this.vmap = vmap;
+		brackets = 0;
 		
-		StringBuilder buff = new StringBuilder();
-		int i		= -1;
-		char ch		= 0;
+		Data d = beginParse(0);
+		root = d.root;
 		
-		last = root = new MathematicsOps.ADD();
-		last.left(new ConstVal());
-		last.right(new ConstVal());
+		if (brackets != 0) {
+			throw new ExprException("括号不匹配: " + exp);
+		}
+	}
+	
+	private Data beginParse(final int beginIndex) throws ExprException {
+		Data d	= new Data();
+		int i	= beginIndex - 1;
+		char ch	= 0;
+		
+		d.last = d.root = new MathematicsOps.ADD();
+		d.last.left(new ConstVal());
 		
 		while (++i < exp.length()) {
 			ch  = exp.charAt(i);
@@ -39,141 +45,170 @@ public class Expression {
 			if (ch == ' ' || ch == '\t') 
 				continue;
 			
-			if (ch =='(' || ch == ')') {
-				throw new ExprException("不支持括号: " + exp);
-			}
-			
-			first_check(ch);
-			
-			if (ch == '+') {
-				new_opt = new MathematicsOps.ADD();
-			}
-			else if (ch == '-') {
-				new_opt = new MathematicsOps.SUB();
-			}
-			else if (ch == '*') {
-				new_opt = new MathematicsOps.MUL();
-			}
-			else if (ch == '/') {
-				new_opt = new MathematicsOps.DIV();
-			}
-			else if (ch == '=') {
-				if (exp.charAt(i+1) == '=') {
-					new_opt = new ComparisonOps.EQ(); i++;
-				}
-			}
-			else if (ch == '!') {
-				if (exp.charAt(i+1) == '=') {
-					new_opt = new ComparisonOps.UEQ(); i++;
-				}
-			}
-			else if (ch == '>') {
-				if (exp.charAt(i+1) == '=') {
-					new_opt = new ComparisonOps.GEQ(); i++;
-				} else {
-					new_opt = new ComparisonOps.GE();
-				}
-			}
-			else if (ch == '<') {
-				if (exp.charAt(i+1) == '=') {
-					new_opt = new ComparisonOps.LEQ(); i++;
-				} else {
-					new_opt = new ComparisonOps.LE();
-				}
-			}
-			else if (ch == '|') {
-				if (exp.charAt(i+1) == '|') {
-					new_opt = new LogicalOps.OR(); i++;
-				}
-			}
-			else if (ch == '&') {
-				if (exp.charAt(i+1) == '&') {
-					new_opt = new LogicalOps.AND(); i++;
-				}
-			}
-			
-			if (new_opt != null) {
-				createOp(buff);
+			if (ch == '(') {
+				brackets++;
+				Data ret = beginParse(i + 1);
+				i = ret.lastIdx;
+				d.mode3 = ret.root;
+				d.mode = 3;
 				continue;
+			} 
+			if (ch == ')') {
+				brackets--;
+				break;
 			}
 			
-			check_ch(ch);
-			buff.append(ch);
+			first_check(d, ch);
+			
+			switch (ch) {
+				case '+':
+					d.new_opt = new MathematicsOps.ADD();
+					break;
+				case '-':
+					d.new_opt = new MathematicsOps.SUB();
+					break;
+				case '*':
+					d.new_opt = new MathematicsOps.MUL();
+					break;
+				case '/':
+					d.new_opt = new MathematicsOps.DIV();
+					break;
+				case '=':
+					if (exp.charAt(i+1) == '=') { i++;
+						d.new_opt = new ComparisonOps.EQ(); 
+					}
+					break;
+				case '!':
+					if (exp.charAt(i+1) == '=') { i++;
+						d.new_opt = new ComparisonOps.UEQ();
+					}
+					break;
+				case '>':
+					if (exp.charAt(i+1) == '=') { i++;
+						d.new_opt = new ComparisonOps.GEQ();
+					} else {
+						d.new_opt = new ComparisonOps.GE();
+					}
+					break;
+				case '<':
+					if (exp.charAt(i+1) == '=') { i++;
+						d.new_opt = new ComparisonOps.LEQ();
+					} else {
+						d.new_opt = new ComparisonOps.LE();
+					}
+					break;
+				case '|':
+					if (exp.charAt(i+1) == '|') { i++;
+						d.new_opt = new LogicalOps.OR();
+					}
+					break;
+				case '&':
+					if (exp.charAt(i+1) == '&') { i++;
+						d.new_opt = new LogicalOps.AND();
+					}
+					break;
+				
+				default:
+					addToBuffer(d, ch);
+					continue;
+			}
+			
+			if (d.new_opt != null) {
+				createOp(d);
+			}
 		}
 		
-		if (buff.length() > 0) {
-			IVal nvel = createVal(buff);
-			last.right(nvel);
+		if (d.buff.length() > 0) {
+			IVal nvel = createVal(d);
+			d.last.right(nvel);
 		}
+		else if (d.last.right() == null) {
+			if (d.mode == 3) {
+				d.last.right(d.mode3);
+			} else {
+				throw new ExprException("表达式错误: " + exp);
+			}
+		}
+		
+		d.lastIdx = i;
+		
+		return d;
 	}
 	
-	private IVal createVal(StringBuilder buff) throws ExprException {
+	private IVal createVal(Data d) throws ExprException {
 		IVal nval = null;
 		
-		if (mode == 1) {
-			nval = new ConstVal(buff.toString());
-		} else if (mode == 2) {
-			nval = new Variable(buff.toString(), vmap);
-		} else { 
-			throw new ExprException("操作符缺少左值: " + exp);
+		switch (d.mode) {
+			case 1:
+				nval = new ConstVal(d.buff.toString());
+				break;
+			case 2:
+				nval = new Variable(d.buff.toString(), vmap);
+				break;
+			case 3:
+				nval = d.mode3;
+				break;
+			default:
+				throw new ExprException("操作符缺少左值: " + exp);
 		}
-		buff.setLength(0);
 		
+		d.mode = 0;
+		d.buff.setLength(0);
 		return nval; 
 	}
 	
-	private void createOp(StringBuilder buff) throws ExprException {
-		IVal nvel = createVal(buff);
+	private void createOp(Data d) throws ExprException {
+		IVal nvel = createVal(d);
 		
 		/* 高优先级的运算符作为右值,低优先级作为根元素追加,
 		 * 优先级相同则插入元素 */
-		if (new_opt.level() > last.level()) {
-			last.right(new_opt);
-			new_opt.left(nvel);
+		if (d.new_opt.level() > d.last.level()) {
+			d.last.right(d.new_opt);
+			d.new_opt.left(nvel);
 		} 
-		else if (new_opt.level() < last.level()) {
-			last.right(nvel);
-			new_opt.left(root);
-			root = new_opt;
+		else if (d.new_opt.level() < d.last.level()) {
+			d.last.right(nvel);
+			d.new_opt.left(d.root);
+			d.root = d.new_opt;
 		}
 		else {
-			last.right(nvel);
-			new_opt.left(last);
-			if (last == root) {
-				root = new_opt;
+			d.last.right(nvel);
+			d.new_opt.left(d.last);
+			
+			if (d.last == d.root) {
+				d.root = d.new_opt;
 			} else {
-				root.right(new_opt);
+				d.root.right(d.new_opt);
 			}
 		}
 		
-		last	= new_opt;
-		new_opt	= null;
-		mode	= 0;
+		d.last = d.new_opt;
+		d.new_opt= null;
 	}
 	
-	private void check_ch(char ch) throws ExprException {
-		if (ch != '.') { /* '.'是有效符号 */;
-			if (mode == 1) {
-				if (!Character.isDigit(ch))
-					throw new ExprException("无效的数字常量: " + exp);
+	private void addToBuffer(Data d, char ch) throws ExprException {
+		if (ch != '.') { /* .是有效符号 */;
+			if (d.mode == 1) {
+				if ( !Character.isDigit(ch) )
+				throw new ExprException("无效的数字常量: " + exp);
 			}
-			else if (mode == 2) {
-				if (ch == '(' || ch == ')') ;
-				else if (!Character.isJavaIdentifierPart(ch)) 
-					throw new ExprException("无效的变量名: " + exp);
+			else if (d.mode == 2) {
+				if ( !Character.isJavaIdentifierPart(ch) ) 
+				throw new ExprException("无效的变量名: " + exp);
 			}
 		}
+		d.buff.append(ch);
 	}
 	
 	/**
 	 * 起始必须是一个常量或变量
 	 */
-	private void first_check(char ch) throws ExprException {
-		if (mode == 0) {
+	private void first_check(Data d, char ch) throws ExprException {
+		if (d.mode == 0) {
 			if (Character.isDigit(ch)) 
-				mode = 1;
+				d.mode = 1;
 			else if (Character.isJavaIdentifierStart(ch)) 
-				mode = 2;
+				d.mode = 2;
 			else
 				throw new ExprException("无效的字符: '"+ ch +"' 在表达式 " + exp);
 		}
@@ -181,5 +216,20 @@ public class Expression {
 
 	public BigDecimal compute() {
 		return root.get();
+	}
+	
+	
+	/** 在函数间传递参数 */
+	private class Data {
+		StringBuilder buff	= new StringBuilder(); 
+		/** 0:first, 1:number, 2:string, 3:来自另一个表达式 */
+		int mode 	= 0;
+		Opt last	= null;
+		Opt new_opt	= null;
+		Opt root	= null;
+		/** mode == 3 的时候, 该参数有效 */
+		IVal mode3	= null;
+		/** lastIdx + 1 指向下一次要读取的字符 */
+		int lastIdx	= -1;
 	}
 }

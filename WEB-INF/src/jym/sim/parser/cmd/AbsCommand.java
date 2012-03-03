@@ -9,6 +9,7 @@ import java.util.Map;
 
 import jym.sim.parser.IComponent;
 import jym.sim.parser.IItem;
+import jym.sim.parser.ObjectAttribute;
 import jym.sim.parser.expr.ExprException;
 import jym.sim.parser.expr.Expression;
 
@@ -72,6 +73,36 @@ public abstract class AbsCommand implements ICommand {
 
 	public void setVariableBag(Map<String, IItem> vars) {
 		this.vars = vars;
+	}
+	
+	/**
+	 * 返回名字对应的变量, 允许使用'.'取变量的属性
+	 * 变量不存在返回null
+	 */
+	public final Object getVar(String name) {
+		String[] vs = name.split("\\.");
+		if (vs.length > 0) {
+			IItem it = vars.get(vs[0]);
+			Object ori = it.originalObj();
+			if (vs.length > 1) {
+				return ObjectAttribute.get(ori, vs, 1);
+			}
+			return ori;
+		}
+		return null;
+	}
+	
+	/**
+	 * 在全局变量表中创建的变量, 失败返回null
+	 */
+	public final IItem createVar(String name) {
+		Iterator<IItem> itr = vars.values().iterator();
+		if (itr.hasNext()) {
+			IItem var = itr.next().newInstance();
+			vars.put(name, var);
+			return var;
+		}
+		return null;
 	}
 	
 	/**

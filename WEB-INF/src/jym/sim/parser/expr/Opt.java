@@ -45,7 +45,7 @@ public abstract class Opt extends AbsVal implements IVal {
 	/**
 	 * 运算符优先级, 值越大优先级越高
 	 */
-	protected abstract int level();
+	public abstract int level();
 	
 	
 }

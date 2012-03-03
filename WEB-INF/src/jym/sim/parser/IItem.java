@@ -23,7 +23,8 @@ public interface IItem extends IComponent {
 	public Type getType();
 	
 	/**
-	 * 不同的实现有不同的过滤方式
+	 * 不同的实现有不同的过滤方式<br>
+	 * 如果是变量, 通过init()改变变量名, 可以引用变量的属性
 	 */
 	public String filter();
 	
