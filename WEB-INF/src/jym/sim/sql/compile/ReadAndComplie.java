@@ -173,4 +173,8 @@ public class ReadAndComplie implements ISqlReader, ResultSetList.IGetBean<Object
 		}
 		return r;
 	}
+
+	/** 编译的文件不需要锁定 */
+	public void lockFile(long protectKey) {
+	}
 }

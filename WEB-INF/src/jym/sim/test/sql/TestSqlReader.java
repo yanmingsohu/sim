@@ -32,6 +32,7 @@ public class TestSqlReader {
 		UsedTime.start("\n生成sql");
 //		final ISqlReader sr2  = genSql( new ReadAndComplie("/test/complier.sql") );
 		final ISqlReader sr = genSql( new SqlLink(TestSqlReader.class, "TestSqlReader.sql") );
+		sr.lockFile(2816319025L);
 		UsedTime.endAndPrint(out);
 		sr.showSql();
 
@@ -54,15 +55,17 @@ public class TestSqlReader {
 	}
 	
 	public static void loopcreate() {
+		int count = 2000;
 		StringBuilder out = new StringBuilder();
-		UsedTime.start("\n1000 次生成sql ");
+		UsedTime.start("\n" + count + "次生成sql ");
 		Data d = new Data();
 		d.dates = new String[] {"a", "b", "c"};
-		for (int i=0; i<1000; i++) {
+		for (int i=0; i<count; i++) {
 			//UsedTime.start("\n生成sql " + i);
 			try {
 				SqlLink sl = new SqlLink("/jym/sim/test/sql/TestSqlReader.sql");
 				sl.set("data", d);
+				sl.lockFile(2816319025L);
 				sl.getResultSql();
 			} catch (Exception e) {
 				e.printStackTrace();

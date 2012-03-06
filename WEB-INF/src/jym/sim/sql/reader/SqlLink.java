@@ -5,6 +5,7 @@ package jym.sim.sql.reader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.security.AccessControlException;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -21,11 +22,11 @@ import jym.sim.util.Tools;
 public class SqlLink implements ISqlReader {
 	
 	private IItemFactory itemFact;
+	private long protectKey;
 	private Map<String, IItem> vars;
 	private FileParse parse;
 	private String fname;
 	private URL url;
-	
 	
 	/**
 	 * filename 指定的文件与 Object 类处于同一个目录(或包)
@@ -55,9 +56,10 @@ public class SqlLink implements ISqlReader {
 		if (file == null) {
 			throw new IOException("找不到文件");
 		}
-		fname = file.getFile();
-		url = file;
-		itemFact = new LinkFactory();
+		protectKey	= 0l;
+		fname		= file.getFile();
+		url			= file;
+		itemFact	= new LinkFactory();
 		checkAndRead();
 	}
 	
@@ -73,6 +75,14 @@ public class SqlLink implements ISqlReader {
 	}
 
 	public String getResultSql() {
+		if (protectKey == 0) {
+			Tools.pl(url, "文件的锁定码为: ", parse.getCrc() + "L");
+			
+		} else if (protectKey != parse.getCrc()) {
+			throw new AccessControlException(fname + "(" +parse.getCrc() + 
+					"L) 文件校验码不符, bad:" + protectKey + "L, 读取sql文件失败.");
+		}
+		
 		StringBuilder sql = new StringBuilder();
 		Iterator<IItem> itr = parse.getItems();
 		
@@ -90,6 +100,10 @@ public class SqlLink implements ISqlReader {
 			vars.put(name, item);
 		}
 		item.init(null, value);
+	}
+	
+	public void lockFile(long protectKey) {
+		this.protectKey = protectKey;
 	}
 
 	public void showSql() {

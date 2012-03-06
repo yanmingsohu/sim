@@ -69,6 +69,13 @@ public class FileParse implements ILineCounter {
 	public Iterator<IItem> getItems() {
 		return core.getItems();
 	}
+	
+	/**
+	 * @see jym.sim.parser.el.ParseCore#getCrc
+	 */
+	public long getCrc() {
+		return core.getCrc();
+	}
 
 	public void add() {
 		++line;

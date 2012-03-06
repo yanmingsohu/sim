@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.zip.CRC32;
 
 import jym.sim.parser.IComponent;
 import jym.sim.parser.IItem;
@@ -32,6 +33,7 @@ public class ParseCore {
 	private CommandFactory cfact;
 	private ILineCounter lc;
 	private Reader reader;
+	private CRC32 crc;
 
 	/**
 	 * reader 可能已经读取过, 当函数返回, reader 不会被关闭
@@ -44,6 +46,7 @@ public class ParseCore {
 		cfact		= CommandFactory.instance;
 		this.lc		= lc;
 		this.reader	= reader;
+		crc			= new CRC32();
 		
 		process(m_items);
 	}
@@ -56,6 +59,7 @@ public class ParseCore {
 		
 		while (true) {
 			ch = reader.read();
+			crc.update(ch);
 
 			if (ch=='\r') continue;
 			
@@ -221,6 +225,13 @@ public class ParseCore {
 	 */
 	public Iterator<IItem> getItems() {
 		return new ItemIterator();
+	}
+	
+	/**
+	 * 返回文件校验值, 该校验值在文件读取之后就不再改变
+	 */
+	public long getCrc() {
+		return crc.getValue();
 	}
 
 	/**

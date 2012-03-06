@@ -2,6 +2,8 @@
 
 package jym.sim.sql.reader;
 
+import java.security.AccessControlException;
+
 
 /**
  * 读取的文件必须使用 UTF-8 编码
@@ -22,12 +24,19 @@ public interface ISqlReader {
 	
 	/**
 	 * 返回拼装好的sql,其中的变量使用set()提前设置好
+	 * <b>如果变量没有改变, 不要频繁调用该方法, 而是缓存结果</b>
+	 * @throws AccessControlException - 如果文件校验错误抛出改异常
 	 */
-	public String getResultSql();
+	public String getResultSql() throws AccessControlException;
 	
 	/**
 	 * 把sql打印到控制台
 	 */
 	public void showSql();
 	
+	/**
+	 * 设置文件锁定参数, 如果文件经过校验算法后与该值不同, getResultSql()会抛出异常
+	 * @param protectKey - 文件校验码
+	 */
+	public void lockFile(long protectKey);
 }
