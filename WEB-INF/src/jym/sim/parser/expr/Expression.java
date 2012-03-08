@@ -9,6 +9,8 @@ import jym.sim.parser.IItem;
 
 /**
  * 创建表达式对象
+ * 
+ * @see jym.sim.parser.expr.Opt 表达式的基类
  */
 public class Expression {
 

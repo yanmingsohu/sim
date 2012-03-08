@@ -3,7 +3,7 @@
 package jym.sim.filter;
 
 /**
- * 所有过滤器的父接口父,泛型指示该过滤器过滤的数据类型
+ * 所有过滤器的父接口,泛型指示该过滤器过滤的数据类型
  */
 public interface IFilter<T> {
 	/**

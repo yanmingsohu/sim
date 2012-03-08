@@ -18,6 +18,8 @@ import jym.sim.parser.IItem;
  * </code><br>
  * 迭代器部分用来控制如何输出内容体, 实现类必须有默认构造函数, 
  * 线程不安全的, 可变类, 不能重复使用
+ * 
+ * @see jym.sim.parser.expr.Expression 表达式解析器
  */
 public interface ICommand extends IComponent {
 	

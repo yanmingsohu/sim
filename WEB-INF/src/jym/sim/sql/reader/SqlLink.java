@@ -17,7 +17,10 @@ import jym.sim.util.Tools;
 
 
 /**
- * 读取sql, 使用拼接字符串的方式取得结果sql
+ * 读取sql模板文件, 处理动态变量, 解析表达式和命令, 返回处理后的sql
+ * 
+ * @see jym.sim.parser.cmd.ICommand 文件中可以有命令
+ * @see jym.sim.parser.el.ParseCore 文件解析器核心, 如何处理动态变量
  */
 public class SqlLink implements ISqlReader {
 	

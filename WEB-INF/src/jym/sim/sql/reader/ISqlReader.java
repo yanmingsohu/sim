@@ -6,10 +6,13 @@ import java.security.AccessControlException;
 
 
 /**
- * 读取的文件必须使用 UTF-8 编码
+ * 读取的文件中可以有变量,命令; 命令参数中用表达式
  */
 public interface ISqlReader {
 	
+	/**
+	 * 文件使用的编码
+	 */
 	String SQL_FILE_CODE = "UTF-8";
 	
 	/**
