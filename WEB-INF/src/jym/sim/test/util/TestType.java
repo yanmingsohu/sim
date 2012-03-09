@@ -7,11 +7,15 @@ import jym.sim.util.Tools;
 
 public class TestType {
 
+	
 	public static void main(String[] args) {
 		Object o = 1;
-		boolean c1 = Integer.class.isAssignableFrom(o.getClass());
-		boolean c2 = String.class.isAssignableFrom(o.getClass());
-		Tools.pl(c1, c2);
+		test(Integer.class, o);
+		test(String.class, o);
 	}
 
+	public static void test(Class<?> clazz, Object test) {
+		Tools.pl(test, "is", clazz, "=", clazz.isAssignableFrom(test.getClass()));
+	}
+	
 }

@@ -21,7 +21,7 @@ public class TestCommand {
 				);
 		
 		SqlLink sl = new SqlLink(TestCommand.class, "commands.sql");
-		sl.lockFile(1667704139L);
+//		sl.lockFile(1667704139L);
 		sl.set("id", 1);
 		sl.set("list1", list);
 		sl.set("list2", list.iterator());

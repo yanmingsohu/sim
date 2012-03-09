@@ -5,6 +5,7 @@ package jym.sim.parser;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Map;
 
 /**
  * 对象属性解析器
@@ -16,6 +17,24 @@ public final class ObjectAttribute {
 	 */
 	public static Object get(Object o, String[] names) {
 		return get(o, names, 0);
+	}
+	
+	/**
+	 * 从vars中取值, 名字规则为refname
+	 * refname: a.b.c().d
+	 * @see #get(Object, String[], int)
+	 */
+	public static Object get(Map<String, IItem> vars, String refname) {
+		String[] vs = refname.split("\\.");
+		if (vs.length > 0) {
+			IItem it = vars.get(vs[0]);
+			Object ori = it.originalObj();
+			if (vs.length > 1) {
+				return get(ori, vs, 1);
+			}
+			return ori;
+		}
+		return null;
 	}
 	
 	/**

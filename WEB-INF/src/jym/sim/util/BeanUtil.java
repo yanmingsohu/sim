@@ -9,7 +9,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BeanUtil<TYPE> {
+public class BeanUtil {
 	
 	
 	public static String firstUp(String s) {

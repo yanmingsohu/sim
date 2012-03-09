@@ -80,16 +80,7 @@ public abstract class AbsCommand implements ICommand {
 	 * 变量不存在返回null
 	 */
 	public final Object getVar(String name) {
-		String[] vs = name.split("\\.");
-		if (vs.length > 0) {
-			IItem it = vars.get(vs[0]);
-			Object ori = it.originalObj();
-			if (vs.length > 1) {
-				return ObjectAttribute.get(ori, vs, 1);
-			}
-			return ori;
-		}
-		return null;
+		return ObjectAttribute.get(vars, name);
 	}
 	
 	/**

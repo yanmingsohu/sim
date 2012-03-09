@@ -2,7 +2,7 @@ select * from
 
 #if ((id+1) == 2 )
 	--如果id设置为1 则会显示这里
-	table1
+	table1 ${id}
 #end
 
 #if ((id+1) != 2)
