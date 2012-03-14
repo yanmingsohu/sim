@@ -18,7 +18,7 @@ import jym.sim.util.UsedTime;
 public class TestPrepTrans {
 
 	public static final void main(String[] s) throws IOException {
-		ReadAndComplie sr = new ReadAndComplie("/test/trans.sql");
+		ReadAndComplie sr = new ReadAndComplie("/jym/sim/test/sql/trans.sql");
 		TransformPrep tp = new TransformPrep();
 		
 		tp.setSql(sr.getResultSql());

@@ -435,6 +435,10 @@ public class JdbcTemplate implements IQuery, ICall {
 			}
 			
 			try {
+				if (ps == null)
+				throw new UnsupportedOperationException(
+						"JdbcTemplate 使用了自动转换语法,不支持 " + method);
+				
 				return method.invoke(ps, args);
 				
 			} catch (InvocationTargetException e) {
