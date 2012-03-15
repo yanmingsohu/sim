@@ -22,4 +22,8 @@ public class NotPagination implements IPage {
 		return buff.toString();
 	}
 
+	public String selectTotalPage(PaginationParam parm) {
+		return null;
+	}
+
 }

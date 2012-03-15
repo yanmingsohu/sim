@@ -23,6 +23,8 @@ import jym.sim.sql.JdbcTemplate;
 import jym.sim.sql.ResultSetList;
 import jym.sim.util.Tools;
 
+import com.jym.fw.util.Point;
+
 /**
  * 数据库实体检索模板
  */
@@ -189,19 +191,33 @@ implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 		/** 如果pagedata==null 此时会抛出异常... */
 		pagedata.getCurrent();
 		
-		PaginationParam param = new PaginationParam(
-				  orm.getTableName()
-				, getWhereSub(model, join)
-				, plot.order()
-				, pagedata
-				, plot.getJoinSql() );
+		final PaginationParam param = new PaginationParam(
+					  orm.getTableName()
+					, getWhereSub(model, join)
+					, plot.order()
+					, pagedata
+					, plot.getJoinSql() );
 		
 		final String sql = pagePlot.select(param);
 		final List<T> brs = new ArrayList<T>();
+		final Point<Boolean> totalSeted = new Point<Boolean>(false);
+		
+		final String total_sql = pagePlot.selectTotalPage(param);
+		if (total_sql!=null) {
+			query(new ISql() {
+				public void exe(Statement stm) throws Throwable {
+					ResultSet rs = stm.executeQuery(total_sql);
+					if (rs.next()) {
+						pagedata.setTotalRow( rs.getInt(IPage.TOTAL_COLUMN_NAME) );
+						totalSeted.setValue(true);
+					}
+				}
+			});
+		}	
 		
 		query(new ISql() {
 			public void exe(Statement stm) throws Throwable {
-				assembleBeanList( stm.executeQuery(sql), brs, pagedata );
+				assembleBeanList( stm.executeQuery(sql), brs, pagedata, totalSeted.value );
 			}
 		});
 		
@@ -259,21 +275,23 @@ implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 	 * 此方法会把rs中所有的数据压入brs中并返回,在数据行很多时,内存溢出<br>
 	 * 但该方法比动态取数据的方法快
 	 */
-	private void assembleBeanList(ResultSet rs, List<T> brs, PageBean pagedata) throws Exception {
+	private void assembleBeanList(ResultSet rs, List<T> brs, PageBean pagedata, boolean totalSeted) throws Exception {
 		if (rs==null) return;
 		
 		try {
 			String[] cols = getColumnNames(rs.getMetaData());
 			
 			if (rs.next()) {
-				int total = 1;
-			try { 
-				// 没有TOTAL_COLUMN_NAME指定的列并不是错误
-				total = rs.getInt(IPage.TOTAL_COLUMN_NAME);
+				if (!totalSeted) {
+					int total = 1;
+				try { 
+					// 没有TOTAL_COLUMN_NAME指定的列并不是错误
+					total = rs.getInt(IPage.TOTAL_COLUMN_NAME);
+					}
+				catch(Exception e) {}
+					
+					pagedata.setTotalRow(total);
 				}
-			catch(Exception e) {}
-				
-				pagedata.setTotalRow(total);
 			
 				T model = fromRowData(cols, rs, 0);
 				brs.add(model);

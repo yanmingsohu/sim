@@ -57,4 +57,8 @@ public class OraclePagination implements IPage {
 		return buff.toString();
 	}
 
+	public String selectTotalPage(PaginationParam parm) {
+		return null;
+	}
+
 }
