@@ -21,9 +21,8 @@ import jym.sim.sql.ISql;
 import jym.sim.sql.IWhere;
 import jym.sim.sql.JdbcTemplate;
 import jym.sim.sql.ResultSetList;
+import jym.sim.util.Pack;
 import jym.sim.util.Tools;
-
-import com.jym.fw.util.Point;
 
 /**
  * 数据库实体检索模板
@@ -88,11 +87,11 @@ implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 	}
 	
 	private void init() {
-		vaildChecker = new CheckVaildValue();
-		infilter = new FilterPocket();
-		outfilter = new FilterPocket();
-		clazz = orm.getModelClass();
-		plot = new Plot<T>(orm, outfilter);
+		vaildChecker	= new CheckVaildValue();
+		infilter		= new FilterPocket();
+		outfilter		= new FilterPocket();
+		clazz			= orm.getModelClass();
+		plot			= new Plot<T>(orm, outfilter);
 	}
 	
 	private void check() {
@@ -133,6 +132,7 @@ implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 	protected final Object transformValue(Object o) {
 		try {
 			return infilter.filter(o);
+			
 		} catch (SimFilterException e) {
 			warnning("输入参数过滤器转换失败:" + e);
 			handleException(e);
@@ -200,10 +200,10 @@ implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 		
 		final String sql = pagePlot.select(param);
 		final List<T> brs = new ArrayList<T>();
-		final Point<Boolean> totalSeted = new Point<Boolean>(false);
+		final Pack<Boolean> totalSeted = new Pack<Boolean>(false);
 		
 		final String total_sql = pagePlot.selectTotalPage(param);
-		if (total_sql!=null) {
+		if (total_sql != null) {
 			query(new ISql() {
 				public void exe(Statement stm) throws Throwable {
 					ResultSet rs = stm.executeQuery(total_sql);

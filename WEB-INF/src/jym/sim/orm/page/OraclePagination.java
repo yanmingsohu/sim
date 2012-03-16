@@ -37,7 +37,7 @@ public class OraclePagination implements IPage {
 		buff.append( 	" ) sim__in__table "  									);
 		buff.append(	"where rownum <= "										);
 		buff.append(	e														);
-		
+		/*
 		buff.append( " ),( " 													);
 		
 		buff.append(	"select count(1) " ).append( TOTAL_COLUMN_NAME 			);
@@ -47,7 +47,7 @@ public class OraclePagination implements IPage {
 		buff.append(	 parm.getJoin()											);
 		buff.append( 	 BLANK													);
 		buff.append( 	 whereSub												);
-		
+		*/
 		buff.append( " ) "														);
 		buff.append( "where sim__row__num >= "									);
 		buff.append(  s															);
@@ -58,7 +58,18 @@ public class OraclePagination implements IPage {
 	}
 
 	public String selectTotalPage(PaginationParam parm) {
-		return null;
+		StringBuilder buff = new StringBuilder();
+		
+		buff.append(	"select count(1) " ).append( TOTAL_COLUMN_NAME 			);
+		buff.append(	" from " 												);
+		buff.append( 	 parm.getTableName()									);
+		buff.append(	 BLANK													);
+		buff.append(	 parm.getJoin()											);
+		buff.append( 	 BLANK													);
+		buff.append( 	 parm.getWhereSub()										);
+		
+		return buff.toString();
+//		return null;
 	}
 
 }
