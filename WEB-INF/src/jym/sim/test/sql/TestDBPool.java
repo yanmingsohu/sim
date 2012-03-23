@@ -19,7 +19,7 @@ public class TestDBPool {
 	public static String MDB	= "/jym/sim/test/sql/access_source.conf";
 	public static String MYSQL	= "/jym/sim/test/sql/mysql_source.conf";
 	public static String ORL	= "/jym/sim/test/sql/oracle_source_!secure.conf";
-	public static String MSS	= "/jym/sim/test/sql/sql_server_source.conf";
+	public static String MSS	= "/jym/sim/test/sql/sql_server_source!secure.conf";
 	
 	
 	public static void main(String s[]) throws Exception {
@@ -29,11 +29,14 @@ public class TestDBPool {
 		Tools.pl("over.");
 	}
 	
-	public static DataSource getDataSource() throws IOException {
+	public static DataSource getDataSource(String conf_file) throws IOException {
 		if (pool==null) {
-			pool = new PoolFactory(MSS);
+			pool = new PoolFactory(conf_file);
 		}
 		return pool.getDataSource();
 	}
 	
+	public static DataSource getDataSource() throws IOException {
+		return getDataSource(MSS);
+	}
 }

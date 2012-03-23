@@ -8,6 +8,11 @@ import jym.sim.sql.IOrder;
 public interface IPlot {
 	
 	/**
+	 * orm 会忽略以该前缀开始的字段
+	 */
+	String PASS_COLM_NAME = "sim__";
+	
+	/**
 	 * 把需要映射的实体属性名fieldName与数据库列名colname进行匹配<br>
 	 * 未映射的实体属性使用表格名匹配<br>
 	 * <br>

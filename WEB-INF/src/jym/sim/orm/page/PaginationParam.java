@@ -20,25 +20,19 @@ public class PaginationParam {
 	private PageBean page;
 	/** 多表关联查询, 可以null */
 	private String join;
+	/** 表的主键 */
+	private String key;
 	
 	
 	public PaginationParam(String tableName, String whereSub, 
-			IOrder order, PageBean page, String join) {
+			IOrder order, PageBean page, String join, String key) {
 		
-		this.tableName = tableName;
-		this.whereSub = whereSub;
-		this.order = order.toString();
-		this.page = page;
-		this.join = join;
-	}
-	
-	public PaginationParam(String tableName, String whereSub, 
-			IOrder order,  String join) {
-		
-		this.tableName = tableName;
-		this.whereSub = whereSub;
-		this.order = order.toString();
-		this.join = join;
+		this.tableName	= tableName;
+		this.whereSub	= whereSub;
+		this.order		= order.toString();
+		this.page		= page;
+		this.join		= join;
+		this.key		= key;
 	}
 	
 	public PaginationParam() {}
@@ -85,5 +79,13 @@ public class PaginationParam {
 
 	public void setJoin(String join) {
 		this.join = join;
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
 	}
 }

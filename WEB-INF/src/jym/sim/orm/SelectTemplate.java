@@ -174,7 +174,9 @@ implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 				  orm.getTableName()
 				, getWhereSub(model, join)
 				, plot.order()
-				, plot.getJoinSql() );
+				, null
+				, plot.getJoinSql()
+				, orm.getKey() );
 		
 		String sql = NOPAGE_PLOT.select(param);
 		
@@ -196,7 +198,8 @@ implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 					, getWhereSub(model, join)
 					, plot.order()
 					, pagedata
-					, plot.getJoinSql() );
+					, plot.getJoinSql()
+					, orm.getKey() );
 		
 		final String sql = pagePlot.select(param);
 		final List<T> brs = new ArrayList<T>();

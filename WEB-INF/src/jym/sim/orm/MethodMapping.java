@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
+import java.util.UUID;
 
 import jym.sim.filter.FilterPocket;
 import jym.sim.util.BeanUtil;
@@ -134,6 +135,13 @@ class MethodMapping {
 			it = new ITransition() {
 				public Object trans(ResultSet rs, int col) throws SQLException {
 					return rs.getBigDecimal(col);
+				}
+			};
+		}
+		else if (UUID.class.isAssignableFrom(type)) {
+			it = new ITransition() {
+				public Object trans(ResultSet rs, int col) throws SQLException {
+					return UUID.fromString(rs.getString(col));
 				}
 			};
 		}

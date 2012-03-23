@@ -8,8 +8,8 @@ package jym.sim.orm.page;
 public class PageBean {
 	
 	public final static int DEFAULT_CURRENT_PAGE = 1;
-	public final static int DEFAULT_TOTAL_PAGE = 1;
-	public final static int DEFAULT_ONE_SIZE = 20;
+	public final static int DEFAULT_TOTAL_PAGE	 = 1;
+	public final static int DEFAULT_ONE_SIZE	 = 20;
 	
 	/** 当前页,从1开始 */
 	private int current;
@@ -24,9 +24,9 @@ public class PageBean {
 	 * 默认值: current = 1, total = 1, onesize = 20
 	 */
 	public PageBean() {
-		current = DEFAULT_CURRENT_PAGE;
-		total = DEFAULT_TOTAL_PAGE;
-		onesize = DEFAULT_ONE_SIZE;
+		current	= DEFAULT_CURRENT_PAGE;
+		total	= DEFAULT_TOTAL_PAGE;
+		onesize	= DEFAULT_ONE_SIZE;
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class PageBean {
 	 * 如果total<=0则置1
 	 */
 	public void setTotal(int total) {
-		if (total<=0) total = 1;
+		if (total <= 0) total = 1;
 		this.total = total;
 	}
 
@@ -88,7 +88,7 @@ public class PageBean {
 	public void setTotalRow(int rownum) {
 		int tp = rownum / getOnesize();
 		int tc = rownum % getOnesize();
-		if (tc>0) tp++;
+		if (tc > 0) tp++;
 		setTotal(tp);
 		totalItem = rownum;
 	}
@@ -105,5 +105,13 @@ public class PageBean {
 	/** 未分页时的总数据量 */
 	public long getTotalItem() {
 		return totalItem;
+	}
+	
+	public String toString() {
+		return 
+			"当前页:" 		+ current +
+			", 一页容量:"		+ onesize +
+			", 总数据量:"		+ totalItem +
+			", 总页数:"		+ total + "\n";
 	}
 }

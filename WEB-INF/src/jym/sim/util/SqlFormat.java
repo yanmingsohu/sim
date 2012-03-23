@@ -20,6 +20,10 @@ public class SqlFormat {
 		,{'o', 'r', 'd', 'e', 'r',      ' '}
 		,{'j', 'o', 'i', 'n',           ' '} // 6
 		,{'h', 'a', 'v', 'i', 'n', 'g', ' '}
+		,{'w', 'h', 'e', 'n',			' '}
+		,{'t', 'h', 'e', 'n',			' '}
+		,{'e', 'n', 'd', 				' '}
+		,{'a', 'n', 'd', 				' '}
 	};
 	
 	private final static String SPACE = "  ";
@@ -37,7 +41,10 @@ public class SqlFormat {
 		while (i<len) {
 			c = sql.charAt(i++);
 			
-			if (c=='\n') continue;
+			if (c=='\n') {
+				continue;
+			}
+			
 			if (c==' ' && (enter || pc==' ')) {
 				pc = c;
 				continue;
@@ -77,7 +84,7 @@ public class SqlFormat {
 	
 	private static int needEnter(String sql, int index) {
 		
-		if (index+1<sql.length() && sql.charAt(index)==' ') {
+		if (index+1<sql.length() && (sql.charAt(index)==' ' || sql.charAt(index)=='\n')) {
 			boolean has = false;
 			boolean find = false;
 			int klen = 0;

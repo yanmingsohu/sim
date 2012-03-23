@@ -8,6 +8,7 @@ package jym.sim.sql;
 public interface IOrder {
 	
 	/**
+	 * 在需要的时候, 需要(比如join)使用完整的表名引用
 	 * 反向排序,从大到小
 	 * 
 	 * @param columnName - 列的名字
@@ -16,6 +17,7 @@ public interface IOrder {
 	public IOrder desc(String columnName);
 	
 	/**
+	 * 在需要的时候, 需要(比如join)使用完整的表名引用
 	 * 正向排序,从小到大
 	 * 
 	 * @param columnName - 列的名字

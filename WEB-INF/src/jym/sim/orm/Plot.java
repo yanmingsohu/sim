@@ -23,8 +23,6 @@ import jym.sim.util.Tools;
  */
 class Plot<T> implements IPlot {
 	
-	private final static String PASS_COLM_NAME = "sim__";
-	
 	/** 使用小写比较String <表列名, 方法封装> */
 	private Map<String, MethodMapping> ormmap;
 	/** 使用小写比较String <方法小写名, 方法> */
