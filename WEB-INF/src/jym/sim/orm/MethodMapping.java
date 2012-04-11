@@ -148,6 +148,13 @@ class MethodMapping {
 		else if (Collection.class.isAssignableFrom(type)) {
 			it = getCollection(type);
 		}
+		else if (Object.class == type) {
+			it = new ITransition() {
+				public Object trans(ResultSet rs, int col) throws SQLException {
+					return rs.getObject(col);
+				}
+			};
+		}
 		else {
 			it = getObjTransition(type);
 		}
