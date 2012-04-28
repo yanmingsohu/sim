@@ -24,12 +24,17 @@ public class FromBean extends Json {
 	public void go(Appendable out) throws IOException {
 		Class<?> clazz = bean.getClass();
 		Field[] fields = clazz.getDeclaredFields();
+		
 		if (fields.length>0) {
 			for (int i=0; i<fields.length; ++i) {
 				if ( Modifier.isStatic(fields[i].getModifiers()) ) 
 					continue;
 				
 				String fname = fields[i].getName();
+				
+				if ( fname.startsWith("this$") )
+					continue;
+				
 				String geterName = BeanUtil.getGetterName(fname);
 				
 				try {

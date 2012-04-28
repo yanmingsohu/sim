@@ -1,6 +1,6 @@
 ﻿// CatfoOD 2009.12.9
 // charset: UTF-8
-// v0.31
+// v0.32
 
 (function() {
 	var head = document.getElementsByTagName("head")[0];
@@ -316,7 +316,7 @@ function getFormData(formid) {
 	var textareas = form.getElementsByTagName("textarea");
 	for (var i=0; i<textareas.length; ++i) {
 		if (textareas[i].disabled) continue;
-		pushvalue(textareas[i].name, textareas[i].innerText);
+		pushvalue(textareas[i].name, textareas[i].value);
 	}
 	
 	return formtext.join('');
