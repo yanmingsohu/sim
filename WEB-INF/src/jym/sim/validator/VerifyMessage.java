@@ -28,7 +28,7 @@ public class VerifyMessage {
 	/**
 	 * 压入消息
 	 */
-	protected void putMsg(Field field, String msg) {
+	public void putMsg(Field field, String msg) {
 		msgs.add(new Msg(field, msg));
 	}
 	
