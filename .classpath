@@ -10,6 +10,5 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/mysql"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/oracle"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/sql_server"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/NeuralNetwork"/>
 	<classpathentry kind="output" path="WEB-INF/classes"/>
 </classpath>

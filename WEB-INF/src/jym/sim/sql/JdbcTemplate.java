@@ -22,6 +22,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import jym.sim.util.DBAbandonedConnTest;
 import jym.sim.util.SqlFormat;
 import jym.sim.util.Tools;
 import jym.sim.util.UsedTime;
@@ -36,11 +37,10 @@ public class JdbcTemplate implements IQuery, ICall {
 	
 	private final static int ADD_BASE 	= 5;
 	private static int maxSessCount 	= 20;
-	private static int connectCount 	= 1;
+	private static int connectCount 	= 0;
 	
 	private boolean needformat 	= false;
 	private boolean showsql 	= false;
-	private boolean lazyMode 	= false;
 	private boolean debug 		= false;
 	private boolean convertSql	= false;
 	private DataSource src;
@@ -106,22 +106,6 @@ public class JdbcTemplate implements IQuery, ICall {
 		return showsql;
 	}
 	
-	/**
-	 * 设置关闭数据库连接的模式<br>
-	 * 
-	 * false - (默认的) 在执行完请求后立即关闭数据库连接<br>
-	 * 
-	 * true - 请求结束后会释放对数据库的引用,但是直到虚拟
-	 * 机的垃圾回收进程启动才会关闭数据库连接,<b>该方法会占用
-	 * 较多的数据库连接</b><br>
-	 * 
-	 * 注意如果当前的连接处于手动递交状态,则数据库绝不会关闭连接<br>
-	 * 修改该设置,需要测试与数据库的兼容性
-	 */
-	public void setConnectMode(boolean lazy) {
-		lazyMode = lazy;
-	}
-	
 	public void setDebug(boolean debug) {
 		this.debug = debug;
 	}
@@ -185,7 +169,7 @@ public class JdbcTemplate implements IQuery, ICall {
 			if (msg==null) {
 				msg = "未知的sql异常";
 			}
-			Tools.p(msg.trim() + ": ");
+			Tools.p("SQLState: " + e.getSQLState() + ", " + msg.trim() + ": ");
 			
 			if (proxy!=null) {
 				Tools.plsql(proxy.getSql());
@@ -406,6 +390,7 @@ public class JdbcTemplate implements IQuery, ICall {
 	 * 包装PreparedStatement以便能传给query<br>
 	 */
 	public class PreparedStatementHandler implements InvocationHandler, IShowSql {
+		private List<JdbcSession> jss = new ArrayList<JdbcSession>(7);
 		private PreparedStatement ps;
 		private JdbcSession js;
 		private TransformPrep tp = new TransformPrep();
@@ -446,12 +431,10 @@ public class JdbcTemplate implements IQuery, ICall {
 			}
 		}
 		
-		/* 关闭PreparedStatement */
+		/* 关闭到数据库的连接 */
 		public void close() throws SQLException {
-			if (ps!=null) {
-				ps.close();
-			}
-			if (js!=null) {
+			for (Iterator<JdbcSession> itr = jss.iterator(); itr.hasNext(); ) {
+				JdbcSession js = itr.next();
 				js.close();
 			}
 		}
@@ -462,6 +445,8 @@ public class JdbcTemplate implements IQuery, ICall {
 			tp.setSql(_sql);
 
 			js = initSession();
+			jss.add(js);
+			
 			Connection conn = js.getConnection();
 			ps = conn.prepareStatement(tp.getSql());
 			tp.exe(ps);
@@ -590,8 +575,12 @@ public class JdbcTemplate implements IQuery, ICall {
 				conn = src.getConnection();
 				++connectCount;
 				
-				if (debug) Tools.pl("create conn@" + conn.hashCode() 
-						+ " sess@" + this.hashCode() + " C^" + connectCount);
+				if (debug) {
+					Tools.pl("create conn@" + conn.hashCode()
+							+ " sess@" + this.hashCode() + " C^" + connectCount);
+
+					DBAbandonedConnTest.add(conn);
+				}
 			}
 			return conn;
 		}
@@ -644,7 +633,8 @@ public class JdbcTemplate implements IQuery, ICall {
 
 		public void setCommit(boolean isAuto) {
 			try {
-				if (debug) Tools.pl("setCommit("+isAuto+") conn@" + conn.hashCode());
+				if (debug)
+					Tools.pl("setCommit("+isAuto+") conn@" + conn.hashCode());
 				
 				db_connect.set(isAuto ? null : this);
 				conn.setAutoCommit(isAuto);
@@ -674,26 +664,28 @@ public class JdbcTemplate implements IQuery, ICall {
 		public void close() {
 			if (conn!=null && isAutoCommit()) {
 				/* 把JdbcSession从线程变量中移除,
-				   直到没有其他引用时再释放连接 */
+				直到没有其他引用时再释放连接 */
 				db_connect.set(null);
 				
-				if (!lazyMode) {
-					try {
-						finalize();
-					} catch (Throwable e) {
-					}
+				try {
+					finalize();
+				} catch (Throwable e) {
 				}
 			}
 		}
 		
-		protected void finalize() throws Throwable {			
+		protected void finalize() throws Throwable {
 			if (conn!=null) {
-				if (debug) Tools.pl("close conn@" 
-						+ conn.hashCode() + " sess@" + this.hashCode());
-				
 				conn.close();
 				conn = null;
 				--connectCount;
+				
+				if (debug) {
+					Tools.pl(" close conn@" + conn.hashCode()
+						+ " sess@" + this.hashCode() + " C^" + connectCount);
+					
+					DBAbandonedConnTest.close(conn);
+				}
 			}
 		}
 	}
