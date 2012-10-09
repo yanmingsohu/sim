@@ -1,0 +1,44 @@
+@CHARSET "UTF-8";
+
+#calendartable div {
+	font-size: 16px;
+}
+
+.infoday {
+	font-family:"鏂规濮氫綋";
+	font-size: 12px;
+	color: #660000;
+	font-style: normal;
+	text-decoration: underline;
+}
+
+#calendartable {
+	width: 100%;
+}
+
+#calendartable tr {
+	height: 60px;
+}
+
+/* 鏃ュ巻鐨勫ご */
+.caletitlediv {
+	text-align: center;
+	font-size: 28px;
+	font-family: "鏂规鑸掍綋";
+	padding: 20px 0px 20px 0px;
+	cursor: default;
+	background-color: #FDD695;
+}
+
+#quickdiv div a {
+	color:#ffffff;
+}
+
+#quickdiv div {
+	padding: 9px 0px 9px 0px;
+	text-align: center;
+}
+
+#calendartable thead td {
+	text-align: center;
+}

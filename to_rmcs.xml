@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project sim">
+	<!--this file was created by Eclipse Runnable JAR Export Wizard	-->
+	<!--ANT 1.7 is required											-->
+
+	<!--jar输出路径													-->
+	<property name="outdir" 		value="F:/workspace/framework"/>
+	
+	<property name="src_dir" 		value="${basedir}/WEB-INF/src"/>
+	<property name="class_dir" 		value="${basedir}/WEB-INF/classes"/>
+	
+	
+	<target name="create_run_jar">
+		<copy todir="${basedir}/WEB-INF/classes/jym/" overwrite="true">
+			<fileset file="${basedir}/readme.txt"/>
+		</copy>
+
+		<jar destfile="${outdir}/sim.jar" filesetmanifest="mergewithoutmain">
+			<manifest>
+				<attribute name="Main-Class" value="jym.sim.test.util.Main"/>
+				<attribute name="Class-Path" value="."/>
+			</manifest>
+
+			<fileset dir="${class_dir}">
+				<include name="**"/>
+				<exclude name="**/*!secure*"/>
+			</fileset>
+			<fileset dir="${src_dir}"> 
+				<include name="**"/>
+				<exclude name="**/*!secure*"/>
+			</fileset>
+		</jar>
+		
+		<!-- 复制打包好的jar文件复制到指定的项目目录 -->
+		<copy todir="F:/workspace/LWBS/WebRoot/WEB-INF/lib" overwrite="true">
+			<fileset file="${outdir}/sim.jar"/>
+		</copy>
+		<copy todir="F:/workspace/RMCSI/WebRoot/WEB-INF/lib" overwrite="true">
+			<fileset file="${outdir}/sim.jar"/>
+		</copy>
+		<copy todir="F:/workspace/Tools" overwrite="true">
+			<fileset file="${outdir}/sim.jar"/>
+		</copy>
+	</target>
+
+</project>

@@ -1,0 +1,24 @@
+@CHARSET "UTF-8";
+
+.er_css {
+	font-size: 10px;
+}
+
+.er_classname {
+	font-size: 10px;
+	color: #990000;
+}
+
+.er_methodname {
+	font-size: 10px;
+	color: #000099;
+}
+
+.er_filename {
+	font-size: 10px;
+	color: #009900;
+}
+
+.er_line {
+	font-size: 9px;
+}

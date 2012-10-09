@@ -86,7 +86,7 @@ public class Validator {
 				IVerify iv = ite.next();
 				try {
 					String mstr = iv.getMessage(field, fieldvalue);
-					if ( mstr!=null ) {
+					if ( mstr!=IVerify.SKIP && mstr!=IVerify.SUCCESS ) {
 						msg.putMsg(field, mstr);
 					}
 				} catch (Exception e) {
