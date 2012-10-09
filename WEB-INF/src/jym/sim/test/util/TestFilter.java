@@ -13,7 +13,7 @@ import jym.sim.util.Tools;
 import jym.sim.util.UsedTime;
 
 
-public class TestFilter {
+public class testFilter {
 
 	public static void main(String[] args) throws SimFilterException {
 		String a = "_fdsafsaf\"'fdsaffn_";

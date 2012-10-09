@@ -13,17 +13,17 @@ public interface IVerify {
 	/**
 	 * 验证成功
 	 */
-	public final String SUCCESS = "SUCCESS";
+	public final String SUCCESS = null;
 	
 	/**
 	 * 验证过程中出现错误
 	 */
-	public final String ERROR = "ERR";
+	public final String ERROR = null;
 	
 	/**
 	 * 验证器跳过验证
 	 */
-	public final String SKIP = "SKIP";
+	public final String SKIP = null;
 	
 	/**
 	 * 返回验证器要验证的'注解'的class
@@ -40,5 +40,4 @@ public interface IVerify {
 	 * @param value - 字段所属对象的值
 	 */
 	public String getMessage(Field field, Object value);
-	
 }

@@ -246,7 +246,7 @@ implements ISelecter<T>, IQuery, ResultSetList.IGetBean<T> {
 			}
 			
 			public void set(String column, Object value, Class<?> valueType) {
-				IWhere logic = plot.getLogicPackage(column).getWhereLogic();
+				IWhere logic = plot.getWhereLogic(column).getWhereLogic();
 				
 				if (logic instanceof ISkipValueCheck || isValid(value, valueType) ) {
 					//XXX transformValue 负责按照策略转换输入值

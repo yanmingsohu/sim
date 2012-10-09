@@ -160,7 +160,7 @@ class Plot<T> implements IPlot {
 	 * 取得指定列where的比较方式, 大小写不敏感<br>
 	 * 该方法不会返回null
 	 */
-	protected LogicPackage getLogicPackage(String colname) {
+	protected LogicPackage getWhereLogic(String colname) {
 		LogicPackage log = null;
 		MethodMapping mm = ormmap.get(colname.toLowerCase());
 		if (mm!=null) {
