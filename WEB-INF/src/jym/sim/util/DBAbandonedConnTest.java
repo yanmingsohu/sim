@@ -20,20 +20,21 @@ public class DBAbandonedConnTest {
 	
 	
 	private static Map<Object, ConnInf> map = new HashMap<Object, ConnInf>();
-	private static Thread test = new Thread() {
-		public void run() {
-			while (true) {
-				try {
-					sleep(20 * 1000);
-					test();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	};
+	private static Thread test;
 	
 	static {
+		test = new Thread() {
+			public void run() {
+				while (true) {
+					try {
+						sleep(20 * 1000);
+						test();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		};
 		test.setDaemon(true);
 		test.start();
 	}
