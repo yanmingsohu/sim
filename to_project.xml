@@ -4,7 +4,7 @@
 	<!--ANT 1.7 is required											-->
 
 	<!--jar输出路径													-->
-	<property name="outdir" 		value="F:/workspace/xdemo/webroot/WEB-INF/lib"/>
+	<property name="outdir" 		value="${basedir}"/>
 	
 	<property name="src_dir" 		value="${basedir}/WEB-INF/src"/>
 	<property name="class_dir" 		value="${basedir}/WEB-INF/classes"/>
@@ -25,7 +25,16 @@
 				<include name="**"/>
 				<exclude name="**/*!secure*"/>
 			</fileset>
+			<fileset dir="${src_dir}"> 
+				<include name="**"/>
+				<exclude name="**/*!secure*"/>
+			</fileset>
 		</jar>
+		
+		<!-- 复制打包好的jar文件复制到指定的项目目录 -->
+		<copy todir="F:/workspace_gis/LLB_GIS/WebContent/WEB-INF/lib" overwrite="true">
+			<fileset file="${outdir}/sim.jar"/>
+		</copy>
 	</target>
 
 </project>

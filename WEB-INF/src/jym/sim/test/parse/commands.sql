@@ -5,6 +5,9 @@ select * from
 	table1 ${id}
 #end
 
+-- 不支持字符串判断
+-- #if (id=="abc")
+
 #if ((id+1) != 2)
 	--如果id设置了别的值: ${id }
 	table2

@@ -45,18 +45,32 @@ public class PoolFactory {
 	 * @throws IOException - 配置文件读取错误,连接数据库错误
 	 */
 	public PoolFactory(String fromfile, boolean waitSuccess) throws IOException {
-		this.waitSuccess = waitSuccess;
-		
 		Properties prop = new Properties();
 		readFromFile(prop, fromfile);
 		PoolConf pc = createConfig(prop);
 		
+		init(pc, waitSuccess);
+	}
+	
+	/**
+	 * 创建连接池工厂
+	 * 
+	 * @param config 配置项
+	 * @param waitSuccess 是否阻塞操作直到数据库正常使用才返回
+	 * @throws IOException - 配置文件读取错误,连接数据库错误
+	 */
+	public PoolFactory(PoolConf config, boolean waitSuccess) throws IOException {
+		init(config, waitSuccess);
+	}
+	
+	private void init(PoolConf config, boolean waitSuccess) throws IOException {
+		this.waitSuccess = waitSuccess;
 		try {
-			_ds = createFromJndi(pc);
-			success("使用服务器在jndi中提供的数据源, jndi: [" + pc.getJndiName() + "]");
+			_ds = createFromJndi(config);
+			success("使用服务器在jndi中提供的数据源, jndi: [" + config.getJndiName() + "]");
 		} catch (Exception e) {
-			_ds = createFromLocal(pc);
-			success("创建了独立的数据源, url: [" + pc.getUrl() + "]");	
+			_ds = createFromLocal(config);
+			success("创建了独立的数据源, url: [" + config.getUrl() + "]");	
 		}
 	}
 	

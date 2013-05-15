@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import jym.sim.util.Tools;
 import jym.sim.validator.verify.DateVerify;
 import jym.sim.validator.verify.EmailVerify;
 import jym.sim.validator.verify.NotNullVerify;
@@ -51,7 +50,7 @@ public final class Verifys {
 			if (iv!=null) {
 				ivs.add(iv);
 			} else {
-				Tools.pl("Verifys未找到验证规则: " + annos[i]);
+			//	Tools.pl("Verifys未找到验证规则: " + annos[i]);
 			}
 		}
 		

@@ -39,7 +39,6 @@ public class C_for extends AbsCommand {
 				error("迭代器无效 " + itr_name);
 			}
 			
-			
 			Iterator itr = null;
 			
 			if (obj instanceof Iterator) {
@@ -111,7 +110,8 @@ public class C_for extends AbsCommand {
 				}
 				else if (itr_each.hasNext()) {
 					itr_content = content.iterator();
-					itr_var.init(null, itr_each.next());
+					Object o = itr_each.next();
+					itr_var.init(null, o);
 				}
 				else {
 					allOver = true;
